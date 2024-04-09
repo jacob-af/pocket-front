@@ -1,0 +1,47 @@
+{
+  "name": "next-apollo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "compile": "graphql-codegen",
+    "watch": "graphql-codegen -w"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.9.10",
+    "@apollo/client-react-streaming": "^0.10.0",
+    "@apollo/experimental-nextjs-app-support": "^0.9.1",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/material": "^5.15.14",
+    "@urql/next": "^1.1.1",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
+    "next": "14.1.4",
+    "next-auth": "^4.24.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.2",
+    "urql": "^4.0.7"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-resolvers": "^4.0.6",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.4.3"
+  }
+}
