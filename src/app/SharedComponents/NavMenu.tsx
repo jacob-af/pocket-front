@@ -47,31 +47,40 @@ export default function NavMenu() {
             Protected Route
           </li>
         </Link>
-        <Link href="/serverAction">
+        <Link href="/serverSideQuery">
           <li
             className={
-              pathname === "/serverAction" ? ACTIVE_ROUTE : INACTIVE_ROUTE
+              pathname === "/serverSideQuery" ? ACTIVE_ROUTE : INACTIVE_ROUTE
             }
           >
             Server Action
           </li>
         </Link>
-        <Link href="/apiFromClient">
+        <Link href="/serverSideMutation">
           <li
             className={
-              pathname === "/apiFromClient" ? ACTIVE_ROUTE : INACTIVE_ROUTE
+              pathname === "/serverSideMutation" ? ACTIVE_ROUTE : INACTIVE_ROUTE
             }
           >
-            API From Client
+            Query from Server
           </li>
         </Link>
-        <Link href="/apiFromServer">
+        <Link href="/clientSideQuery">
           <li
             className={
-              pathname === "/apiFromServer" ? ACTIVE_ROUTE : INACTIVE_ROUTE
+              pathname === "/clientSideQuery" ? ACTIVE_ROUTE : INACTIVE_ROUTE
             }
           >
-            API From Server
+            Query from Client
+          </li>
+        </Link>
+        <Link href="/clientSideMutation">
+          <li
+            className={
+              pathname === "/clientSideMutation" ? ACTIVE_ROUTE : INACTIVE_ROUTE
+            }
+          >
+            Mutation from Client
           </li>
         </Link>
       </ul>

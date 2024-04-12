@@ -15,8 +15,8 @@ export const ALL_INGREDIENTS: TypedDocumentNode<{
 }> = gql`
   query Ingredients {
     ingredients {
-      description
       id
+      description
       name
     }
   }

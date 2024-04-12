@@ -24,11 +24,6 @@ function Button() {
       if (session) {
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session?.user.id }
-          // context: {
-          //   headers: {
-          //     Authorization: authTokens() ? `Bearer ${authTokens()}` : ""
-          //   }
-          // }
         });
         console.log(data?.loggedOut);
         await signOut({ callbackUrl: "/welcome", redirect: true });

@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
           id: resp?.user.id,
           name: resp?.user.userName,
           email: resp?.user.email,
-          accessTokenExpires: Date.now() + 50000,
+          accessTokenExpires: Date.now() + 24 * 60 * 30 * 60 * 1000,
           accessToken: resp?.accessToken,
           refreshToken: resp?.refreshToken
         };

@@ -1,5 +1,5 @@
 {
-  "name": "next-apollo",
+  "name": "pocket-barbook",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,17 +16,17 @@
     "@apollo/experimental-nextjs-app-support": "^0.9.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@headlessui/react": "^1.7.18",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
-    "@urql/next": "^1.1.1",
+    "@types/d3": "^7.4.3",
+    "d3": "^7.9.0",
     "graphql": "^16.8.1",
-    "graphql-request": "^6.1.0",
     "next": "14.1.4",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.51.2",
-    "urql": "^4.0.7"
+    "react-hook-form": "^7.51.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
