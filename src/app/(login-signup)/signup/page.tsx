@@ -2,28 +2,13 @@
 
 import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { useMutation, FetchResult } from "@apollo/client";
-import { Copyright } from "../../SharedComponents/Copyright";
+import Link from "next/link";
+import { useMutation } from "@apollo/client";
 import { SIGNUP } from "@/app/graphql/mutations/auth";
 import { signIn } from "next-auth/react";
-import { AuthPayload } from "@/__generated__/graphql";
 import { useRouter } from "next/navigation";
 
-//const defaultTheme = createTheme();
-
-type Inputs = {
+type SignUpInputs = {
   userName: string;
   email: string;
   password: string;
@@ -36,19 +21,17 @@ export default function SignUpSide() {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<Inputs>();
+  } = useForm<SignUpInputs>();
   console.log(errors, "errorss");
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<Inputs> = async ({
+  const onSubmit: SubmitHandler<SignUpInputs> = async ({
     email,
     userName,
     password,
     confirmPassword
   }) => {
-    console.log("ding");
-    console.log(email, userName, password, confirmPassword);
-    const { data: data }: FetchResult<AuthPayload> = await newUser({
+    const { data: data } = await newUser({
       variables: {
         createUserInput: {
           email,
@@ -64,153 +47,141 @@ export default function SignUpSide() {
       redirect: false
     });
     console.log(res);
-    router.push("/dashboard");
+    router.push("/db");
   };
 
   return (
-    <Grid container sx={{ height: "100vh" }}>
-      <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          backgroundImage: "url(https://source.unsplash.com/random?wallpapers)",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: t =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="userName"
+            >
+              User Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="userName"
-              label="User Name"
+              type="text"
+              placeholder="User Name"
               {...register("userName", {
                 required: true,
                 pattern: {
                   value: /^[a-zA-Z0-9_-]{3,32}$/,
-                  message: "Invalid email address"
+                  message: "Invalid user name"
                 }
               })}
-              error={!!errors?.userName}
-              helperText={errors?.userName ? errors.userName.message : null}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Email Address"
+            {errors?.userName && (
+              <p className="text-red-500 text-xs italic">
+                {errors.userName.message}
+              </p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email Address
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="Email Address"
               {...register("email", {
-                required: "Required field",
+                required: true,
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "Invalid email address"
                 }
               })}
-              error={!!errors?.email}
-              helperText={errors?.email ? errors.email.message : null}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              type="password"
+            {errors?.email && (
+              <p className="text-red-500 text-xs italic">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Password
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
+              type="password"
+              placeholder="Password"
               {...register("password", {
                 required: true,
-                maxLength: 64,
                 pattern: {
                   value:
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,32}$/,
                   message: "Password must be extra fancy"
                 }
               })}
-              error={!!errors?.password}
-              helperText={errors?.password ? errors.password.message : null}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Confirm Password"
-              type="password"
+            {errors?.password && (
+              <p className="text-red-500 text-xs italic">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          {/* Password and Confirm Password fields */}
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="confirmPassword"
+            >
+              Confirm Password
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="confirmPassword"
+              type="confirmPassword"
+              placeholder="Confirm Password"
               {...register("confirmPassword", {
+                required: true,
                 pattern: {
                   value:
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,32}$/,
-                  message: "Passwords must match"
-                },
-                validate: (value, formValues) => {
-                  console.log(value, formValues.password);
-                  return formValues.password === formValues.confirmPassword;
+                  message: "Password must be extra fancy"
                 }
               })}
-              error={!!errors?.confirmPassword}
-              helperText={
-                errors?.confirmPassword ? errors?.confirmPassword.message : null
-              }
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="login" variant="body2">
-                  {"Already have an account? Login"}
-                </Link>
-              </Grid>
-            </Grid>
+            {errors?.confirmPassword && (
+              <p className="text-red-500 text-xs italic">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
 
-            <Copyright sx={{ mt: 5 }} />
-          </Box>
-        </Box>
-      </Grid>
-    </Grid>
-    //</ThemeProvider>
+          {/* Submit button */}
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Create Account
+          </button>
+          {/* Login link */}
+          <Link
+            href="login"
+            className="block mt-4 text-blue-500 hover:text-blue-700"
+          >
+            Already have an account? Login
+          </Link>
+        </form>
+      </div>
+    </div>
   );
 }

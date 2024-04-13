@@ -25,17 +25,17 @@ function Button() {
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session?.user.id }
         });
+        authTokens("");
         console.log(data?.loggedOut);
-        await signOut({ callbackUrl: "/welcome", redirect: true });
+        await signOut({
+          callbackUrl: `/welcome`,
+          redirect: true
+        });
       }
       return;
     } catch (err) {
       console.log(err);
       return;
-    }
-    if (!loading) {
-      signOut({ redirect: false });
-      router.push("/");
     }
   };
 

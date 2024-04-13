@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AmILoggedIn() {
-  const { data: session, status, update } = useSession();
+  const { data: session, update } = useSession();
   useEffect(() => {
     if (session?.user && session?.user?.accessTokenExpires < Date.now()) {
       update({ action: "New Tokens" });

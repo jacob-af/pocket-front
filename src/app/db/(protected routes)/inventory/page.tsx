@@ -1,13 +1,10 @@
-import LoadIngredients from "../../components/LoadIngredients";
-import Csr from "./csr";
+import LoadIngredients from "./components/IngredientSelector";
 import UploadFile from "@/app/SharedComponents/FileUpload";
 
 export default function ClientSideIngredients() {
   return (
     <div>
-      {/* <Csr /> */}
       <LoadIngredients />
-      {/* <UploadFile /> */}
     </div>
   );
 }

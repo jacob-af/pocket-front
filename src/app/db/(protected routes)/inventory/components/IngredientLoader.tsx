@@ -4,21 +4,22 @@ import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import CheckIcon from "@mui/icons-material/Check";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { ingredientList } from "@/app/Apollo/ingredients";
 import { Ingredient } from "@/__generated__/graphql";
-import sortByLevenshteinDistance from "../../components/levenshteinSort";
+import sortByLevenshteinDistance from "../../../components/levenshteinSort";
 
-export default function Example() {
+export default function AutoDrop({
+  ingredients
+}: {
+  ingredients: Ingredient[];
+}) {
   const [selected, setSelected] = useState({
     id: "",
     name: "",
     description: ""
   });
   const [query, setQuery] = useState("");
-  const list: Ingredient[] = [...ingredientList()];
-  console.log(selected);
   const filteredIngredients =
-    query === "" ? list : sortByLevenshteinDistance(list, query);
+    query === "" ? ingredients : sortByLevenshteinDistance(ingredients, query);
   return (
     <div className="fixed top-16 w-72">
       <Combobox value={selected} onChange={setSelected}>

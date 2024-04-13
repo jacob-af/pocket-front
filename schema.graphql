@@ -26,10 +26,13 @@ type NewTokenResponse {
 
 type Query {
   hello: String!
-  builds: [Build]
-  build: Build
+  findAllBuilds: [Build]
+  findOneBuild: Build
+  usersBuilds: [Recipe]
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
+  recipes: [Recipe]!
+  recipe(id: Int!): Recipe
   allUsers: [User]!
   userById(id: ID!): User
 }
@@ -54,18 +57,24 @@ type Mutation {
     userPermission: Permission
     permission: Permission
   ): BuildPermissionResponse
-  updateTouch(
-    newTouchArray: [TouchInput]
-    permission: Permission
-    buildId: String
-    version: Int
-  ): [Touch]
   createIngredient(createIngredientInput: CreateIngredientInput!): Ingredient!
   createManyIngredients(
     createManyIngredientInputs: [CreateIngredientInput]!
   ): StatusMessage!
   updateIngredient(updateIngredientInput: UpdateIngredientInput!): Ingredient!
   removeIngredient(id: String!): Ingredient
+  createManyRecipes(
+    createManyRecipeInputs: [CreateRecipeInput]!
+  ): StatusMessage!
+  createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
+  updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
+  removeRecipe(id: ID!): Recipe
+  updateTouch(
+    newTouchArray: [TouchInput]
+    permission: Permission
+    buildId: String
+    version: Int
+  ): [Touch]
   followUser(followId: String!, relationship: Relationship): StatusMessage
   unFollowUser(unfollowId: String!): StatusMessage
   blockUser(blockId: String!): StatusMessage
@@ -74,6 +83,7 @@ type Mutation {
 
 type Build {
   id: ID!
+  recipe: Recipe!
   buildName: String!
   createdAt: DateTime
   editedAt: DateTime
@@ -84,7 +94,7 @@ type Build {
   glassware: String
   ice: String
   permission: Permission
-  touch: [Touch]
+  touch: [Touch]!
   version: Int
   archivedBuild: [ArchivedBuild]
 }
@@ -141,20 +151,30 @@ type BuildPermissionResponse {
 }
 
 input CreateBuildInput {
-  buildName: String
+  recipeId: ID!
+  buildName: String!
   instructions: String
   glassware: String
   ice: String
-  touchArray: [TouchInput]
+  touchArray: [TouchInput]!
+}
+
+input CreateFirstBuildInput {
+  buildName: String!
+  instructions: String
+  glassware: String
+  ice: String
+  touchArray: [TouchInput]!
 }
 
 input UpdateBuildInput {
-  buildId: String
+  recipeId: ID!
+  buildId: String!
   buildName: String
   instructions: String
   glassware: String
   ice: String
-  touchArray: [TouchInput]
+  touchArray: [TouchInput]!
   permission: Permission
 }
 
@@ -164,6 +184,71 @@ input ChangeBuildPermissionInput {
   userPermission: Permission
   desiredPermission: Permission
 }
+
+enum Permission {
+  VIEW
+  EDIT
+  MANAGER
+  OWNER
+  BLOCKED
+}
+
+enum Relationship {
+  Favorite
+  Close
+  Following
+  Blocked
+}
+
+type Ingredient {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+input CreateIngredientInput {
+  name: String!
+  description: String
+}
+
+input UpdateIngredientInput {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Recipe {
+  id: ID!
+  createdAt: DateTime
+  editedAt: DateTime
+  name: String
+  about: String
+  createdBy: User
+  editedBy: User
+  build: [Build]
+}
+
+input CreateRecipeInput {
+  name: String!
+  about: String!
+  build: CreateFirstBuildInput!
+}
+
+input UpdateRecipeInput {
+  id: ID!
+  name: String
+  about: String
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress
 
 type Touch {
   id: ID!
@@ -186,62 +271,18 @@ type ArchivedTouch {
 }
 
 input TouchInput {
-  order: Int
-  ingredientId: String
+  ingredientName: String
   amount: Float
   unit: String
 }
 
 type CompleteTouch {
   id: ID!
-  order: Int
-  ingredientId: String
+  ingredientName: String
   amount: Float
   unit: String
   cost: Float
 }
-
-enum Permission {
-  VIEW
-  EDIT
-  MANAGER
-  OWNER
-  BLOCKED
-}
-
-enum Relationship {
-  Favorite
-  Close
-  Following
-  Blocked
-}
-
-type Ingredient {
-  id: String!
-  name: String!
-  description: String!
-}
-
-input CreateIngredientInput {
-  name: String!
-  description: String
-}
-
-input UpdateIngredientInput {
-  id: ID!
-  name: String!
-  description: String
-}
-
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
-
-"""
-A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
-"""
-scalar EmailAddress
 
 type User {
   id: ID!
@@ -252,7 +293,7 @@ type User {
   following: [Following]
   followedBy: [Follower]
   myBuild: [Build]
-  allBuild: [Build]
+  allBuilds: [Build]
   buildEditedBy: [Build]
 }
 

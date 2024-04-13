@@ -73,7 +73,8 @@ export type Build = {
   instructions?: Maybe<Scalars['String']['output']>;
   notes?: Maybe<Scalars['String']['output']>;
   permission?: Maybe<Permission>;
-  touch?: Maybe<Array<Maybe<Touch>>>;
+  recipe: Recipe;
+  touch: Array<Maybe<Touch>>;
   version?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -125,21 +126,35 @@ export type CompleteTouch = {
   amount?: Maybe<Scalars['Float']['output']>;
   cost?: Maybe<Scalars['Float']['output']>;
   id: Scalars['ID']['output'];
-  ingredientId?: Maybe<Scalars['String']['output']>;
-  order?: Maybe<Scalars['Int']['output']>;
+  ingredientName?: Maybe<Scalars['String']['output']>;
   unit?: Maybe<Scalars['String']['output']>;
 };
 
 export type CreateBuildInput = {
-  buildName?: InputMaybe<Scalars['String']['input']>;
+  buildName: Scalars['String']['input'];
   glassware?: InputMaybe<Scalars['String']['input']>;
   ice?: InputMaybe<Scalars['String']['input']>;
   instructions?: InputMaybe<Scalars['String']['input']>;
-  touchArray?: InputMaybe<Array<InputMaybe<TouchInput>>>;
+  recipeId: Scalars['ID']['input'];
+  touchArray: Array<InputMaybe<TouchInput>>;
+};
+
+export type CreateFirstBuildInput = {
+  buildName: Scalars['String']['input'];
+  glassware?: InputMaybe<Scalars['String']['input']>;
+  ice?: InputMaybe<Scalars['String']['input']>;
+  instructions?: InputMaybe<Scalars['String']['input']>;
+  touchArray: Array<InputMaybe<TouchInput>>;
 };
 
 export type CreateIngredientInput = {
   description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateRecipeInput = {
+  about: Scalars['String']['input'];
+  build: CreateFirstBuildInput;
   name: Scalars['String']['input'];
 };
 
@@ -178,7 +193,7 @@ export type Following = {
 export type Ingredient = {
   __typename?: 'Ingredient';
   description: Scalars['String']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
 };
 
@@ -199,6 +214,8 @@ export type Mutation = {
   createBuild?: Maybe<BuildResponse>;
   createIngredient: Ingredient;
   createManyIngredients: StatusMessage;
+  createManyRecipes: StatusMessage;
+  createRecipe: Recipe;
   deleteBuildPermission?: Maybe<BuildPermissionResponse>;
   followUser?: Maybe<StatusMessage>;
   getNewTokens: AuthPayload;
@@ -206,11 +223,13 @@ export type Mutation = {
   logout: LogoutResponse;
   removeBuild?: Maybe<BuildResponse>;
   removeIngredient?: Maybe<Ingredient>;
+  removeRecipe?: Maybe<Recipe>;
   signup: AuthPayload;
   unFollowUser?: Maybe<StatusMessage>;
   unblockUser?: Maybe<StatusMessage>;
   updateBuild?: Maybe<ArchiveResponse>;
   updateIngredient: Ingredient;
+  updateRecipe: Recipe;
   updateTouch?: Maybe<Array<Maybe<Touch>>>;
 };
 
@@ -240,6 +259,16 @@ export type MutationCreateIngredientArgs = {
 
 export type MutationCreateManyIngredientsArgs = {
   createManyIngredientInputs: Array<InputMaybe<CreateIngredientInput>>;
+};
+
+
+export type MutationCreateManyRecipesArgs = {
+  createManyRecipeInputs: Array<InputMaybe<CreateRecipeInput>>;
+};
+
+
+export type MutationCreateRecipeArgs = {
+  createRecipeInput: CreateRecipeInput;
 };
 
 
@@ -283,6 +312,11 @@ export type MutationRemoveIngredientArgs = {
 };
 
 
+export type MutationRemoveRecipeArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationSignupArgs = {
   createUserInput: CreateUserInput;
 };
@@ -305,6 +339,11 @@ export type MutationUpdateBuildArgs = {
 
 export type MutationUpdateIngredientArgs = {
   updateIngredientInput: UpdateIngredientInput;
+};
+
+
+export type MutationUpdateRecipeArgs = {
+  updateRecipeInput: UpdateRecipeInput;
 };
 
 
@@ -332,12 +371,15 @@ export enum Permission {
 export type Query = {
   __typename?: 'Query';
   allUsers: Array<Maybe<User>>;
-  build?: Maybe<Build>;
-  builds?: Maybe<Array<Maybe<Build>>>;
+  findAllBuilds?: Maybe<Array<Maybe<Build>>>;
+  findOneBuild?: Maybe<Build>;
   hello: Scalars['String']['output'];
   ingredient?: Maybe<Ingredient>;
   ingredients: Array<Maybe<Ingredient>>;
+  recipe?: Maybe<Recipe>;
+  recipes: Array<Maybe<Recipe>>;
   userById?: Maybe<User>;
+  usersBuilds?: Maybe<Array<Maybe<Recipe>>>;
 };
 
 
@@ -346,8 +388,25 @@ export type QueryIngredientArgs = {
 };
 
 
+export type QueryRecipeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type QueryUserByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type Recipe = {
+  __typename?: 'Recipe';
+  about?: Maybe<Scalars['String']['output']>;
+  build?: Maybe<Array<Maybe<Build>>>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  editedAt?: Maybe<Scalars['DateTime']['output']>;
+  editedBy?: Maybe<User>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export enum Relationship {
@@ -375,25 +434,31 @@ export type Touch = {
 
 export type TouchInput = {
   amount?: InputMaybe<Scalars['Float']['input']>;
-  ingredientId?: InputMaybe<Scalars['String']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
+  ingredientName?: InputMaybe<Scalars['String']['input']>;
   unit?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateBuildInput = {
-  buildId?: InputMaybe<Scalars['String']['input']>;
+  buildId: Scalars['String']['input'];
   buildName?: InputMaybe<Scalars['String']['input']>;
   glassware?: InputMaybe<Scalars['String']['input']>;
   ice?: InputMaybe<Scalars['String']['input']>;
   instructions?: InputMaybe<Scalars['String']['input']>;
   permission?: InputMaybe<Permission>;
-  touchArray?: InputMaybe<Array<InputMaybe<TouchInput>>>;
+  recipeId: Scalars['ID']['input'];
+  touchArray: Array<InputMaybe<TouchInput>>;
 };
 
 export type UpdateIngredientInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
+};
+
+export type UpdateRecipeInput = {
+  about?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {
@@ -404,7 +469,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
-  allBuild?: Maybe<Array<Maybe<Build>>>;
+  allBuilds?: Maybe<Array<Maybe<Build>>>;
   buildEditedBy?: Maybe<Array<Maybe<Build>>>;
   dateJoined?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['EmailAddress']['output'];

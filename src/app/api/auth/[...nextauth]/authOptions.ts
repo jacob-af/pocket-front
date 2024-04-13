@@ -4,8 +4,9 @@ import { getClient } from "@/lib/client";
 import { NEW_TOKENS } from "@/app/graphql/mutations/auth";
 
 export const authOptions: NextAuthOptions = {
-  secret: "super secret",
   providers: [credentialsProvider],
+  pages: { signIn: "/login" },
+  session: { maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
     async jwt({ token, user, session, trigger }) {
       if (user) {
