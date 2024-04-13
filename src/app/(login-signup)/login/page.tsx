@@ -29,7 +29,7 @@ export default function LogInSide() {
         redirect: false
       });
       console.log(res);
-      router.push("/dashboard");
+      router.push("/db");
     } catch (error) {
       console.log(error);
       return;

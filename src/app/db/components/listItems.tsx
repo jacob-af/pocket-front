@@ -13,31 +13,31 @@ import Link from "next/link";
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} href="/dashboard" sx={{ color: "#FFF" }}>
+    <ListItemButton component={Link} href="/db" sx={{ color: "#FFF" }}>
       <ListItemIcon>
         <HomeIcon sx={{ color: "#FFF" }} />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
-    <ListItemButton component={Link} href="/dashboard/recipe">
+    <ListItemButton component={Link} href="/db/recipe">
       <ListItemIcon>
         <LocalBarIcon sx={{ color: "#FFF" }} />
       </ListItemIcon>
       <ListItemText primary="Recipes" />
     </ListItemButton>
-    <ListItemButton component={Link} href="/dashboard/recipeBook">
+    <ListItemButton component={Link} href="/db/recipeBook">
       <ListItemIcon>
         <MenuBookIcon sx={{ color: "#FFF" }} />
       </ListItemIcon>
       <ListItemText primary="RecipeBooks" />
     </ListItemButton>
-    <ListItemButton component={Link} href="/dashboard/inventory">
+    <ListItemButton component={Link} href="/db/inventory">
       <ListItemIcon>
         <LiquorIcon sx={{ color: "#FFF" }} />
       </ListItemIcon>
       <ListItemText primary="Inventory" />
     </ListItemButton>
-    <ListItemButton component={Link} href="/dashboard/crew">
+    <ListItemButton component={Link} href="/db/crew">
       <ListItemIcon>
         <GroupsIcon sx={{ color: "#FFF" }} />
       </ListItemIcon>
