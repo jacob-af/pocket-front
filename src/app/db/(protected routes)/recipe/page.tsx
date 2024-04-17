@@ -1,12 +1,9 @@
-"use client";
-
-import { ALL_INGREDIENTS, ALL_USERS } from "../../../graphql/queries/allUsers";
-import { ApolloQueryResult, useQuery } from "@apollo/client";
-import { Ingredient } from "@/__generated__/graphql";
-import { useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { authTokens } from "@/app/Apollo/authTokens";
+import RecipeSelector from "./components/RecipeSelector";
 
 export default function Recipe() {
-  return <div></div>;
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <RecipeSelector />
+    </div>
+  );
 }
