@@ -28,11 +28,11 @@ type Query {
   hello: String!
   findAllBuilds: [Build]
   findOneBuild: Build
-  usersBuilds: [Recipe]
+  usersBuilds: [Build]
   ingredients: [Ingredient]!
-  ingredient(id: Int!): Ingredient
+  ingredient(id: String!): Ingredient
   recipes: [Recipe]!
-  recipe(id: Int!): Recipe
+  recipe(id: String!): Recipe
   allUsers: [User]!
   userById(id: ID!): User
 }

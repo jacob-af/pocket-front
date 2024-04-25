@@ -1,29 +1,30 @@
-import { Recipe } from "@/__generated__/graphql";
+import { Build } from "@/__generated__/graphql";
 import { gql, TypedDocumentNode } from "@apollo/client";
 
-export const USER_RECIPES: TypedDocumentNode<{
-  usersBuilds: Recipe[];
+export const USER_BUILDS: TypedDocumentNode<{
+  usersBuilds: Build[];
 }> = gql`
   query userBuilds {
     usersBuilds {
       id
-      name
-      about
-      build {
-        buildName
-        glassware
-        ice
-        instructions
-        touch {
+      buildName
+      glassware
+      ice
+      instructions
+      recipe {
+        id
+        name
+        about
+      }
+      touch {
+        id
+        amount
+        unit
+        order
+        ingredient {
           id
-          amount
-          unit
-          ingredient {
-            id
-            name
-            description
-          }
-          order
+          name
+          description
         }
       }
     }
