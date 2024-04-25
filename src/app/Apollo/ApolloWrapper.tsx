@@ -25,8 +25,8 @@ const authLink = setContext(async (_, { headers }) => {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_GQL_API_URL,
-    fetchOptions: { cache: "no-store" }
+    uri: process.env.NEXT_PUBLIC_GQL_API_URL
+    //fetchOptions: { cache: "no-store" }
   });
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
