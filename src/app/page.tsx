@@ -1,7 +1,6 @@
 import AuthButton from "@/app/db/components/SignOutButton";
 import { Button } from "@mui/material";
 import Link from "@mui/material/Link";
-import NavMenu from "./SharedComponents/NavMenu";
 import { redirect } from "next/navigation";
 import { auth } from "./Apollo/auth";
 
