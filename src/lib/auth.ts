@@ -4,7 +4,7 @@ import type {
   NextApiResponse
 } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import { authOptions } from "../app/api/auth/[...nextauth]/authOptions";
 
 export function auth(
   ...args:

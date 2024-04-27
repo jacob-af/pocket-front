@@ -10,7 +10,7 @@ import {
   NextSSRInMemoryCache
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
-import { authTokens } from "@/app/Apollo/authTokens";
+import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 import { CachePersistor, LocalForageWrapper } from "apollo3-cache-persist";
 import localForage from "localforage";
 
