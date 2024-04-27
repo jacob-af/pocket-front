@@ -4,38 +4,52 @@ import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import CheckIcon from "@mui/icons-material/Check";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { Build, Recipe } from "@/__generated__/graphql";
+import { ListItem } from "@/__generated__/graphql";
 import sortByLevenshteinDistance from "../../../components/levenshteinSort";
-import RecipeCard from "./RecipeCard";
-import {
-  userRecipeList,
-  selectedRecipe
-} from "@/app/graphql/reactiveVar/recipes";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar, ReactiveVar } from "@apollo/client";
+import { RecipeChangeFunction } from "./recipeHooks";
 
-export default function RecipeDropDown() {
-  const recipes = useReactiveVar(userRecipeList);
-  const selected = useReactiveVar(selectedRecipe);
-  // const [selected, setSelected] = useState<Recipe>(recipes[0]);
+export default function PropDown({
+  list,
+  selector,
+  handleChange
+}: {
+  list: ReactiveVar<ListItem[]>;
+  selector: ReactiveVar<ListItem>;
+  handleChange: RecipeChangeFunction;
+}) {
+  const options = useReactiveVar(list);
+  const selected = useReactiveVar(selector);
+  // const [selected, setSelected] = useState<Recipe>(options[0]);
   const [query, setQuery] = useState("");
-  const filteredRecipes =
-    query === "" ? recipes : sortByLevenshteinDistance(recipes, query);
+  const filteredOptions =
+    query === "" ? options : sortByLevenshteinDistance(options, query);
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(selected);
+    setQuery(event.target.value);
+    console.log(event.target.value);
+    handleChange(event.target.value, options);
+    selector({ id: "", name: event.target.value });
+  };
+
   return (
-    <div className="top-16 right-16 fixed flex flex-col w-sm">
+    <div className="flex flex-col w-sm">
       <Combobox
         value={selected || "loading"}
-        onChange={selectedRecipe}
-        nullable
+        onChange={value => {
+          if (value) {
+            console.log(value);
+            selector(value);
+          }
+        }}
       >
         <div className="relative mt-1">
           <div className="relative bg-black shadow-md w-full text-left text-white sm:text-sm cursor-default overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-300">
             <Combobox.Input
               className="py-2 pr-10 pl-3 border-none w-full text-gray-900 text-sm leading-5 focus:ring-0"
-              displayValue={(recipe: Recipe) => recipe?.name}
-              onChange={event => {
-                console.log(event);
-                setQuery(event.target.value);
-              }}
+              displayValue={(option: ListItem) => option?.name}
+              onChange={event => onChange(event)}
             />
             <Combobox.Button className="right-0 absolute inset-y-0 flex items-center pr-2">
               <UnfoldMoreIcon
@@ -52,12 +66,15 @@ export default function RecipeDropDown() {
             afterLeave={() => setQuery("")}
           >
             <Combobox.Options className="absolute bg-white shadow-lg mt-1 py-1 rounded-md w-full max-h-60 text-base sm:text-sm overflow-auto ring-1 ring-black/5 focus:outline-none">
-              {filteredRecipes.length === 0 && query !== "" ? (
-                <div className="relative px-4 py-2 text-gray-700 cursor-default select-none">
-                  Nothing found.
-                </div>
+              {query.length > 0 ? (
+                <Combobox.Option
+                  className="relative px-4 py-2 text-gray-700 cursor-default select-none"
+                  value={{ id: null, name: query }}
+                >
+                  Create {query}
+                </Combobox.Option>
               ) : (
-                filteredRecipes.map(recipe => (
+                filteredOptions?.map(recipe => (
                   <Combobox.Option
                     key={recipe.id}
                     className={({ active }) =>

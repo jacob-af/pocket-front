@@ -1,27 +1,55 @@
 "use client";
 
-import { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
-import { Build, Recipe } from "@/__generated__/graphql";
+import { Build, Recipe, Touch } from "@/__generated__/graphql";
+import TempImage from "./TempImage";
+import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
+import { useReactiveVar } from "@apollo/client";
 
-export default function RecipeCard({ recipe }: { recipe: Recipe }) {
-  const [currentBuild, setBuild] = useState<Build>();
+export default function RecipeCard() {
+  const recipe = useReactiveVar(selectedRecipe);
   return (
-    <div className="top-16 w-72">
+    <div className="p-4 border border-white mt-16">
       {/* <Transition
         show="true"
         leave="transition ease-in duration-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0" 
       >*/}
-      <div>{recipe.name}</div>
-      <div>{recipe.about}</div>
+      <div className="text-center text-xl mb-4">{recipe.name}</div>
+      <div className="flex">
+        <div className="flex-shrink-0 mr-4">
+          <TempImage />
+        </div>
+        <div className="flex-1">About: {recipe.about}</div>
+      </div>
       <ul>
-        {recipe.build.map((build, index) => {
-          return <li key={index}>{build.buildName}</li>;
+        {recipe.build?.map((build: Build, index: number) => {
+          return <BuildDisplay key={index} build={build} />;
         })}
       </ul>
-      {/* </Transition> */}
     </div>
   );
 }
+
+const BuildDisplay: React.FC<{ build: Build }> = ({ build }) => {
+  const sortedTouches = build.touch?.slice().sort((a, b) => {
+    // Ensure both a and b are not null, and handle the case when `order` is null or undefined
+    const orderA = a?.order ?? Number.MAX_VALUE;
+    const orderB = b?.order ?? Number.MAX_VALUE;
+    return orderA - orderB;
+  });
+  return (
+    <>
+      <div className="py-2">Build Name: {build.buildName}</div>
+      {sortedTouches.map((touch: Touch | null, index: number) => (
+        <div key={index}>
+          {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
+        </div>
+      ))}
+      <div className="py-2">Instructions: {build.instructions}</div>
+      <div className="py-2">Ice: {build.ice}</div>
+      <div className="py-2">Glassware: {build.glassware}</div>
+    </>
+  );
+};
