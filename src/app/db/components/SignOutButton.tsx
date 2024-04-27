@@ -11,7 +11,7 @@ import {
 } from "@apollo/client";
 import { LOG_OUT } from "../../graphql/mutations/auth";
 import { useRouter } from "next/navigation";
-import { authTokens } from "@/app/Apollo/authTokens";
+import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 
 function Button() {
   const router = useRouter();

@@ -2,7 +2,7 @@ import { ApolloQueryResult } from "@apollo/client";
 import { getClient } from "@/lib/client";
 import { ALL_INGREDIENTS } from "@/app/graphql/queries/ingredient";
 import { Ingredient } from "@/__generated__/graphql";
-import { auth } from "@/app/Apollo/auth";
+import { auth } from "@/lib/auth";
 import AutoDrop from "./IngredientLoader";
 
 export default async function LoadIngredients() {

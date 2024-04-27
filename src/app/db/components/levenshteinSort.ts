@@ -5,7 +5,8 @@ export default function sortByLevenshteinDistance<T extends { name: string }>(
   query: string
 ) {
   query = query.toLowerCase();
-  return objects.sort((obj1, obj2) => {
+
+  return [...objects].sort((obj1, obj2) => {
     const name1 = obj1?.name.toLowerCase();
     const name2 = obj2?.name.toLowerCase();
 
@@ -14,7 +15,6 @@ export default function sortByLevenshteinDistance<T extends { name: string }>(
     const score2: number = computeMatchingScore(name2, query);
 
     // Sort by the matching score in descending order
-    console.log(score1);
     return score2 - score1;
   });
 }
