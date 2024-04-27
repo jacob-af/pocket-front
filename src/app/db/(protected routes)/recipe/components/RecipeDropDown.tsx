@@ -7,20 +7,23 @@ import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { Build, Recipe } from "@/__generated__/graphql";
 import sortByLevenshteinDistance from "../../../components/levenshteinSort";
 import RecipeCard from "./RecipeCard";
+import { userRecipeList } from "@/app/Apollo/recipes";
+import { useReactiveVar } from "@apollo/client";
 
-export default function DropDown({ recipes }: { recipes: Recipe[] }) {
+export default function RecipeDropDown() {
+  const recipes = useReactiveVar(userRecipeList);
   const [selected, setSelected] = useState<Recipe>(recipes[0]);
   const [query, setQuery] = useState("");
   const filteredRecipes =
     query === "" ? recipes : sortByLevenshteinDistance(recipes, query);
   return (
     <div className="fixed top-16 w-72">
-      <Combobox value={selected} onChange={setSelected}>
+      <Combobox value={selected || "loading"} onChange={setSelected} nullable>
         <div className="relative mt-1">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+          <div className="relative w-full cursor-default overflow-hidden  bg-black text-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-300 sm:text-sm">
             <Combobox.Input
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-              displayValue={(recipe: Recipe) => recipe.name}
+              displayValue={(recipe: Recipe) => recipe?.name}
               onChange={event => {
                 console.log(event);
                 setQuery(event.target.value);
@@ -28,7 +31,7 @@ export default function DropDown({ recipes }: { recipes: Recipe[] }) {
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <UnfoldMoreIcon
-                className="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-black"
                 aria-hidden="true"
               />
             </Combobox.Button>
@@ -50,8 +53,8 @@ export default function DropDown({ recipes }: { recipes: Recipe[] }) {
                   <Combobox.Option
                     key={recipe.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-teal-600 text-white" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pl-10 pr-4 hover:bg-gray-500 ${
+                        active ? "bg-gray-300 text-white" : "text-gray-900"
                       }`
                     }
                     value={recipe}
@@ -68,7 +71,7 @@ export default function DropDown({ recipes }: { recipes: Recipe[] }) {
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "text-teal-600"
+                              active ? "text-gra-400" : "text-gray-900"
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
