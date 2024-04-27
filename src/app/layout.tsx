@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Press_Start_2P } from "next/font/google";
 import "./globals.css";
-import SessionProvider from "@/app/Apollo/SessionProvider";
+import SessionProvider from "@/lib/SessionProvider";
 import { getSession } from "next-auth/react";
-import { ApolloWrapper } from "./Apollo/ApolloWrapper";
+import { ApolloWrapper } from "../lib/ApolloWrapper";
 
 import { Session } from "next-auth";
 
