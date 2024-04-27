@@ -33,6 +33,7 @@ type Query {
   ingredient(id: String!): Ingredient
   recipes: [Recipe]!
   recipe(id: String!): Recipe
+  recipeList: [ListItem]!
   allUsers: [User]!
   userById(id: ID!): User
 }
@@ -150,8 +151,19 @@ type BuildPermissionResponse {
   permission: Permission
 }
 
+type BuildConstructor {
+  recipeName: String!
+  buildName: String!
+  about: String!
+  newRecipe: Boolean!
+  instructions: String
+  glassware: String
+  ice: String
+  touchArray: [TouchInput]!
+}
+
 input CreateBuildInput {
-  recipeId: ID!
+  recipeName: String!
   buildName: String!
   instructions: String
   glassware: String
@@ -322,6 +334,11 @@ type Follower {
 
 type StatusMessage {
   message: String
+}
+
+type ListItem {
+  id: String!
+  name: String!
 }
 
 type FollowReturn {

@@ -19,7 +19,8 @@ const documents = {
     "\n  mutation LogOut($userId: ID!) {\n    logout(userId: $userId) {\n      loggedOut\n    }\n  }\n": types.LogOutDocument,
     "\n  mutation CreateManyIngredients(\n    $createManyIngredientInputs: [CreateIngredientInput]!\n  ) {\n    createManyIngredients(\n      createManyIngredientInputs: $createManyIngredientInputs\n    ) {\n      message\n    }\n  }\n": types.CreateManyIngredientsDocument,
     "\n  query Ingredients {\n    ingredients {\n      id\n      description\n      name\n    }\n  }\n": types.IngredientsDocument,
-    "\n  query userBuilds {\n    usersBuilds {\n      buildName\n      glassware\n      ice\n      instructions\n      recipe {\n        name\n        about\n      }\n      touch {\n        id\n        amount\n        unit\n        order\n        ingredient {\n          id\n          name\n          description\n        }\n      }\n    }\n  }\n": types.UserBuildsDocument,
+    "\n  query userBuilds {\n    usersBuilds {\n      id\n      buildName\n      glassware\n      ice\n      instructions\n      recipe {\n        id\n        name\n        about\n      }\n      touch {\n        id\n        amount\n        unit\n        order\n        ingredient {\n          id\n          name\n          description\n        }\n      }\n    }\n  }\n": types.UserBuildsDocument,
+    "\n  query RecipeList {\n    recipeList {\n      id\n      name\n    }\n  }\n": types.RecipeListDocument,
     "\n  query AllUsers {\n    allUsers {\n      id\n      userName\n    }\n  }\n": types.AllUsersDocument,
 };
 
@@ -64,7 +65,11 @@ export function gql(source: "\n  query Ingredients {\n    ingredients {\n      i
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query userBuilds {\n    usersBuilds {\n      buildName\n      glassware\n      ice\n      instructions\n      recipe {\n        name\n        about\n      }\n      touch {\n        id\n        amount\n        unit\n        order\n        ingredient {\n          id\n          name\n          description\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query userBuilds {\n    usersBuilds {\n      buildName\n      glassware\n      ice\n      instructions\n      recipe {\n        name\n        about\n      }\n      touch {\n        id\n        amount\n        unit\n        order\n        ingredient {\n          id\n          name\n          description\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query userBuilds {\n    usersBuilds {\n      id\n      buildName\n      glassware\n      ice\n      instructions\n      recipe {\n        id\n        name\n        about\n      }\n      touch {\n        id\n        amount\n        unit\n        order\n        ingredient {\n          id\n          name\n          description\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query userBuilds {\n    usersBuilds {\n      id\n      buildName\n      glassware\n      ice\n      instructions\n      recipe {\n        id\n        name\n        about\n      }\n      touch {\n        id\n        amount\n        unit\n        order\n        ingredient {\n          id\n          name\n          description\n        }\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query RecipeList {\n    recipeList {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query RecipeList {\n    recipeList {\n      id\n      name\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
