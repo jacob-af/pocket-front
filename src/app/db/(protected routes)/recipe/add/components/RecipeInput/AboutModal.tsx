@@ -5,17 +5,17 @@ import { useReactiveVar } from "@apollo/client";
 
 export const AboutModal = ({
   open,
-  setOpen
+  toggleOpen
 }: {
   open: boolean;
-  setOpen: (value: boolean) => void;
+  toggleOpen: () => void;
 }) => {
   // Function to close the modal
   const recipeInfo = useReactiveVar(newRecipeInfo);
 
   const closeModal = () => {
     fieldChange({ key: "about", value: "" });
-    setOpen(false);
+    toggleOpen();
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ export const AboutModal = ({
   };
 
   const onClick = () => {
-    setOpen(false);
+    toggleOpen();
   };
 
   return (
@@ -41,7 +41,7 @@ export const AboutModal = ({
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              className="absolute top-2 right-2 text-gray-100 hover:text-gray-800"
             >
               &times;
             </button>

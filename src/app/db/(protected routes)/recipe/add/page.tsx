@@ -95,11 +95,29 @@ export default function AddRecipe() {
       {selectedIndex === 1 && (
         <div className="p-4">
           <BuildInstructions />
+          <button
+            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-left"
+            onClick={() => setSelectedIndex(0)} // Move to Instructions panel
+          >
+            Back
+          </button>
+          <button
+            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
+            onClick={() => setSelectedIndex(2)} // Move to Instructions panel
+          >
+            Next
+          </button>
         </div>
       )}
       {selectedIndex === 2 && (
         <div className="p-4">
           <Review />
+          <button
+            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-left"
+            onClick={() => setSelectedIndex(1)} // Move to Instructions panel
+          >
+            Back
+          </button>
         </div>
       )}
     </div>

@@ -53,7 +53,7 @@ export const ingredientChange: IngredientChangeFunction = (
   const touches = touchArray();
   const newTouch = {
     ...touches[index],
-    ingredient: value
+    ingredientName: value
   };
   const newTouches = touches;
   newTouches.splice(index, 1, newTouch);

@@ -18,30 +18,32 @@ interface SpecialListItem {
 
 interface ChildProps {
   open: boolean;
-  setOpen: (value: boolean) => void;
+  toggleOpen: () => void;
 }
 
 export default function MuiDropDownWModal({
   list,
   handleChange,
   index,
+  currentValue,
   children
 }: {
   list: ReactiveVar<SpecialListItem[]>;
   handleChange: RecipeChangeFunction | IngredientChangeFunction;
   index: number;
+  currentValue: string;
   children: ReactNode;
 }) {
   const options = useReactiveVar(list);
-
-  const [value, setValue] = useState<SpecialListItem | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const toggleOpen = () => setOpen(!open);
+  console.log("currentValue:", currentValue);
 
   // Clone the child element and pass open and setOpen as props
   const clonedChildren = React.Children.map(children, child => {
     if (React.isValidElement<ChildProps>(child)) {
       // Clone the child element and pass the open and setOpen props
-      return React.cloneElement(child, { open, setOpen });
+      return React.cloneElement(child, { open, toggleOpen });
     }
     return child; // Return non-element children as is
   });
@@ -50,31 +52,21 @@ export default function MuiDropDownWModal({
     <>
       <Autocomplete
         className="bg-black"
-        value={value}
+        value={currentValue}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
             setTimeout(() => {
-              setOpen(true);
-              setValue({
-                name: newValue,
-                id: value?.id || ""
-              });
               handleChange(newValue, index);
+              setOpen(true);
             });
           } else if (newValue && newValue.inputValue) {
             // Create a new value from the user input
-            setOpen(true);
-            setValue({
-              name: newValue.inputValue,
-              id: ""
-            });
             handleChange(newValue.inputValue, index);
+            setOpen(true);
           } else {
-            setValue(newValue);
             if (newValue) {
               handleChange(newValue.name, index);
             }
-            console.log(newValue);
           }
         }}
         filterOptions={(options, params) => {
@@ -112,7 +104,7 @@ export default function MuiDropDownWModal({
         }}
         renderOption={(props, option) => (
           <li
-            key={option.id}
+            key={option.id + option.name}
             {...props}
             className={`${pressStart.className} antialiased bg-black text-white`}
           >

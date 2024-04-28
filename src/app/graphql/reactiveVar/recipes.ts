@@ -4,9 +4,8 @@ import { makeVar, ReactiveVar } from "@apollo/client";
 export const blankTouch = (order: number) => {
   return {
     order,
-    customIngredient: {},
-    ingredient: {},
-    amount: 0,
+    ingredientName: "",
+    amount: 1,
     unit: "oz"
   };
 };
