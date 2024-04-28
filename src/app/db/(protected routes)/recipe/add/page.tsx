@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import { ListItem } from "@/__generated__/graphql";
-import { allRecipesList } from "@/app/graphql/reactiveVar/recipes";
+import {
+  allRecipesList,
+  newRecipeInfo,
+  touchArray
+} from "@/app/graphql/reactiveVar/recipes";
 import { useSession } from "next-auth/react";
 import RecipeInput from "./components/RecipeInput";
 import BuildInstructions from "./components/RecipeInstructions";
@@ -12,10 +16,14 @@ import Review from "./components/Review";
 import { Tabs, Tab } from "@mui/material";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";
+import { ADD_RECIPE } from "@/app/graphql/mutations/recipes";
 
 export default function AddRecipe() {
   const { status: sessionStatus } = useSession();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [newRecipe, feedback] = useMutation(ADD_RECIPE);
+  const touches = useReactiveVar(touchArray);
+  const recipeInfo = useReactiveVar(newRecipeInfo);
 
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
@@ -43,6 +51,24 @@ export default function AddRecipe() {
     allRecipesList(recipeList);
     allIngredientsList(ingredientList);
   }, [recipeList, ingredientList]);
+
+  const submitRecipe = async () => {
+    const { data: data } = await newRecipe({
+      variables: {
+        createRecipeInput: {
+          name: recipeInfo.recipeName,
+          about: recipeInfo.about,
+          build: {
+            buildName: recipeInfo.buildName,
+            glassware: recipeInfo.glassware,
+            ice: recipeInfo.ice,
+            touchArray: [...touches],
+            instructions: recipeInfo.instructions
+          }
+        }
+      }
+    });
+  };
 
   // Handle loading and error states
   if (loading) {
@@ -115,6 +141,12 @@ export default function AddRecipe() {
           <button
             className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-left"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
+          >
+            Back
+          </button>
+          <button
+            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
+            onClick={submitRecipe} // Move to Instructions panel
           >
             Back
           </button>
