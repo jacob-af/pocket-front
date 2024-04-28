@@ -7,42 +7,42 @@ import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { ListItem } from "@/__generated__/graphql";
 import sortByLevenshteinDistance from "../../../components/levenshteinSort";
 import { useReactiveVar, ReactiveVar } from "@apollo/client";
-import { RecipeChangeFunction } from "./recipeHooks";
+import {
+  RecipeChangeFunction,
+  IngredientChangeFunction
+} from "../add/components/recipeHooks";
 
 export default function PropDown({
   list,
-  selector,
-  handleChange
+  handleChange,
+  index
 }: {
   list: ReactiveVar<ListItem[]>;
-  selector: ReactiveVar<ListItem>;
-  handleChange: RecipeChangeFunction;
+  handleChange: RecipeChangeFunction | IngredientChangeFunction;
+  index: number;
 }) {
   const options = useReactiveVar(list);
-  const selected = useReactiveVar(selector);
-  // const [selected, setSelected] = useState<Recipe>(options[0]);
+  //const selected = useReactiveVar(selector);
+  const [selected, setSelected] = useState<ListItem>({ id: "", name: "" });
   const [query, setQuery] = useState("");
   const filteredOptions =
     query === "" ? options : sortByLevenshteinDistance(options, query);
-
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(selected);
     setQuery(event.target.value);
-    console.log(event.target.value);
-    handleChange(event.target.value, options);
-    selector({ id: "", name: event.target.value });
+    console.log("before handleChange");
+    handleChange(event.target.value, index);
+    setSelected({ id: "", name: event.target.value });
   };
 
   return (
     <div className="flex flex-col w-sm">
       <Combobox
         value={selected || "loading"}
-        onChange={value => {
-          if (value) {
-            console.log(value);
-            selector(value);
-          }
+        onChange={(value: ListItem) => {
+          setQuery(value.name);
+          setSelected(value);
         }}
+        nullable
       >
         <div className="relative mt-1">
           <div className="relative bg-black shadow-md w-full text-left text-white sm:text-sm cursor-default overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-300">
@@ -65,8 +65,8 @@ export default function PropDown({
             leaveTo="opacity-0"
             afterLeave={() => setQuery("")}
           >
-            <Combobox.Options className="absolute bg-white shadow-lg mt-1 py-1 rounded-md w-full max-h-60 text-base sm:text-sm overflow-auto ring-1 ring-black/5 focus:outline-none">
-              {query.length > 0 ? (
+            <Combobox.Options className="absolute bg-white shadow-lg mt-1 py-1 rounded-md w-full max-h-60 text-base sm:text-sm overflow-auto ring-1 ring-black/5 focus:outline-none z-10">
+              {query.length > 0 && filteredOptions?.length === 0 ? (
                 <Combobox.Option
                   className="relative px-4 py-2 text-gray-700 cursor-default select-none"
                   value={{ id: null, name: query }}
@@ -74,15 +74,15 @@ export default function PropDown({
                   Create {query}
                 </Combobox.Option>
               ) : (
-                filteredOptions?.map(recipe => (
+                filteredOptions?.map(option => (
                   <Combobox.Option
-                    key={recipe.id}
+                    key={option.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 hover:bg-gray-500 ${
-                        active ? "bg-gray-300 text-white" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pl-10 pr-4 hover:bg-gray-300 ${
+                        active ? "bg-gray-200 text-white" : "text-gray-900"
                       }`
                     }
-                    value={recipe}
+                    value={option}
                   >
                     {({ selected, active }) => (
                       <>
@@ -91,7 +91,7 @@ export default function PropDown({
                             selected ? "font-medium" : "font-normal"
                           }`}
                         >
-                          {recipe.name}
+                          {option.name}
                         </span>
                         {selected ? (
                           <span

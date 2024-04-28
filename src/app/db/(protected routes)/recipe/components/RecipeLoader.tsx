@@ -1,12 +1,13 @@
 "use client";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { USER_BUILDS } from "@/app/graphql/queries/recipe";
 import { Recipe } from "@/__generated__/graphql";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 import { useSession } from "next-auth/react";
 
 export default function RecipeLoader() {
+  const recipeList = useReactiveVar(userRecipeList);
   const { status: sessionStatus } = useSession();
   const { data, loading, error } = useQuery(USER_BUILDS, {
     skip: sessionStatus !== "authenticated",

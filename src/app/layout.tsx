@@ -4,10 +4,12 @@ import "./globals.css";
 import SessionProvider from "@/lib/SessionProvider";
 import { getSession } from "next-auth/react";
 import { ApolloWrapper } from "../lib/ApolloWrapper";
-
 import { Session } from "next-auth";
 
-const pressStart = Press_Start_2P({ subsets: ["latin"], weight: "400" });
+const pressStart = Press_Start_2P({
+  subsets: ["latin"],
+  weight: "400"
+});
 
 export const metadata: Metadata = {
   title: "Pocket",
@@ -22,11 +24,11 @@ export default async function RootLayout({
   const session: Session | null = await getSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${pressStart.className} antialiased`}>
       <head>
         <link rel="icon" href="./favicon.ico" sizes="any" />
       </head>
-      <body className={`${pressStart.className} antialiased`}>
+      <body>
         <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>

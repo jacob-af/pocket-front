@@ -31,9 +31,16 @@ export const USER_BUILDS: TypedDocumentNode<{
   }
 `;
 
-export const RECIPE_LIST: TypedDocumentNode<{ recipeList: ListItem[] }> = gql`
+export const RECIPES_AND_INGREDIENTS: TypedDocumentNode<{
+  recipeList: ListItem[];
+  ingredients: ListItem[];
+}> = gql`
   query RecipeList {
     recipeList {
+      id
+      name
+    }
+    ingredients {
       id
       name
     }
