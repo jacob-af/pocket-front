@@ -1,23 +1,36 @@
 import { User, Ingredient } from "@/__generated__/graphql";
 import { gql, TypedDocumentNode } from "@apollo/client";
 
-export const ALL_USERS: TypedDocumentNode<User[]> = gql`
+export const ALL_USERS: TypedDocumentNode<{ allUsers: User[] }> = gql`
   query AllUsers {
     allUsers {
       id
       userName
+      email
     }
   }
 `;
 
-export const ALL_INGREDIENTS: TypedDocumentNode<{
-  ingredients: Ingredient[];
+export const ALL_RELATIONS: TypedDocumentNode<{
+  allUsers: User[];
+  findFollowers: User[];
+  findFollows: User[];
 }> = gql`
-  query Ingredients {
-    ingredients {
+  query allRelations {
+    allUsers {
       id
-      description
-      name
+      userName
+      email
+    }
+    findFollowers {
+      userName
+      id
+      email
+    }
+    findFollows {
+      userName
+      id
+      email
     }
   }
 `;
