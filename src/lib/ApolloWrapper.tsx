@@ -26,7 +26,22 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
-const cache = new NextSSRInMemoryCache();
+const cache = new NextSSRInMemoryCache({
+  typePolicies: {
+    User: {
+      keyFields: ["id", "email"]
+    },
+    Build: {
+      keyFields: ["buildName", "recipe", ["name"]]
+    },
+    Touch: {
+      keyFields: ["id"]
+    },
+    Ingredient: {
+      keyFields: ["name"]
+    }
+  }
+});
 
 function makeClient() {
   const httpLink = new HttpLink({
