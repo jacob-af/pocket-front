@@ -16,12 +16,12 @@ export default function RecipeCard() {
         leaveFrom="opacity-100"
         leaveTo="opacity-0" 
       >*/}
-      <div className="text-center text-xl mb-4">{recipe.name}</div>
+      <div className="text-center text-xl">{recipe.name}</div>
       <div className="flex">
-        <div className="flex-shrink-0 mr-4">
+        <div className="flex-shrink-0 mr-6">
           <TempImage />
         </div>
-        <div className="flex-1">About: {recipe.about}</div>
+        <div className="flex-1 mt-8">About: {recipe.about}</div>
       </div>
       <ul>
         {recipe.build?.map((build: Build, index: number) => {
