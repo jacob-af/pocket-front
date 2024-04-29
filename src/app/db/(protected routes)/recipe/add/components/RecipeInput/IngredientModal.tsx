@@ -3,7 +3,7 @@ import { fieldChange } from "../recipeHooks";
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
-export const AboutModal = ({
+export const IngredientModal = ({
   open,
   toggleopen
 }: {
@@ -47,19 +47,18 @@ export const AboutModal = ({
             </button>
 
             {/* Modal content */}
-            <h3 className="text-lg font-semibold mb-4">
-              Describe the new recipe: {`${recipeInfo.recipeName}`}
+            <h3 className="text-lg text-primary bg-black font-semibold mb-4">
+              We dont have that in our database, would you like to make a custom
+              ingredient?
             </h3>
 
             {/* Input field */}
-            <textarea
-              onChange={(event: any) => onChange(event)}
-              className="bg-black shadow focus:shadow-outline border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400"
-              id="instructions"
-              placeholder="Instructions"
-              value={recipeInfo.instructions || ""}
-              rows={5}
-            ></textarea>
+            <input
+              onChange={onChange}
+              className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 appearance-none focus:outline-none h-32 text-left text-top placeholder-gray-400 disabled:placeholder-gray-900
+    disabled:text-gray-900 disabled:border-none"
+              id="about"
+            />
 
             {/* Optional button to submit the form */}
             <button

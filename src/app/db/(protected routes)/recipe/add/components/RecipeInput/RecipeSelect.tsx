@@ -12,7 +12,7 @@ export default function RecipeSelect() {
   const recipeInfo = useReactiveVar(newRecipeInfo);
 
   return (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center text-center min-w-sm">
       Select a recipe or create a new one?
       {allRecipesList.length > 0 ? (
         <MuiDropDownWModal
@@ -23,7 +23,7 @@ export default function RecipeSelect() {
         >
           <AboutModal
             open={false}
-            toggleOpen={function (): void {
+            toggleopen={function (): void {
               throw new Error("Function not implemented.");
             }}
           />

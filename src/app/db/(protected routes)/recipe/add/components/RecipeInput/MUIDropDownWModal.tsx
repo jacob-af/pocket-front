@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
+import React, { HTMLAttributes, ReactNode, useState } from "react";
 import { ListItem } from "@/__generated__/graphql";
 import { useReactiveVar, ReactiveVar } from "@apollo/client";
 import { RecipeChangeFunction, IngredientChangeFunction } from "../recipeHooks";
@@ -18,7 +18,7 @@ interface SpecialListItem {
 
 interface ChildProps {
   open: boolean;
-  toggleOpen: () => void;
+  toggleopen: () => void;
 }
 
 export default function MuiDropDownWModal({
@@ -36,14 +36,13 @@ export default function MuiDropDownWModal({
 }) {
   const options = useReactiveVar(list);
   const [open, setOpen] = useState<boolean>(false);
-  const toggleOpen = () => setOpen(!open);
-  console.log("currentValue:", currentValue);
+  const toggleopen = () => setOpen(!open);
 
   // Clone the child element and pass open and setOpen as props
   const clonedChildren = React.Children.map(children, child => {
     if (React.isValidElement<ChildProps>(child)) {
       // Clone the child element and pass the open and setOpen props
-      return React.cloneElement(child, { open, toggleOpen });
+      return React.cloneElement(child, { open, toggleopen });
     }
     return child; // Return non-element children as is
   });
@@ -51,7 +50,7 @@ export default function MuiDropDownWModal({
   return (
     <>
       <Autocomplete
-        className="bg-black"
+        className="bg-black w-full"
         value={currentValue}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
@@ -102,16 +101,17 @@ export default function MuiDropDownWModal({
           // Regular option
           return option.name;
         }}
-        renderOption={(props, option) => (
-          <li
-            key={option.id + option.name}
-            {...props}
-            className={`${pressStart.className} antialiased bg-black text-white`}
-          >
-            {option.name}
-          </li>
-        )}
-        sx={{ width: 300 }}
+        renderOption={(props: HTMLAttributes<HTMLLIElement>, option) => {
+          return (
+            <li
+              {...props}
+              key={option.id}
+              className={`${pressStart.className} antialiased bg-black text-white`}
+            >
+              {option.name}
+            </li>
+          );
+        }}
         freeSolo
         renderInput={params => (
           <TextField
@@ -123,6 +123,7 @@ export default function MuiDropDownWModal({
                 fontFamily: `${pressStart.style.fontFamily}`
               }
             }}
+            className="w-full"
           />
         )}
       />

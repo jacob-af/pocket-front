@@ -102,7 +102,6 @@ export default function MuiDropDown({
           {option.name}
         </li>
       )}
-      sx={{ width: 300 }}
       freeSolo
       renderInput={params => (
         <TextField

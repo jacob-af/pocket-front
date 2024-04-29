@@ -12,18 +12,25 @@ import {
 import { useSession } from "next-auth/react";
 import RecipeInput from "./components/RecipeInput";
 import BuildInstructions from "./components/RecipeInstructions";
+import { useRouter } from "next/navigation";
 import Review from "./components/Review";
 import { Tabs, Tab } from "@mui/material";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";
-import { ADD_RECIPE } from "@/app/graphql/mutations/recipes";
+import { ADD_BUILD, ADD_RECIPE } from "@/app/graphql/mutations/recipes";
 
 export default function AddRecipe() {
   const { status: sessionStatus } = useSession();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [newRecipe, feedback] = useMutation(ADD_RECIPE);
+  const [newRecipe] = useMutation(ADD_RECIPE, {
+    refetchQueries: [RECIPES_AND_INGREDIENTS]
+  });
+  const [newBuild] = useMutation(ADD_BUILD, {
+    refetchQueries: [RECIPES_AND_INGREDIENTS]
+  });
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
+  const router = useRouter();
 
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
@@ -53,21 +60,44 @@ export default function AddRecipe() {
   }, [recipeList, ingredientList]);
 
   const submitRecipe = async () => {
-    const { data: data } = await newRecipe({
-      variables: {
-        createRecipeInput: {
-          name: recipeInfo.recipeName,
-          about: recipeInfo.about,
-          build: {
-            buildName: recipeInfo.buildName,
-            glassware: recipeInfo.glassware,
-            ice: recipeInfo.ice,
-            touchArray: [...touches],
-            instructions: recipeInfo.instructions
+    console.log(recipeInfo.newRecipe, recipeInfo.recipeName);
+    try {
+      if (recipeInfo.newRecipe) {
+        const { data: data } = await newRecipe({
+          variables: {
+            createRecipeInput: {
+              recipeName: recipeInfo.recipeName,
+              about: recipeInfo.about,
+              build: {
+                buildName: recipeInfo.buildName,
+                instructions: recipeInfo.instructions,
+                glassware: recipeInfo.glassware,
+                ice: recipeInfo.ice,
+                touchArray: [...touches]
+              }
+            }
           }
-        }
+        });
+      } else {
+        console.log(recipeInfo.recipeName);
+        const { data: data } = await newBuild({
+          variables: {
+            createBuildInput: {
+              recipeName: recipeInfo.recipeName,
+              buildName: recipeInfo.buildName,
+              instructions: recipeInfo.instructions,
+              glassware: recipeInfo.glassware,
+              ice: recipeInfo.ice,
+              touchArray: [...touches]
+            }
+          }
+        });
       }
-    });
+
+      router.push("/db/recipe");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Handle loading and error states
@@ -148,7 +178,7 @@ export default function AddRecipe() {
             className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
             onClick={submitRecipe} // Move to Instructions panel
           >
-            Back
+            Submit
           </button>
         </div>
       )}

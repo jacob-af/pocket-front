@@ -8,6 +8,7 @@ import { touchArray } from "@/app/graphql/reactiveVar/recipes";
 import MuiDropDownWithModal from "./MUIDropDownWModal";
 import { RemoveTouch } from "./RemoveTouch";
 import { useReactiveVar } from "@apollo/client";
+import { IngredientModal } from "./IngredientModal";
 
 export const SingleTouch = ({
   touch,
@@ -16,19 +17,16 @@ export const SingleTouch = ({
   touch: TouchInput;
   index: number;
 }) => {
-  console.log(touch);
   const touches = useReactiveVar(touchArray);
 
   const onChange = (event: any) => {
-    console.log(event.target.id, event.target.value);
     touchChange({ key: event.target.id, value: event.target.value, index });
   };
-  console.log("ingredient name", touches[index]);
 
   return (
     <div className="w-lg grid grid-cols-12 my-2 p-0">
       <input
-        className="col-span-2 bg-black shadow focus:shadow-outline text-gray-100"
+        className="col-span-2 bg-black shadow focus:shadow-outline text-gray-100 text-center"
         onChange={onChange}
         type="number"
         id="amount"
@@ -55,7 +53,12 @@ export const SingleTouch = ({
           index={index}
           currentValue={touches[index].ingredientName}
         >
-          <div />
+          <IngredientModal
+            open={false}
+            toggleopen={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </MuiDropDownWithModal>
       </div>
       <div>
