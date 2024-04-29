@@ -12,11 +12,11 @@ import {
 import { LOG_OUT } from "../../graphql/mutations/auth";
 import { useRouter } from "next/navigation";
 import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
+import localForage from "localforage";
 
 function Button() {
-  const router = useRouter();
   const { data: session } = useSession();
-  const [logOut, { loading }] = useMutation(LOG_OUT);
+  const [logOut, { loading, client }] = useMutation(LOG_OUT);
   authTokens(session?.user.accessToken);
 
   const onClick = async () => {
@@ -25,6 +25,8 @@ function Button() {
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session?.user.id }
         });
+        client.clearStore();
+        localForage.clear();
         authTokens("");
         console.log(data?.loggedOut);
         await signOut({
