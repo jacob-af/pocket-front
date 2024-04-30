@@ -18,10 +18,9 @@ export default function RecipeCard() {
       >*/}
       <div className="text-center text-xl">{recipe.name}</div>
       <div className="flex">
-        <div className="flex-shrink-0 mr-6">
-          <TempImage />
-        </div>
-        <div className="flex-1 mt-8">About: {recipe.about}</div>
+        <TempImage />
+
+        <div className="w-full">About: {recipe.about}</div>
       </div>
       <ul>
         {recipe.build?.map((build: Build, index: number) => {

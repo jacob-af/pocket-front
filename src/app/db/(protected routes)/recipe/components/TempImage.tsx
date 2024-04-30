@@ -7,6 +7,7 @@ export default function TempImage() {
       width={200}
       height={200}
       alt="Pixel drawing of whiskey cocktail on the rocks with cherry"
+      className="float-left"
     />
   );
 }

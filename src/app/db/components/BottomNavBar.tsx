@@ -29,10 +29,8 @@ function BottomNavBar() {
             }`}
             onClick={() => handleChange("home")}
           >
-            <span>
-              Home
-              <HomeIcon />
-            </span>
+            <HomeIcon />
+            <span className="text-xxs">Home</span>
           </span>
         </Link>
         <Link href="/db/recipeBook" passHref>
@@ -42,8 +40,8 @@ function BottomNavBar() {
             }`}
             onClick={() => handleChange("recipeBooks")}
           >
-            <span>RecipeBooks</span>
             <BookIcon />
+            <span className="text-xxs">RecipeBooks</span>
           </span>
         </Link>
         <Link href="/db/recipe" passHref>
@@ -53,8 +51,8 @@ function BottomNavBar() {
             }`}
             onClick={() => handleChange("recipes")}
           >
-            <span>Recipes</span>
             <MartiniIcon />
+            <span className="text-xxs">Recipes</span>
           </span>
         </Link>
         <Link href="/db/inventory" passHref>
@@ -64,8 +62,8 @@ function BottomNavBar() {
             }`}
             onClick={() => handleChange("inventory")}
           >
-            <span>Inventory</span>
             <BottleIcon />
+            <span className="text-xxs">Inventory</span>
           </span>
         </Link>
         <Link href="/db/crew" passHref>
@@ -75,10 +73,8 @@ function BottomNavBar() {
             }`}
             onClick={() => handleChange("crew")}
           >
-            <span>
-              Crew
-              <GroupIcon />
-            </span>
+            <GroupIcon />
+            <span className="text-xxs">Crew</span>
           </span>
         </Link>
       </nav>

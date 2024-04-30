@@ -1,6 +1,6 @@
 export default async function Landing() {
   return (
-    <div className="max-w-2xl  mb-12">
+    <div className="max-w-2xl  mb-12 overflow-auto">
       <div className="text-center text-4xl my-16">Welcome to Pocket</div>
       <div className="text-center text-xl my-8">
         This is a roadmap to what I have planned for this application. I have a

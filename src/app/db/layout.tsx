@@ -14,7 +14,7 @@ export default async function Dashboard({
     <main className="flex min-h-screen w-screen">
       <TopNavBar />
       <SideBar />
-      <div className="flex flex-grow h-screen mt-12 lg:ml-60 border float-right justify-center">
+      <div className="flex flex-grow h-screen mt-16 lg:ml-60 border pb-24 md:pb-0 float-right justify-center">
         {children}
       </div>
       <BottomNavBar />

@@ -2,15 +2,16 @@ import Image from "next/image";
 
 export function HomeIcon() {
   return (
-    <div className="relative w-8 h-8 border rounded">
-      <Image
-        src="/Pocket-Icons/home-sm-black.png"
-        height={20}
-        width={20}
-        alt="home icon"
-        className="absolute dark:invert"
-      />
-    </div>
+    //<div className="w-8 h-8 border rounded-full flex items-center justify-center">
+    <Image
+      src="/Pocket-Icons/home-sm-black.png"
+      height={20}
+      width={20}
+      alt="home icon"
+      className="z-10 dark:invert"
+    />
+    //   <div className="absolute h-4 w-4 bg-blue-900"></div>
+    // </div>
   );
 }
 
