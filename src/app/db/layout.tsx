@@ -1,8 +1,9 @@
 "use server";
 
 import * as React from "react";
-import NavBar from "./components/NavBar";
+import TopNavBar from "./components/TopNavBar";
 import SideBar from "./components/SideBar";
+import BottomNavBar from "./components/BottomNavBar";
 
 export default async function Dashboard({
   children
@@ -10,10 +11,13 @@ export default async function Dashboard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <NavBar />
+    <main className="flex min-h-screen w-screen">
+      <TopNavBar />
       <SideBar />
-      <div className="container flex pt-12 justify-center">{children}</div>
+      <div className="flex flex-grow h-screen mt-12 lg:ml-60 border float-right justify-center">
+        {children}
+      </div>
+      <BottomNavBar />
     </main>
   );
 }

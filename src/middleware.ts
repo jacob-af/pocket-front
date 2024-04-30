@@ -7,4 +7,4 @@ export default withAuth({
   }
 });
 
-export const config = { matcher: ["/db/:path"] };
+export const config = { matcher: ["/db/:path*"] };

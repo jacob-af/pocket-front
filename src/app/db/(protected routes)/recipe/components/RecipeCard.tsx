@@ -9,7 +9,7 @@ import { useReactiveVar } from "@apollo/client";
 export default function RecipeCard() {
   const recipe = useReactiveVar(selectedRecipe);
   return (
-    <div className="p-4 border border-white mt-16">
+    <div className="p-4 border mt-16">
       {/* <Transition
         show="true"
         leave="transition ease-in duration-100"

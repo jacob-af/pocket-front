@@ -36,7 +36,6 @@ export default async function Landing() {
       <div>[ x ][ x ] Specialized Recipe Search</div>
       <div>[ x ][ x ] Manage Recipe with CSV</div>
       <br />
-      <br />
       <div className="text-2xl text-center py-4">Ingredient Operations</div>
       <div>[API][UI]</div>
       <div>[ &#10003; ][ &#10003; ] Load Ingredients</div>

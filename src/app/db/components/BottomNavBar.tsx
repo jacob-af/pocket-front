@@ -1,98 +1,88 @@
+"use client";
+
 import React from "react";
-import Paper from "@mui/material/Paper";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import LocalBarIcon from "@mui/icons-material/LocalBar";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import LiquorIcon from "@mui/icons-material/Liquor";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupsIcon from "@mui/icons-material/Groups";
+
 import Link from "next/link";
+import {
+  HomeIcon,
+  GroupIcon,
+  BottleIcon,
+  MartiniIcon,
+  BookIcon
+} from "./icons/NavIcons";
+import { Bokor } from "next/font/google";
 
 function BottomNavBar() {
   const [value, setValue] = React.useState("home");
 
-  const handleChange = (
-    event: React.SyntheticEvent<Element, Event>,
-    newValue: string
-  ) => {
+  const handleChange = (newValue: string) => {
     setValue(newValue);
   };
 
   return (
-    <Paper
-      sx={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: { sm: "none" }
-      }}
-      elevation={3}
-    >
-      <BottomNavigation
-        value={value}
-        onChange={handleChange}
-        sx={{
-          bgcolor: "#000",
-          "&& .Mui-selected": {
-            color: "orange"
-          }
-        }}
-      >
-        <BottomNavigationAction
-          label="Home"
-          value="home"
-          component={Link}
-          href="/"
-          icon={<HomeIcon />}
-          sx={{
-            color: "#FFF"
-          }}
-        />
-        <BottomNavigationAction
-          label="RecipeBooks"
-          value="recipeBooks"
-          component={Link}
-          href="/recipeBook"
-          icon={<MenuBookIcon />}
-          sx={{
-            color: "#FFF",
-            px: 0
-          }}
-        />
-        <BottomNavigationAction
-          label="Recipes"
-          value="recipes"
-          component={Link}
-          href="/recipe"
-          icon={<LocalBarIcon />}
-          sx={{
-            color: "#FFF"
-          }}
-        />
-        <BottomNavigationAction
-          label="Inventory"
-          value="inventory"
-          component={Link}
-          href="/inventory"
-          icon={<LiquorIcon />}
-          sx={{
-            color: "#FFF"
-          }}
-        />
-        <BottomNavigationAction
-          label="Crew"
-          value="crew"
-          component={Link}
-          href="/crew"
-          icon={<GroupsIcon />}
-          sx={{
-            color: "#FFF"
-          }}
-        />
-      </BottomNavigation>
-    </Paper>
+    <div className="fixed md:hidden bottom-0 left-0 right-0 bg-black shadow-lg">
+      <nav className="flex justify-around items-center">
+        <Link href="/db" passHref>
+          <span
+            className={`flex flex-col items-center p-2 ${
+              value === "home" ? "text-orange-500" : "text-white"
+            }`}
+            onClick={() => handleChange("home")}
+          >
+            <span>
+              Home
+              <HomeIcon />
+            </span>
+          </span>
+        </Link>
+        <Link href="/db/recipeBook" passHref>
+          <span
+            className={`flex flex-col items-center p-2 ${
+              value === "recipeBooks" ? "text-orange-500" : "text-white"
+            }`}
+            onClick={() => handleChange("recipeBooks")}
+          >
+            <span>RecipeBooks</span>
+            <BookIcon />
+          </span>
+        </Link>
+        <Link href="/db/recipe" passHref>
+          <span
+            className={`flex flex-col items-center p-2 ${
+              value === "recipes" ? "text-orange-500" : "text-white"
+            }`}
+            onClick={() => handleChange("recipes")}
+          >
+            <span>Recipes</span>
+            <MartiniIcon />
+          </span>
+        </Link>
+        <Link href="/db/inventory" passHref>
+          <span
+            className={`flex flex-col items-center p-2 ${
+              value === "inventory" ? "text-orange-500" : "text-white"
+            }`}
+            onClick={() => handleChange("inventory")}
+          >
+            <span>Inventory</span>
+            <BottleIcon />
+          </span>
+        </Link>
+        <Link href="/db/crew" passHref>
+          <span
+            className={`flex flex-col items-center p-2 ${
+              value === "crew" ? "text-orange-500" : "text-white"
+            }`}
+            onClick={() => handleChange("crew")}
+          >
+            <span>
+              Crew
+              <GroupIcon />
+            </span>
+          </span>
+        </Link>
+      </nav>
+    </div>
   );
 }
 

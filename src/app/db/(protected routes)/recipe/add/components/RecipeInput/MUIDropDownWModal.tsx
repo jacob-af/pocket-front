@@ -32,7 +32,7 @@ export default function MuiDropDownWModal({
   handleChange: RecipeChangeFunction | IngredientChangeFunction;
   index: number;
   currentValue: string;
-  children: ReactNode;
+  children?: ReactNode;
 }) {
   const options = useReactiveVar(list);
   const [open, setOpen] = useState<boolean>(false);
