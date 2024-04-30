@@ -8,8 +8,9 @@ import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeCard() {
   const recipe = useReactiveVar(selectedRecipe);
+  console.log(recipe.name);
   return (
-    <div className="p-4 border mt-16">
+    <div className={`p-4 border mt-16 ${recipe.name ? "" : "hidden"}`}>
       {/* <Transition
         show="true"
         leave="transition ease-in duration-100"
@@ -17,10 +18,10 @@ export default function RecipeCard() {
         leaveTo="opacity-0" 
       >*/}
       <div className="text-center text-xl">{recipe.name}</div>
-      <div className="flex">
+      <div className="block">
         <TempImage />
 
-        <div className="w-full">About: {recipe.about}</div>
+        <div className="mt-4">About: {recipe.about}</div>
       </div>
       <ul>
         {recipe.build?.map((build: Build, index: number) => {
