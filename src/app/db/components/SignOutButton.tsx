@@ -59,7 +59,7 @@ function Button() {
   return (
     <>
       {session?.user.accessToken === token ? "true" : "false"}
-      {token.length}
+      {token ? token.length : ""}
       <button onClick={onClick}>Sign out</button>
     </>
   );
