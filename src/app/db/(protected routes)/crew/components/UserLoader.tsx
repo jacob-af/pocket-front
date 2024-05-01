@@ -10,7 +10,7 @@ export default function UserLoader() {
   const { status: sessionStatus } = useSession();
   const { data, loading, error } = useQuery(ALL_RELATIONS, {
     skip: sessionStatus !== "authenticated",
-    fetchPolicy: "network-only" // Change fetchPolicy to "network-only"
+    fetchPolicy: "cache-and-network" // Change fetchPolicy to "network-only"
   });
 
   useEffect(() => {
