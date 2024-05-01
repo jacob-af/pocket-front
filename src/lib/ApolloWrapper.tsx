@@ -13,6 +13,7 @@ import {
 import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 import { CachePersistor, LocalForageWrapper } from "apollo3-cache-persist";
 import localForage from "localforage";
+import { getSession } from "next-auth/react";
 
 const authLink = setContext(async (_, { headers }) => {
   if (authTokens() === "") return { headers: { ...headers } };
@@ -81,6 +82,19 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
     }
 
     init().catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    async function fetchSession() {
+      const session = await getSession();
+      console.log("async hit:", session);
+      console.log("async hit:", session?.user.name);
+      if (session && session.user.accessToken) {
+        authTokens(session.user.accessToken);
+      }
+    }
+    // Call the fetchSession function
+    fetchSession();
   }, []);
 
   return (
