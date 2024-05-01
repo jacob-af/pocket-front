@@ -16,11 +16,10 @@ export default function AmILoggedIn() {
   });
 
   useEffect(() => {
-    // Fetch the session asynchronously
     async function fetchSession() {
       const session = await getSession();
       console.log("async hit:", session);
-      // Once the session is available, extract the token and set it in the Apollo reactive variable
+      console.log("async hit:", session?.user.name);
       if (session && session.user.accessToken) {
         authTokens(session.user.accessToken);
       }
