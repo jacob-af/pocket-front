@@ -84,19 +84,6 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
     init().catch(console.error);
   }, []);
 
-  useEffect(() => {
-    async function fetchSession() {
-      const session = await getSession();
-      console.log("async hit:", session);
-      console.log("async hit:", session?.user.name);
-      if (session && session.user.accessToken) {
-        authTokens(session.user.accessToken);
-      }
-    }
-    // Call the fetchSession function
-    fetchSession();
-  }, []);
-
   return (
     <ApolloNextAppProvider makeClient={makeClient}>
       {children}
