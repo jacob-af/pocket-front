@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
@@ -13,11 +12,17 @@ import { LOG_OUT } from "../../graphql/mutations/auth";
 import { useRouter } from "next/navigation";
 import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 import localForage from "localforage";
+import { useEffect } from "react";
 
 function Button() {
   const { data: session } = useSession();
   const [logOut, { loading, client }] = useMutation(LOG_OUT);
-  authTokens(session?.user.accessToken);
+
+  useEffect(() => {
+    if (session?.user && session?.user?.accessTokenExpires < Date.now()) {
+      authTokens(session.user.accessToken);
+    }
+  });
 
   const onClick = async () => {
     try {
