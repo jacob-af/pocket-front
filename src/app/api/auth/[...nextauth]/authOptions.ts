@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
         };
       }
       if (session) {
-        console.log("in session");
+        console.log("no user in session");
       }
       if (trigger === "update" && session.action === "New Tokens") {
         console.log("closer");
@@ -56,10 +56,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ token, session, user }) {
-      console.log(
-        "token check in sessionn async: ",
-        token.accessToken === authTokens()
-      );
+      console.log(user, token);
 
       return {
         ...session,
@@ -73,10 +70,5 @@ export const authOptions: NextAuthOptions = {
         }
       };
     }
-    // async redirect({ url, baseUrl }) {
-    //   // Allows relative callback URLs
-    //   console.log(url, baseUrl);
-    //   return baseUrl + "/";
-    // }
   }
 } satisfies NextAuthOptions;

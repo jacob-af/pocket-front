@@ -17,7 +17,6 @@ export default function AmILoggedIn() {
 
   useEffect(() => {
     async function fetchSession() {
-      console.log(status);
       const session = await getSession();
       console.log(session);
       if (session && session.user.accessToken) {
@@ -25,11 +24,13 @@ export default function AmILoggedIn() {
       }
       console.log("async hit:", session);
       console.log("async hit:", session?.user.name);
-      await getSession();
+      //);
+      const event = new Event("visibilitychange");
+      document.dispatchEvent(event);
     }
     // Call the fetchSession function
     fetchSession();
-  }, [status]);
+  });
 
   return (
     <div className="float float-left">Logged in as: {session?.user.name}</div>
