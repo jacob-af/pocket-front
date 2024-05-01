@@ -34,8 +34,6 @@ function Button() {
           redirect: true
         });
       } else {
-        client.clearStore();
-        localForage.clear();
         authTokens("");
         await signOut({
           callbackUrl: `/welcome`,
