@@ -20,17 +20,11 @@ export default function AmILoggedIn() {
       if (session && session.user.accessToken) {
         authTokens(session.user.accessToken);
       }
-      //console.log("async hit:", session);
-      //console.log("async hit:", session?.user.name);
-      //);
-      const event = new Event("visibilitychange");
-      document.dispatchEvent(event);
-      if (!session) {
+      if (!session?.user.name) {
         console.log("hit");
         update({ action: "refresh" });
       }
     }
-    // Call the fetchSession function
     fetchSession();
   });
 
