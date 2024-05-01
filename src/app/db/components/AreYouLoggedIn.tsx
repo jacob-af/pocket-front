@@ -26,7 +26,6 @@ export default function AmILoggedIn() {
       }
     }
     fetchSession();
-    fetchSession();
   });
 
   return (
