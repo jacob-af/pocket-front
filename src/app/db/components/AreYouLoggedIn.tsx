@@ -20,13 +20,12 @@ export default function AmILoggedIn() {
     // Fetch the session asynchronously
     async function fetchSession() {
       const session = await getSession();
-      console.log(session);
+      console.log("async hit:", session);
       // Once the session is available, extract the token and set it in the Apollo reactive variable
       if (session && session.user.accessToken) {
         authTokens(session.user.accessToken);
       }
     }
-
     // Call the fetchSession function
     fetchSession();
   }, []);

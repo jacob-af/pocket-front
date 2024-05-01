@@ -11,7 +11,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, session, trigger }) {
       if (user) {
-        authTokens(user.accessToken);
         return {
           ...token,
           id: user.id,
@@ -57,8 +56,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ token, session, user }) {
-      console.log("token: ", token.accessToken === authTokens());
-      authTokens(token.accessToken);
+      console.log(
+        "token check in sessionn async: ",
+        token.accessToken === authTokens()
+      );
 
       return {
         ...session,

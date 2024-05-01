@@ -20,7 +20,6 @@ function Button() {
   const [logOut, { loading, client }] = useMutation(LOG_OUT);
 
   const token = useReactiveVar(authTokens);
-  console.log(token);
   // if (session?.user) {
   //   console.log("auth token set");
   // }
