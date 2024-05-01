@@ -17,16 +17,18 @@ export default function AmILoggedIn() {
 
   useEffect(() => {
     async function fetchSession() {
-      const session = await getSession();
-      console.log(session);
       if (session && session.user.accessToken) {
         authTokens(session.user.accessToken);
       }
-      console.log("async hit:", session);
-      console.log("async hit:", session?.user.name);
+      //console.log("async hit:", session);
+      //console.log("async hit:", session?.user.name);
       //);
       const event = new Event("visibilitychange");
       document.dispatchEvent(event);
+      if (!session) {
+        console.log("hit");
+        update({ action: "refresh" });
+      }
     }
     // Call the fetchSession function
     fetchSession();
