@@ -8,7 +8,6 @@ import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeCard() {
   const recipe = useReactiveVar(selectedRecipe);
-  console.log(recipe.name);
   return (
     <div className={`p-4 border mt-16 ${recipe.name ? "" : "hidden"}`}>
       {/* <Transition

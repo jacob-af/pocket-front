@@ -22,7 +22,6 @@ export default function SignUpSide() {
     handleSubmit,
     formState: { errors }
   } = useForm<SignUpInputs>();
-  console.log(errors, "errorss");
   const router = useRouter();
 
   const onSubmit: SubmitHandler<SignUpInputs> = async ({

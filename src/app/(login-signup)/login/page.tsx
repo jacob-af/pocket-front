@@ -16,7 +16,6 @@ export default function LogInSide() {
     handleSubmit,
     formState: { errors }
   } = useForm<LoginInputs>();
-  console.log(errors, "errorss");
 
   const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }) => {
     try {

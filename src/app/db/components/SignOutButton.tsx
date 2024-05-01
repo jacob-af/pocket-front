@@ -18,11 +18,10 @@ function Button() {
   const { data: session } = useSession();
   const [logOut, { loading, client }] = useMutation(LOG_OUT);
 
-  useEffect(() => {
-    if (session?.user && session?.user?.accessTokenExpires < Date.now()) {
-      authTokens(session.user.accessToken);
-    }
-  });
+  // if (session?.user) {
+  //   console.log("auth token set");
+  //   authTokens(session.user.accessToken);
+  // }
 
   const onClick = async () => {
     try {
@@ -56,6 +55,7 @@ function Button() {
 
   return (
     <>
+      {session?.user.accessTokenExpires}
       <button onClick={onClick}>Sign out</button>
     </>
   );
