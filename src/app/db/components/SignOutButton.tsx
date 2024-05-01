@@ -57,7 +57,7 @@ function Button() {
   return (
     <>
       {session?.user.accessToken === token ? "true" : "false"}
-      {token ? token.length : "nope"}
+      {token ? token.slice(220, -1) : "nope"}
       <button onClick={onClick}>Sign out</button>
     </>
   );

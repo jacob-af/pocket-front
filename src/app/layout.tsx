@@ -29,7 +29,7 @@ export default async function RootLayout({
         <link rel="icon" href="./favicon.ico" sizes="any" />
       </head>
       <body>
-        <SessionProvider session={session}>
+        <SessionProvider session={session} refetchInterval={23 * 60 * 60}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>
       </body>

@@ -29,7 +29,6 @@ export default function RecipeDropDown() {
       >
         <div className="relative mt-1">
           <div className="relative bg-black shadow-md w-full text-left text-white sm:text-sm cursor-default overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-300">
-            <Combobox.Label>Choose A Recipe:</Combobox.Label>
             <Combobox.Input
               className="py-2 pr-10 pl-3 border-none w-full text-gray-900 text-sm leading-5 focus:ring-0"
               displayValue={(recipe: Recipe) => recipe?.name}
