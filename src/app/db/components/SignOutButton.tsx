@@ -20,13 +20,13 @@ function Button() {
 
   // if (session?.user) {
   //   console.log("auth token set");
-  //   authTokens(session.user.accessToken);
   // }
 
+  authTokens(session?.user.accessToken);
   const onClick = async () => {
     try {
       if (session) {
-        console.log(session.status);
+        console.log(session);
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session.user.id }
         });

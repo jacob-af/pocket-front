@@ -2,6 +2,7 @@ import { credentialsProvider } from "./credentialsProvider";
 import type { NextAuthOptions } from "next-auth";
 import { getClient } from "@/lib/client";
 import { NEW_TOKENS } from "@/app/graphql/mutations/auth";
+import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 
 export const authOptions: NextAuthOptions = {
   providers: [credentialsProvider],
@@ -10,6 +11,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, session, trigger }) {
       if (user) {
+        authTokens(user.accessToken);
         return {
           ...token,
           id: user.id,
@@ -38,6 +40,7 @@ export const authOptions: NextAuthOptions = {
           }
         });
         const resp = data.data.getNewTokens;
+        authTokens(resp?.accessToken);
         return {
           ...token,
           id: resp?.user.id,

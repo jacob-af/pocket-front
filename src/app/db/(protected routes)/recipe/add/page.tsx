@@ -35,8 +35,7 @@ export default function AddRecipe() {
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
     skip: sessionStatus !== "authenticated",
-    fetchPolicy: "cache-and-network",
-    nextFetchPolicy: "cache-and-network" // Change fetchPolicy to "network-only"
+    fetchPolicy: "cache-and-network" // Change fetchPolicy to "network-only"
   });
 
   // Memoized and sorted lists
@@ -107,6 +106,7 @@ export default function AddRecipe() {
   }
 
   if (error) {
+    console.log(error);
     return <div>Error loading data</div>; // Display an error message
   }
 
