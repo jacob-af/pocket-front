@@ -17,8 +17,8 @@ import { getSession } from "next-auth/react";
 
 const authLink = setContext(async (_, { headers }) => {
   if (authTokens() === "") return { headers: { ...headers } };
-  const token = authTokens();
 
+  const token = authTokens();
   return {
     headers: {
       ...headers,

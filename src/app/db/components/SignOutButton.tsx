@@ -11,18 +11,12 @@ import {
 } from "@apollo/client";
 import { LOG_OUT } from "../../graphql/mutations/auth";
 import { useRouter } from "next/navigation";
-import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 import localForage from "localforage";
 import { useEffect } from "react";
 
 function Button() {
   const { data: session } = useSession();
   const [logOut, { loading, client }] = useMutation(LOG_OUT);
-
-  const token = useReactiveVar(authTokens);
-  // if (session?.user) {
-  //   console.log("auth token set");
-  // }
 
   const onClick = async () => {
     try {
@@ -32,7 +26,7 @@ function Button() {
           variables: { userId: session.user.id }
         });
         localForage.clear();
-        authTokens("");
+
         client.clearStore();
         console.log(data?.loggedOut);
         await signOut({
@@ -40,7 +34,6 @@ function Button() {
           redirect: true
         });
       } else {
-        authTokens("");
         client.clearStore();
         await signOut({
           callbackUrl: `/welcome`,
@@ -56,8 +49,6 @@ function Button() {
 
   return (
     <>
-      {session?.user.accessToken === token ? "true" : "false"}
-      {token ? token.slice(220, -1) : "nope"}
       <button onClick={onClick}>Sign out</button>
     </>
   );
