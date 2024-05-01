@@ -15,7 +15,7 @@ import { CachePersistor, LocalForageWrapper } from "apollo3-cache-persist";
 import localForage from "localforage";
 
 const authLink = setContext(async (_, { headers }) => {
-  if (!authTokens()) return { headers: { ...headers } };
+  if (authTokens() === "") return { headers: { ...headers } };
   const token = authTokens();
 
   return {
