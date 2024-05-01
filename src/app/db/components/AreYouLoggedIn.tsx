@@ -18,6 +18,7 @@ export default function AmILoggedIn() {
   useEffect(() => {
     async function fetchSession() {
       if (session && session.user.accessToken) {
+        console.log("hello");
         authTokens(session.user.accessToken);
       }
       if (!session?.user.name) {
