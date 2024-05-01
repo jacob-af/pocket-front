@@ -22,6 +22,9 @@ export const authOptions: NextAuthOptions = {
           refreshToken: user.refreshToken
         };
       }
+      if (session) {
+        console.log("in session");
+      }
       if (trigger === "update" && session.action === "New Tokens") {
         console.log("closer");
         const client = await getClient();
@@ -54,6 +57,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ token, session, user }) {
+      console.log("session: ", session, token);
       return {
         ...session,
         user: {
