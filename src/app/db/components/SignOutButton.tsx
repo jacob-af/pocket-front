@@ -22,12 +22,13 @@ function Button() {
   const onClick = async () => {
     try {
       if (session) {
+        console.log(session.status);
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session.user.id }
         });
-        client.clearStore();
         localForage.clear();
         authTokens("");
+        client.clearStore();
         console.log(data?.loggedOut);
         await signOut({
           callbackUrl: `/welcome`,
@@ -35,6 +36,7 @@ function Button() {
         });
       } else {
         authTokens("");
+        client.clearStore();
         await signOut({
           callbackUrl: `/welcome`,
           redirect: true

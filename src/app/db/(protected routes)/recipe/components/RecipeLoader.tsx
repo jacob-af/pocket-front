@@ -11,8 +11,7 @@ export default function RecipeLoader() {
   const { status: sessionStatus } = useSession();
   const { data, loading, error } = useQuery(USER_BUILDS, {
     skip: sessionStatus !== "authenticated",
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-first"
+    fetchPolicy: "cache-and-network"
   });
 
   // Memoized recipes array

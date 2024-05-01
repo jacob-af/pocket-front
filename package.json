@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "compile": "graphql-codegen",
-    "watch": "graphql-codegen -w",
-    "postinstall": "prisma generate"
+    "watch": "graphql-codegen -w"
   },
   "dependencies": {
     "@apollo/client": "^3.9.10",
