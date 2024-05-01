@@ -21,19 +21,18 @@ function Button() {
 
   const onClick = async () => {
     try {
-      if (session) {
-        const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
-          variables: { userId: session?.user.id }
-        });
-        client.clearStore();
-        localForage.clear();
-        authTokens("");
-        console.log(data?.loggedOut);
-        await signOut({
-          callbackUrl: `/welcome`,
-          redirect: true
-        });
-      }
+      const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
+        variables: { userId: session?.user.id }
+      });
+      client.clearStore();
+      localForage.clear();
+      authTokens("");
+      console.log(data?.loggedOut);
+      await signOut({
+        callbackUrl: `/welcome`,
+        redirect: true
+      });
+
       return;
     } catch (err) {
       console.log(err);

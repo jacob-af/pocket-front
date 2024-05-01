@@ -8,7 +8,8 @@ export const UserList = () => {
   const users = useReactiveVar(userList);
   const relations = useReactiveVar(userRelations);
   const [addFollow] = useMutation(ADD_FOLLOW, {
-    fetchPolicy: "network-only", // Change fetchPolicy to "network-only"
+    fetchPolicy: "network-only", // Used for first execution
+
     refetchQueries: [ALL_RELATIONS]
   });
   const [unFollow] = useMutation(UN_FOLLOW, {
