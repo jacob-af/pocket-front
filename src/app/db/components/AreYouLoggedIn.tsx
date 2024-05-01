@@ -1,7 +1,7 @@
 "use client";
 
 import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
@@ -15,6 +15,21 @@ export default function AmILoggedIn() {
     }
     authTokens(session?.user.accessToken);
   });
+
+  useEffect(() => {
+    // Fetch the session asynchronously
+    async function fetchSession() {
+      const session = await getSession();
+
+      // Once the session is available, extract the token and set it in the Apollo reactive variable
+      if (session && session.user.accessToken) {
+        authTokens(session.user.accessToken);
+      }
+    }
+
+    // Call the fetchSession function
+    fetchSession();
+  }, []);
 
   return (
     <div className="float float-left">Logged in as: {session?.user.name}</div>
