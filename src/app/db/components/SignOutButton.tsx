@@ -41,14 +41,11 @@ function Button() {
     }
   };
 
-  if (session) {
-    return (
-      <>
-        <button onClick={onClick}>Sign out</button>
-      </>
-    );
-  }
-  return <></>;
+  return (
+    <>
+      <button onClick={onClick}>Sign out</button>
+    </>
+  );
 }
 
 export default function AuthButton() {
