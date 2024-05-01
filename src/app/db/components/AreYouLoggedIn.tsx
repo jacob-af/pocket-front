@@ -13,6 +13,7 @@ export default function AmILoggedIn() {
       console.log("new tokens");
       update({ action: "New Tokens" });
     }
+    authTokens(session?.user.accessToken);
   });
 
   return (

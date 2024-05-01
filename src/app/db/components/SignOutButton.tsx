@@ -25,7 +25,6 @@ function Button() {
   //   console.log("auth token set");
   // }
 
-  authTokens(session?.user.accessToken);
   const onClick = async () => {
     try {
       if (session) {
@@ -59,7 +58,7 @@ function Button() {
   return (
     <>
       {session?.user.accessToken === token ? "true" : "false"}
-      {token ? token.length : ""}
+      {token ? token.length : "nope"}
       <button onClick={onClick}>Sign out</button>
     </>
   );
