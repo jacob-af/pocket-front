@@ -17,13 +17,14 @@ export default function AmILoggedIn() {
 
   useEffect(() => {
     async function fetchSession() {
-      if (session && session.user.accessToken) {
+      const session = await getSession();
+      if (session && session.user.accessToken !== "") {
         console.log("hello");
         authTokens(session.user.accessToken);
       }
       if (!session?.user.name) {
         console.log("hit");
-        update({ action: "refresh" });
+        update();
       }
     }
     fetchSession();
