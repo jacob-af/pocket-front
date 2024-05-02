@@ -1,7 +1,7 @@
 "use server";
 
 import Link from "next/link";
-import AmILoggedIn from "./AreYouLoggedIn";
+import AmILoggedIn from "./AmILoggedIn";
 import AuthButton from "./SignOutButton";
 
 export default async function TopNavBar() {

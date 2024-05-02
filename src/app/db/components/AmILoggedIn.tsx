@@ -18,7 +18,7 @@ export default function AmILoggedIn() {
       }
     }
     fetchSession();
-  });
+  }, [update]);
 
   return <div className="float float-left">Logged in as: {userName}</div>;
 }
