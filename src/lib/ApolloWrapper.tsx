@@ -18,11 +18,14 @@ import { getSession } from "next-auth/react";
 const authLink = setContext(async (_, { headers }) => {
   if (authTokens() === "") return { headers: { ...headers } };
 
-  const token = authTokens();
+  const session = await getSession();
+
   return {
     headers: {
       ...headers,
-      Authorization: token ? `Bearer ${token}` : ""
+      Authorization: session?.user.accessToken
+        ? `Bearer ${session?.user.accessToken}`
+        : ""
     }
   };
 });
