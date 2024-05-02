@@ -25,11 +25,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${pressStart.className} antialiased`}>
-      <head>
-        <link rel="icon" href="./favicon.ico" sizes="any" />
-      </head>
       <body>
-        <SessionProvider session={session} refetchInterval={23 * 60 * 60}>
+        <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>
       </body>
