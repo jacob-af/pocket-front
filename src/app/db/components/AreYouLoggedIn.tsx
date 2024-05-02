@@ -18,20 +18,20 @@ export default function AmILoggedIn() {
   useEffect(() => {
     async function fetchSession() {
       const session = await getSession();
-      if (session && session.user.accessToken !== "") {
-        console.log(
-          session.user.accessToken.slice(210, -1),
-          session?.user.name
-        );
-        authTokens(session.user.accessToken);
-      }
+      // if (session && session.user.accessToken !== "") {
+      //   console.log(
+      //     session.user.accessToken.slice(210, -1),
+      //     session?.user.name
+      //   );
+      //   authTokens(session.user.accessToken);
+      // }
       if (!session?.user.name) {
         console.log("hit");
         update();
       }
     }
     fetchSession();
-  });
+  }, [update]);
 
   return (
     <div className="float float-left">Logged in as: {session?.user.name}</div>

@@ -9,8 +9,6 @@ import {
   SSRMultipartLink,
   NextSSRInMemoryCache
 } from "@apollo/experimental-nextjs-app-support/ssr";
-
-import { authTokens } from "@/app/graphql/reactiveVar/authTokens";
 import { CachePersistor, LocalForageWrapper } from "apollo3-cache-persist";
 import localForage from "localforage";
 import { getSession } from "next-auth/react";
@@ -69,9 +67,13 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
     useState<NextSSRApolloClient<NormalizedCacheObject>>();
   const [persistor, setPersistor] =
     useState<CachePersistor<NormalizedCacheObject>>();
+
   useEffect(() => {
+    if (persistor) {
+      return;
+    }
     async function init() {
-      let newPersistor = new CachePersistor({
+      const newPersistor = new CachePersistor({
         cache,
         storage: new LocalForageWrapper(localForage),
         debug: true,
@@ -83,7 +85,11 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
     }
 
     init().catch(console.error);
-  }, []);
+  }, [persistor]);
+
+  if (!client) {
+    return null; // Return null while client is not yet initialized
+  }
 
   return (
     <ApolloNextAppProvider makeClient={makeClient}>
