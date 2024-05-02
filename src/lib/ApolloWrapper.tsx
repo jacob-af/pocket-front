@@ -16,16 +16,14 @@ import localForage from "localforage";
 import { getSession } from "next-auth/react";
 
 const authLink = setContext(async (_, { headers }) => {
-  if (authTokens() === "") return { headers: { ...headers } };
-
   const session = await getSession();
+
+  if (!session?.user.accessToken) return { headers: { ...headers } };
 
   return {
     headers: {
       ...headers,
-      Authorization: session?.user.accessToken
-        ? `Bearer ${session?.user.accessToken}`
-        : ""
+      Authorization: `Bearer ${session?.user.accessToken}`
     }
   };
 });

@@ -19,7 +19,10 @@ export default function AmILoggedIn() {
     async function fetchSession() {
       const session = await getSession();
       if (session && session.user.accessToken !== "") {
-        console.log("hello");
+        console.log(
+          session.user.accessToken.slice(210, -1),
+          session?.user.name
+        );
         authTokens(session.user.accessToken);
       }
       if (!session?.user.name) {
