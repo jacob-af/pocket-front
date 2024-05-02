@@ -20,36 +20,35 @@ export const authOptions: NextAuthOptions = {
           refreshToken: user.refreshToken
         };
       }
-      if (session) {
-        console.log("no user in session");
-      }
+      //This call back is triggered from the client, a better implementation surely exists.
       if (trigger === "update" && session.action === "New Tokens") {
-        console.log("closer");
-        const client = await getClient();
-        console.log(token);
-        const data: any = await client.mutate({
-          mutation: NEW_TOKENS,
-          variables: {
-            refreshToken: token.refreshToken
-          },
-          context: {
-            headers: {
-              Authorization: token.refreshToken
-                ? `Bearer ${token.refreshToken}`
-                : ""
+        try {
+          const client = await getClient();
+          const { data } = await client.mutate({
+            mutation: NEW_TOKENS,
+            variables: { refreshToken: token.refreshToken },
+            context: {
+              headers: {
+                Authorization: `Bearer ${token.refreshToken}`
+              }
             }
+          });
+
+          const resp = data?.getNewTokens;
+          if (resp) {
+            return {
+              ...token,
+              id: resp.user.id,
+              name: resp.user.userName,
+              email: resp.user.email,
+              accessTokenExpires: Date.now() + 23 * 60 * 60 * 1000,
+              accessToken: resp.accessToken,
+              refreshToken: resp.refreshToken
+            };
           }
-        });
-        const resp = data.data.getNewTokens;
-        return {
-          ...token,
-          id: resp?.user.id,
-          name: resp?.user.userName,
-          email: resp?.user.email,
-          accessTokenExpires: Date.now() + 23 * 60 * 60 * 1000,
-          accessToken: resp?.accessToken,
-          refreshToken: resp?.refreshToken
-        };
+        } catch (error) {
+          console.error("Error fetching new tokens: ", error);
+        }
       }
       return token;
     },

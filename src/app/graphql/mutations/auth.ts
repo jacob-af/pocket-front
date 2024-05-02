@@ -29,7 +29,7 @@ export const SIGNUP: TypedDocumentNode<AuthPayload> = gql`
   }
 `;
 
-export const NEW_TOKENS: TypedDocumentNode<AuthPayload> = gql`
+export const NEW_TOKENS: TypedDocumentNode<{ getNewTokens: AuthPayload }> = gql`
   mutation GetTokens($refreshToken: String!) {
     getNewTokens(refreshToken: $refreshToken) {
       accessToken
