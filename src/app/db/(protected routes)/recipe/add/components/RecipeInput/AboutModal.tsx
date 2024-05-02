@@ -55,9 +55,9 @@ export const AboutModal = ({
             <textarea
               onChange={(event: any) => onChange(event)}
               className="bg-black shadow focus:shadow-outline border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400"
-              id="instructions"
-              placeholder="Instructions"
-              value={recipeInfo.instructions || ""}
+              id="about"
+              placeholder="About"
+              value={recipeInfo.about || ""}
               rows={5}
             ></textarea>
 
