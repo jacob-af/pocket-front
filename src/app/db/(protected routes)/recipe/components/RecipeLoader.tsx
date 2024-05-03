@@ -32,7 +32,7 @@ export default function RecipeLoader() {
             build: [...recipes[index].build, { ...userBuild }]
           };
         }
-      });
+      }, []);
 
       recipes.sort((a, b) => a.name.localeCompare(b.name));
     }
