@@ -4,6 +4,7 @@ import { BuildDetails } from "./RecipeInput/BuildDetails";
 import { BuildName } from "./RecipeInput/BuildName";
 import RecipeSelect from "./RecipeInput/RecipeSelect";
 import { AddTouch } from "./RecipeInput/AddTouch";
+import { RecipeAbout } from "./RecipeInput/RecipeAbout";
 
 export default function RecipeInput() {
   const recipeInfo = useReactiveVar(newRecipeInfo);
@@ -11,6 +12,7 @@ export default function RecipeInput() {
   return (
     <div className="flex flex-col items-center min-w-xl">
       <RecipeSelect />
+      {recipeInfo.newRecipe === true ? <RecipeAbout /> : <></>}
       <BuildName />
       <BuildDetails />
       <AddTouch />

@@ -4,7 +4,8 @@ import {
   REMOVE_BUILD_PERMISSION
 } from "@/app/graphql/mutations/recipes";
 import { BUILD_PERMISSIONS } from "@/app/graphql/queries/recipe";
-import { useMutation } from "@apollo/client";
+import { userBuildPermissions } from "@/app/graphql/reactiveVar/user";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 
 export const ShareRecipe = ({

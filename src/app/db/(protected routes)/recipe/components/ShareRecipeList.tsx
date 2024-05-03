@@ -14,17 +14,17 @@ import { useEffect } from "react";
 
 export const ShareRecipeList = ({ build }: { build: Build }) => {
   const { status: sessionStatus } = useSession();
-  console.log("list", build.permission);
+
   const { data, loading, error } = useQuery(BUILD_PERMISSIONS, {
     variables: {
       buildId: build.id
     },
     skip: sessionStatus !== "authenticated",
-    fetchPolicy: "cache-and-network"
+    fetchPolicy: "network-only"
   });
 
   useEffect(() => {
-    if (data?.findFolloweddUsersBuildPermission)
+    if (data && data.findFolloweddUsersBuildPermission)
       userBuildPermissions(data.findFolloweddUsersBuildPermission);
   }, [data]);
 
@@ -43,7 +43,6 @@ export const ShareRecipeList = ({ build }: { build: Build }) => {
           />
         );
       })}
-      {buildPermissions.length}
     </div>
   );
 };

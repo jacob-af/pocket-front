@@ -135,11 +135,6 @@ input BuildConstructor {
   touchArray: [Touch]!
 }
 
-type UserBuildPermission {
-  user: User!
-  permission: String
-}
-
 type ArchiveResponse {
   build: Build
   archivedBuild: ArchivedBuild
@@ -147,7 +142,7 @@ type ArchiveResponse {
 
 type BuildPermissionResponse {
   buildUser: BuildUser
-  permission: Permission
+  status: StatusMessage
 }
 
 input CreateBuildInput {
@@ -234,7 +229,7 @@ type Recipe {
   about: String
   createdBy: User
   editedBy: User
-  build: [Build!]
+  build: [Build!]!
 }
 
 input CreateRecipeInput {
