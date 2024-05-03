@@ -63,7 +63,7 @@ export default function AddRecipe() {
     console.log(recipeInfo.newRecipe, recipeInfo.recipeName);
     try {
       if (recipeInfo.newRecipe) {
-        const { data: data } = await newRecipe({
+        const { data } = await newRecipe({
           variables: {
             createRecipeInput: {
               recipeName: recipeInfo.recipeName,
@@ -78,12 +78,13 @@ export default function AddRecipe() {
             }
           }
         });
+        console.log(data);
       } else {
         console.log(recipeInfo.recipeName);
-        const { data: data } = await newBuild({
+        const { data } = await newBuild({
           variables: {
             createBuildInput: {
-              recipeName: recipeInfo.recipeName,
+              recipe: { name: recipeInfo.recipeName },
               buildName: recipeInfo.buildName,
               instructions: recipeInfo.instructions,
               glassware: recipeInfo.glassware,
@@ -92,6 +93,7 @@ export default function AddRecipe() {
             }
           }
         });
+        console.log(data);
       }
 
       router.push("/db/recipe");

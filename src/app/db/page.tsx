@@ -31,8 +31,8 @@ export default async function Landing() {
       <div>[ &#10003; ][ x ] Build Version Control</div>
       <div>[ &#10003; ][ x ] Delete Recipe</div>
       <div>[ &#10003; ][ x ] Delete Build</div>
-      <div>[ &#10003; ][ x ] Change Build Permission</div>
-      <div>[ &#10003; ][ x ] Remove Build Permission</div>
+      <div>[ &#10003; ][ &#10003; ] Change Build Permission</div>
+      <div>[ &#10003; ][ &#10003; ] Remove Build Permission</div>
       <div>[ x ][ x ] Specialized Recipe Search</div>
       <div>[ x ][ x ] Manage Recipe with CSV</div>
       <br />
