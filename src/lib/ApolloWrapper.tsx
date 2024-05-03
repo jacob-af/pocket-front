@@ -29,7 +29,7 @@ const authLink = setContext(async (_, { headers }) => {
 const cache = new NextSSRInMemoryCache({
   typePolicies: {
     User: {
-      keyFields: ["id", "email"]
+      keyFields: ["id", "userName"]
     },
     Build: {
       keyFields: ["buildName", "recipe", ["name"]]

@@ -1,4 +1,4 @@
-import { User } from "@/__generated__/graphql";
+import { User, UserBuildPermission } from "@/__generated__/graphql";
 import { makeVar, ReactiveVar } from "@apollo/client";
 
 export const userList = makeVar<User[]>([
@@ -25,3 +25,5 @@ export const userRelations = makeVar<{ followers: User[]; following: User[] }>({
     }
   ]
 });
+
+export const userBuildPermissions = makeVar<UserBuildPermission[]>([]);

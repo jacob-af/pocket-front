@@ -15,7 +15,7 @@ export const ADD_RECIPE = gql`
 `;
 
 export const ADD_BUILD = gql`
-  mutation Mutation($createBuildInput: CreateBuildInput) {
+  mutation AddBuild($createBuildInput: CreateBuildInput) {
     createBuild(createBuildInput: $createBuildInput) {
       buildName
       ice
@@ -35,6 +35,34 @@ export const ADD_BUILD = gql`
         ingredient {
           name
         }
+      }
+    }
+  }
+`;
+
+export const CHANGE_BUILD_PERMISSION = gql`
+  mutation ChangeBuildPermission(
+    $changeBuildPermissionInput: ChangeBuildPermissionInput
+  ) {
+    changeBuildPermission(
+      changeBuildPermissionInput: $changeBuildPermissionInput
+    ) {
+      status {
+        message
+      }
+    }
+  }
+`;
+
+export const REMOVE_BUILD_PERMISSION = gql`
+  mutation RemoveBuildPermission(
+    $changeBuildPermissionInput: ChangeBuildPermissionInput
+  ) {
+    deleteBuildPermission(
+      changeBuildPermissionInput: $changeBuildPermissionInput
+    ) {
+      status {
+        message
       }
     }
   }

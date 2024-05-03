@@ -19,6 +19,7 @@ export const selectedRecipe = makeVar<Recipe>({
   about: "",
   build: []
 });
+
 export const allRecipesList = makeVar<ListItem[]>([
   {
     id: "",

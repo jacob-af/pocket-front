@@ -1,4 +1,4 @@
-import { Build, ListItem } from "@/__generated__/graphql";
+import { Build, ListItem, UserBuildPermission } from "@/__generated__/graphql";
 import { gql, TypedDocumentNode } from "@apollo/client";
 
 export const USER_BUILDS: TypedDocumentNode<{
@@ -11,6 +11,7 @@ export const USER_BUILDS: TypedDocumentNode<{
       glassware
       ice
       instructions
+      permission
       recipe {
         id
         name
@@ -43,6 +44,20 @@ export const RECIPES_AND_INGREDIENTS: TypedDocumentNode<{
     ingredients {
       id
       name
+    }
+  }
+`;
+
+export const BUILD_PERMISSIONS: TypedDocumentNode<{
+  findFolloweddUsersBuildPermission: UserBuildPermission[];
+}> = gql`
+  query FindFolloweddUsersBuildPermission($buildId: String!) {
+    findFolloweddUsersBuildPermission(buildId: $buildId) {
+      permission
+      user {
+        userName
+        id
+      }
     }
   }
 `;
