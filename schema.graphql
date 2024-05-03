@@ -52,16 +52,10 @@ type Mutation {
   updateBuild(updateBuildInput: UpdateBuildInput): ArchiveResponse
   removeBuild(buildId: String, permission: Permission): Build
   changeBuildPermission(
-    userId: String
-    buildId: String
-    userPermission: Permission
-    desiredPermission: Permission
+    changeBuildPermissionInput: ChangeBuildPermissionInput
   ): BuildPermissionResponse
   deleteBuildPermission(
-    userId: String
-    buildId: String
-    userPermission: Permission
-    permission: Permission
+    changeBuildPermissionInput: ChangeBuildPermissionInput
   ): BuildPermissionResponse
   createIngredient(createIngredientInput: CreateIngredientInput!): Ingredient!
   createManyIngredients(
@@ -240,7 +234,7 @@ type Recipe {
   about: String
   createdBy: User
   editedBy: User
-  build: [Build!]!
+  build: [Build!]
 }
 
 input CreateRecipeInput {
