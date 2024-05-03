@@ -390,7 +390,12 @@ export type Query = {
   __typename?: 'Query';
   allUsers: Array<Maybe<User>>;
   findAllBuilds?: Maybe<Array<Maybe<Build>>>;
+  findBuildUsers?: Maybe<Array<Maybe<BuildUser>>>;
+  findFolloweddUsersBuildPermission?: Maybe<Array<Maybe<UserBuildPermission>>>;
+  findFollowers?: Maybe<Array<Maybe<User>>>;
+  findFollows?: Maybe<Array<Maybe<User>>>;
   findOneBuild?: Maybe<Build>;
+  getUserRelationships?: Maybe<Array<Maybe<UserRelationship>>>;
   hello: Scalars['String']['output'];
   ingredient?: Maybe<Ingredient>;
   ingredients: Array<Maybe<Ingredient>>;
@@ -408,7 +413,7 @@ export type QueryIngredientArgs = {
 
 
 export type QueryRecipeArgs = {
-  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
 };
 
 
@@ -426,6 +431,10 @@ export type Recipe = {
   editedBy?: Maybe<User>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+};
+
+export type RecipeNameInput = {
+  name: Scalars['String']['input'];
 };
 
 export enum Relationship {
@@ -464,7 +473,7 @@ export type UpdateBuildInput = {
   ice?: InputMaybe<Scalars['String']['input']>;
   instructions?: InputMaybe<Scalars['String']['input']>;
   permission?: InputMaybe<Permission>;
-  recipeId: Scalars['ID']['input'];
+  recipeName?: InputMaybe<Scalars['String']['input']>;
   touchArray: Array<InputMaybe<TouchInput>>;
 };
 
@@ -498,6 +507,19 @@ export type User = {
   lastEdited?: Maybe<Scalars['DateTime']['output']>;
   myBuild?: Maybe<Array<Maybe<Build>>>;
   userName: Scalars['String']['output'];
+};
+
+export type UserBuildPermission = {
+  __typename?: 'UserBuildPermission';
+  permission?: Maybe<Scalars['String']['output']>;
+  user: User;
+};
+
+export type UserRelationship = {
+  __typename?: 'UserRelationship';
+  followedBy?: Maybe<Scalars['Boolean']['output']>;
+  following?: Maybe<Scalars['Boolean']['output']>;
+  user: User;
 };
 
 export type LoginMutationVariables = Exact<{

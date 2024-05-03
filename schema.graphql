@@ -29,13 +29,18 @@ type Query {
   findAllBuilds: [Build]
   findOneBuild: Build
   usersBuilds: [Build]
+  findBuildUsers(buildId: String!): [BuildUser]
+  findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
   ingredients: [Ingredient]!
-  ingredient(id: String!): Ingredient
-  recipes: [Recipe]!
-  recipe(id: String!): Recipe
+  ingredient(id: Int!): Ingredient
   recipeList: [ListItem]!
+  recipes: [Recipe]!
+  recipe(name: String!): Recipe
   allUsers: [User]!
   userById(id: ID!): User
+  findFollows: [User]
+  findFollowers: [User]
+  getUserRelationships: [UserRelationship]
 }
 
 type Mutation {
@@ -43,9 +48,9 @@ type Mutation {
   signup(createUserInput: CreateUserInput!): AuthPayload!
   logout(userId: ID!): LogoutResponse!
   getNewTokens(refreshToken: String): AuthPayload!
-  createBuild(createBuildInput: CreateBuildInput): BuildResponse
+  createBuild(createBuildInput: CreateBuildInput): Build
   updateBuild(updateBuildInput: UpdateBuildInput): ArchiveResponse
-  removeBuild(buildId: String, permission: Permission): BuildResponse
+  removeBuild(buildId: String, permission: Permission): Build
   changeBuildPermission(
     userId: String
     buildId: String
@@ -95,7 +100,7 @@ type Build {
   glassware: String
   ice: String
   permission: Permission
-  touch: [Touch]!
+  touch: [Touch!]!
   version: Int
   archivedBuild: [ArchivedBuild]
 }
@@ -120,25 +125,25 @@ type BuildUser {
   permission: Permission
 }
 
-type CompleteBuild {
-  id: ID!
-  buildName: String!
-  createdAt: DateTime
-  editedAt: DateTime
-  createdBy: User
-  editedBy: User
-  about: String
-  notes: String
-  glassware: String
-  ice: String
-  instructions: String
-  permission: Permission
-  completeTouch: [CompleteTouch]
+type UserBuildPermission {
+  user: User!
+  permission: String
 }
 
-type BuildResponse {
-  build: Build
-  permission: Permission
+input BuildConstructor {
+  newRecipe: Boolean!
+  recipeName: String!
+  buildName: String!
+  about: String!
+  glassware: String!
+  ice: String!
+  instructions: String!
+  touchArray: [Touch]!
+}
+
+type UserBuildPermission {
+  user: User!
+  permission: String
 }
 
 type ArchiveResponse {
@@ -151,24 +156,17 @@ type BuildPermissionResponse {
   permission: Permission
 }
 
-type BuildConstructor {
-  recipeName: String!
+input CreateBuildInput {
+  recipe: RecipeNameInput!
   buildName: String!
-  about: String!
-  newRecipe: Boolean!
   instructions: String
   glassware: String
   ice: String
   touchArray: [TouchInput]!
 }
 
-input CreateBuildInput {
-  recipeName: String!
-  buildName: String!
-  instructions: String
-  glassware: String
-  ice: String
-  touchArray: [TouchInput]!
+input RecipeNameInput {
+  name: String!
 }
 
 input CreateFirstBuildInput {
@@ -180,7 +178,7 @@ input CreateFirstBuildInput {
 }
 
 input UpdateBuildInput {
-  recipeId: ID!
+  recipeName: String
   buildId: String!
   buildName: String
   instructions: String
@@ -212,10 +210,15 @@ enum Relationship {
   Blocked
 }
 
+type ListItem {
+  id: String!
+  name: String!
+}
+
 type Ingredient {
   id: ID!
   name: String!
-  description: String!
+  description: String
 }
 
 input CreateIngredientInput {
@@ -241,7 +244,7 @@ type Recipe {
 }
 
 input CreateRecipeInput {
-  name: String!
+  recipeName: String!
   about: String!
   build: CreateFirstBuildInput!
 }
@@ -299,7 +302,7 @@ type CompleteTouch {
 type User {
   id: ID!
   userName: String!
-  email: EmailAddress!
+  email: EmailAddress
   dateJoined: DateTime
   lastEdited: DateTime
   following: [Following]
@@ -318,7 +321,7 @@ input UpdateUserInput {
 type Following {
   id: ID!
   userName: String!
-  email: EmailAddress!
+  email: EmailAddress
   dateJoined: DateTime
   lastEdited: DateTime
   relationship: Relationship
@@ -327,7 +330,7 @@ type Following {
 type Follower {
   id: ID!
   userName: String!
-  email: EmailAddress!
+  email: EmailAddress
   dateJoined: DateTime
   lastEdited: DateTime
 }
@@ -336,13 +339,14 @@ type StatusMessage {
   message: String
 }
 
-type ListItem {
-  id: String!
-  name: String!
-}
-
 type FollowReturn {
   following: String
   relationship: Relationship
   status: StatusMessage
+}
+
+type UserRelationship {
+  user: User!
+  followedBy: Boolean
+  following: Boolean
 }
