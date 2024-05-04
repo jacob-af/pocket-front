@@ -1,8 +1,8 @@
 "use client";
 
 import { Build, Recipe } from "@/__generated__/graphql";
+import { NetworkStatus, useQuery, useReactiveVar } from "@apollo/client";
 import { useEffect, useMemo } from "react";
-import { useQuery, useReactiveVar } from "@apollo/client";
 
 import { USER_BUILDS } from "@/app/graphql/queries/recipe";
 import { useSession } from "next-auth/react";
@@ -10,10 +10,14 @@ import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {
   const { status: sessionStatus } = useSession();
-  const { data, loading, error, refetch } = useQuery(USER_BUILDS, {
-    skip: sessionStatus !== "authenticated",
-    fetchPolicy: "cache-and-network"
-  });
+  const { data, loading, error, refetch, networkStatus } = useQuery(
+    USER_BUILDS,
+    {
+      skip: sessionStatus !== "authenticated",
+      fetchPolicy: "cache-and-network",
+      notifyOnNetworkStatusChange: true
+    }
+  );
   const recipeList = useReactiveVar(userRecipeList);
 
   useEffect(() => {
@@ -24,8 +28,11 @@ export default function RecipeLoader() {
     } else {
       console.log("no data, refetching");
       refetch();
+      console.log("data fetched?");
     }
   }, [data, refetch]);
+
+  if (networkStatus === NetworkStatus.refetch) return "Refetching!";
 
   if (loading) {
     return <div>Loading...</div>;
