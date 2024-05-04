@@ -1,5 +1,6 @@
-import { Ingredient, ListItem } from "@/__generated__/graphql";
-import { makeVar, ReactiveVar } from "@apollo/client";
+import { ReactiveVar, makeVar } from "@apollo/client";
+
+import { ListItem } from "@/types/apollo";
 
 export const ingredientList = makeVar([
   { id: "0", name: "loading", description: "loading" }
@@ -7,13 +8,8 @@ export const ingredientList = makeVar([
 
 export const allIngredientsList = makeVar<ListItem[]>([]);
 
-export const selectedIngredientIds = makeVar<ListItem[]>([
-  {
-    id: "",
-    name: ""
-  },
-  {
-    id: "",
-    name: ""
-  }
-]);
+export const selectedIngredient = makeVar<ListItem>({
+  id: "",
+  name: "",
+  description: ""
+});

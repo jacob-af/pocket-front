@@ -1,7 +1,7 @@
 import { ALL_INGREDIENTS } from "@/app/graphql/queries/ingredient";
 import { ApolloQueryResult } from "@apollo/client";
-import AutoDrop from "./IngredientSelect";
 import { Ingredient } from "@/__generated__/graphql";
+import IngredientDrop from "./IngredientSelect";
 import { auth } from "@/lib/auth";
 import { getClient } from "@/lib/client";
 
@@ -29,7 +29,7 @@ export default async function LoadIngredients() {
       }
     );
 
-    return <AutoDrop ingredients={sortedIngredients} />;
+    return <IngredientDrop ingredients={sortedIngredients} />;
   } catch (error) {
     console.log(error);
   }

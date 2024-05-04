@@ -83,9 +83,10 @@ export type BuildConstructor = {
   buildName: Scalars['String']['input'];
   glassware: Scalars['String']['input'];
   ice: Scalars['String']['input'];
+  id: Scalars['String']['input'];
   instructions: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   newRecipe: Scalars['Boolean']['input'];
-  recipeName: Scalars['String']['input'];
   touchArray: Array<InputMaybe<Touch>>;
 };
 
@@ -182,12 +183,6 @@ export type Ingredient = {
   __typename?: 'Ingredient';
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type ListItem = {
-  __typename?: 'ListItem';
-  id: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
 
@@ -370,7 +365,7 @@ export type Query = {
   ingredient?: Maybe<Ingredient>;
   ingredients: Array<Maybe<Ingredient>>;
   recipe?: Maybe<Recipe>;
-  recipeList: Array<Maybe<ListItem>>;
+  recipeList: Array<Maybe<Recipe>>;
   recipes: Array<Maybe<Recipe>>;
   userById?: Maybe<User>;
   usersBuilds?: Maybe<Array<Maybe<Build>>>;
@@ -593,7 +588,7 @@ export type UserBuildsQuery = { __typename?: 'Query', usersBuilds?: Array<{ __ty
 export type RecipeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RecipeListQuery = { __typename?: 'Query', recipeList: Array<{ __typename?: 'ListItem', id: string, name: string } | null>, ingredients: Array<{ __typename?: 'Ingredient', id: string, name: string } | null> };
+export type RecipeListQuery = { __typename?: 'Query', recipeList: Array<{ __typename?: 'Recipe', id: string, name: string } | null>, ingredients: Array<{ __typename?: 'Ingredient', id: string, name: string } | null> };
 
 export type FindFolloweddUsersBuildPermissionQueryVariables = Exact<{
   buildId: Scalars['String']['input'];
