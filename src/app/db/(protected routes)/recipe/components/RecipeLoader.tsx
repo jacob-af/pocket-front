@@ -10,19 +10,19 @@ import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {
   const { status: sessionStatus } = useSession();
-  const { data, loading, error, refetch } = useQuery(USER_BUILDS, {
+  const { data, loading, error } = useQuery(USER_BUILDS, {
     skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
   const recipeList = useReactiveVar(userRecipeList);
 
   useEffect(() => {
-    if (!loading) {
+    if (sessionStatus === "authenticated") {
       const recipes = convertRecipes(data);
       recipes.sort((a, b) => a.name.localeCompare(b.name));
       userRecipeList(recipes);
     }
-  }, [data, loading]);
+  }, [data, sessionStatus]);
 
   if (loading) {
     return <div>Loading...</div>;
