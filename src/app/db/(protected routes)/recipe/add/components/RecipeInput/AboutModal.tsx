@@ -2,6 +2,7 @@ import { ChangeEvent, ChangeEventHandler } from "react";
 import { fieldChange } from "../recipeHooks";
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
+import React from "react";
 
 export const AboutModal = ({
   open,
@@ -16,10 +17,6 @@ export const AboutModal = ({
   const closeModal = () => {
     fieldChange({ key: "about", value: "" });
     toggleopen();
-  };
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    fieldChange({ key: event.target.id, value: event.target.value });
   };
 
   const onClick = () => {
@@ -46,22 +43,10 @@ export const AboutModal = ({
               &times;
             </button>
 
-            {/* Modal content */}
             <h3 className="text-lg font-semibold mb-4">
-              Describe the new recipe: {`${recipeInfo.recipeName}`}
+              You are creating a new RECIPE called: {`${recipeInfo.recipeName}`}
             </h3>
 
-            {/* Input field */}
-            <textarea
-              onChange={(event: any) => onChange(event)}
-              className="bg-black shadow focus:shadow-outline border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400"
-              id="about"
-              placeholder="About"
-              value={recipeInfo.about || ""}
-              rows={5}
-            ></textarea>
-
-            {/* Optional button to submit the form */}
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded"
               onClick={onClick}
