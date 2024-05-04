@@ -3,7 +3,7 @@ import {
   allIngredientsList,
   selectedIngredientIds
 } from "@/app/graphql/reactiveVar/ingredients";
-import { ingredientChange, touchChange } from "../recipeHooks";
+import { ingredientChange, touchChange } from "../../components/recipeHooks";
 import { touchArray } from "@/app/graphql/reactiveVar/recipes";
 import MuiDropDownWithModal from "./MUIDropDownWModal";
 import { RemoveTouch } from "./RemoveTouch";

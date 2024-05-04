@@ -1,5 +1,5 @@
 import { ReactEventHandler } from "react";
-import { fieldChange } from "../recipeHooks";
+import { fieldChange } from "../../components/recipeHooks";
 
 export const BuildName = () => {
   const onChange = (event: any) => {

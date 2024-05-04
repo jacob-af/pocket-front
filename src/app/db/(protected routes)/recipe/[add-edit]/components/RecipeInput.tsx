@@ -1,10 +1,10 @@
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
-import { BuildDetails } from "./RecipeInput/BuildDetails";
-import { BuildName } from "./RecipeInput/BuildName";
-import RecipeSelect from "./RecipeInput/RecipeSelect";
-import { AddTouch } from "./RecipeInput/AddTouch";
-import { RecipeAbout } from "./RecipeInput/RecipeAbout";
+import { BuildDetails } from "./BuildDetails";
+import { BuildName } from "./BuildName";
+import RecipeSelect from "./RecipeSelect";
+import { AddTouch } from "./AddTouch";
+import { RecipeAbout } from "./RecipeAbout";
 
 export default function RecipeInput() {
   const recipeInfo = useReactiveVar(newRecipeInfo);

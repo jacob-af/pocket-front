@@ -31,10 +31,10 @@ export const ShareRecipe = ({
     const message = await changePermission({
       variables: {
         changeBuildPermissionInput: {
+          userId: userId,
           buildId: build.id,
           userPermission: build.permission,
-          desiredPermission: value,
-          userId: userId
+          desiredPermission: value
         }
       }
     });
@@ -42,14 +42,13 @@ export const ShareRecipe = ({
   };
 
   const handleUnshare = async (userId: string) => {
-    console.log("hi unshare");
     removePermission({
       variables: {
         changeBuildPermissionInput: {
+          userId: userId,
           buildId: build.id,
           userPermission: build.permission,
-          desiredPermission: value,
-          userId: userId
+          desiredPermission: value
         }
       }
     });
@@ -71,10 +70,10 @@ export const ShareRecipe = ({
         <option value="BLOCKED">Block</option>
         <option value="VIEW">View</option>
         <option value="EDIT">Edit</option>
+        <option value="MANAGER">Manager</option>
         <option value="OWNER">Owner</option>
       </select>
       {permission ? (
-        // Render the unshare button conditionally
         <>
           <button
             onClick={() => handleUnshare(user.id)}

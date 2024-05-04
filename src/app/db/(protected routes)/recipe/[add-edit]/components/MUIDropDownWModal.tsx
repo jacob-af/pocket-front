@@ -3,7 +3,10 @@
 import React, { HTMLAttributes, ReactNode, useState } from "react";
 import { ListItem } from "@/__generated__/graphql";
 import { useReactiveVar, ReactiveVar } from "@apollo/client";
-import { RecipeChangeFunction, IngredientChangeFunction } from "../recipeHooks";
+import {
+  RecipeChangeFunction,
+  IngredientChangeFunction
+} from "../../components/recipeHooks";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { pressStart } from "@/lib/pressStart";

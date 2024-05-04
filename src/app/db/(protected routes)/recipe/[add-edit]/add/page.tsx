@@ -10,10 +10,10 @@ import {
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
 import { useSession } from "next-auth/react";
-import RecipeInput from "./components/RecipeInput";
-import BuildInstructions from "./components/RecipeInstructions";
+import RecipeInput from "../components/RecipeInput";
+import BuildInstructions from "../components/RecipeInstructions";
 import { useRouter } from "next/navigation";
-import Review from "./components/Review";
+import Review from "../components/Review";
 import { Tabs, Tab } from "@mui/material";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";

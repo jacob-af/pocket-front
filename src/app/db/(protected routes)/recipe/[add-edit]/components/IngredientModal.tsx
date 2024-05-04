@@ -1,5 +1,5 @@
 import { ChangeEvent, ChangeEventHandler } from "react";
-import { fieldChange } from "../recipeHooks";
+import { fieldChange } from "../../components/recipeHooks";
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
