@@ -1,5 +1,5 @@
+import LoadIngredients from "./components/IngredientLoader";
 import { useReactiveVar } from "@apollo/client";
-import LoadIngredients from "./components/IngredientSelector";
 
 export default function ClientSideIngredients() {
   return (
