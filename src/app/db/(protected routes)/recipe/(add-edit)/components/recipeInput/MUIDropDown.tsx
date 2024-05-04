@@ -2,7 +2,6 @@
 
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import React, { HTMLAttributes, ReactNode, useState } from "react";
-import { ReactiveVar, useReactiveVar } from "@apollo/client";
 
 import { ListItem } from "@/types/apollo";
 import TextField from "@mui/material/TextField";
@@ -15,26 +14,19 @@ interface ChildProps {
   toggleopen: () => void;
 }
 
-export default function MuiDropDownWModal({
-  list,
+export default function MuiDropDown({
+  options,
   handleChange,
   index = 0,
   currentValue,
   children
 }: {
-  list: ReactiveVar<ListItem[]>;
-  handleChange: ({
-    newValue,
-    index
-  }: {
-    newValue: string;
-    index: number;
-  }) => void;
+  options: ListItem[];
+  handleChange: (item: ListItem) => void;
   index: number;
-  currentValue: string;
+  currentValue: ListItem;
   children?: ReactNode;
 }) {
-  const options = useReactiveVar(list);
   const [open, setOpen] = useState<boolean>(false);
   const toggleopen = () => setOpen(!open);
 
@@ -51,20 +43,20 @@ export default function MuiDropDownWModal({
     <>
       <Autocomplete
         className="bg-black w-full"
-        value={currentValue}
+        value={currentValue.name}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
             setTimeout(() => {
-              handleChange({ newValue, index });
+              handleChange({ name: newValue, id: "", index });
               setOpen(true);
             });
-          } else if (newValue && newValue.name) {
+          } else if (newValue && newValue.inputValue) {
             // Create a new value from the user input
-            handleChange({ newValue: newValue.name, index });
+            handleChange({ ...newValue, index });
             setOpen(true);
           } else {
             if (newValue) {
-              handleChange({ newValue: newValue.name, index });
+              handleChange({ ...newValue, index });
             }
           }
         }}
@@ -74,6 +66,7 @@ export default function MuiDropDownWModal({
           const { inputValue } = params;
           // Suggest the creation of a new value
           const isExisting = options.some(option => inputValue === option.name);
+
           if (inputValue !== "" && !isExisting) {
             filtered.push({
               //inputValue,

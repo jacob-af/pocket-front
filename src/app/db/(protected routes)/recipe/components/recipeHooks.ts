@@ -1,29 +1,29 @@
-import { ListItem, BuildConstructor } from "@/__generated__/graphql";
-import { ReactiveVar } from "@apollo/client";
 import {
-  newRecipeInfo,
   allRecipesList,
-  touchArray,
-  blankTouch
+  blankTouch,
+  newRecipeInfo,
+  touchArray
 } from "@/app/graphql/reactiveVar/recipes";
+
+import { DropDownSelectFunction } from "../../inventory/components/ingredientHooks";
+import { ListItem } from "@/types/apollo";
+import { ReactiveVar } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 
-export type RecipeChangeFunction = (value: string) => void;
-
-export const recipeChange: RecipeChangeFunction = (value: string) => {
+export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
   const recipeList = allRecipesList();
   const recipe = newRecipeInfo();
-  if (recipeList.findIndex(a => a.name === value) === -1) {
+  if (recipeList.findIndex(a => a.name === newValue.name) === -1) {
     newRecipeInfo({
       ...recipe,
-      recipeName: value,
+      name: newValue.name,
       buildName: "Original",
       newRecipe: true
     });
   } else {
     newRecipeInfo({
       ...recipe,
-      recipeName: value,
+      name: newValue.name,
       buildName: "",
       newRecipe: false
     });
@@ -32,27 +32,33 @@ export const recipeChange: RecipeChangeFunction = (value: string) => {
 
 export type FieldChangeFunction = ({
   key,
-  value
+  newValue
 }: {
   key: string;
-  value: string;
+  newValue: string;
 }) => void;
 
-export const fieldChange: FieldChangeFunction = ({ key, value }) => {
+export const fieldChange: FieldChangeFunction = ({ key, newValue }) => {
   const recipeInfo = newRecipeInfo();
-  newRecipeInfo({ ...recipeInfo, [key]: value });
+  newRecipeInfo({ ...recipeInfo, [key]: newValue });
 };
 
-export type IngredientChangeFunction = (value: string, index: number) => void;
+export type IngredientChangeFunction = ({
+  newValue,
+  index
+}: {
+  newValue: string;
+  index: number;
+}) => void;
 
-export const ingredientChange: IngredientChangeFunction = (
-  value: string,
-  index: number
-) => {
+export const touchIngredientChange: IngredientChangeFunction = ({
+  newValue,
+  index
+}) => {
   const touches = touchArray();
   const newTouch = {
     ...touches[index],
-    ingredientName: value
+    ingredientName: newValue
   };
   const newTouches = touches;
   newTouches.splice(index, 1, newTouch);
@@ -61,15 +67,15 @@ export const ingredientChange: IngredientChangeFunction = (
 
 export type TouchChangeFunction = ({
   key,
-  value,
+  newValue,
   index
 }: {
   [key: string]: any;
-  value: any;
+  newValue: any;
   index: number;
 }) => void;
 
-export const touchChange: TouchChangeFunction = ({ key, value, index }) => {
+export const touchChange: TouchChangeFunction = ({ key, newValue, index }) => {
   interface TouchFace {
     ingredientName: string;
     amount: number;
@@ -80,11 +86,11 @@ export const touchChange: TouchChangeFunction = ({ key, value, index }) => {
   const touches: TouchFace[] = touchArray();
   let newTouch = { ...touches[index] };
 
-  // Update the specified key with the new value
+  // Update the specified key with the new newValue
   if (key === "amount") {
-    newTouch[key] = parseFloat(value);
+    newTouch[key] = parseFloat(newValue);
   } else {
-    newTouch[key] = value;
+    newTouch[key] = newValue;
   }
 
   touches[index] = newTouch;

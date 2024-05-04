@@ -1,5 +1,7 @@
-import { Recipe, ListItem, BuildConstructor } from "@/__generated__/graphql";
-import { makeVar, ReactiveVar } from "@apollo/client";
+import { BuildConstructor, Recipe } from "@/__generated__/graphql";
+import { ReactiveVar, makeVar } from "@apollo/client";
+
+import { ListItem } from "@/types/apollo";
 
 export const blankTouch = (order: number) => {
   return {
@@ -32,12 +34,13 @@ export const selectedRecipeId = makeVar<ListItem>({
 });
 
 export const newRecipeInfo = makeVar<BuildConstructor>({
-  recipeName: "",
+  name: "",
   buildName: "",
   about: "",
   instructions: "",
   glassware: "",
   ice: "",
   touchArray: [],
-  newRecipe: false
+  newRecipe: false,
+  id: ""
 });

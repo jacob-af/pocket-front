@@ -33,7 +33,7 @@ type Query {
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
-  recipeList: [ListItem]!
+  recipeList: [Recipe]!
   recipes: [Recipe]!
   recipe(name: String!): Recipe
   allUsers: [User]!
@@ -125,8 +125,9 @@ type UserBuildPermission {
 }
 
 input BuildConstructor {
+  id: String!
   newRecipe: Boolean!
-  recipeName: String!
+  name: String!
   buildName: String!
   about: String!
   glassware: String!
@@ -197,11 +198,6 @@ enum Relationship {
   Close
   Following
   Blocked
-}
-
-type ListItem {
-  id: String!
-  name: String!
 }
 
 type Ingredient {

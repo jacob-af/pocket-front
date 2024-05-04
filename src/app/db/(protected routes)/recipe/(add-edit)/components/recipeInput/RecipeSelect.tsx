@@ -2,10 +2,10 @@ import {
   allRecipesList,
   newRecipeInfo
 } from "@/app/graphql/reactiveVar/recipes";
-import { recipeChange } from "../../../components/recipeHooks";
-import MuiDropDown from "../../../components/MUIDropDown";
-import MuiDropDownWModal from "../MUIDropDownWModal";
+
 import { AboutModal } from "./AboutModal";
+import MuiDropDown from "./MUIDropDown";
+import { recipeChange } from "../../../components/recipeHooks";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeSelect() {
@@ -16,11 +16,13 @@ export default function RecipeSelect() {
     <div className="flex flex-col items-center text-center min-w-sm">
       Select a recipe or create a new one?
       {allRecipes.length > 0 ? (
-        <MuiDropDownWModal
-          list={allRecipesList}
+        <MuiDropDown
+          options={allRecipes}
           handleChange={recipeChange}
           index={0}
-          currentValue={recipeInfo.recipeName}
+          currentValue={{
+            ...recipeInfo
+          }}
         >
           <AboutModal
             open={false}
@@ -28,7 +30,7 @@ export default function RecipeSelect() {
               throw new Error("Function not implemented.");
             }}
           />
-        </MuiDropDownWModal>
+        </MuiDropDown>
       ) : (
         ""
       )}

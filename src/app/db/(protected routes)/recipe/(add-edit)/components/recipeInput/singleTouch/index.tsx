@@ -1,10 +1,10 @@
 import {
   allIngredientsList,
-  selectedIngredientIds
+  selectedIngredient
 } from "@/app/graphql/reactiveVar/ingredients";
 import {
-  ingredientChange,
-  touchChange
+  touchChange,
+  touchIngredientChange
 } from "../../../../components/recipeHooks";
 
 import { IngredientModal } from "./IngredientModal";
@@ -24,7 +24,7 @@ export const SingleTouch = ({
   const touches = useReactiveVar(touchArray);
 
   const onChange = (event: any) => {
-    touchChange({ key: event.target.id, value: event.target.value, index });
+    touchChange({ key: event.target.id, newValue: event.target.value, index });
   };
 
   return (
@@ -53,7 +53,7 @@ export const SingleTouch = ({
       <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100">
         <MuiDropDownWithModal
           list={allIngredientsList}
-          handleChange={ingredientChange}
+          handleChange={touchIngredientChange}
           index={index}
           currentValue={touches[index].ingredientName}
         >
