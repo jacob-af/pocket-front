@@ -2,12 +2,14 @@ import {
   allRecipesList,
   blankTouch,
   newRecipeInfo,
+  selectedRecipe,
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
 
 import { DropDownSelectFunction } from "../../inventory/components/ingredientHooks";
 import { ListItem } from "@/types/apollo";
 import { ReactiveVar } from "@apollo/client";
+import { Recipe } from "@/__generated__/graphql";
 import { useMutation } from "@apollo/client";
 
 export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
@@ -28,6 +30,10 @@ export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
       newRecipe: false
     });
   }
+};
+
+export const recipeSelect: DropDownSelectFunction = newValue => {
+  selectedRecipe(newValue as Recipe);
 };
 
 export type FieldChangeFunction = ({
