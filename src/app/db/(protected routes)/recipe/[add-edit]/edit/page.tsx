@@ -10,7 +10,7 @@ import {
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
 import { useSession } from "next-auth/react";
-import RecipeInput from "../components/RecipeInput";
+import RecipeInput from "../components/recipeInput";
 import BuildInstructions from "../components/RecipeInstructions";
 import { useRouter } from "next/navigation";
 import Review from "../components/Review";

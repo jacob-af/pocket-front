@@ -1,10 +1,9 @@
 import { ChangeEvent, ChangeEventHandler } from "react";
-import { fieldChange } from "../../components/recipeHooks";
-import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
-import React from "react";
+import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
+import { fieldChange } from "../../../../components/recipeHooks";
 
-export const AboutModal = ({
+export const IngredientModal = ({
   open,
   toggleopen
 }: {
@@ -17,6 +16,10 @@ export const AboutModal = ({
   const closeModal = () => {
     fieldChange({ key: "about", value: "" });
     toggleopen();
+  };
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    fieldChange({ key: event.target.id, value: event.target.value });
   };
 
   const onClick = () => {
@@ -43,10 +46,21 @@ export const AboutModal = ({
               &times;
             </button>
 
-            <h3 className="text-lg font-semibold mb-4">
-              You are creating a new RECIPE called: {`${recipeInfo.recipeName}`}
+            {/* Modal content */}
+            <h3 className="text-lg text-primary bg-black font-semibold mb-4">
+              We dont have that in our database, would you like to make a custom
+              ingredient?
             </h3>
 
+            {/* Input field */}
+            <input
+              onChange={onChange}
+              className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 appearance-none focus:outline-none h-32 text-left text-top placeholder-gray-400 disabled:placeholder-gray-900
+    disabled:text-gray-900 disabled:border-none"
+              id="about"
+            />
+
+            {/* Optional button to submit the form */}
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded"
               onClick={onClick}

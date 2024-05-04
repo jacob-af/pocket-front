@@ -2,9 +2,9 @@ import {
   allRecipesList,
   newRecipeInfo
 } from "@/app/graphql/reactiveVar/recipes";
-import { recipeChange } from "../../components/recipeHooks";
-import MuiDropDown from "../../components/MUIDropDown";
-import MuiDropDownWModal from "./MUIDropDownWModal";
+import { recipeChange } from "../../../components/recipeHooks";
+import MuiDropDown from "../../../components/MUIDropDown";
+import MuiDropDownWModal from "../MUIDropDownWModal";
 import { AboutModal } from "./AboutModal";
 import { useReactiveVar } from "@apollo/client";
 

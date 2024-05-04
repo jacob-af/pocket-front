@@ -1,14 +1,18 @@
-import { TouchInput } from "@/__generated__/graphql";
 import {
   allIngredientsList,
   selectedIngredientIds
 } from "@/app/graphql/reactiveVar/ingredients";
-import { ingredientChange, touchChange } from "../../components/recipeHooks";
-import { touchArray } from "@/app/graphql/reactiveVar/recipes";
-import MuiDropDownWithModal from "./MUIDropDownWModal";
-import { RemoveTouch } from "./RemoveTouch";
-import { useReactiveVar } from "@apollo/client";
+import {
+  ingredientChange,
+  touchChange
+} from "../../../../components/recipeHooks";
+
 import { IngredientModal } from "./IngredientModal";
+import MuiDropDownWithModal from "../../MUIDropDownWModal";
+import { RemoveTouch } from "./RemoveTouch";
+import { TouchInput } from "@/__generated__/graphql";
+import { touchArray } from "@/app/graphql/reactiveVar/recipes";
+import { useReactiveVar } from "@apollo/client";
 
 export const SingleTouch = ({
   touch,
