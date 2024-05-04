@@ -1,9 +1,9 @@
 "use client";
 
+import { Build, Recipe } from "@/__generated__/graphql";
 import { useEffect, useMemo } from "react";
 import { useQuery, useReactiveVar } from "@apollo/client";
 
-import { Recipe } from "@/__generated__/graphql";
 import { USER_BUILDS } from "@/app/graphql/queries/recipe";
 import { useSession } from "next-auth/react";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
@@ -17,11 +17,33 @@ export default function RecipeLoader() {
   const recipeList = useReactiveVar(userRecipeList);
 
   useEffect(() => {
-    if (!data?.usersBuilds) {
-      console.log("refetching");
-      refetch();
+    if (!loading) {
+      const recipes = convertRecipes(data);
+      recipes.sort((a, b) => a.name.localeCompare(b.name));
+      userRecipeList(recipes);
     }
-    const recipes: Recipe[] = [];
+  }, [data, loading]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
+  return <div>{`${recipeList.length} Recipes Loaded`}</div>;
+}
+
+function convertRecipes(
+  data:
+    | {
+        usersBuilds: Build[];
+      }
+    | undefined
+) {
+  const recipes: Recipe[] = [];
+  if (data && data.usersBuilds) {
     data?.usersBuilds.forEach(userBuild => {
       const { recipe } = userBuild;
       const index = recipes.findIndex(rec => rec.name === recipe.name);
@@ -37,18 +59,6 @@ export default function RecipeLoader() {
         };
       }
     });
-
-    recipes.sort((a, b) => a.name.localeCompare(b.name));
-    userRecipeList(recipes);
-  }, [data?.usersBuilds, refetch]);
-
-  if (loading) {
-    return <div>Loading...</div>;
   }
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
-  return <div>{`${recipeList.length} Recipes Loaded`}</div>;
+  return recipes;
 }
