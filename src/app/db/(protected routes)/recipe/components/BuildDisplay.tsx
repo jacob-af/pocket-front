@@ -1,6 +1,7 @@
 import { Build, Touch } from "@/__generated__/graphql";
 import React, { useState } from "react";
-import { ShareRecipeModal } from "./share/ShareRecipeModal";
+
+import { ShareRecipeModal } from "./shareRecipe/ShareRecipeModal";
 
 const BuildDisplay = ({ builds }: { builds: Build[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);

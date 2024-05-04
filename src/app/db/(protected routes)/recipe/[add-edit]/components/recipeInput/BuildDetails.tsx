@@ -1,6 +1,6 @@
-import { touchArray } from "@/app/graphql/reactiveVar/recipes";
+import { SingleTouch } from "./singleTouch";
 import { TouchInput } from "@/__generated__/graphql";
-import { SingleTouch } from "./singleTouch/SingleTouch";
+import { touchArray } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export function BuildDetails({}) {
