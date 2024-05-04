@@ -1,15 +1,16 @@
 "use client";
 
-import { useQuery, useReactiveVar } from "@apollo/client";
-import { USER_BUILDS } from "@/app/graphql/queries/recipe";
-import { Recipe } from "@/__generated__/graphql";
-import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
-import { useSession } from "next-auth/react";
 import { useEffect, useMemo } from "react";
+import { useQuery, useReactiveVar } from "@apollo/client";
+
+import { Recipe } from "@/__generated__/graphql";
+import { USER_BUILDS } from "@/app/graphql/queries/recipe";
+import { useSession } from "next-auth/react";
+import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {
   const { status: sessionStatus } = useSession();
-  const { data, loading, error } = useQuery(USER_BUILDS, {
+  const { data, loading, error, refetch } = useQuery(USER_BUILDS, {
     skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
@@ -43,6 +44,16 @@ export default function RecipeLoader() {
   useEffect(() => {
     userRecipeList(recipes);
   }, [recipes]);
+
+  useEffect(() => {
+    const handleFocus = () => {
+      refetch(); // Refetch data when window regains focus
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, [refetch]);
 
   if (loading) {
     return <div>Loading...</div>;
