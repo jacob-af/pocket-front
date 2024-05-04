@@ -14,14 +14,39 @@ export default function RecipeLoader() {
     skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
-
+  const recipeList = useReactiveVar(userRecipeList);
   // Memoized recipes array
-  const recipes = useMemo(() => {
+  // const recipes = useMemo(() => {
+  //   if (!data?.usersBuilds) {
+  //     return [];
+  //   }
+  //   const recipes: Recipe[] = [];
+  //   data.usersBuilds.forEach(userBuild => {
+  //     const { recipe } = userBuild;
+  //     const index = recipes.findIndex(rec => rec.name === recipe.name);
+  //     if (index === -1) {
+  //       recipes.push({
+  //         ...recipe,
+  //         build: [userBuild]
+  //       });
+  //     } else {
+  //       recipes[index] = {
+  //         ...recipes[index],
+  //         build: [...recipes[index].build, { ...userBuild }]
+  //       };
+  //     }
+  //   });
+
+  //   recipes.sort((a, b) => a.name.localeCompare(b.name));
+  //   return recipes;
+  // }, [data?.usersBuilds]);
+
+  useEffect(() => {
     if (!data?.usersBuilds) {
-      return [];
+      refetch();
     }
     const recipes: Recipe[] = [];
-    data.usersBuilds.forEach(userBuild => {
+    data?.usersBuilds.forEach(userBuild => {
       const { recipe } = userBuild;
       const index = recipes.findIndex(rec => rec.name === recipe.name);
       if (index === -1) {
@@ -38,22 +63,8 @@ export default function RecipeLoader() {
     });
 
     recipes.sort((a, b) => a.name.localeCompare(b.name));
-    return recipes;
-  }, [data?.usersBuilds]);
-
-  useEffect(() => {
     userRecipeList(recipes);
-  }, [recipes]);
-
-  useEffect(() => {
-    const handleFocus = () => {
-      refetch(); // Refetch data when window regains focus
-    };
-    window.addEventListener("focus", handleFocus);
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-    };
-  }, [refetch]);
+  }, [data?.usersBuilds, refetch]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -63,5 +74,5 @@ export default function RecipeLoader() {
     return <div>{error.message}</div>;
   }
 
-  return <div>{`${recipes.length} Recipes Loaded`}</div>;
+  return <div>{`${recipeList.length} Recipes Loaded`}</div>;
 }
