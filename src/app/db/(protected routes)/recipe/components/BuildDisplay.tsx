@@ -1,3 +1,5 @@
+"use client";
+
 import { Build, Touch } from "@/__generated__/graphql";
 import React, { useState } from "react";
 
@@ -6,7 +8,6 @@ import { ShareRecipeModal } from "./shareRecipe/ShareRecipeModal";
 const BuildDisplay = ({ builds }: { builds: Build[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [open, setOpen] = useState(false);
-  console.log(builds);
   // Function to handle going to the next slide
   const handleNextSlide = () => {
     setCurrentSlide(prevSlide => (prevSlide + 1) % builds.length);

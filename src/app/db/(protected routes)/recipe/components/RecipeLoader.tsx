@@ -15,15 +15,15 @@ export default function RecipeLoader() {
     fetchPolicy: "cache-and-network"
   });
   const recipeList = useReactiveVar(userRecipeList);
+  console.log(recipeList.slice(0, 2));
 
   useEffect(() => {
     if (data) {
       const recipes = convertRecipes(data);
-      recipes.sort((a, b) => a.name.localeCompare(b.name));
       userRecipeList(recipes);
     } else {
-      console.log("no data, refetching");
       setTimeout(() => {
+        console.log("no data, refetching");
         refetch();
       }, 1000);
     }
