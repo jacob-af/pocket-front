@@ -16,7 +16,6 @@ export const AboutModal = ({
   const recipeInfo = useReactiveVar(newRecipeInfo);
 
   const closeModal = () => {
-    fieldChange({ key: "about", value: "" });
     toggleopen();
   };
 
@@ -45,7 +44,7 @@ export const AboutModal = ({
             </button>
 
             <h3 className="text-lg font-semibold mb-4">
-              You are creating a new RECIPE called: {`${recipeInfo.recipeName}`}
+              You are creating a new RECIPE called: {`${recipeInfo.name}`}
             </h3>
 
             <button
