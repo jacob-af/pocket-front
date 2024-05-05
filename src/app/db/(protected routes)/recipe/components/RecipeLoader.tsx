@@ -19,11 +19,11 @@ export default function RecipeLoader() {
   console.log(recipeList.slice(0, 2));
 
   useEffect(() => {
-    if (data?.usersBuilds) {
-      const recipes = convertRecipes(data.usersBuilds);
-      console.log("sorted", recipes.slice(0, 2));
-      userRecipeList(recipes);
-    }
+    // if (data?.usersBuilds) {
+    const recipes = convertRecipes(data.usersBuilds);
+    console.log("sorted", recipes.slice(0, 2));
+    userRecipeList(recipes);
+    //}
   }, [data?.usersBuilds]);
 
   if (error) {
