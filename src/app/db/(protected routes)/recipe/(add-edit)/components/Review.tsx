@@ -1,4 +1,5 @@
 import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
+
 import { useReactiveVar } from "@apollo/client";
 
 export default function Review() {
@@ -7,7 +8,7 @@ export default function Review() {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold">{recipeInfo.recipeName}</h2>
+      <h2 className="text-lg font-semibold">{recipeInfo.name}</h2>
       <h2 className="text-lg font-semibold">{recipeInfo.buildName}</h2>
       <p className="text-sm">{recipeInfo.about}</p>
 
