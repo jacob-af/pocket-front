@@ -1,8 +1,9 @@
 "use server";
 
-import Link from "next/link";
 import AmILoggedIn from "./AmILoggedIn";
 import AuthButton from "./SignOutButton";
+import Link from "next/link";
+import RecipeLoader from "../(protected routes)/recipe/components/RecipeLoader";
 
 export default async function TopNavBar() {
   return (
@@ -10,6 +11,7 @@ export default async function TopNavBar() {
       <AmILoggedIn />
       <Link href="/db">Pocket</Link>
       <AuthButton />
+      <RecipeLoader />
     </nav>
   );
 }

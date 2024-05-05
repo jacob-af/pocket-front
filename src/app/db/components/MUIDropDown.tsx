@@ -42,7 +42,7 @@ export default function MuiDropDown({
   return (
     <>
       <Autocomplete
-        className="bg-black w-full"
+        className="w-full"
         value={currentValue.name}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
@@ -99,9 +99,13 @@ export default function MuiDropDown({
             <li
               {...props}
               key={option.id}
-              className={`${pressStart.className} antialiased bg-black text-white`}
+              className={`${pressStart.className} antialiased py-1 px-2`}
             >
-              {option.name}
+              <div>{option.name}</div>
+              {option.build && option.build.length > 1 ? (
+                <div className="text-xxs">{`${option.build.length} Builds Available`}</div>
+              ) : null}
+              {}
             </li>
           );
         }}
@@ -112,7 +116,7 @@ export default function MuiDropDown({
             InputProps={{
               ...params.InputProps,
               style: {
-                color: "white",
+                color: "primary",
                 fontFamily: `${pressStart.style.fontFamily}`
               }
             }}
