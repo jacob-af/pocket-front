@@ -19,13 +19,16 @@ export const AlertItem = ({
       : "";
 
   const handleRemove = () => {
-    alertList(alerts.splice(0, 1));
+    // Remove the specific alert from the list by index
+    const newAlerts = [...alerts];
+    newAlerts.splice(index, 1);
+    alertList(newAlerts);
   };
 
   return (
     <div
-      className={`absolute flex w-full justify-center items-center bg-black h-10 ${color} mt-${
-        11 + index * 11
+      className={`w-full justify-center truncate items-center bg-black h-10 ${color} mt-${
+        20 + index * 11
       }`}
     >
       {alert.message}

@@ -16,6 +16,7 @@ import { ListItem } from "@/types/util";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import RecipeInput from "../components/recipeInput";
 import Review from "../components/Review";
+import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";
 import { useRouter } from "next/navigation";
@@ -31,6 +32,7 @@ export default function AddRecipe() {
   });
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
+  const alerts = useReactiveVar(alertList);
   const router = useRouter();
 
   // Query data
@@ -51,6 +53,7 @@ export default function AddRecipe() {
   }, [data?.recipeList, data?.ingredients]);
 
   if (error) {
+    alertList([...alerts, { code: "error", message: error.message }]);
     return <div>{error.message}</div>;
   }
 
@@ -93,6 +96,11 @@ export default function AddRecipe() {
       newRecipeInfo(recipeBlank);
       router.push("/db/recipe");
     } catch (error) {
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      alertList([...alerts, { code: "error", message: errorMessage }]);
       console.log(error);
     }
   };

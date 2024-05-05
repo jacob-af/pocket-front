@@ -9,28 +9,25 @@ import { useReactiveVar } from "@apollo/client";
 
 export const AlertDisplay = () => {
   const alerts = useReactiveVar(alertList);
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (alerts.length > 0) {
-      const newTimer = setTimeout(() => {
-        if (alerts.length > 0) {
-          alertList(alerts.splice(0, 1));
-        }
-      }, 5000); // Adjust the delay time as needed, e.g., 5000ms for 5 seconds.
+      const timer = setTimeout(() => {
+        // Remove the first alert from the list
+        const newAlerts = alerts.slice(1);
+        alertList(newAlerts);
+      }, 5000); // Adjust the delay time as needed (5000ms for 5 seconds).
 
-      setTimer(newTimer);
+      return () => clearTimeout(timer);
     }
-  }, [alerts, timer]);
+  }, [alerts]);
 
   return (
     <>
-      {alerts.length === 0 ? (
-        <></>
-      ) : (
-        <div className="fixed top-0 flex w-full justify-center">
-          {alerts.map((alert: Alert, index: number) => (
-            <AlertItem key={index} index={index} alert={alert} />
+      {alerts.length > 0 && (
+        <div className="fixed top-10 flex flex-col w-full justify-center">
+          {alerts.map((alert, index) => (
+            <AlertItem key={index} alert={alert} index={index} />
           ))}
         </div>
       )}
