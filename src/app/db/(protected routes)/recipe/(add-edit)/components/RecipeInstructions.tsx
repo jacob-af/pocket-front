@@ -8,7 +8,7 @@ export default function BuildInstructions() {
   const recipeInfo = useReactiveVar(newRecipeInfo);
   const onChange = (event: any) => {
     console.log(event.target.id, event.target.value);
-    fieldChange({ key: event.target.id, value: event.target.value });
+    fieldChange({ key: event.target.id, newValue: event.target.value });
   };
 
   return (

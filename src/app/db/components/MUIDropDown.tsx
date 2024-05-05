@@ -42,7 +42,7 @@ export default function MuiDropDown({
   return (
     <>
       <Autocomplete
-        className="w-full"
+        className="w-full bg-black text-white"
         value={currentValue.name}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
@@ -116,7 +116,7 @@ export default function MuiDropDown({
             InputProps={{
               ...params.InputProps,
               style: {
-                color: "primary",
+                color: "white",
                 fontFamily: `${pressStart.style.fontFamily}`
               }
             }}
