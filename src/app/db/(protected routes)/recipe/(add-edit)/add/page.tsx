@@ -30,8 +30,8 @@ export default function AddRecipe() {
   });
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
-  const ingredientList = useReactiveVar(allIngredientsList);
-  const recipeList = useReactiveVar(allRecipesList);
+  //const ingredientList = useReactiveVar(allIngredientsList);
+  //const recipeList = useReactiveVar(allRecipesList);
   const router = useRouter();
 
   // Query data
