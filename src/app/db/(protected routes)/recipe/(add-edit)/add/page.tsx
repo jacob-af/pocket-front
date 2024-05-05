@@ -113,8 +113,8 @@ export default function AddRecipe() {
   return (
     <div className="flex flex-col bg-gray-900 shadow-md mx-auto p-4 rounded-lg w-full md:w-2/3">
       {loading ? "loading" : ""}
-      {recipeList.length}
-      {ingredientList.length}
+      {/* {recipeList.length}
+      {ingredientList.length} */}
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}
