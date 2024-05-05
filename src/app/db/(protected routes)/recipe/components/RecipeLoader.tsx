@@ -14,7 +14,7 @@ export default function RecipeLoader() {
     USER_BUILDS,
     {
       skip: sessionStatus !== "authenticated",
-      fetchPolicy: "network-only"
+      fetchPolicy: "cache-and-network"
     }
   );
   const recipeList = useReactiveVar(userRecipeList);
@@ -30,7 +30,7 @@ export default function RecipeLoader() {
         refetch();
         console.log("data fetched?");
       }
-    }, 500);
+    }, 2000);
   }, [data, refetch]);
 
   if (networkStatus === NetworkStatus.refetch) return "Refetching!";
