@@ -31,6 +31,8 @@ export default function AddRecipe() {
   });
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
+  const ingredientList = useReactiveVar(allIngredientsList);
+  const recipeList = useReactiveVar(allRecipesList);
   const router = useRouter();
 
   // Query data
@@ -38,6 +40,7 @@ export default function AddRecipe() {
     //skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
+  console.log();
 
   // Update reactive variables when the lists change
   useEffect(() => {
@@ -50,9 +53,6 @@ export default function AddRecipe() {
     }
   }, [data?.recipeList, data?.ingredients]);
 
-  if (loading) {
-    return <div>loading</div>;
-  }
   if (error) {
     return <div>{error.message}</div>;
   }
@@ -112,6 +112,9 @@ export default function AddRecipe() {
 
   return (
     <div className="flex flex-col bg-gray-900 shadow-md mx-auto p-4 rounded-lg w-full md:w-2/3">
+      {loading ? "loading" : ""}
+      {recipeList.length}
+      {ingredientList.length}
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}

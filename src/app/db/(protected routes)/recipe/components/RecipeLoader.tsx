@@ -11,7 +11,7 @@ import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {
   const { status: sessionStatus } = useSession();
-  const { data, loading, error, refetch } = useQuery(USER_BUILDS, {
+  const { data, loading, error } = useQuery(USER_BUILDS, {
     //skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
@@ -33,7 +33,6 @@ export default function RecipeLoader() {
 
   return (
     <div>
-      {loading ? "Loading" : ""}
       {`${recipeList.length} Recipes Loaded`}
       <RecipeDropDown recipes={recipeList} />
     </div>
