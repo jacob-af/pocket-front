@@ -23,7 +23,9 @@ export default function RecipeLoader() {
       userRecipeList(recipes);
     } else {
       console.log("no data, refetching");
-      refetch();
+      setTimeout(() => {
+        refetch();
+      }, 1000);
     }
   }, [data, refetch]);
 
