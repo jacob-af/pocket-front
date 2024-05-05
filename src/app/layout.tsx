@@ -26,11 +26,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${pressStart.className} antialiased`}>
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        <meta name="theme-color" content="#042940" />
-      </head>
       <body>
         <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
