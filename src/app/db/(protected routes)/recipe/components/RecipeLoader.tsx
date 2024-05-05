@@ -2,9 +2,9 @@
 
 import { Build, Recipe } from "@/__generated__/graphql";
 import { NetworkStatus, useQuery, useReactiveVar } from "@apollo/client";
-import { useEffect, useMemo } from "react";
 
 import { USER_BUILDS } from "@/app/graphql/queries/recipe";
+import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
@@ -14,8 +14,7 @@ export default function RecipeLoader() {
     USER_BUILDS,
     {
       skip: sessionStatus !== "authenticated",
-      fetchPolicy: "cache-and-network",
-      notifyOnNetworkStatusChange: true
+      fetchPolicy: "cache-and-network"
     }
   );
   const recipeList = useReactiveVar(userRecipeList);
