@@ -41,6 +41,7 @@ export default function AddRecipe() {
 
   // Update reactive variables when the lists change
   useEffect(() => {
+    console.log("unconditional");
     if (data?.recipeList) {
       allRecipesList(data?.recipeList);
     }
