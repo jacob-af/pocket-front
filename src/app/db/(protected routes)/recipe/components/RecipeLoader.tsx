@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { Build, Recipe } from "@/__generated__/graphql";
 import { NetworkStatus, useQuery, useReactiveVar } from "@apollo/client";
@@ -28,7 +29,6 @@ export default function RecipeLoader() {
       } else {
         console.log("no data, refetching");
         refetch();
-        console.log("data fetched?");
       }
     }, 2000);
   }, [data, refetch]);
