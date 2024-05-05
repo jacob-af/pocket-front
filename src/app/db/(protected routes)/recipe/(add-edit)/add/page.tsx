@@ -37,7 +37,7 @@ export default function AddRecipe() {
 
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
-    skip: sessionStatus !== "authenticated",
+    //skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
   console.log();
