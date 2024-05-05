@@ -50,9 +50,6 @@ export default function AddRecipe() {
     }
   }, [data?.recipeList, data?.ingredients]);
 
-  if (loading) {
-    return <div>loading</div>;
-  }
   if (error) {
     return <div>{error.message}</div>;
   }
