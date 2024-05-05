@@ -12,7 +12,7 @@ import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 export default function RecipeLoader() {
   const { status: sessionStatus } = useSession();
   const { data, loading, error } = useQuery(USER_BUILDS, {
-    //skip: sessionStatus !== "authenticated",
+    skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
   const recipeList = useReactiveVar(userRecipeList);
