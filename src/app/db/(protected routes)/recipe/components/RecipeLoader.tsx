@@ -14,7 +14,7 @@ export default function RecipeLoader() {
     USER_BUILDS,
     {
       skip: sessionStatus !== "authenticated",
-      fetchPolicy: "cache-and-network"
+      fetchPolicy: "network-only"
     }
   );
   const recipeList = useReactiveVar(userRecipeList);
