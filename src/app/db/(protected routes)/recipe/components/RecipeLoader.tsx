@@ -21,17 +21,13 @@ export default function RecipeLoader() {
   const recipeList = useReactiveVar(userRecipeList);
 
   useEffect(() => {
-    async function refresh() {
-      await refetch();
-    }
-
     if (data) {
       const recipes = convertRecipes(data);
       recipes.sort((a, b) => a.name.localeCompare(b.name));
       userRecipeList(recipes);
     } else {
       console.log("no data, refetching");
-      refresh();
+      refetch();
       console.log("data fetched?");
     }
   }, [data, refetch]);
