@@ -11,7 +11,7 @@ export default async function TopNavBar() {
       <AmILoggedIn />
       <Link href="/db">Pocket</Link>
       <AuthButton />
-      <RecipeLoader />
+      {/* <RecipeLoader /> */}
     </nav>
   );
 }
