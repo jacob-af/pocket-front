@@ -19,11 +19,12 @@ export default function RecipeLoader() {
   console.log(recipeList.slice(0, 2));
 
   useEffect(() => {
-    if (data) {
-      const recipes = convertRecipes(data);
+    if (data?.usersBuilds) {
+      const recipes = convertRecipes(data.usersBuilds);
+      console.log("sorted", recipes.slice(0, 2));
       userRecipeList(recipes);
     }
-  }, [data]);
+  }, [data?.usersBuilds]);
 
   if (error) {
     return <div>{error.message}</div>;
@@ -38,9 +39,9 @@ export default function RecipeLoader() {
   );
 }
 
-function convertRecipes(data: { usersBuilds: Build[] }) {
+function convertRecipes(usersBuilds: Build[]) {
   const recipes: Recipe[] = [];
-  data.usersBuilds.forEach(userBuild => {
+  usersBuilds.forEach(userBuild => {
     const { recipe } = userBuild;
     const index = recipes.findIndex(rec => rec.name === recipe.name);
     if (index === -1) {
