@@ -20,15 +20,17 @@ export default function RecipeLoader() {
   const recipeList = useReactiveVar(userRecipeList);
 
   useEffect(() => {
-    if (data) {
-      const recipes = convertRecipes(data);
-      recipes.sort((a, b) => a.name.localeCompare(b.name));
-      userRecipeList(recipes);
-    } else {
-      console.log("no data, refetching");
-      refetch();
-      console.log("data fetched?");
-    }
+    setTimeout(() => {
+      if (data) {
+        const recipes = convertRecipes(data);
+        recipes.sort((a, b) => a.name.localeCompare(b.name));
+        userRecipeList(recipes);
+      } else {
+        console.log("no data, refetching");
+        refetch();
+        console.log("data fetched?");
+      }
+    }, 500);
   }, [data, refetch]);
 
   if (networkStatus === NetworkStatus.refetch) return "Refetching!";
