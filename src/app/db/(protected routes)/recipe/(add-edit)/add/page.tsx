@@ -21,7 +21,6 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export default function AddRecipe() {
-  const { status: sessionStatus } = useSession();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [newRecipe] = useMutation(ADD_RECIPE, {
     refetchQueries: [RECIPES_AND_INGREDIENTS]
@@ -37,7 +36,6 @@ export default function AddRecipe() {
 
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
-    //skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
   console.log();
@@ -113,7 +111,7 @@ export default function AddRecipe() {
   return (
     <div className="flex flex-col bg-gray-900 shadow-md mx-auto p-4 rounded-lg w-full md:w-2/3">
       {loading ? "loading" : ""}
-      {recipeList.length + ingredientList.length > 0 && "data loaded"}
+      {/* {recipeList.length + ingredientList.length > 0 && "data loaded"} */}
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}
