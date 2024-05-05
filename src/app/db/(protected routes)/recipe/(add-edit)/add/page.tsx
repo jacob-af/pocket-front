@@ -11,7 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
-import { ListItem } from "@/__generated__/graphql";
+import { ListItem } from "@/types/apollo";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import RecipeInput from "../components/recipeInput";
 import Review from "../components/Review";
@@ -61,13 +61,13 @@ export default function AddRecipe() {
   }, [recipeList, ingredientList]);
 
   const submitRecipe = async () => {
-    console.log(recipeInfo.newRecipe, recipeInfo.recipeName);
+    console.log(recipeInfo.newRecipe, recipeInfo.name);
     try {
       if (recipeInfo.newRecipe) {
         const { data } = await newRecipe({
           variables: {
             createRecipeInput: {
-              recipeName: recipeInfo.recipeName,
+              recipeName: recipeInfo.name,
               about: recipeInfo.about,
               build: {
                 buildName: recipeInfo.buildName,
@@ -81,11 +81,11 @@ export default function AddRecipe() {
         });
         console.log(data);
       } else {
-        console.log(recipeInfo.recipeName);
+        console.log(recipeInfo.name);
         const { data } = await newBuild({
           variables: {
             createBuildInput: {
-              recipe: { name: recipeInfo.recipeName },
+              recipe: { name: recipeInfo.name },
               buildName: recipeInfo.buildName,
               instructions: recipeInfo.instructions,
               glassware: recipeInfo.glassware,
