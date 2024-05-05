@@ -3,6 +3,7 @@
 import { Build, Recipe } from "@/__generated__/graphql";
 import { NetworkStatus, useQuery, useReactiveVar } from "@apollo/client";
 
+import RecipeDropDown from "./RecipeDropDown";
 import { USER_BUILDS } from "@/app/graphql/queries/recipe";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -29,15 +30,17 @@ export default function RecipeLoader() {
     }
   }, [data, refetch]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>{error.message}</div>;
   }
 
-  return <div>{`${recipeList.length} Recipes Loaded`}</div>;
+  return (
+    <div>
+      {loading ? "Loading" : ""}
+      {`${recipeList.length} Recipes Loaded`}
+      <RecipeDropDown recipes={recipeList} />
+    </div>
+  );
 }
 
 function convertRecipes(data: { usersBuilds: Build[] }) {

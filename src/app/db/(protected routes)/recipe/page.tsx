@@ -6,7 +6,7 @@ import RecipeLoader from "./components/RecipeLoader";
 export default function Recipe() {
   return (
     <div className="min-h-screen flex flex-col content-center max-w-2xl overflow-auto">
-      <RecipeDropDown />
+     
       <RecipeCard />
       <RecipeLoader />
       <Link

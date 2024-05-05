@@ -14,8 +14,8 @@ import MuiDropDown from "../../../components/MUIDropDown";
 import { recipeSelect } from "./recipeActions";
 import { useReactiveVar } from "@apollo/client";
 
-export default function RecipeDropDown() {
-  const recipes: Recipe[] = useReactiveVar(userRecipeList);
+export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
+  //const recipes: Recipe[] = useReactiveVar(userRecipeList);
   const selected = useReactiveVar(selectedRecipe);
   // const [selected, setSelected] = useState<Recipe>(recipes[0]);
   console.log(recipes.slice(0, 5));
@@ -25,7 +25,7 @@ export default function RecipeDropDown() {
       <MuiDropDown
         options={recipes as ListItem[]}
         handleChange={recipeSelect}
-        currentValue={selected as ListItem}
+        currentValue={(selected as ListItem) || { name: "", id: "" }}
         index={0}
       />
     </div>
