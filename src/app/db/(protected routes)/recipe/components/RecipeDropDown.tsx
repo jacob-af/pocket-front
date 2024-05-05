@@ -15,10 +15,9 @@ import { recipeSelect } from "./recipeActions";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
-  //const recipes: Recipe[] = useReactiveVar(userRecipeList);
   const selected = useReactiveVar(selectedRecipe);
+  //const recipes: Recipe[] = useReactiveVar(userRecipeList);
   // const [selected, setSelected] = useState<Recipe>(recipes[0]);
-  console.log("recipe", recipes.slice(0, 5));
 
   return (
     <div className="flex flex-col w-sm">
