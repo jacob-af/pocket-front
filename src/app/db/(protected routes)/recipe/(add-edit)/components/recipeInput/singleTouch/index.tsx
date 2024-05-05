@@ -5,10 +5,10 @@ import {
 import {
   touchChange,
   touchIngredientChange
-} from "../../../../components/recipeHooks";
+} from "../../../../components/recipeActions";
 
 import { IngredientModal } from "./IngredientModal";
-import MuiDropDownWithModal from "../../MUIDropDownWModal";
+import MuiDropDown from "@/app/db/components/MUIDropDown";
 import { RemoveTouch } from "./RemoveTouch";
 import { TouchInput } from "@/__generated__/graphql";
 import { touchArray } from "@/app/graphql/reactiveVar/recipes";
@@ -22,6 +22,7 @@ export const SingleTouch = ({
   index: number;
 }) => {
   const touches = useReactiveVar(touchArray);
+  const allIngredients = useReactiveVar(allIngredientsList);
 
   const onChange = (event: any) => {
     touchChange({ key: event.target.id, newValue: event.target.value, index });
@@ -51,11 +52,15 @@ export const SingleTouch = ({
         <option value="each">Each</option>
       </select>
       <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100">
-        <MuiDropDownWithModal
-          list={allIngredientsList}
+        <MuiDropDown
+          options={allIngredients}
           handleChange={touchIngredientChange}
           index={index}
-          currentValue={touches[index].ingredientName}
+          currentValue={{
+            ...touches[index],
+            id: "",
+            name: touches[index].ingredientName
+          }}
         >
           <IngredientModal
             open={false}
@@ -63,7 +68,7 @@ export const SingleTouch = ({
               throw new Error("Function not implemented.");
             }}
           />
-        </MuiDropDownWithModal>
+        </MuiDropDown>
       </div>
       <div>
         <RemoveTouch index={index} />

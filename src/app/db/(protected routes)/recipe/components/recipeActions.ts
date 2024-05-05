@@ -57,14 +57,14 @@ export type IngredientChangeFunction = ({
   index: number;
 }) => void;
 
-export const touchIngredientChange: IngredientChangeFunction = ({
-  newValue,
+export const touchIngredientChange: DropDownSelectFunction = ({
+  name,
   index
 }) => {
   const touches = touchArray();
   const newTouch = {
     ...touches[index],
-    ingredientName: newValue
+    ingredientName: name
   };
   const newTouches = touches;
   newTouches.splice(index, 1, newTouch);

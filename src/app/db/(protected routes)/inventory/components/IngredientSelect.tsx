@@ -10,7 +10,7 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import { Ingredient } from "@/__generated__/graphql";
 import { ListItem } from "@/types/apollo";
-import MuiDropDown from "../../recipe/(add-edit)/components/recipeInput/MUIDropDown";
+import MuiDropDown from "@/app/db/components/MUIDropDown";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { ingredientChange } from "./ingredientHooks";
 import sortByLevenshteinDistance from "../../../components/levenshteinSort";

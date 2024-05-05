@@ -1,7 +1,8 @@
 import { ChangeEvent, ChangeEventHandler } from "react";
-import { useReactiveVar } from "@apollo/client";
+
+import { fieldChange } from "../../../../components/recipeActions";
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
-import { fieldChange } from "../../../../components/recipeHooks";
+import { useReactiveVar } from "@apollo/client";
 
 export const IngredientModal = ({
   open,
@@ -14,12 +15,12 @@ export const IngredientModal = ({
   const recipeInfo = useReactiveVar(newRecipeInfo);
 
   const closeModal = () => {
-    fieldChange({ key: "about", value: "" });
+    fieldChange({ key: "about", newValue: "" });
     toggleopen();
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    fieldChange({ key: event.target.id, value: event.target.value });
+    fieldChange({ key: event.target.id, newValue: event.target.value });
   };
 
   const onClick = () => {

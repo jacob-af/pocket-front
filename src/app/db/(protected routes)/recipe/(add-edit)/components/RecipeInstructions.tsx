@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { useReactiveVar } from "@apollo/client";
+import { fieldChange } from "../../components/recipeActions";
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
-import { fieldChange } from "../../components/recipeHooks";
+import { useReactiveVar } from "@apollo/client";
 
 export default function BuildInstructions() {
   const recipeInfo = useReactiveVar(newRecipeInfo);

@@ -10,11 +10,8 @@ import {
 
 import CheckIcon from "@mui/icons-material/Check";
 import { ListItem } from "@/types/apollo";
-import MuiDropDown from "../(add-edit)/components/recipeInput/MUIDropDown";
-import RecipeCard from "./RecipeCard";
-import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { recipeSelect } from "./recipeHooks";
-import sortByLevenshteinDistance from "../../../components/levenshteinSort";
+import MuiDropDown from "../../../components/MUIDropDown";
+import { recipeSelect } from "./recipeActions";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeDropDown() {

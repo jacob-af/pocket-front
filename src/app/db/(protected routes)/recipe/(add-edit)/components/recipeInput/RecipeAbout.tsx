@@ -1,6 +1,6 @@
-import { ReactEventHandler } from "react";
-import { fieldChange } from "../../../components/recipeHooks";
 import React from "react";
+import { ReactEventHandler } from "react";
+import { fieldChange } from "../../../components/recipeActions";
 
 export const RecipeAbout = () => {
   const onChange = (event: any) => {

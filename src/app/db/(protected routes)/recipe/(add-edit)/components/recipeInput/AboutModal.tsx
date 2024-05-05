@@ -1,8 +1,9 @@
 import { ChangeEvent, ChangeEventHandler } from "react";
-import { fieldChange } from "../../../components/recipeHooks";
+
+import React from "react";
+import { fieldChange } from "../../../components/recipeActions";
 import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
-import React from "react";
 
 export const AboutModal = ({
   open,
