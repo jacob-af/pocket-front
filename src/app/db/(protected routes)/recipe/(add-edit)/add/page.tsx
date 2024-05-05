@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
-import { ListItem } from "@/types/apollo";
+import { ListItem } from "@/types/util";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import RecipeInput from "../components/recipeInput";
 import Review from "../components/Review";

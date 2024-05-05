@@ -10,7 +10,7 @@ import {
 } from "@/app/graphql/reactiveVar/recipes";
 
 import { DropDownSelectFunction } from "../../inventory/components/ingredientHooks";
-import { ListItem } from "@/types/apollo";
+import { ListItem } from "@/types/util";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import router from "next/router";
 import { useMutation } from "@apollo/client";

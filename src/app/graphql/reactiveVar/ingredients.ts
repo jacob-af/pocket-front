@@ -1,6 +1,6 @@
 import { ReactiveVar, makeVar } from "@apollo/client";
 
-import { ListItem } from "@/types/apollo";
+import { ListItem } from "@/types/util";
 
 export const ingredientList = makeVar([
   { id: "0", name: "loading", description: "loading" }

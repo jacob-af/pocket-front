@@ -4,3 +4,9 @@ export type ListItem = {
   name: Scalars["String"]["output"];
   [key: string]: any;
 };
+
+export type Alert = {
+  __typename?: "Alert";
+  message: Scalars["String"]["output"];
+  code: Scalars["String"]["output"];
+};

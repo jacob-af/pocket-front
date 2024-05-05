@@ -33,9 +33,9 @@ export const ADD_RECIPE = gql`
 export const ADD_BUILD = gql`
   mutation AddBuild($createBuildInput: CreateBuildInput) {
     createBuild(createBuildInput: $createBuildInput) {
+      id
       buildName
       ice
-      id
       instructions
       notes
       permission
