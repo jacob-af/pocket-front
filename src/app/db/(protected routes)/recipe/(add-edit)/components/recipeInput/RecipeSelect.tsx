@@ -3,7 +3,7 @@ import {
   newRecipeInfo
 } from "@/app/graphql/reactiveVar/recipes";
 
-import { AboutModal } from "./AboutModal";
+import { AboutModal } from "./NewRecipeModal";
 import MuiDropDown from "@/app/db/components/MUIDropDown";
 import { recipeChange } from "../../../components/recipeActions";
 import { useReactiveVar } from "@apollo/client";

@@ -7,7 +7,7 @@ import {
   newRecipeInfo,
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
@@ -22,7 +22,7 @@ import { useSession } from "next-auth/react";
 
 export default function AddRecipe() {
   const { status: sessionStatus } = useSession();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [newRecipe] = useMutation(ADD_RECIPE, {
     refetchQueries: [RECIPES_AND_INGREDIENTS]
   });
@@ -36,29 +36,18 @@ export default function AddRecipe() {
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
     skip: sessionStatus !== "authenticated",
-    fetchPolicy: "cache-and-network" // Change fetchPolicy to "network-only"
+    fetchPolicy: "cache-and-network"
   });
-
-  // Memoized and sorted lists
-  const recipeList = useMemo(() => {
-    const list = data?.recipeList || [];
-    return list
-      .filter(item => item !== undefined)
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, [data]);
-
-  const ingredientList = useMemo(() => {
-    const list = data?.ingredients || [];
-    return list
-      .filter(item => item !== undefined)
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, [data]);
 
   // Update reactive variables when the lists change
   useEffect(() => {
-    allRecipesList(recipeList);
-    allIngredientsList(ingredientList);
-  }, [recipeList, ingredientList]);
+    if (data?.recipeList) {
+      allRecipesList(data?.recipeList);
+    }
+    if (data?.ingredients) {
+      allIngredientsList(data.ingredients);
+    }
+  }, [data?.recipeList, data?.ingredients]);
 
   const submitRecipe = async () => {
     console.log(recipeInfo.newRecipe, recipeInfo.name);

@@ -5,7 +5,7 @@ import {
 import {
   touchChange,
   touchIngredientChange
-} from "../../../../components/recipeActions";
+} from "@/app/db/(protected routes)/recipe/components/recipeActions";
 
 import { IngredientModal } from "./IngredientModal";
 import MuiDropDown from "@/app/db/components/MUIDropDown";

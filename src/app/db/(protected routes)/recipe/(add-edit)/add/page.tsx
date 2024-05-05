@@ -42,8 +42,12 @@ export default function AddRecipe() {
   // Update reactive variables when the lists change
   useEffect(() => {
     console.log(data);
-    if (data?.ingredients) allIngredientsList(data.ingredients);
-    if (data?.recipeList) allRecipesList(data.recipeList);
+    if (data?.ingredients) {
+      allIngredientsList(data.ingredients);
+    }
+    if (data?.recipeList) {
+      allRecipesList(data.recipeList);
+    }
   }, [data]);
 
   const submitRecipe = async () => {
@@ -108,12 +112,13 @@ export default function AddRecipe() {
         textColor="inherit"
         TabIndicatorProps={{
           style: {
-            backgroundColor: "#000000"
+            backgroundColor: "#000000",
+            fontFamily: `${pressStart.style.fontFamily}`
           }
         }}
       >
         <Tab
-          label="Recipe Info"
+          label="Recipe Details"
           className={`${pressStart.className} antialiased bg-black text-white`}
         />
         <Tab
