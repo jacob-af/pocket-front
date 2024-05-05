@@ -22,13 +22,8 @@ export default function RecipeLoader() {
     if (data) {
       const recipes = convertRecipes(data);
       userRecipeList(recipes);
-    } else {
-      setTimeout(() => {
-        console.log("no data, refetching");
-        refetch();
-      }, 1000);
     }
-  }, [data, refetch]);
+  }, [data]);
 
   if (error) {
     return <div>{error.message}</div>;

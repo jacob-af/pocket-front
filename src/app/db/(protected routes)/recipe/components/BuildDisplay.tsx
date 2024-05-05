@@ -45,20 +45,26 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
         <p>Ice: {builds[currentSlide].ice}</p>
       </div>
       {/* Navigation buttons */}
-      <button onClick={handlePrevSlide} className="float-left">
-        Previous
-      </button>
-      <button onClick={handleShare} className="my-auto">
-        share
-      </button>
-      <button onClick={handleNextSlide} className="float-right">
-        Next
-      </button>
-      <ShareRecipeModal
-        build={builds[currentSlide]}
-        open={open}
-        toggleopen={setOpen}
-      />
+      <div className="flex justify-between items-center">
+        {builds.length >= 2 && (
+          <button onClick={handlePrevSlide} className="flex-shrink-0">
+            Previous
+          </button>
+        )}
+        <button onClick={handleShare} className="flex-grow text-center">
+          Share
+        </button>
+        {builds.length >= 2 && (
+          <button onClick={handleNextSlide} className="flex-shrink-0">
+            Next
+          </button>
+        )}
+        <ShareRecipeModal
+          build={builds[currentSlide]}
+          open={open}
+          toggleopen={setOpen}
+        />
+      </div>
     </div>
   );
 };

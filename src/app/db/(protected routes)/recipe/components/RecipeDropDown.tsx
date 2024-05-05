@@ -18,7 +18,7 @@ export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
   //const recipes: Recipe[] = useReactiveVar(userRecipeList);
   const selected = useReactiveVar(selectedRecipe);
   // const [selected, setSelected] = useState<Recipe>(recipes[0]);
-  console.log(recipes.slice(0, 5));
+  console.log("recipe", recipes.slice(0, 5));
 
   return (
     <div className="flex flex-col w-sm">
