@@ -3,7 +3,7 @@
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import React, { HTMLAttributes, ReactNode, useState } from "react";
 
-import { ListItem } from "@/types/apollo";
+import { ListItem } from "@/types/util";
 import TextField from "@mui/material/TextField";
 import { pressStart } from "@/lib/pressStart";
 

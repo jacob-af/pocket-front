@@ -7,7 +7,7 @@ import {
 } from "@/app/graphql/reactiveVar/ingredients";
 
 import { Ingredient } from "@/__generated__/graphql";
-import { ListItem } from "@/types/apollo";
+import { ListItem } from "@/types/util";
 import MuiDropDown from "@/app/db/components/MUIDropDown";
 import { ingredientChange } from "./ingredientHooks";
 import { useReactiveVar } from "@apollo/client";

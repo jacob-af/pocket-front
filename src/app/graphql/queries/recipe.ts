@@ -1,7 +1,7 @@
 import { Build, UserBuildPermission } from "@/__generated__/graphql";
 import { TypedDocumentNode, gql } from "@apollo/client";
 
-import { ListItem } from "@/types/apollo";
+import { ListItem } from "@/types/util";
 
 export const USER_BUILDS: TypedDocumentNode<{
   usersBuilds: Build[];
