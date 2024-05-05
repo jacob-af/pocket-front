@@ -7,8 +7,24 @@ export const ADD_RECIPE = gql`
       createdAt
       build {
         buildName
-        createdAt
         ice
+        id
+        instructions
+        notes
+        permission
+        recipe {
+          name
+        }
+        touch {
+          amount
+          order
+          unit
+          version
+          id
+          ingredient {
+            name
+          }
+        }
       }
     }
   }

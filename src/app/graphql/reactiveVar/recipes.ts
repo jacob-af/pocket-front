@@ -33,7 +33,7 @@ export const selectedRecipeId = makeVar<ListItem>({
   name: ""
 });
 
-export const newRecipeInfo = makeVar<BuildConstructor>({
+export const recipeBlank = {
   name: "",
   buildName: "",
   about: "",
@@ -43,4 +43,6 @@ export const newRecipeInfo = makeVar<BuildConstructor>({
   touchArray: [],
   newRecipe: false,
   id: ""
-});
+};
+
+export const newRecipeInfo = makeVar<BuildConstructor>(recipeBlank);

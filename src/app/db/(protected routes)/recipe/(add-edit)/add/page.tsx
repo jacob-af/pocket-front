@@ -5,6 +5,7 @@ import { Tab, Tabs } from "@mui/material";
 import {
   allRecipesList,
   newRecipeInfo,
+  recipeBlank,
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
 import { useEffect, useState } from "react";
@@ -30,8 +31,6 @@ export default function AddRecipe() {
   });
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
-  //const ingredientList = useReactiveVar(allIngredientsList);
-  //const recipeList = useReactiveVar(allRecipesList);
   const router = useRouter();
 
   // Query data
@@ -91,7 +90,7 @@ export default function AddRecipe() {
         });
         console.log(data);
       }
-
+      newRecipeInfo(recipeBlank);
       router.push("/db/recipe");
     } catch (error) {
       console.log(error);
@@ -111,7 +110,6 @@ export default function AddRecipe() {
   return (
     <div className="flex flex-col bg-gray-900 shadow-md mx-auto p-4 rounded-lg w-full md:w-2/3">
       {loading ? "loading" : ""}
-      {/* {recipeList.length + ingredientList.length > 0 && "data loaded"} */}
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}

@@ -1,17 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { HttpLink, ApolloLink, NormalizedCacheObject } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import { ApolloLink, HttpLink, NormalizedCacheObject } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRApolloClient,
-  SSRMultipartLink,
-  NextSSRInMemoryCache
+  NextSSRInMemoryCache,
+  SSRMultipartLink
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { CachePersistor, LocalForageWrapper } from "apollo3-cache-persist";
-import localForage from "localforage";
+import { useCallback, useEffect, useState } from "react";
+
 import { getSession } from "next-auth/react";
+import localForage from "localforage";
+import { setContext } from "@apollo/client/link/context";
 
 const authLink = setContext(async (_, { headers }) => {
   const session = await getSession();
@@ -32,7 +33,7 @@ const cache = new NextSSRInMemoryCache({
       keyFields: ["id", "userName"]
     },
     Build: {
-      keyFields: ["buildName", "recipe", ["name"]]
+      keyFields: ["id", "recipe", ["name"]]
     },
     Touch: {
       keyFields: ["id"]

@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {
-  const { data, loading, error } = useQuery(USER_BUILDS, {
+  const { data, error } = useQuery(USER_BUILDS, {
     fetchPolicy: "cache-and-network"
   });
   const recipeList = useReactiveVar(userRecipeList);
