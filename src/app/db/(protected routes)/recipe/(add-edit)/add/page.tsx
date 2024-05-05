@@ -41,14 +41,21 @@ export default function AddRecipe() {
 
   // Update reactive variables when the lists change
   useEffect(() => {
-    console.log(data);
+    console.log("unconditional too");
     if (data?.ingredients) {
       allIngredientsList(data.ingredients);
     }
     if (data?.recipeList) {
       allRecipesList(data.recipeList);
     }
-  }, [data]);
+  }, [data?.recipeList, data?.ingredients]);
+
+  if (loading) {
+    return <div>loading</div>;
+  }
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   const submitRecipe = async () => {
     console.log(recipeInfo.newRecipe, recipeInfo.name);

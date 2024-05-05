@@ -38,10 +38,10 @@ export default function AddRecipe() {
     skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
-
+  console.log("hello");
   // Update reactive variables when the lists change
   useEffect(() => {
-    console.log("unconditional");
+    console.log("unconditional too");
     if (data?.recipeList) {
       allRecipesList(data?.recipeList);
     }
@@ -49,6 +49,13 @@ export default function AddRecipe() {
       allIngredientsList(data.ingredients);
     }
   }, [data?.recipeList, data?.ingredients]);
+
+  if (loading) {
+    return <div>loading</div>;
+  }
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   const submitRecipe = async () => {
     console.log(recipeInfo.newRecipe, recipeInfo.name);
