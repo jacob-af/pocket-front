@@ -8,7 +8,7 @@ import {
   SSRMultipartLink
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { CachePersistor, LocalForageWrapper } from "apollo3-cache-persist";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getSession } from "next-auth/react";
 import localForage from "localforage";

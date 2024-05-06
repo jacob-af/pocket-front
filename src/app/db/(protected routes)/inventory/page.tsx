@@ -1,9 +1,8 @@
 import LoadIngredients from "./components/IngredientLoader";
-import { useReactiveVar } from "@apollo/client";
 
 export default function ClientSideIngredients() {
   return (
-    <div>
+    <div className="flex content-center align-middle">
       <LoadIngredients />
     </div>
   );

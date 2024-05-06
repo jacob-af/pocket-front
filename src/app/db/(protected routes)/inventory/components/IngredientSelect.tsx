@@ -1,6 +1,5 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
 import {
   allIngredientsList,
   selectedIngredient
@@ -10,6 +9,7 @@ import { Ingredient } from "@/__generated__/graphql";
 import { ListItem } from "@/types/util";
 import MuiDropDown from "@/app/db/components/MUIDropDown";
 import { ingredientChange } from "./ingredientHooks";
+import { useEffect } from "react";
 import { useReactiveVar } from "@apollo/client";
 
 export default function IngredientDrop({

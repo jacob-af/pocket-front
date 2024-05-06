@@ -1,7 +1,7 @@
 import { BuildConstructor, Recipe } from "@/__generated__/graphql";
-import { ReactiveVar, makeVar } from "@apollo/client";
 
 import { ListItem } from "@/types/util";
+import { makeVar } from "@apollo/client";
 
 export const blankTouch = (order: number) => {
   return {

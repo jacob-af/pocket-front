@@ -1,12 +1,11 @@
 "use client";
 
 import { Build, Recipe } from "@/__generated__/graphql";
-import { NetworkStatus, useQuery, useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 
 import RecipeDropDown from "./RecipeDropDown";
 import { USER_BUILDS } from "@/app/graphql/queries/recipe";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {

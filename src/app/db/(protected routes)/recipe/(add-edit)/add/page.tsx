@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
-import { ListItem } from "@/types/util";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import RecipeInput from "../components/recipeInput";
 import Review from "../components/Review";
@@ -20,7 +19,6 @@ import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 export default function AddRecipe() {
   const [selectedIndex, setSelectedIndex] = useState(0);

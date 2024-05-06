@@ -1,11 +1,4 @@
-import { ADD_BUILD, ADD_RECIPE } from "@/app/graphql/mutations/recipes";
-import {
-  BuildConstructor,
-  Recipe,
-  Touch,
-  TouchInput
-} from "@/__generated__/graphql";
-import { ReactiveVar, useReactiveVar } from "@apollo/client";
+import { Recipe, Touch, TouchInput } from "@/__generated__/graphql";
 import {
   allRecipesList,
   blankTouch,
@@ -16,9 +9,6 @@ import {
 
 import { DropDownSelectFunction } from "../../inventory/components/ingredientHooks";
 import { ListItem } from "@/types/util";
-import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
-import router from "next/router";
-import { useMutation } from "@apollo/client";
 
 export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
   const recipeList = allRecipesList();
@@ -58,11 +48,11 @@ export const fieldChange: FieldChangeFunction = ({ key, newValue }) => {
 };
 
 export type IngredientChangeFunction = ({
-  newValue,
-  index
+  index,
+  newValue
 }: {
-  newValue: string;
   index: number;
+  newValue: string;
 }) => void;
 
 export const touchIngredientChange: DropDownSelectFunction = ({
@@ -90,13 +80,6 @@ export type TouchChangeFunction = ({
 }) => void;
 
 export const touchChange: TouchChangeFunction = ({ key, newValue, index }) => {
-  interface TouchFace {
-    ingredientName: string;
-    amount: number;
-    unit: string;
-    [key: string]: any; // Index signature to allow any property of type string
-  }
-
   const touches: TouchInput[] = touchArray();
   let newTouch = { ...touches[index] };
 
