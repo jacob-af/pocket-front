@@ -1,6 +1,6 @@
 "use client";
 
-import { ADD_BUILD, ADD_RECIPE } from "@/app/graphql/mutations/recipes";
+import { EDIT_BUILD, EDIT_RECIPE } from "@/app/graphql/mutations/recipes";
 import { Tab, Tabs } from "@mui/material";
 import {
   allRecipesList,
@@ -15,6 +15,7 @@ import { ListItem } from "@/types/util";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
 import RecipeInput from "../components/recipeInput";
 import Review from "../components/Review";
+import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";
 import { useRouter } from "next/navigation";
@@ -23,14 +24,15 @@ import { useSession } from "next-auth/react";
 export default function AddRecipe() {
   const { status: sessionStatus } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [newRecipe] = useMutation(ADD_RECIPE, {
+  const [newRecipe] = useMutation(EDIT_RECIPE, {
     refetchQueries: [RECIPES_AND_INGREDIENTS]
   });
-  const [newBuild] = useMutation(ADD_BUILD, {
+  const [newBuild] = useMutation(EDIT_BUILD, {
     refetchQueries: [RECIPES_AND_INGREDIENTS]
   });
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
+  const alerts = useReactiveVar(alertList);
   const router = useRouter();
 
   // Query data
@@ -41,7 +43,7 @@ export default function AddRecipe() {
   console.log("hello");
   // Update reactive variables when the lists change
   useEffect(() => {
-    console.log("unconditional too");
+    console.log("unconditional three");
     if (data?.recipeList) {
       allRecipesList(data?.recipeList);
     }
@@ -60,10 +62,12 @@ export default function AddRecipe() {
       if (recipeInfo.newRecipe) {
         const { data } = await newRecipe({
           variables: {
-            createRecipeInput: {
-              recipeName: recipeInfo.name,
+            updateRecipeInput: {
+              id: recipeInfo.id,
+              name: recipeInfo.name,
               about: recipeInfo.about,
               build: {
+                buildId: recipeInfo.id,
                 buildName: recipeInfo.buildName,
                 instructions: recipeInfo.instructions,
                 glassware: recipeInfo.glassware,
@@ -79,6 +83,7 @@ export default function AddRecipe() {
         const { data } = await newBuild({
           variables: {
             createBuildInput: {
+              buildId: recipeInfo.id,
               recipe: { name: recipeInfo.name },
               buildName: recipeInfo.buildName,
               instructions: recipeInfo.instructions,
@@ -93,6 +98,11 @@ export default function AddRecipe() {
 
       router.push("/db/recipe");
     } catch (error) {
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      alertList([...alerts, { code: "error", message: errorMessage }]);
       console.log(error);
     }
   };

@@ -133,7 +133,7 @@ input BuildConstructor {
   glassware: String!
   ice: String!
   instructions: String!
-  touchArray: [Touch]!
+  touchArray: [TouchInput!]!
 }
 
 type ArchiveResponse {
@@ -236,8 +236,9 @@ input CreateRecipeInput {
 
 input UpdateRecipeInput {
   id: ID!
-  name: String
+  name: String!
   about: String
+  build: UpdateBuildInput!
 }
 
 """
@@ -253,11 +254,11 @@ scalar EmailAddress
 type Touch {
   id: ID!
   build: Build
-  order: Int
-  amount: Float
-  unit: String
+  order: Int!
+  amount: Float!
+  unit: String!
   version: Int
-  ingredient: Ingredient
+  ingredient: Ingredient!
 }
 
 type ArchivedTouch {
@@ -271,9 +272,9 @@ type ArchivedTouch {
 }
 
 input TouchInput {
-  ingredientName: String
-  amount: Float
-  unit: String
+  ingredientName: String!
+  amount: Float!
+  unit: String!
 }
 
 type CompleteTouch {

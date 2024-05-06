@@ -2,12 +2,16 @@
 
 import { Build, Touch } from "@/__generated__/graphql";
 import React, { useState } from "react";
+import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
 
 import { ShareRecipeModal } from "./shareRecipe/ShareRecipeModal";
+import { convertArrayByOrder } from "@/app/db/(protected routes)/recipe/components/recipeActions";
+import { useRouter } from "next/navigation";
 
 const BuildDisplay = ({ builds }: { builds: Build[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   // Function to handle going to the next slide
   const handleNextSlide = () => {
     setCurrentSlide(prevSlide => (prevSlide + 1) % builds.length);
@@ -22,6 +26,39 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
 
   const handleShare = () => {
     setOpen(true);
+  };
+
+  const handleEdit = () => {
+    console.log(builds[currentSlide].touch);
+    const touches = convertArrayByOrder(builds[currentSlide].touch);
+    touchArray(touches);
+
+    if (builds[currentSlide].permission == "OWNER") {
+      newRecipeInfo({
+        id: builds[currentSlide].id,
+        name: builds[currentSlide].recipe.name,
+        buildName: builds[currentSlide].buildName,
+        about: builds[currentSlide].recipe.about || "",
+        instructions: builds[currentSlide].instructions || "",
+        glassware: builds[currentSlide].glassware || "",
+        ice: builds[currentSlide].ice || "",
+        touchArray: touches,
+        newRecipe: true
+      });
+    } else {
+      newRecipeInfo({
+        id: builds[currentSlide].id,
+        name: builds[currentSlide].recipe.name,
+        buildName: builds[currentSlide].buildName,
+        about: builds[currentSlide].recipe.about || "",
+        instructions: builds[currentSlide].instructions || "",
+        glassware: builds[currentSlide].glassware || "",
+        ice: builds[currentSlide].ice || "",
+        touchArray: touches,
+        newRecipe: false
+      });
+    }
+    router.push("/db/recipe/edit");
   };
 
   if (builds.length === 0) {
@@ -49,6 +86,12 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
         {builds.length >= 2 && (
           <button onClick={handlePrevSlide} className="flex-shrink-0">
             Previous
+          </button>
+        )}
+        {(builds[currentSlide].permission == "OWNER" ||
+          builds[currentSlide].permission == "MANAGER") && (
+          <button onClick={handleEdit} className="flex-shrink-0">
+            Edit
           </button>
         )}
         <button onClick={handleShare} className="flex-grow text-center">

@@ -16,11 +16,11 @@ export const ADD_RECIPE = gql`
           name
         }
         touch {
+          id
           amount
           order
           unit
           version
-          id
           ingredient {
             name
           }
@@ -43,13 +43,70 @@ export const ADD_BUILD = gql`
         name
       }
       touch {
+        id
         amount
         order
         unit
         version
-        id
         ingredient {
           name
+        }
+      }
+    }
+  }
+`;
+
+export const EDIT_RECIPE = gql`
+  mutation UpdateRecipe($updateRecipeInput: UpdateRecipeInput!) {
+    updateRecipe(updateRecipeInput: $updateRecipeInput) {
+      id
+      name
+      about
+      build {
+        id
+        buildName
+        ice
+        glassware
+        instructions
+        recipe {
+          name
+        }
+        touch {
+          id
+          amount
+          unit
+          version
+          ingredient {
+            name
+          }
+          order
+        }
+      }
+    }
+  }
+`;
+
+export const EDIT_BUILD = gql`
+  mutation UpdateBuild($updateBuildInput: UpdateBuildInput) {
+    updateBuild(updateBuildInput: $updateBuildInput) {
+      build {
+        id
+        buildName
+        glassware
+        ice
+        instructions
+        permission
+        recipe {
+          name
+        }
+        touch {
+          id
+          ingredient {
+            name
+          }
+          order
+          unit
+          amount
         }
       }
     }

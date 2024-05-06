@@ -38,7 +38,7 @@ export default function MuiDropDown({
     }
     return child; // Return non-element children as is
   });
-
+  console.log(currentValue.name);
   return (
     <>
       <Autocomplete

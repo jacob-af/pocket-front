@@ -1,5 +1,10 @@
 import { ADD_BUILD, ADD_RECIPE } from "@/app/graphql/mutations/recipes";
-import { BuildConstructor, Recipe } from "@/__generated__/graphql";
+import {
+  BuildConstructor,
+  Recipe,
+  Touch,
+  TouchInput
+} from "@/__generated__/graphql";
 import { ReactiveVar, useReactiveVar } from "@apollo/client";
 import {
   allRecipesList,
@@ -117,3 +122,25 @@ export const addTouch = () => {
   const rec = [...touches, blankTouch(touches.length)];
   touchArray(rec);
 };
+
+export function convertArrayByOrder(inputArray: Touch[]) {
+  // Create an empty array to hold the output
+  const outputArray: TouchInput[] = [];
+
+  // Loop through each object in the input array
+  inputArray.forEach(item => {
+    // Create a new object with the desired properties
+    const newItem = {
+      //id: item.id,
+      ingredientName: item.ingredient.name,
+      amount: item.amount,
+      unit: item.unit
+      //order: item.order
+    };
+
+    // Place the new object in the output array at the index specified by the order property
+    outputArray[item.order] = newItem;
+  });
+  console.log(outputArray);
+  return outputArray;
+}
