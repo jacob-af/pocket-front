@@ -97,14 +97,14 @@ export const touchChange: TouchChangeFunction = ({ key, newValue, index }) => {
     [key: string]: any; // Index signature to allow any property of type string
   }
 
-  const touches: TouchFace[] = touchArray();
+  const touches: TouchInput[] = touchArray();
   let newTouch = { ...touches[index] };
 
   // Update the specified key with the new newValue
   if (key === "amount") {
-    newTouch[key] = parseFloat(newValue);
-  } else {
-    newTouch[key] = newValue;
+    newTouch["amount"] = parseFloat(newValue);
+  } else if (key === "unit") {
+    newTouch["unit"] = newValue;
   }
 
   touches[index] = newTouch;
@@ -131,7 +131,7 @@ export function convertArrayByOrder(inputArray: Touch[]) {
   inputArray.forEach(item => {
     // Create a new object with the desired properties
     const newItem = {
-      //id: item.id,
+      id: item.id,
       ingredientName: item.ingredient.name,
       amount: item.amount,
       unit: item.unit

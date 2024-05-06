@@ -19,7 +19,7 @@ export default function RecipeSelect() {
         <MuiDropDown
           options={allRecipes}
           handleChange={recipeChange}
-          index={0}
+          index={98}
           currentValue={{
             ...recipeInfo
           }}

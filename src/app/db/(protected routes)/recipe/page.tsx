@@ -1,12 +1,11 @@
 import Link from "next/link";
 import RecipeCard from "./components/RecipeCard";
-import RecipeDropDown from "./components/RecipeDropDown";
+//import RecipeDropDown from "./components/RecipeDropDown";
 import RecipeLoader from "./components/RecipeLoader";
 
 export default function Recipe() {
   return (
     <div className="min-h-screen flex flex-col content-center max-w-2xl overflow-auto">
-     
       <RecipeCard />
       <RecipeLoader />
       <Link

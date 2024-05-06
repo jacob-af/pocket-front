@@ -40,7 +40,7 @@ export default function AddRecipe() {
     skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
-  console.log("hello");
+
   // Update reactive variables when the lists change
   useEffect(() => {
     console.log("unconditional three");

@@ -1,17 +1,10 @@
 "use client";
 
-import { Build, Recipe } from "@/__generated__/graphql";
-import { Combobox, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import {
-  selectedRecipe,
-  userRecipeList
-} from "@/app/graphql/reactiveVar/recipes";
-
-import CheckIcon from "@mui/icons-material/Check";
 import { ListItem } from "@/types/util";
 import MuiDropDown from "../../../components/MUIDropDown";
+import { Recipe } from "@/__generated__/graphql";
 import { recipeSelect } from "./recipeActions";
+import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
@@ -24,8 +17,8 @@ export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
       <MuiDropDown
         options={recipes as ListItem[]}
         handleChange={recipeSelect}
-        currentValue={(selected as ListItem) || { name: "", id: "" }}
-        index={0}
+        currentValue={(selected as ListItem) || { name: "", id: "Arbitrary" }}
+        index={97}
       />
     </div>
   );

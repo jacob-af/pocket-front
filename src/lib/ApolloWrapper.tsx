@@ -39,7 +39,7 @@ const cache = new NextSSRInMemoryCache({
       keyFields: ["id"]
     },
     Ingredient: {
-      keyFields: ["name"]
+      keyFields: ["id", "name"]
     }
   }
 });

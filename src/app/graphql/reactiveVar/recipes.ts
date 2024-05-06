@@ -5,6 +5,7 @@ import { ListItem } from "@/types/util";
 
 export const blankTouch = (order: number) => {
   return {
+    id: order.toString(),
     ingredientName: "",
     amount: 1,
     unit: "oz"
@@ -28,10 +29,6 @@ export const allRecipesList = makeVar<ListItem[]>([
     name: ""
   }
 ]);
-export const selectedRecipeId = makeVar<ListItem>({
-  id: "",
-  name: ""
-});
 
 export const recipeBlank = {
   name: "",

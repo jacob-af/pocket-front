@@ -17,7 +17,7 @@ interface ChildProps {
 export default function MuiDropDown({
   options,
   handleChange,
-  index = 0,
+  index,
   currentValue,
   children
 }: {
@@ -29,7 +29,6 @@ export default function MuiDropDown({
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const toggleopen = () => setOpen(!open);
-
   // Clone the child element and pass open and setOpen as props
   const clonedChildren = React.Children.map(children, child => {
     if (React.isValidElement<ChildProps>(child)) {
@@ -38,7 +37,7 @@ export default function MuiDropDown({
     }
     return child; // Return non-element children as is
   });
-  console.log(currentValue.name);
+
   return (
     <>
       <Autocomplete
@@ -98,7 +97,7 @@ export default function MuiDropDown({
           return (
             <li
               {...props}
-              key={option.id}
+              key={option.id + index}
               className={`${pressStart.className} antialiased py-1 px-2`}
             >
               <div>{option.name}</div>

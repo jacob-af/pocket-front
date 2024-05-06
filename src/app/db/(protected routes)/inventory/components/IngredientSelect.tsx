@@ -29,7 +29,7 @@ export default function IngredientDrop({
       <MuiDropDown
         options={list}
         handleChange={ingredientChange}
-        index={0}
+        index={99}
         currentValue={selected}
       />
       {selected ? selected.description : ""}
