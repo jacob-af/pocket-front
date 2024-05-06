@@ -29,7 +29,7 @@ export const SingleTouch = ({
   };
 
   return (
-    <div className="w-lg grid grid-cols-12 my-2 p-0">
+    <div className="w-lg grid grid-cols-12 my-4 p-0 h-18 border-4 box-border">
       <input
         className="col-span-2 bg-black shadow focus:shadow-outline text-gray-100 text-center"
         onChange={onChange}
@@ -50,6 +50,9 @@ export const SingleTouch = ({
         <option value="dashes">Dashes</option>
         <option value="drops">Drops</option>
         <option value="each">Each</option>
+        <option value="ml">ml</option>
+        <option value="cl">cl</option>
+        <option value="g">grams</option>
       </select>
       <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100">
         <MuiDropDown

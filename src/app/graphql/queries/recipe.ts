@@ -18,6 +18,10 @@ export const USER_BUILDS: TypedDocumentNode<{
         id
         name
         about
+        createdBy {
+          id
+          userName
+        }
       }
       touch {
         id

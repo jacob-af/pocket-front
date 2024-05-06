@@ -22,6 +22,7 @@ export const ADD_RECIPE = gql`
           unit
           version
           ingredient {
+            id
             name
           }
         }
@@ -49,6 +50,7 @@ export const ADD_BUILD = gql`
         unit
         version
         ingredient {
+          id
           name
         }
       }
@@ -77,6 +79,7 @@ export const EDIT_RECIPE = gql`
           unit
           version
           ingredient {
+            id
             name
           }
           order
@@ -102,6 +105,7 @@ export const EDIT_BUILD = gql`
         touch {
           id
           ingredient {
+            id
             name
           }
           order

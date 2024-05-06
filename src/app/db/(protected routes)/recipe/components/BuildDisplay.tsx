@@ -7,11 +7,13 @@ import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
 import { ShareRecipeModal } from "./shareRecipe/ShareRecipeModal";
 import { convertArrayByOrder } from "@/app/db/(protected routes)/recipe/components/recipeActions";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const BuildDisplay = ({ builds }: { builds: Build[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
   // Function to handle going to the next slide
   const handleNextSlide = () => {
     setCurrentSlide(prevSlide => (prevSlide + 1) % builds.length);
@@ -33,7 +35,7 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
     const touches = convertArrayByOrder(builds[currentSlide].touch);
     touchArray(touches);
 
-    if (builds[currentSlide].permission == "OWNER") {
+    if (builds[currentSlide].recipe.createdBy?.id == session?.user.id) {
       newRecipeInfo({
         id: builds[currentSlide].id,
         name: builds[currentSlide].recipe.name,

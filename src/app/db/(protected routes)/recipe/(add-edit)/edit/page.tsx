@@ -1,18 +1,22 @@
 "use client";
 
 import { EDIT_BUILD, EDIT_RECIPE } from "@/app/graphql/mutations/recipes";
+import {
+  RECIPES_AND_INGREDIENTS,
+  USER_BUILDS
+} from "@/app/graphql/queries/recipe";
 import { Tab, Tabs } from "@mui/material";
 import {
   allRecipesList,
   newRecipeInfo,
+  selectedRecipe,
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
-import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
-import RecipeInput from "../components/recipeInput";
+import EditInput from "../components/recipeInput/EditInput";
 import Review from "../components/Review";
 import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
@@ -23,12 +27,13 @@ import { useSession } from "next-auth/react";
 export default function AddRecipe() {
   const { status: sessionStatus } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [newRecipe] = useMutation(EDIT_RECIPE, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS]
+  const [updateRecipe] = useMutation(EDIT_RECIPE, {
+    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_BUILDS]
   });
-  const [newBuild] = useMutation(EDIT_BUILD, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS]
+  const [updateBuild] = useMutation(EDIT_BUILD, {
+    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_BUILDS]
   });
+
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
   const alerts = useReactiveVar(alertList);
@@ -59,7 +64,7 @@ export default function AddRecipe() {
     console.log(recipeInfo.newRecipe, recipeInfo.name);
     try {
       if (recipeInfo.newRecipe) {
-        const { data } = await newRecipe({
+        const { data } = await updateRecipe({
           variables: {
             updateRecipeInput: {
               id: recipeInfo.id,
@@ -77,9 +82,16 @@ export default function AddRecipe() {
           }
         });
         console.log(data);
+        alertList([
+          ...alerts,
+          {
+            code: "success",
+            message: `${recipeInfo.name} successfully updated`
+          }
+        ]);
       } else {
         console.log(recipeInfo.name);
-        const { data } = await newBuild({
+        const { data } = await updateBuild({
           variables: {
             createBuildInput: {
               buildId: recipeInfo.id,
@@ -93,8 +105,20 @@ export default function AddRecipe() {
           }
         });
         console.log(data);
+        alertList([
+          ...alerts,
+          {
+            code: "success",
+            message: `Build "${recipeInfo.buildName}" successfully updated for ${recipeInfo.name}`
+          }
+        ]);
       }
-
+      selectedRecipe({
+        id: "",
+        name: "",
+        about: "",
+        build: []
+      });
       router.push("/db/recipe");
     } catch (error) {
       let errorMessage = "An unknown error occurred";
@@ -146,7 +170,7 @@ export default function AddRecipe() {
       {/* Conditionally render tab panels based on selectedIndex */}
       {selectedIndex === 0 && (
         <div className="p-4">
-          <RecipeInput />
+          <EditInput />
           <button
             className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
