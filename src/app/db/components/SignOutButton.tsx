@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
 import {
   ApolloPayloadResult,
   FetchResult,
@@ -9,10 +7,13 @@ import {
   useMutation,
   useReactiveVar
 } from "@apollo/client";
+import { signOut, useSession } from "next-auth/react";
+
 import { LOG_OUT } from "../../graphql/mutations/auth";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import localForage from "localforage";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function Button() {
   const { data: session } = useSession();
@@ -49,7 +50,9 @@ function Button() {
 
   return (
     <>
-      <button onClick={onClick}>Sign out</button>
+      <button onClick={onClick} className=" text-lg">
+        Sign out
+      </button>
     </>
   );
 }

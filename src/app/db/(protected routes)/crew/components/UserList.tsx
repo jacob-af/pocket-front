@@ -1,8 +1,9 @@
-import { User } from "@/__generated__/graphql";
 import { ADD_FOLLOW, UN_FOLLOW } from "@/app/graphql/mutations/user";
-import { ALL_RELATIONS } from "@/app/graphql/queries/user";
-import { userList, userRelations } from "@/app/graphql/reactiveVar/user";
 import { useMutation, useReactiveVar } from "@apollo/client";
+import { userList, userRelations } from "@/app/graphql/reactiveVar/user";
+
+import { ALL_RELATIONS } from "@/app/graphql/queries/user";
+import { User } from "@/__generated__/graphql";
 
 export const UserList = () => {
   const users = useReactiveVar(userList);
@@ -37,7 +38,7 @@ export const UserList = () => {
   };
 
   return (
-    <div>
+    <div className="content-center">
       {users.map((user: User) => {
         if (
           relations.following.some((relation: User) => relation.id === user.id)

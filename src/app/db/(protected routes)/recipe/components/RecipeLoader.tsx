@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function RecipeLoader() {
-  const { data, error } = useQuery(USER_BUILDS, {
+  const { data, error, loading } = useQuery(USER_BUILDS, {
     fetchPolicy: "cache-and-network"
   });
   const recipeList = useReactiveVar(userRecipeList);
@@ -30,7 +30,11 @@ export default function RecipeLoader() {
 
   return (
     <div>
-      {`${recipeList.length} Recipes Loaded`}
+      {recipeList.length === 0 && loading
+        ? "Loading..."
+        : recipeList.length > 0 && loading
+        ? `${recipeList.length} Recipes Loaded From Cache`
+        : `${recipeList.length} Recipes Loaded`}
       <RecipeDropDown recipes={recipeList} />
     </div>
   );

@@ -25,6 +25,9 @@ export default async function SideBar() {
         <Link href="/db/crew" className="text-gray-100 hover:text-blue-600">
           Crew
         </Link>
+        <Link href="/db/upload" className="text-gray-100 hover:text-blue-600">
+          Upload
+        </Link>
       </div>
     </div>
   );

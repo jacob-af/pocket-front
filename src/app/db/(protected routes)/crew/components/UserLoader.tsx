@@ -1,10 +1,11 @@
 "use client";
 
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { ALL_RELATIONS } from "@/app/graphql/queries/user";
 import { userList, userRelations } from "@/app/graphql/reactiveVar/user";
-import { useSession } from "next-auth/react";
+
+import { ALL_RELATIONS } from "@/app/graphql/queries/user";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function UserLoader() {
   const { status: sessionStatus } = useSession();
@@ -44,5 +45,5 @@ export default function UserLoader() {
     return <div>{error.message}</div>;
   }
 
-  return <div>{`${users.length} Users Loaded`}</div>;
+  return <div className="text-center">{`${users.length} Users Loaded`}</div>;
 }

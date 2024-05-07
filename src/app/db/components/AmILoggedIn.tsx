@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession, getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function AmILoggedIn() {
@@ -20,5 +20,7 @@ export default function AmILoggedIn() {
     fetchSession();
   }, [update]);
 
-  return <div className="float float-left">Logged in as: {userName}</div>;
+  return (
+    <div className="float float-left text-lg">Logged in as: {userName}</div>
+  );
 }

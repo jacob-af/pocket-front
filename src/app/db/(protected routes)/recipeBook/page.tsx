@@ -2,13 +2,8 @@
 
 export default function Recipe() {
   return (
-    <div>
-      This is a protected route.
-      <br />
-      You will only see this if you are authenticated.
-      {/* {ingredients?.ingredients?.map((ingredient: any) => {
-        return <div key={ingredient?.id}>{ingredient.name}</div>;
-      })} */}
+    <div className="text-xl text-center max-w-md">
+      Here you will find all your recipe books.
     </div>
   );
 }

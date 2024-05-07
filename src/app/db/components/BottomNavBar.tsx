@@ -1,16 +1,16 @@
 "use client";
 
-import React from "react";
-
-import Link from "next/link";
 import {
-  HomeIcon,
-  GroupIcon,
+  BookIcon,
   BottleIcon,
-  MartiniIcon,
-  BookIcon
+  GroupIcon,
+  HomeIcon,
+  MartiniIcon
 } from "./icons/NavIcons";
+
 import { Bokor } from "next/font/google";
+import Link from "next/link";
+import React from "react";
 
 function BottomNavBar() {
   const [value, setValue] = React.useState("home");
@@ -20,7 +20,7 @@ function BottomNavBar() {
   };
 
   return (
-    <div className="fixed md:hidden bottom-0 left-0 right-0 bg-black shadow-lg">
+    <div className="fixed lg:hidden bottom-0 left-0 right-0 bg-black shadow-lg">
       <nav className="flex justify-around items-center">
         <Link href="/db" passHref>
           <span

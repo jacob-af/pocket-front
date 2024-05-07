@@ -54,7 +54,10 @@ export default function AddRecipe() {
     if (data?.ingredients) {
       allIngredientsList(data.ingredients);
     }
-  }, [data?.recipeList, data?.ingredients]);
+    if (recipeInfo.name === "") {
+      router.push("/db/recipe");
+    }
+  }, [data?.recipeList, data?.ingredients, recipeInfo, router]);
 
   if (error) {
     return <div>{error.message}</div>;
