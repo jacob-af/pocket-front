@@ -1,16 +1,7 @@
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  Dispatch,
-  SetStateAction,
-  useEffect
-} from "react";
+import { Dispatch, SetStateAction } from "react";
+
 import { Build } from "@/__generated__/graphql";
 import { ShareRecipeList } from "./ShareRecipeList";
-import { useQuery } from "@apollo/client";
-import { ALL_USERS } from "@/app/graphql/queries/user";
-import { useSession } from "next-auth/react";
-import { BUILD_PERMISSIONS } from "@/app/graphql/queries/recipe";
 
 export const ShareRecipeModal = ({
   build,

@@ -4,22 +4,24 @@ import { Build, Touch } from "@/__generated__/graphql";
 import React, { useState } from "react";
 import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
 
+import { DeleteBuildModal } from "./DeleteBuildModal";
 import { ShareRecipeModal } from "./shareRecipe/ShareRecipeModal";
 import { convertArrayByOrder } from "@/app/db/(protected routes)/recipe/components/recipeActions";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const BuildDisplay = ({ builds }: { builds: Build[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [open, setOpen] = useState(false);
+  const [openShare, setOpenShare] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
-  // Function to handle going to the next slide
+
   const handleNextSlide = () => {
     setCurrentSlide(prevSlide => (prevSlide + 1) % builds.length);
   };
 
-  // Function to handle going to the previous slide
   const handlePrevSlide = () => {
     setCurrentSlide(prevSlide =>
       prevSlide === 0 ? builds.length - 1 : prevSlide - 1
@@ -27,11 +29,10 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
   };
 
   const handleShare = () => {
-    setOpen(true);
+    setOpenShare(true);
   };
 
   const handleEdit = () => {
-    console.log(builds[currentSlide].touch);
     const touches = convertArrayByOrder(builds[currentSlide].touch);
     touchArray(touches);
 
@@ -63,6 +64,10 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
     router.push("/db/recipe/edit");
   };
 
+  const handleDelete = () => {
+    setOpenDelete(true);
+  };
+
   if (builds.length === 0) {
     return <div>This recipe has no builds</div>;
   }
@@ -84,30 +89,53 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
         <p>Ice: {builds[currentSlide].ice}</p>
       </div>
       {/* Navigation buttons */}
+      <div className="grid grid-cols-5 gap-4">
+        <div className="bg-blue-500 p-4">
+          {builds.length >= 2 && (
+            <button onClick={handlePrevSlide} className="flex-shrink-0">
+              Previous
+            </button>
+          )}
+        </div>
+        <div className="bg-green-500 p-4">
+          {["EDIT", "MANAGER", "OWNER"].includes(
+            builds[currentSlide].permission || "ERROR"
+          ) && (
+            <button onClick={handleEdit} className="flex-shrink-0">
+              Edit
+            </button>
+          )}
+        </div>
+        <div className="bg-yellow-500 p-4">
+          <button onClick={handleShare} className="flex-grow text-center">
+            Share
+          </button>
+        </div>
+        <div className="bg-red-500 p-4">
+          {builds[currentSlide].recipe?.createdBy?.id == session?.user.id && (
+            <button onClick={handleDelete} className="flex-shrink-0">
+              Delete
+            </button>
+          )}
+        </div>
+        <div className="bg-purple-500 p-4">
+          {builds.length >= 2 && (
+            <button onClick={handleNextSlide} className="flex-shrink-0">
+              Next
+            </button>
+          )}
+        </div>
+      </div>
       <div className="flex justify-between items-center">
-        {builds.length >= 2 && (
-          <button onClick={handlePrevSlide} className="flex-shrink-0">
-            Previous
-          </button>
-        )}
-        {(builds[currentSlide].permission == "OWNER" ||
-          builds[currentSlide].permission == "MANAGER") && (
-          <button onClick={handleEdit} className="flex-shrink-0">
-            Edit
-          </button>
-        )}
-        <button onClick={handleShare} className="flex-grow text-center">
-          Share
-        </button>
-        {builds.length >= 2 && (
-          <button onClick={handleNextSlide} className="flex-shrink-0">
-            Next
-          </button>
-        )}
         <ShareRecipeModal
           build={builds[currentSlide]}
-          open={open}
-          toggleopen={setOpen}
+          open={openShare}
+          toggleopen={setOpenShare}
+        />
+        <DeleteBuildModal
+          build={builds[currentSlide]}
+          open={openDelete}
+          toggleopen={setOpenDelete}
         />
       </div>
     </div>

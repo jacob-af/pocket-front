@@ -97,10 +97,10 @@ export default function MuiDropDown({
           return (
             <li
               {...props}
-              key={option.id + index}
-              className={`${pressStart.className} antialiased py-1 px-2`}
+              key={option.id + option.name + index}
+              className={`${pressStart.className} antialiased py-1 px-2 `}
             >
-              <div>{option.name}</div>
+              <div className="hover:bg-gray-400">{option.name}</div>
               {option.build && option.build.length > 1 ? (
                 <div className="text-xxs">{`${option.build.length} Builds Available`}</div>
               ) : null}
@@ -109,19 +109,21 @@ export default function MuiDropDown({
           );
         }}
         freeSolo
-        renderInput={params => (
-          <TextField
-            {...params}
-            InputProps={{
-              ...params.InputProps,
-              style: {
-                color: "white",
-                fontFamily: `${pressStart.style.fontFamily}`
-              }
-            }}
-            className="w-full"
-          />
-        )}
+        renderInput={params => {
+          return (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                style: {
+                  color: "white",
+                  fontFamily: `${pressStart.style.fontFamily}`
+                }
+              }}
+              className="w-full"
+            />
+          );
+        }}
       />
       <div>
         {/* Pass the props to children */}

@@ -16,7 +16,7 @@ export default async function Landing() {
       <div>[ &#10003; ] Secure login with protected routes</div>
       <div>[ &#10003; ] Refresh Tokens</div>
       <div>[ &#10003; ] Cache Persist</div>
-      <div>[ x ] User facing error messages</div>
+      <div>[ &#10003; ] User facing error messages</div>
       <div>[ x ] Image Hosting</div>
       <div>[ x ] Alternate Login methods</div>
       <div>[ x ] Social Feed</div>
@@ -26,8 +26,8 @@ export default async function Landing() {
       <div>[ &#10003; ][ &#10003; ] Load users Recipes</div>
       <div>[ &#10003; ][ &#10003; ] Add New Recipe</div>
       <div>[ &#10003; ][ &#10003; ] Add New Build</div>
-      <div>[ &#10003; ][ x ] Edit Recipe</div>
-      <div>[ &#10003; ][ x ] Edit Build</div>
+      <div>[ &#10003; ][ &#10003; ] Edit Recipe</div>
+      <div>[ &#10003; ][ &#10003; ] Edit Build</div>
       <div>[ &#10003; ][ x ] Build Version Control</div>
       <div>[ &#10003; ][ x ] Delete Recipe</div>
       <div>[ &#10003; ][ x ] Delete Build</div>

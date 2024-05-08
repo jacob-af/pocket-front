@@ -1,9 +1,10 @@
+import { FetchResult, QueryResult } from "@apollo/client";
+
+import { AuthPayload } from "@/__generated__/graphql";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getClient } from "@/lib/client";
 //import { request } from "graphql-request";
 import { LOGIN } from "../../../graphql/mutations/auth";
-import { AuthPayload } from "@/__generated__/graphql";
-import { FetchResult, QueryResult } from "@apollo/client";
+import { getClient } from "@/lib/client";
 
 export const credentialsProvider = CredentialsProvider({
   name: "Credentials",
@@ -17,7 +18,6 @@ export const credentialsProvider = CredentialsProvider({
   },
   async authorize(credentials, req) {
     const client = await getClient();
-    console.log("ding");
     try {
       const { data }: FetchResult<{ login: AuthPayload }> = await client.mutate(
         {
@@ -31,7 +31,6 @@ export const credentialsProvider = CredentialsProvider({
         }
       );
       const login = data?.login;
-      console.log(login, ": data");
       if (login) {
         return {
           accessToken: login.accessToken,

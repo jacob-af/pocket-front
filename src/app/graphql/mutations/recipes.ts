@@ -117,6 +117,34 @@ export const EDIT_BUILD = gql`
   }
 `;
 
+export const DELETE_BUILD = gql`
+  mutation Mutation($buildId: String, $permission: Permission) {
+    removeBuild(buildId: $buildId, permission: $permission) {
+      id
+      buildName
+      instructions
+      recipe {
+        id
+        name
+        about
+      }
+      touch {
+        id
+        amount
+        unit
+        ingredient {
+          name
+          id
+        }
+        order
+      }
+      permission
+      ice
+      glassware
+    }
+  }
+`;
+
 export const CHANGE_BUILD_PERMISSION = gql`
   mutation ChangeBuildPermission(
     $changeBuildPermissionInput: ChangeBuildPermissionInput
