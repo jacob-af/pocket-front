@@ -26,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${pressStart.className} antialiased`}>
-      <body>
+      <body className="w-full">
         <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>

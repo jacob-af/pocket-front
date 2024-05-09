@@ -17,7 +17,7 @@ export default async function Dashboard({
       <TopNavBar />
       <SideBar />
       <AlertDisplay />
-      <div className="flex flex-grow h-full w-screen box-border mt-12 lg:mx-60 border pb-26 md:pb-0 float-right justify-center">
+      <div className="flex flex-grow h-full w-screen box-border mt-12 lg:mx-60 pb-26 md:pb-0 float-right justify-center">
         {children}
       </div>
 

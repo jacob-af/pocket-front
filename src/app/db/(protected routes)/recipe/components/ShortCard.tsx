@@ -8,7 +8,7 @@ import { useReactiveVar } from "@apollo/client";
 
 export default function ShortCard({ build }: { build: Build }) {
   return (
-    <div className="m-2 px-2 border-4 border-black border-box rounded-lg content-center text-center w-full">
+    <div className="border-2 border-black rounded-lg content-center text-center w-full my-2 bg-black">
       <div className="grid grid-cols-3 gap-1 items-center">
         {/* SmallImage spans 1 row and 1 column */}
         <div className="col-span-3 row-span-2">{build.recipe.name}</div>
