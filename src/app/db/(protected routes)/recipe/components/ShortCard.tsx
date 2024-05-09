@@ -1,19 +1,34 @@
 "use client";
 
-import { Recipe } from "@/__generated__/graphql";
-import ShortBuildDisplay from "./ShortBuildDisplay";
-import { SmallImage } from "./TempImage";
+import { Build, Touch } from "@/__generated__/graphql";
+
+import { SmallImage } from "./Images";
 import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
-export default function ShortCard({ recipe }: { recipe: Recipe }) {
+export default function ShortCard({ build }: { build: Build }) {
   return (
-    <div className={"p-1 border"}>
-      <div className="text-center text-xl">{recipe.name}</div>
-      <div className="block">
-        <SmallImage />
+    <div className="m-2 px-2 border-4 border-black border-box rounded-lg content-center text-center w-full">
+      <div className="grid grid-cols-3 gap-1 items-center">
+        {/* SmallImage spans 1 row and 1 column */}
+        <div className="col-span-3 row-span-2">{build.recipe.name}</div>
+
+        <div className="col-span-1 row-span-6 flex justify-center">
+          <SmallImage />
+        </div>
+
+        {build.touch.map((touch, index) => (
+          <div
+            key={touch?.id}
+            className="col-span-2 row-span-2 text-xs overflow-clip text-left"
+          >
+            {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
+          </div>
+        ))}
+        <div className="col-span-3 row-span-2 text-sm">
+          Build: {build.buildName}
+        </div>
       </div>
-      <ShortBuildDisplay builds={recipe.userBuild} />
     </div>
   );
 }

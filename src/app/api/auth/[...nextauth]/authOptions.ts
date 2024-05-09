@@ -15,6 +15,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
+          image: user.image,
           accessTokenExpires: user.accessTokenExpires,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken
@@ -61,6 +62,7 @@ export const authOptions: NextAuthOptions = {
           id: token.id,
           name: token.name,
           email: token.email,
+          image: token.image,
           accessToken: token.accessToken,
           refreshToken: token.refreshToken,
           accessTokenExpires: token.accessTokenExpires

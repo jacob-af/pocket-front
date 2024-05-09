@@ -33,10 +33,13 @@ type Query {
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
-  recipeList: [Recipe]!
+  getProfile(userId: String): Profile!
+  allRecipeBooks: [RecipeBook]!
+  userRecipeBooks(userId: String!): RecipeBook
+  recipeList: [ListItem]!
   recipes: [Recipe]!
-  userRecipe: [Recipe]
   recipe(name: String!): Recipe
+  userRecipe: [Recipe]
   allUsers: [User]!
   userById(id: ID!): User
   findFollows: [User]
@@ -64,6 +67,40 @@ type Mutation {
   ): StatusMessage!
   updateIngredient(updateIngredientInput: UpdateIngredientInput!): Ingredient!
   removeIngredient(id: String!): Ingredient
+  updateProfile(image: String): Profile!
+  createRecipeBook(name: String!, description: String): RecipeBook!
+  updateRecipeBook(
+    recipeBookId: String!
+    name: String!
+    permission: Permission!
+    description: String
+  ): RecipeBook!
+  removeRecipeBook(
+    recipeBookId: String!
+    permission: Permission!
+  ): StatusMessage!
+  addBuildToRecipeBook(
+    recipeBookId: String!
+    buildId: String!
+    buildPermission: Permission!
+    bookPermission: Permission!
+  ): StatusMessage!
+  removeBuildFromRecipeBook(
+    recipeBookId: String!
+    buildId: String!
+    bookPermission: Permission!
+  ): StatusMessage!
+  changeRecipeBookPermission(
+    userId: String!
+    recipeBookId: String!
+    permission: Permission
+    userPermission: Permission
+  ): StatusMessage!
+  removeRecipeBookPermission(
+    userId: String!
+    recipeBookId: String!
+    permission: Permission
+  ): StatusMessage!
   createManyRecipes(
     createManyRecipeInputs: [CreateRecipeInput]!
   ): StatusMessage!
@@ -89,6 +126,7 @@ type Build {
   createdAt: DateTime
   editedAt: DateTime
   createdBy: User
+  createdById: String
   editedBy: User
   instructions: String
   notes: String
@@ -100,9 +138,27 @@ type Build {
   archivedBuild: [ArchivedBuild]
 }
 
+type BuildWithRecipeOptional {
+  id: ID!
+  recipe: Recipe
+  buildName: String!
+  createdAt: DateTime
+  editedAt: DateTime
+  createdBy: User
+  editedBy: User
+  instructions: String
+  notes: String
+  glassware: String
+  ice: String
+  permission: Permission
+  touch: [Touch!]
+  version: Int
+  archivedBuild: [ArchivedBuild]
+}
+
 type ArchivedBuild {
   id: ID!
-  buildId: ID!
+  buildId: String!
   buildName: String!
   createdAt: DateTime
   createdBy: User
@@ -170,7 +226,7 @@ input CreateFirstBuildInput {
 }
 
 input UpdateBuildInput {
-  recipe: Recipe!
+  recipe: RecipeNameInput!
   buildId: String!
   buildName: String
   instructions: String
@@ -187,19 +243,24 @@ input ChangeBuildPermissionInput {
   desiredPermission: Permission
 }
 
-enum Permission {
-  VIEW
-  EDIT
-  MANAGER
-  OWNER
-  BLOCKED
-}
-
 enum Relationship {
   Favorite
   Close
   Following
   Blocked
+}
+
+enum Permission {
+  BLOCKED
+  VIEW
+  EDIT
+  MANAGER
+  OWNER
+}
+
+type ListItem {
+  id: String!
+  name: String!
 }
 
 type Ingredient {
@@ -219,6 +280,40 @@ input UpdateIngredientInput {
   description: String
 }
 
+type Profile {
+  id: ID!
+  image: String
+  user: User
+}
+
+input ProfileInput {
+  userId: String!
+  image: String
+}
+
+type RecipeBook {
+  id: ID!
+  name: String
+  description: String
+  createdAt: DateTime
+  editedAt: DateTime
+  createdBy: User
+  editedBy: User
+  permission: Permission
+  build: [Build]
+}
+
+type RecipeBookUser {
+  recipeBook: RecipeBook!
+  user: User!
+  permission: Permission!
+}
+
+type RecipeBookBuild {
+  recipeBook: RecipeBook
+  build: Build
+}
+
 type Recipe {
   id: ID!
   createdAt: DateTime
@@ -226,6 +321,7 @@ type Recipe {
   name: String!
   about: String
   createdBy: User
+  createdById: String
   editedBy: User
   build: [Build!]!
   userBuild: [Build!]!
@@ -300,6 +396,7 @@ type User {
   myBuild: [Build]
   allBuilds: [Build]
   buildEditedBy: [Build]
+  profile: Profile
 }
 
 input UpdateUserInput {

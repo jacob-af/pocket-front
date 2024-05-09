@@ -38,7 +38,8 @@ export const credentialsProvider = CredentialsProvider({
           accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
           id: login.user.id,
           email: login.user.email,
-          name: login.user.userName
+          name: login.user.userName,
+          image: login.user.profile?.image || null
         };
       }
     } catch (err) {

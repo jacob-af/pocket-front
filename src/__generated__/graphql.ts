@@ -29,7 +29,7 @@ export type ArchiveResponse = {
 export type ArchivedBuild = {
   __typename?: 'ArchivedBuild';
   archivedTouch?: Maybe<Array<Maybe<ArchivedTouch>>>;
-  buildId: Scalars['ID']['output'];
+  buildId: Scalars['String']['output'];
   buildName: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
@@ -65,6 +65,7 @@ export type Build = {
   buildName: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
+  createdById?: Maybe<Scalars['String']['output']>;
   editedAt?: Maybe<Scalars['DateTime']['output']>;
   editedBy?: Maybe<User>;
   glassware?: Maybe<Scalars['String']['output']>;
@@ -102,6 +103,25 @@ export type BuildUser = {
   build: Build;
   permission?: Maybe<Permission>;
   user: User;
+};
+
+export type BuildWithRecipeOptional = {
+  __typename?: 'BuildWithRecipeOptional';
+  archivedBuild?: Maybe<Array<Maybe<ArchivedBuild>>>;
+  buildName: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  editedAt?: Maybe<Scalars['DateTime']['output']>;
+  editedBy?: Maybe<User>;
+  glassware?: Maybe<Scalars['String']['output']>;
+  ice?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  instructions?: Maybe<Scalars['String']['output']>;
+  notes?: Maybe<Scalars['String']['output']>;
+  permission?: Maybe<Permission>;
+  recipe?: Maybe<Recipe>;
+  touch?: Maybe<Array<Touch>>;
+  version?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ChangeBuildPermissionInput = {
@@ -187,6 +207,12 @@ export type Ingredient = {
   name: Scalars['String']['output'];
 };
 
+export type ListItem = {
+  __typename?: 'ListItem';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type LoginInput = {
   email: Scalars['EmailAddress']['input'];
   password: Scalars['String']['input'];
@@ -199,28 +225,44 @@ export type LogoutResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addBuildToRecipeBook: StatusMessage;
   blockUser?: Maybe<StatusMessage>;
   changeBuildPermission?: Maybe<BuildPermissionResponse>;
+  changeRecipeBookPermission: StatusMessage;
   createBuild?: Maybe<Build>;
   createIngredient: Ingredient;
   createManyIngredients: StatusMessage;
   createManyRecipes: StatusMessage;
   createRecipe: Recipe;
+  createRecipeBook: RecipeBook;
   deleteBuildPermission?: Maybe<BuildPermissionResponse>;
   followUser?: Maybe<StatusMessage>;
   getNewTokens: AuthPayload;
   login: AuthPayload;
   logout: LogoutResponse;
   removeBuild?: Maybe<Build>;
+  removeBuildFromRecipeBook: StatusMessage;
   removeIngredient?: Maybe<Ingredient>;
   removeRecipe?: Maybe<Recipe>;
+  removeRecipeBook: StatusMessage;
+  removeRecipeBookPermission: StatusMessage;
   signup: AuthPayload;
   unFollowUser?: Maybe<StatusMessage>;
   unblockUser?: Maybe<StatusMessage>;
   updateBuild?: Maybe<ArchiveResponse>;
   updateIngredient: Ingredient;
+  updateProfile: Profile;
   updateRecipe: Recipe;
+  updateRecipeBook: RecipeBook;
   updateTouch?: Maybe<Array<Maybe<Touch>>>;
+};
+
+
+export type MutationAddBuildToRecipeBookArgs = {
+  bookPermission: Permission;
+  buildId: Scalars['String']['input'];
+  buildPermission: Permission;
+  recipeBookId: Scalars['String']['input'];
 };
 
 
@@ -231,6 +273,14 @@ export type MutationBlockUserArgs = {
 
 export type MutationChangeBuildPermissionArgs = {
   changeBuildPermissionInput?: InputMaybe<ChangeBuildPermissionInput>;
+};
+
+
+export type MutationChangeRecipeBookPermissionArgs = {
+  permission?: InputMaybe<Permission>;
+  recipeBookId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+  userPermission?: InputMaybe<Permission>;
 };
 
 
@@ -256,6 +306,12 @@ export type MutationCreateManyRecipesArgs = {
 
 export type MutationCreateRecipeArgs = {
   createRecipeInput: CreateRecipeInput;
+};
+
+
+export type MutationCreateRecipeBookArgs = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 };
 
 
@@ -291,6 +347,13 @@ export type MutationRemoveBuildArgs = {
 };
 
 
+export type MutationRemoveBuildFromRecipeBookArgs = {
+  bookPermission: Permission;
+  buildId: Scalars['String']['input'];
+  recipeBookId: Scalars['String']['input'];
+};
+
+
 export type MutationRemoveIngredientArgs = {
   id: Scalars['String']['input'];
 };
@@ -298,6 +361,19 @@ export type MutationRemoveIngredientArgs = {
 
 export type MutationRemoveRecipeArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveRecipeBookArgs = {
+  permission: Permission;
+  recipeBookId: Scalars['String']['input'];
+};
+
+
+export type MutationRemoveRecipeBookPermissionArgs = {
+  permission?: InputMaybe<Permission>;
+  recipeBookId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 
@@ -326,8 +402,21 @@ export type MutationUpdateIngredientArgs = {
 };
 
 
+export type MutationUpdateProfileArgs = {
+  image?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type MutationUpdateRecipeArgs = {
   updateRecipeInput: UpdateRecipeInput;
+};
+
+
+export type MutationUpdateRecipeBookArgs = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  permission: Permission;
+  recipeBookId: Scalars['String']['input'];
 };
 
 
@@ -352,8 +441,21 @@ export enum Permission {
   View = 'VIEW'
 }
 
+export type Profile = {
+  __typename?: 'Profile';
+  id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<User>;
+};
+
+export type ProfileInput = {
+  image?: InputMaybe<Scalars['String']['input']>;
+  userId: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
+  allRecipeBooks: Array<Maybe<RecipeBook>>;
   allUsers: Array<Maybe<User>>;
   findAllBuilds?: Maybe<Array<Maybe<Build>>>;
   findBuildUsers?: Maybe<Array<Maybe<BuildUser>>>;
@@ -361,15 +463,17 @@ export type Query = {
   findFollowers?: Maybe<Array<Maybe<User>>>;
   findFollows?: Maybe<Array<Maybe<User>>>;
   findOneBuild?: Maybe<Build>;
+  getProfile: Profile;
   getUserRelationships?: Maybe<Array<Maybe<UserRelationship>>>;
   hello: Scalars['String']['output'];
   ingredient?: Maybe<Ingredient>;
   ingredients: Array<Maybe<Ingredient>>;
   recipe?: Maybe<Recipe>;
-  recipeList: Array<Maybe<Recipe>>;
+  recipeList: Array<Maybe<ListItem>>;
   recipes: Array<Maybe<Recipe>>;
   userById?: Maybe<User>;
   userRecipe?: Maybe<Array<Maybe<Recipe>>>;
+  userRecipeBooks?: Maybe<RecipeBook>;
   usersBuilds?: Maybe<Array<Maybe<Build>>>;
 };
 
@@ -381,6 +485,11 @@ export type QueryFindBuildUsersArgs = {
 
 export type QueryFindFolloweddUsersBuildPermissionArgs = {
   buildId: Scalars['String']['input'];
+};
+
+
+export type QueryGetProfileArgs = {
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -398,17 +507,49 @@ export type QueryUserByIdArgs = {
   id: Scalars['ID']['input'];
 };
 
+
+export type QueryUserRecipeBooksArgs = {
+  userId: Scalars['String']['input'];
+};
+
 export type Recipe = {
   __typename?: 'Recipe';
   about?: Maybe<Scalars['String']['output']>;
   build: Array<Build>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
+  createdById?: Maybe<Scalars['String']['output']>;
   editedAt?: Maybe<Scalars['DateTime']['output']>;
   editedBy?: Maybe<User>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   userBuild: Array<Build>;
+};
+
+export type RecipeBook = {
+  __typename?: 'RecipeBook';
+  build?: Maybe<Array<Maybe<Build>>>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  editedAt?: Maybe<Scalars['DateTime']['output']>;
+  editedBy?: Maybe<User>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  permission?: Maybe<Permission>;
+};
+
+export type RecipeBookBuild = {
+  __typename?: 'RecipeBookBuild';
+  build?: Maybe<Build>;
+  recipeBook?: Maybe<RecipeBook>;
+};
+
+export type RecipeBookUser = {
+  __typename?: 'RecipeBookUser';
+  permission: Permission;
+  recipeBook: RecipeBook;
+  user: User;
 };
 
 export type RecipeNameInput = {
@@ -452,7 +593,7 @@ export type UpdateBuildInput = {
   ice?: InputMaybe<Scalars['String']['input']>;
   instructions?: InputMaybe<Scalars['String']['input']>;
   permission: Permission;
-  recipe: Recipe;
+  recipe: RecipeNameInput;
   touchArray: Array<InputMaybe<TouchInput>>;
 };
 
@@ -486,6 +627,7 @@ export type User = {
   id: Scalars['ID']['output'];
   lastEdited?: Maybe<Scalars['DateTime']['output']>;
   myBuild?: Maybe<Array<Maybe<Build>>>;
+  profile?: Maybe<Profile>;
   userName: Scalars['String']['output'];
 };
 
@@ -507,7 +649,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, userName: string, email?: any | null } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, userName: string, email?: any | null, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
 
 export type SignupMutationVariables = Exact<{
   createUserInput: CreateUserInput;
@@ -627,7 +769,7 @@ export type QueryQuery = { __typename?: 'Query', userRecipe?: Array<{ __typename
 export type RecipeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RecipeListQuery = { __typename?: 'Query', recipeList: Array<{ __typename?: 'Recipe', id: string, name: string } | null>, ingredients: Array<{ __typename?: 'Ingredient', id: string, name: string } | null> };
+export type RecipeListQuery = { __typename?: 'Query', recipeList: Array<{ __typename?: 'ListItem', id: string, name: string } | null>, ingredients: Array<{ __typename?: 'Ingredient', id: string, name: string } | null> };
 
 export type FindFolloweddUsersBuildPermissionQueryVariables = Exact<{
   buildId: Scalars['String']['input'];
@@ -647,7 +789,7 @@ export type AllRelationsQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllRelationsQuery = { __typename?: 'Query', allUsers: Array<{ __typename?: 'User', id: string, userName: string, email?: any | null } | null>, findFollowers?: Array<{ __typename?: 'User', userName: string, id: string, email?: any | null } | null> | null, findFollows?: Array<{ __typename?: 'User', userName: string, id: string, email?: any | null } | null> | null };
 
 
-export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const SignupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]} as unknown as DocumentNode<SignupMutation, SignupMutationVariables>;
 export const GetTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GetTokens"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getNewTokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refreshToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]} as unknown as DocumentNode<GetTokensMutation, GetTokensMutationVariables>;
 export const LogOutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LogOut"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loggedOut"}}]}}]}}]} as unknown as DocumentNode<LogOutMutation, LogOutMutationVariables>;

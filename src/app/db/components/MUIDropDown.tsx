@@ -44,7 +44,7 @@ export default function MuiDropDown({
   return (
     <>
       <Autocomplete
-        className="w-full bg-white border text-black"
+        className="w-full bg-white text-black rounded-xl m-1 box-border"
         value={currentValue.name}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {

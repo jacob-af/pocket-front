@@ -1,5 +1,6 @@
+import { TypedDocumentNode, gql } from "@apollo/client";
+
 import { AuthPayload } from "@/__generated__/graphql";
-import { gql, TypedDocumentNode } from "@apollo/client";
 
 export const LOGIN = gql`
   mutation Login($loginInput: LoginInput!) {
@@ -10,6 +11,9 @@ export const LOGIN = gql`
         id
         userName
         email
+        profile {
+          image
+        }
       }
     }
   }
@@ -38,6 +42,9 @@ export const NEW_TOKENS: TypedDocumentNode<{ getNewTokens: AuthPayload }> = gql`
         email
         id
         userName
+        profile {
+          image
+        }
       }
     }
   }
