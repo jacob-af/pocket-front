@@ -22,6 +22,7 @@
     "@mui/material-nextjs": "^5.15.11",
     "@types/d3": "^7.4.3",
     "@types/uuid": "^9.0.8",
+    "@uploadthing/react": "^6.5.3",
     "apollo3-cache-persist": "^0.15.0",
     "d3": "^7.9.0",
     "graphql": "^16.8.1",
@@ -31,6 +32,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "uploadthing": "^6.10.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
