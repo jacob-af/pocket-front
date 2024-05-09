@@ -4,8 +4,11 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { Build } from "@/__generated__/graphql";
 import { DELETE_BUILD } from "@/app/graphql/mutations/recipes";
 import { DeleteRecipeModal } from "./DeleteRecipeModal";
-import { USER_BUILDS } from "@/app/graphql/queries/recipe";
+import { USER_RECIPES } from "@/app/graphql/queries/recipe";
 import { alertList } from "@/app/graphql/reactiveVar/alert";
+import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export const DeleteBuildModal = ({
   build,
@@ -16,10 +19,13 @@ export const DeleteBuildModal = ({
   open: boolean;
   toggleopen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { data: session } = useSession();
+  const recipe = useReactiveVar(selectedRecipe);
   const alerts = useReactiveVar(alertList);
+  const router = useRouter();
   const [openModal, setOpen] = useState(false);
   const [deleteBuild, feedback] = useMutation(DELETE_BUILD, {
-    refetchQueries: [USER_BUILDS]
+    refetchQueries: [USER_RECIPES]
   });
 
   const closeModal = () => {
@@ -30,6 +36,7 @@ export const DeleteBuildModal = ({
     setOpen(true);
   };
   const handleDeleteBuild = async () => {
+    console.log(build.permission);
     const { data } = await deleteBuild({
       variables: {
         buildId: build.id,
@@ -44,7 +51,17 @@ export const DeleteBuildModal = ({
         message: `${build.buildName} has been deleted`
       }
     ]);
+    selectedRecipe({
+      id: "Uniqu3",
+      name: "",
+      about: "",
+      build: [],
+      userBuild: []
+    });
+    router.push("/db/recipe");
   };
+
+  console.log(recipe);
 
   return (
     <div>
@@ -55,7 +72,7 @@ export const DeleteBuildModal = ({
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="p-6 bg-black border block w-md shadow-lg max-w-lgn"
+            className="p-6 bg-black block max-w-lg"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
@@ -71,8 +88,22 @@ export const DeleteBuildModal = ({
               Are you sure you want to delete: {`${build.buildName}`} for{" "}
               {`${build.recipe.name}? This process cannot be undone.`}
             </div>
-            <button onClick={handleDeleteRecipe}>delete recipe</button>
-            <button onClick={handleDeleteBuild}>delete build</button>
+            <button
+              onClick={handleDeleteBuild}
+              className="border p-2 float-left"
+            >
+              <span className=" block">Delete</span>
+              <span className=" block">Build</span>
+            </button>
+            {recipe.createdBy?.id == session?.user.id && (
+              <button
+                onClick={handleDeleteRecipe}
+                className="border border-red-800 p-2 float-right text-red-800"
+              >
+                <span className=" block">Delete</span>
+                <span className=" block">Recipe</span>
+              </button>
+            )}
           </div>
         </div>
       )}

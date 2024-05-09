@@ -50,7 +50,7 @@ export const DeleteRecipeModal = ({
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="p-6 bg-black border block w-md shadow-lg"
+            className="p-6 bg-black block max-w-lg justify-center items-center"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
@@ -63,12 +63,18 @@ export const DeleteRecipeModal = ({
 
             {/* Modal content */}
 
-            <div className="text-xl font-semibold mb-4">
+            <div className="text-xl font-semibold mb-4 text-red-800">
               Are you sure you want to delete
-              {`${build.recipe.name}? This process cannot be undone.  It will delete every build anyone has made for this recipe.  Someone might have a really bad day.  Like, are you really really sure?`}
+              {` ${build.recipe.name}? This process cannot be undone.  It will delete every build anyone has made for this recipe.  Someone might have a really bad day.  Like, are you really really sure?`}
             </div>
 
-            <button onClick={handleDeleteRecipe}>delete recipe</button>
+            <button
+              onClick={handleDeleteRecipe}
+              className="border border-white p-2 mx-auto text-red-800 block text-center"
+            >
+              <span className=" block">Delete</span>
+              <span className=" block">Recipe</span>
+            </button>
           </div>
         </div>
       )}

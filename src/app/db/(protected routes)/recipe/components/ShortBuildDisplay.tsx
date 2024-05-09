@@ -29,52 +29,6 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
     );
   };
 
-  const handleShare = () => {
-    setOpenShare(true);
-  };
-
-  const handleEdit = () => {
-    const touches = convertArrayByOrder(builds[currentSlide].touch);
-    touchArray(touches);
-
-    if (builds[currentSlide].recipe.createdBy?.id == session?.user.id) {
-      newRecipeInfo({
-        id: builds[currentSlide].id,
-        name: builds[currentSlide].recipe.name,
-        buildName: builds[currentSlide].buildName,
-        about: builds[currentSlide].recipe.about || "",
-        instructions: builds[currentSlide].instructions || "",
-        glassware: builds[currentSlide].glassware || "",
-        ice: builds[currentSlide].ice || "",
-        touchArray: touches,
-        newRecipe: true,
-        permission: builds[currentSlide].permission
-      });
-    } else {
-      newRecipeInfo({
-        id: builds[currentSlide].id,
-        name: builds[currentSlide].recipe.name,
-        buildName: builds[currentSlide].buildName,
-        about: builds[currentSlide].recipe.about || "",
-        instructions: builds[currentSlide].instructions || "",
-        glassware: builds[currentSlide].glassware || "",
-        ice: builds[currentSlide].ice || "",
-        touchArray: touches,
-        newRecipe: false,
-        permission: builds[currentSlide].permission
-      });
-    }
-    router.push("/db/recipe/edit");
-  };
-
-  const handleDelete = () => {
-    setOpenDelete(true);
-  };
-
-  if (builds.length === 0) {
-    return <div>This recipe has no builds</div>;
-  }
-
   return (
     <div className="carousel">
       {/* Displaying the current slide */}
@@ -89,9 +43,6 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
             );
           }
         )}
-        <p>{builds[currentSlide].instructions}</p>
-        <p>Glassware: {builds[currentSlide].glassware}</p>
-        <p>Ice: {builds[currentSlide].ice}</p>
       </div>
       {/* Navigation buttons */}
       <div className="grid grid-cols-5 gap-2">
@@ -102,36 +53,6 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
               className="flex-shrink-0 border-white border p-4"
             >
               Previous
-            </button>
-          )}
-        </div>
-        <div className="">
-          {["EDIT", "MANAGER", "OWNER"].includes(
-            builds[currentSlide].permission || "ERROR"
-          ) && (
-            <button
-              onClick={handleEdit}
-              className="flex-shrink-0 border-white border p-4"
-            >
-              Edit
-            </button>
-          )}
-        </div>
-        <div className="">
-          <button
-            onClick={handleShare}
-            className="flex-grow text-center border-white border p-4"
-          >
-            Share
-          </button>
-        </div>
-        <div className="bg-red-500">
-          {builds[currentSlide].createdBy?.id == session?.user.id && (
-            <button
-              onClick={handleDelete}
-              className="flex-shrink-0 border-white border p-4"
-            >
-              Delete
             </button>
           )}
         </div>

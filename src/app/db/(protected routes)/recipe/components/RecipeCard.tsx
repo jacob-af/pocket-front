@@ -16,7 +16,7 @@ export default function RecipeCard() {
 
         <div className="mt-4">About: {recipe.about}</div>
       </div>
-      <BuildDisplay builds={recipe.build} />
+      <BuildDisplay builds={recipe.userBuild} />
     </div>
   );
 }

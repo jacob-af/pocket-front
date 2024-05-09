@@ -6,6 +6,7 @@ import { Alert } from "@/types/util";
 import { AlertItem } from "./AlertItem";
 import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { useReactiveVar } from "@apollo/client";
+import { v4 as uuidv4 } from "uuid";
 
 export const AlertDisplay = () => {
   const alerts = useReactiveVar(alertList);
@@ -27,7 +28,7 @@ export const AlertDisplay = () => {
       {alerts.length > 0 && (
         <div className="fixed top-10 flex flex-col w-full justify-center">
           {alerts.map((alert, index) => (
-            <AlertItem key={index} alert={alert} index={index} />
+            <AlertItem key={uuidv4()} alert={alert} index={index} />
           ))}
         </div>
       )}

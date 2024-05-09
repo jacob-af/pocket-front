@@ -9,6 +9,7 @@ import {
 
 import { DropDownSelectFunction } from "../../inventory/components/ingredientHooks";
 import { ListItem } from "@/types/util";
+import { redirect } from "next/navigation";
 
 export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
   const recipeList = allRecipesList();
@@ -32,6 +33,8 @@ export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
 
 export const recipeSelect: DropDownSelectFunction = newValue => {
   selectedRecipe(newValue as Recipe);
+  console.log(newValue.name, "hitting rec selec");
+  redirect(`/db/recipe/${newValue.name}`);
 };
 
 export type FieldChangeFunction = ({

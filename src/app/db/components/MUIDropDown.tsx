@@ -6,6 +6,7 @@ import React, { HTMLAttributes, ReactNode, useState } from "react";
 import { ListItem } from "@/types/util";
 import TextField from "@mui/material/TextField";
 import { pressStart } from "@/lib/pressStart";
+import { v4 as uuidv4 } from "uuid";
 
 const filter = createFilterOptions<ListItem>();
 
@@ -28,7 +29,9 @@ export default function MuiDropDown({
   children?: ReactNode;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+  const [uuid, setUuid] = useState<string>("");
   const toggleopen = () => setOpen(!open);
+
   // Clone the child element and pass open and setOpen as props
   const clonedChildren = React.Children.map(children, child => {
     if (React.isValidElement<ChildProps>(child)) {
@@ -41,7 +44,7 @@ export default function MuiDropDown({
   return (
     <>
       <Autocomplete
-        className="w-full bg-black text-white"
+        className="w-full bg-white border text-black"
         value={currentValue.name}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
@@ -70,7 +73,7 @@ export default function MuiDropDown({
             filtered.push({
               //inputValue,
               name: `Add "${inputValue}"`,
-              id: ""
+              id: uuidv4()
             });
           }
 
@@ -94,17 +97,17 @@ export default function MuiDropDown({
           return option.name;
         }}
         renderOption={(props: HTMLAttributes<HTMLLIElement>, option) => {
+          const uniqueKey = `${index}-${uuidv4()}-${option.id}`;
           return (
             <li
               {...props}
-              key={option.id + option.name + index}
-              className={`${pressStart.className} antialiased py-1 px-2 `}
+              key={uniqueKey}
+              className={`${pressStart.className} antialiased py-1 px-2 hover:bg-gray-400 focus-visible:bg-red-800`}
             >
-              <div className="hover:bg-gray-400">{option.name}</div>
+              <div className="focus-visible:bg-red-800">{option.name}</div>
               {option.build && option.build.length > 1 ? (
                 <div className="text-xxs">{`${option.build.length} Builds Available`}</div>
               ) : null}
-              {}
             </li>
           );
         }}
@@ -116,7 +119,7 @@ export default function MuiDropDown({
               InputProps={{
                 ...params.InputProps,
                 style: {
-                  color: "white",
+                  color: "black",
                   fontFamily: `${pressStart.style.fontFamily}`
                 }
               }}

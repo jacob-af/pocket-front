@@ -29,8 +29,8 @@ export default async function Landing() {
       <div>[ &#10003; ][ &#10003; ] Edit Recipe</div>
       <div>[ &#10003; ][ &#10003; ] Edit Build</div>
       <div>[ &#10003; ][ x ] Build Version Control</div>
-      <div>[ &#10003; ][ x ] Delete Recipe</div>
-      <div>[ &#10003; ][ x ] Delete Build</div>
+      <div>[ &#10003; ][ &#10003; ] Delete Recipe</div>
+      <div>[ &#10003; ][ &#10003; ] Delete Build</div>
       <div>[ &#10003; ][ &#10003; ] Change Build Permission</div>
       <div>[ &#10003; ][ &#10003; ] Remove Build Permission</div>
       <div>[ x ][ x ] Specialized Recipe Search</div>
@@ -51,13 +51,13 @@ export default async function Landing() {
       <br />
       <div className="text-2xl text-center py-4">RecipeBook Operations</div>
       <div>[API][UI]</div>
-      <div>[ x ][ x ] Load RecipeBooks</div>
-      <div>[ x ][ x ] Edit RecipeBookDetails</div>
-      <div>[ x ][ x ] Add Recipe to Recipe Book</div>
-      <div>[ x ][ x ] Remove Recipe from Book</div>
-      <div>[ x ][ x ] Delete Recipe Book</div>
-      <div>[ x ][ x ] Change Recipe Book Permission</div>
-      <div>[ x ][ x ] Remove Recipe Book Permission</div>
+      <div>[ &#10003; ][ x ] Load RecipeBooks</div>
+      <div>[ &#10003; ][ x ] Edit RecipeBookDetails</div>
+      <div>[ &#10003; ][ x ] Add Recipe to Recipe Book</div>
+      <div>[ &#10003; ][ x ] Remove Recipe from Book</div>
+      <div>[ &#10003; ][ x ] Delete Recipe Book</div>
+      <div>[ &#10003; ][ x ] Change Recipe Book Permission</div>
+      <div>[ &#10003; ][ x ] Remove Recipe Book Permission</div>
       <br />
       <div className="text-2xl text-center py-4">User/Crew Operations</div>
       <div>[API][UI]</div>

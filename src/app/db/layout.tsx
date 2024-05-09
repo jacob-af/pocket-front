@@ -20,6 +20,7 @@ export default async function Dashboard({
       <div className="flex flex-grow h-full w-screen box-border mt-12 lg:mx-60 border pb-26 md:pb-0 float-right justify-center">
         {children}
       </div>
+
       <BottomNavBar />
     </main>
   );
