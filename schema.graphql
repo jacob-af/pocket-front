@@ -35,6 +35,7 @@ type Query {
   ingredient(id: Int!): Ingredient
   recipeList: [Recipe]!
   recipes: [Recipe]!
+  userRecipe: [Recipe]
   recipe(name: String!): Recipe
   allUsers: [User]!
   userById(id: ID!): User
@@ -93,7 +94,7 @@ type Build {
   notes: String
   glassware: String
   ice: String
-  permission: Permission
+  permission: Permission!
   touch: [Touch!]!
   version: Int
   archivedBuild: [ArchivedBuild]
@@ -134,6 +135,7 @@ input BuildConstructor {
   ice: String!
   instructions: String!
   touchArray: [TouchInput!]!
+  permission: Permission!
 }
 
 type ArchiveResponse {
@@ -168,14 +170,14 @@ input CreateFirstBuildInput {
 }
 
 input UpdateBuildInput {
-  recipeName: String
+  recipe: Recipe!
   buildId: String!
   buildName: String
   instructions: String
   glassware: String
   ice: String
   touchArray: [TouchInput]!
-  permission: Permission
+  permission: Permission!
 }
 
 input ChangeBuildPermissionInput {
@@ -226,6 +228,7 @@ type Recipe {
   createdBy: User
   editedBy: User
   build: [Build!]!
+  userBuild: [Build!]!
 }
 
 input CreateRecipeInput {

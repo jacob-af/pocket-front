@@ -14,7 +14,7 @@ export default function Review() {
 
       <ul className="p-0">
         {touches.map((touch, index) => (
-          <li key={`review${index}`} className="py-1">
+          <li key={`review${touch.id}`} className="py-1">
             <div className="flex justify-between">
               <div>
                 <p className="font-medium">{touch.ingredientName}</p>

@@ -3,7 +3,7 @@
 import { EDIT_BUILD, EDIT_RECIPE } from "@/app/graphql/mutations/recipes";
 import {
   RECIPES_AND_INGREDIENTS,
-  USER_BUILDS
+  USER_RECIPES
 } from "@/app/graphql/queries/recipe";
 import { Tab, Tabs } from "@mui/material";
 import {
@@ -28,10 +28,10 @@ export default function AddRecipe() {
   const { status: sessionStatus } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [updateRecipe] = useMutation(EDIT_RECIPE, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_BUILDS]
+    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_RECIPES]
   });
   const [updateBuild] = useMutation(EDIT_BUILD, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_BUILDS]
+    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_RECIPES]
   });
 
   const touches = useReactiveVar(touchArray);
@@ -79,7 +79,8 @@ export default function AddRecipe() {
                 instructions: recipeInfo.instructions,
                 glassware: recipeInfo.glassware,
                 ice: recipeInfo.ice,
-                touchArray: [...touches]
+                touchArray: [...touches],
+                permission: recipeInfo.permission
               }
             }
           }
@@ -96,14 +97,15 @@ export default function AddRecipe() {
         console.log(recipeInfo.name);
         const { data } = await updateBuild({
           variables: {
-            createBuildInput: {
+            updateBuildInput: {
               buildId: recipeInfo.id,
               recipe: { name: recipeInfo.name },
               buildName: recipeInfo.buildName,
               instructions: recipeInfo.instructions,
               glassware: recipeInfo.glassware,
               ice: recipeInfo.ice,
-              touchArray: [...touches]
+              touchArray: [...touches],
+              permission: recipeInfo.permission
             }
           }
         });
@@ -120,7 +122,8 @@ export default function AddRecipe() {
         id: "",
         name: "",
         about: "",
-        build: []
+        build: [],
+        userBuild: []
       });
       router.push("/db/recipe");
     } catch (error) {

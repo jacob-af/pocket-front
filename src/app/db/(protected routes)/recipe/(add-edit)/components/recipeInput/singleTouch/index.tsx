@@ -61,7 +61,7 @@ export const SingleTouch = ({
           index={index}
           currentValue={{
             ...touches[index],
-            id: "",
+            id: touches[index].id,
             name: touches[index].ingredientName
           }}
         >
