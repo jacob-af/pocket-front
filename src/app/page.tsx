@@ -1,8 +1,8 @@
-import AuthButton from "@/app/db/components/SignOutButton";
+import AuthButton from "@/app/components/buttons/SignOutButton";
 import { Button } from "@mui/material";
 import Link from "@mui/material/Link";
-import { redirect } from "next/navigation";
 import { auth } from "../lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await auth();

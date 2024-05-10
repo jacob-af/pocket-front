@@ -2,10 +2,10 @@
 
 import * as React from "react";
 
-import { AlertDisplay } from "./components/AlertDisplay";
-import BottomNavBar from "./components/BottomNavBar";
-import SideBar from "./components/SideBar";
-import TopNavBar from "./components/TopNavBar";
+import { AlertDisplay } from "../components/alerts/AlertDisplay";
+import BottomNavBar from "@/app/components/navigation/BottomNavBar";
+import SideBar from "@/app/components/navigation/SideBar";
+import TopNavBar from "@/app/components/navigation/TopNavBar";
 
 export default async function Dashboard({
   children

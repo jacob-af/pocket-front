@@ -1,6 +1,6 @@
 "use client";
 
-import UploadFile from "@/app/SharedComponents/FileUpload";
+import UploadFile from "@/app/components/SharedComponents/FileUpload";
 
 export default function Recipe() {
   return (

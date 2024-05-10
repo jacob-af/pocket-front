@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
-import EditInput from "../components/RecipeInput/EditInput";
+import EditInput from "@/app/components/recipe/input/EditInput";
 import Review from "../components/Review";
 import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";

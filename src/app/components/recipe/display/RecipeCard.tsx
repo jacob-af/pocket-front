@@ -2,7 +2,7 @@
 
 import BuildDisplay from "./BuildDisplay";
 import { Recipe } from "@/__generated__/graphql";
-import TempImage from "../../../../components/images/Images";
+import TempImage from "@/app/components/images/Images";
 import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 

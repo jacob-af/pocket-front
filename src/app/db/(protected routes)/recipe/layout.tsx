@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import RecipeLoader from "./components/RecipeLoader";
+import RecipeLoader from "@/app/components/recipe/RecipeLoader";
 
 export default async function Layout({
   children

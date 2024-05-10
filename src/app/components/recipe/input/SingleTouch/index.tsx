@@ -5,7 +5,7 @@ import {
 import {
   touchChange,
   touchIngredientChange
-} from "@/app/db/(protected routes)/recipe/components/recipeActions";
+} from "@/app/components/recipe/recipeActions";
 
 import { IngredientModal } from "./IngredientModal";
 import MuiDropDown from "@/app/db/components/MUIDropDown";
@@ -57,7 +57,7 @@ export const SingleTouch = ({
       <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100">
         <MuiDropDown
           options={allIngredients}
-          handleChange={touchIngredientChange}
+          handleChange={value => touchIngredientChange(value, index)}
           index={index}
           currentValue={{
             ...touches[index],

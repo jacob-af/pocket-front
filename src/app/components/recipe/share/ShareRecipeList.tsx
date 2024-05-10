@@ -1,16 +1,17 @@
-import { Build, User, UserBuildPermission } from "@/__generated__/graphql";
 import { ADD_FOLLOW, UN_FOLLOW } from "@/app/graphql/mutations/user";
-import { BUILD_PERMISSIONS } from "@/app/graphql/queries/recipe";
 import { ALL_RELATIONS, ALL_USERS } from "@/app/graphql/queries/user";
+import { Build, User, UserBuildPermission } from "@/__generated__/graphql";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import {
   userBuildPermissions,
   userList,
   userRelations
 } from "@/app/graphql/reactiveVar/user";
+
+import { BUILD_PERMISSIONS } from "@/app/graphql/queries/recipe";
 import { ShareRecipe } from "./ShareRecipeItem";
-import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export const ShareRecipeList = ({ build }: { build: Build }) => {
   const { status: sessionStatus } = useSession();

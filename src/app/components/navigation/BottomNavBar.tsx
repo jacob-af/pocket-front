@@ -6,7 +6,7 @@ import {
   GroupIcon,
   HomeIcon,
   MartiniIcon
-} from "./icons/NavIcons";
+} from "@/app/components/images/NavIcons";
 
 import { Bokor } from "next/font/google";
 import Link from "next/link";

@@ -6,7 +6,7 @@ import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
 
 import { DeleteBuildModal } from "../../../../components/modals/DeleteBuildModal";
 import { ShareRecipeModal } from "@/app/components/modals/ShareRecipeModal";
-import { convertArrayByOrder } from "@/app/db/(protected routes)/recipe/components/recipeActions";
+import { convertArrayByOrder } from "@/app/components/recipe/recipeActions";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";

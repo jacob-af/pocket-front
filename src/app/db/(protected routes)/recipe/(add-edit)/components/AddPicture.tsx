@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadDropzone } from "@/app/SharedComponents/uploadthing";
+import { UploadDropzone } from "@/app/components/SharedComponents/uploadthing";
 
 export default function Home() {
   return (

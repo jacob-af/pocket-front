@@ -7,7 +7,7 @@ import {
   touchArray
 } from "@/app/graphql/reactiveVar/recipes";
 
-import { DropDownSelectFunction } from "../../inventory/components/ingredientHooks";
+import { DropDownSelectFunction } from "@/app/components/ingredients/ingredientHooks";
 import { ListItem } from "@/types/util";
 import { redirect } from "next/navigation";
 
@@ -31,7 +31,7 @@ export const recipeChange: DropDownSelectFunction = (newValue: ListItem) => {
   }
 };
 
-export const recipeSelect: DropDownSelectFunction = newValue => {
+export const recipeSelect: DropDownSelectFunction = (newValue: ListItem) => {
   selectedRecipe(newValue as Recipe);
   console.log(newValue.name, "hitting rec selec");
   redirect(`/db/recipe/${newValue.name}`);
@@ -50,22 +50,14 @@ export const fieldChange: FieldChangeFunction = ({ key, newValue }) => {
   newRecipeInfo({ ...recipeInfo, [key]: newValue });
 };
 
-export type IngredientChangeFunction = ({
-  index,
-  newValue
-}: {
-  index: number;
-  newValue: string;
-}) => void;
-
-export const touchIngredientChange: DropDownSelectFunction = ({
-  name,
-  index
-}) => {
+export const touchIngredientChange: DropDownSelectFunction = (
+  value: ListItem,
+  index: number
+) => {
   const touches = touchArray();
   const newTouch = {
     ...touches[index],
-    ingredientName: name
+    ingredientName: value.name
   };
   const newTouches = touches;
   newTouches.splice(index, 1, newTouch);

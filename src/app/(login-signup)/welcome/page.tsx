@@ -1,4 +1,4 @@
-import AuthButton from "@/app/db/components/SignOutButton";
+import AuthButton from "@/app/components/buttons/SignOutButton";
 import Link from "next/link";
 export default function Home() {
   return (

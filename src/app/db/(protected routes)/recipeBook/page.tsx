@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadButton } from "@/app/SharedComponents/uploadthing";
+import { UploadButton } from "@/app/components/SharedComponents/uploadthing";
 
 export default function Home() {
   return (

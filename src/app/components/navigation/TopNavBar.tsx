@@ -1,9 +1,8 @@
 "use server";
 
-import AmILoggedIn from "./AmILoggedIn";
-import AuthButton from "./SignOutButton";
+import AmILoggedIn from "@/app/components/images/ProfilePictureSmall";
+import AuthButton from "../../components/buttons/SignOutButton";
 import Link from "next/link";
-import RecipeLoader from "../(protected routes)/recipe/components/RecipeLoader";
 
 export default async function TopNavBar() {
   return (

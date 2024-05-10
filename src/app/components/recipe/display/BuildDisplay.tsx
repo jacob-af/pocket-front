@@ -4,10 +4,9 @@ import { Build, Touch } from "@/__generated__/graphql";
 import React, { useState } from "react";
 import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
 
-import { DeleteBuildModal } from "../../../../components/modals/DeleteBuildModal";
+import { DeleteBuildModal } from "@/app/components/modals/DeleteBuildModal";
 import { ShareRecipeModal } from "@/app/components/modals/ShareRecipeModal";
-import { convertArrayByOrder } from "@/app/db/(protected routes)/recipe/components/recipeActions";
-import { useMutation } from "@apollo/client";
+import { convertArrayByOrder } from "@/app/components/recipe/recipeActions";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 

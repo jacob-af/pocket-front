@@ -13,7 +13,7 @@ import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "../components/RecipeInstructions";
 import { RECIPES_AND_INGREDIENTS } from "@/app/graphql/queries/recipe";
-import RecipeInput from "../components/RecipeInput";
+import RecipeInput from "@/app/components/recipe/input";
 import Review from "../components/Review";
 import { alertList } from "@/app/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";

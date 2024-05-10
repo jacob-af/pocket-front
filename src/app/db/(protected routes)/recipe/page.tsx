@@ -2,9 +2,9 @@
 
 import { useQuery, useReactiveVar } from "@apollo/client";
 
-import AddRecipe from "./components/AddRecipe";
+import AddRecipe from "../../../components/buttons/AddRecipeButton";
 import Link from "next/link";
-import ShortCard from "./components/ShortCard";
+import ShortCard from "../../../components/recipe/display/ShortCard";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 
 export default function Recipe() {

@@ -1,8 +1,8 @@
 "use client";
 
-import UploadFile from "@/app/SharedComponents/FileUpload";
-import { UserList } from "./components/UserList";
-import UserLoader from "./components/UserLoader";
+import UploadFile from "@/app/components/SharedComponents/FileUpload";
+import { UserList } from "../../../components/crew/UserList";
+import UserLoader from "../../../components/crew/UserLoader";
 
 export default function Recipe() {
   return (

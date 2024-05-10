@@ -1,4 +1,4 @@
-import LoadIngredients from "./components/IngredientLoader";
+import LoadIngredients from "@/app/components/ingredients/IngredientLoader";
 
 export default function ClientSideIngredients() {
   return (

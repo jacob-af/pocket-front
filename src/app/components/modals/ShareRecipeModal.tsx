@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 import { Build } from "@/__generated__/graphql";
-import { ShareRecipeList } from "./ShareRecipeList";
+import { ShareRecipeList } from "@/app/components/recipe/share/ShareRecipeList";
 
 export const ShareRecipeModal = ({
   build,
