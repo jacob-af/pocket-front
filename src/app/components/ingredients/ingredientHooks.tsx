@@ -3,7 +3,7 @@ import { selectedIngredient } from "@/app/graphql/reactiveVar/ingredients";
 
 export type DropDownSelectFunction = (
   { id, name }: ListItem,
-  index: number
+  index?: number
 ) => void;
 
 export const ingredientChange: DropDownSelectFunction = newValue => {

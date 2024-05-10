@@ -50,10 +50,10 @@ export const fieldChange: FieldChangeFunction = ({ key, newValue }) => {
   newRecipeInfo({ ...recipeInfo, [key]: newValue });
 };
 
-export const touchIngredientChange: DropDownSelectFunction = (
-  value: ListItem,
-  index: number
-) => {
+export const touchIngredientChange: DropDownSelectFunction = ({
+  index,
+  ...value
+}: ListItem) => {
   const touches = touchArray();
   const newTouch = {
     ...touches[index],

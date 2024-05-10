@@ -3,9 +3,9 @@ import {
   newRecipeInfo
 } from "@/app/graphql/reactiveVar/recipes";
 
-import { AboutModal } from "../../../../../../components/modals/NewRecipeModal";
+import { AboutModal } from "@/app/components/modals/NewRecipeModal";
 import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
-import { recipeChange } from "../../../components/recipeActions";
+import { recipeChange } from "@/app/components/recipe/recipeActions";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeSelect() {
