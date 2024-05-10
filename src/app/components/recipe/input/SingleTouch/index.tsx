@@ -8,7 +8,7 @@ import {
 } from "@/app/components/recipe/recipeActions";
 
 import { IngredientModal } from "./IngredientModal";
-import MuiDropDown from "@/app/db/components/MUIDropDown";
+import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
 import { RemoveTouch } from "./RemoveTouch";
 import { TouchInput } from "@/__generated__/graphql";
 import { touchArray } from "@/app/graphql/reactiveVar/recipes";

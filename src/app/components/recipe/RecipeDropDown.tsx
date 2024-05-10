@@ -1,7 +1,7 @@
 "use client";
 
 import { ListItem } from "@/types/util";
-import MuiDropDown from "../../../components/MUIDropDown";
+import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
 import { Recipe } from "@/__generated__/graphql";
 //import { recipeSelect } from "./recipeActions";
 import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";

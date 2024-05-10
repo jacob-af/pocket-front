@@ -1,9 +1,11 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+
 import { FetchResult, useMutation } from "@apollo/client";
-import { csv } from "d3";
-import { ADD_MANY_INGREDIENTS } from "../graphql/mutations/ingredients";
+import React, { ChangeEvent, useState } from "react";
+
+import { ADD_MANY_INGREDIENTS } from "@/app/graphql/mutations/ingredients";
 import { StatusMessage } from "@/__generated__/graphql";
+import { csv } from "d3";
 
 const UploadFile = () => {
   const [selectedFile, setSelectedFile] = useState("");
