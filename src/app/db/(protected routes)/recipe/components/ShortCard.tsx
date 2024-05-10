@@ -1,9 +1,13 @@
 "use client";
 
 import { Build, Touch } from "@/__generated__/graphql";
-import { DownArrow, Expand, UpArrow } from "./Images";
+import {
+  DownArrow,
+  Expand,
+  UpArrow
+} from "../../../../components/images/Images";
 
-import { SmallImage } from "./Images";
+import { SmallImage } from "../../../../components/images/Images";
 import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";

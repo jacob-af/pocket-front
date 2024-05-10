@@ -3,7 +3,7 @@
 import { getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-import { ProfileImage } from "../(protected routes)/recipe/components/Images";
+import { ProfileImage } from "../../components/images/Images";
 
 export default function AmILoggedIn() {
   const { update } = useSession();
