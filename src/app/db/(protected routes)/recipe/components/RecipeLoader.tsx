@@ -13,7 +13,6 @@ export default function RecipeLoader() {
     fetchPolicy: "cache-and-network"
   });
   const recipeList = useReactiveVar(userRecipeList);
-  console.log(recipeList.slice(0, 2));
 
   useEffect(() => {
     if (data?.userRecipe) {

@@ -147,3 +147,30 @@ export const BUILD_PERMISSIONS: TypedDocumentNode<{
     }
   }
 `;
+
+export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
+  query FindOneBuild($recipeName: String!, $buildName: String!) {
+    findOneBuild(recipeName: $recipeName, buildName: $buildName) {
+      id
+      buildName
+      instructions
+      ice
+      glassware
+      recipe {
+        id
+        name
+        about
+      }
+      touch {
+        id
+        ingredient {
+          id
+          name
+        }
+        amount
+        unit
+        order
+      }
+    }
+  }
+`;

@@ -7,7 +7,7 @@ import RecipeLoader from "../(protected routes)/recipe/components/RecipeLoader";
 
 export default async function TopNavBar() {
   return (
-    <nav className="fixed flex w-screen h-12 box-border bg-black z-10 text-center items-center">
+    <nav className="fixed flex w-screen h-12 box-border bg-black z-10 justify-center items-center">
       <AmILoggedIn />
       <Link href="/db" className="">
         Pocket

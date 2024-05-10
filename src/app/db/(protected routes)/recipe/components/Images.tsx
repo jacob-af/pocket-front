@@ -57,11 +57,11 @@ export function ProfileImage() {
   const { data: session } = useSession();
 
   return (
-    <div className="fixed top-16 right-6">
+    <div className="">
       <Image
         src={session?.user.image || "/withcherry100.png"}
-        width={90}
-        height={90}
+        width={50}
+        height={50}
         alt="Pixel drawing of whiskey cocktail on the rocks with cherry"
         className="rounded-full "
       />
@@ -76,7 +76,7 @@ export function DownArrow() {
       width={15}
       height={15}
       alt="Pixel down arrow"
-      className="dark:invert"
+      className="dark:invert z-10"
     />
   );
 }
@@ -88,7 +88,19 @@ export function UpArrow() {
       width={15}
       height={15}
       alt="Pixel down arrow"
-      className="dark:invert"
+      className="dark:invert z-10"
+    />
+  );
+}
+
+export function Expand() {
+  return (
+    <Image
+      src={"/expand.png"}
+      width={15}
+      height={15}
+      alt="Pixel down arrow"
+      className="dark:invert z-10"
     />
   );
 }

@@ -25,5 +25,9 @@ export default function AmILoggedIn() {
     fetchSession();
   }, [update]);
 
-  return <div className="">{userImage !== "" ? <ProfileImage /> : ""}</div>;
+  return (
+    <div className="fixed top-2 left-2">
+      {userImage !== "" ? <ProfileImage /> : ""}
+    </div>
+  );
 }

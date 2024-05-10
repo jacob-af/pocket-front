@@ -43,7 +43,7 @@ export const DeleteBuildModal = ({
         permission: build.permission
       }
     });
-    console.log(data);
+
     alertList([
       ...alerts,
       {
