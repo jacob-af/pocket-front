@@ -1,4 +1,4 @@
-import { SingleTouch } from "./singleTouch";
+import { SingleTouch } from "./SingleTouch";
 import { TouchInput } from "@/__generated__/graphql";
 import { touchArray } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
