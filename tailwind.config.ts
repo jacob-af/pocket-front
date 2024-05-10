@@ -11,7 +11,7 @@ export default withUt({
   theme: {
     extend: {
       fontSize: {
-        xxs: "10px" // Define smaller font size here
+        xxs: "10px"
       }
     }
   },

@@ -3,13 +3,16 @@ export default async function Landing() {
     <div className="max-w-2xl  mb-12 overflow-auto">
       <div className="text-center text-4xl my-16">Welcome to Pocket</div>
       <div className="text-center text-xl my-8">
-        This is a roadmap to what I have planned for this application. I have a
-        long way to go. For now, Please enjoy storing and viewing recipes. be.
+        Below, I have provided an outline of my plans for this particular
+        application. There remains a considerable journey ahead, and progress
+        will take time. For now, you may take pleasure in exploring the
+        functionality related to the storing and viewing of recipes.
       </div>
       <div className="text-justify text-xs my-4">
-        The front end for this project is Typescript with Next App Router,
-        Apollo Client, Next-Auth, Tailwind, and minimal MUI components. The API
-        was made with Nestjs, Prisma, Apollo Server, Passport, and PostgresQL.
+        The front-end architecture employs Typescript along with Next App
+        Router, Apollo Client, Next-Auth, Tailwind, and a sparing use of MUI
+        components. On the other hand, the backend was crafted using NestJS,
+        Prisma, Apollo Server, Passport, and PostgreSQL.
       </div>
       <div className="text-2xl text-center py-4">Quality of Life</div>
       <div>[ &#10003; ] End to End typesafety</div>

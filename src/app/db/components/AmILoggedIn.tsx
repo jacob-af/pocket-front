@@ -25,10 +25,5 @@ export default function AmILoggedIn() {
     fetchSession();
   }, [update]);
 
-  return (
-    <div className="float float-left text-lg">
-      Logged in as: {userName}
-      {userImage !== "" ? <ProfileImage /> : <div>no image</div>}
-    </div>
-  );
+  return <div className="">{userImage !== "" ? <ProfileImage /> : ""}</div>;
 }

@@ -19,7 +19,7 @@ export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
   };
 
   return (
-    <div className="flex w-96">
+    <div className="w-full">
       <MuiDropDown
         options={recipes as ListItem[]}
         handleChange={recipeSelect}

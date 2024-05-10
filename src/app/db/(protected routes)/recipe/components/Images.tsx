@@ -68,3 +68,27 @@ export function ProfileImage() {
     </div>
   );
 }
+
+export function DownArrow() {
+  return (
+    <Image
+      src={"/down-arrow.png"}
+      width={15}
+      height={15}
+      alt="Pixel down arrow"
+      className="dark:invert"
+    />
+  );
+}
+
+export function UpArrow() {
+  return (
+    <Image
+      src={"/up-arrow.png"}
+      width={15}
+      height={15}
+      alt="Pixel down arrow"
+      className="dark:invert"
+    />
+  );
+}

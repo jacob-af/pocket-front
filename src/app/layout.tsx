@@ -1,13 +1,14 @@
 import "./globals.css";
 
+import { Cutive, Old_Standard_TT, Press_Start_2P } from "next/font/google";
+
 import { ApolloWrapper } from "../lib/ApolloWrapper";
 import type { Metadata } from "next";
-import { Press_Start_2P } from "next/font/google";
 import { Session } from "next-auth";
 import SessionProvider from "@/lib/SessionProvider";
 import { getSession } from "next-auth/react";
 
-const pressStart = Press_Start_2P({
+const pressStart = Cutive({
   subsets: ["latin"],
   weight: "400"
 });
@@ -26,7 +27,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${pressStart.className} antialiased`}>
-      <body className="w-full">
+      <body className="w-screen">
         <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>
