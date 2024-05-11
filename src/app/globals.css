@@ -45,6 +45,6 @@ ul.dropdown-list li:hover {
 .pixelated-image {
   image-rendering: pixelated; /* Use the image-rendering CSS property to give the pixelated effect */
   filter: blur(
-    200px
+    20px
   ); /* Adjust the value as needed to control the pixelation effect */
 }

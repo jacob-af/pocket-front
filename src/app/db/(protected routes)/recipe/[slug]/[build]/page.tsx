@@ -2,9 +2,9 @@
 
 import { useQuery, useReactiveVar } from "@apollo/client";
 
-import { GET_ONE_BUILD } from "@/app/graphql/queries/recipe";
-import RecipeCard from "@/app/components/recipe/display/RecipeCard";
-import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
+import { GET_ONE_BUILD } from "@/graphql/queries/recipe";
+import RecipeCard from "@/components/recipe/display/RecipeCard";
+import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useEffect } from "react";
 
 export default function Page({

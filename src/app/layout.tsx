@@ -10,7 +10,8 @@ import { getSession } from "next-auth/react";
 
 const pressStart = Cutive({
   subsets: ["latin"],
-  weight: "400"
+  weight: "400",
+  preload: false
 });
 
 export const metadata: Metadata = {

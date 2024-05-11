@@ -195,6 +195,7 @@ type BuildConstructor {
   touchArray: [TouchInput]!
   id: String!
   permission: Permission!
+  newRecipe: Boolean!
 }
 
 input RecipeNameInput {

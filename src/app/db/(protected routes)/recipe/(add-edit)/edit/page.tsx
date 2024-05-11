@@ -1,25 +1,25 @@
 "use client";
 
-import { EDIT_BUILD, EDIT_RECIPE } from "@/app/graphql/mutations/recipes";
+import { EDIT_BUILD, EDIT_RECIPE } from "@/graphql/mutations/recipes";
 import {
   RECIPES_AND_INGREDIENTS,
   USER_RECIPES
-} from "@/app/graphql/queries/recipe";
+} from "@/graphql/queries/recipe";
 import { Tab, Tabs } from "@mui/material";
 import {
   allRecipesList,
   newRecipeInfo,
   selectedRecipe,
   touchArray
-} from "@/app/graphql/reactiveVar/recipes";
+} from "@/graphql/reactiveVar/recipes";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
-import BuildInstructions from "../components/RecipeInstructions";
-import EditInput from "@/app/components/recipe/input/EditInput";
-import Review from "../components/Review";
-import { alertList } from "@/app/graphql/reactiveVar/alert";
-import { allIngredientsList } from "@/app/graphql/reactiveVar/ingredients";
+import BuildInstructions from "@/components/recipe/input/BuildInstructions";
+import EditInput from "@/components/recipe/input/EditInput";
+import Review from "@/components/recipe/input/Review";
+import { alertList } from "@/graphql/reactiveVar/alert";
+import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
 import { pressStart } from "@/lib/pressStart";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";

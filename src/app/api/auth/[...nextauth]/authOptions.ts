@@ -1,7 +1,7 @@
 import { credentialsProvider } from "./credentialsProvider";
 import type { NextAuthOptions } from "next-auth";
 import { getClient } from "@/lib/client";
-import { NEW_TOKENS } from "@/app/graphql/mutations/auth";
+import { NEW_TOKENS } from "@/graphql/mutations/auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [credentialsProvider],

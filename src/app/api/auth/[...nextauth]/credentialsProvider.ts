@@ -3,7 +3,7 @@ import { FetchResult, QueryResult } from "@apollo/client";
 import { AuthPayload } from "@/__generated__/graphql";
 import CredentialsProvider from "next-auth/providers/credentials";
 //import { request } from "graphql-request";
-import { LOGIN } from "../../../graphql/mutations/auth";
+import { LOGIN } from "../../../../graphql/mutations/auth";
 import { getClient } from "@/lib/client";
 
 export const credentialsProvider = CredentialsProvider({

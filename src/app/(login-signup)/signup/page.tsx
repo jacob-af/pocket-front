@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+
+import { SubmitHandler, useForm } from "react-hook-form";
+
 import Link from "next/link";
-import { useMutation } from "@apollo/client";
-import { SIGNUP } from "@/app/graphql/mutations/auth";
+import { SIGNUP } from "@/graphql/mutations/auth";
 import { signIn } from "next-auth/react";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 
 type SignUpInputs = {
