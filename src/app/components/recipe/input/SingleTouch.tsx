@@ -7,9 +7,9 @@ import {
   touchIngredientChange
 } from "@/app/components/recipe/recipeActions";
 
-import { IngredientModal } from "../../../modals/IngredientModal";
+import { IngredientModal } from "../../modals/IngredientModal";
 import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
-import { RemoveTouch } from "./RemoveTouch";
+import { RemoveTouch } from "../../buttons/RemoveTouch";
 import { TouchInput } from "@/__generated__/graphql";
 import { touchArray } from "@/app/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
@@ -29,9 +29,9 @@ export const SingleTouch = ({
   };
 
   return (
-    <div className="w-lg grid grid-cols-12 my-4 p-0 h-18 border-4 box-border">
+    <div className="w-lg grid grid-cols-12 my-4 py-1 px-4 rounded-xl h-18 box-border bg-black">
       <input
-        className="col-span-2 bg-black shadow focus:shadow-outline text-gray-100 text-center"
+        className="col-span-2 bg-black px-2 shadow focus:shadow-outline text-center"
         onChange={onChange}
         type="number"
         id="amount"
@@ -42,7 +42,7 @@ export const SingleTouch = ({
       <select
         onChange={onChange}
         name="unit-options"
-        className="col-span-3 bg-black px-4 text-white"
+        className="col-span-3 dark:bg-black text-white focus:shadow-outline"
         id="unit"
         value={touches[index].unit}
       >
@@ -54,7 +54,7 @@ export const SingleTouch = ({
         <option value="cl">cl</option>
         <option value="g">grams</option>
       </select>
-      <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100">
+      <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100 flex">
         <MuiDropDown
           options={allIngredients}
           handleChange={value => touchIngredientChange(value, index)}

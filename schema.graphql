@@ -54,6 +54,7 @@ type Mutation {
   getNewTokens(refreshToken: String): AuthPayload!
   createBuild(createBuildInput: CreateBuildInput): Build
   updateBuild(updateBuildInput: UpdateBuildInput): ArchiveResponse
+  updateManyBuilds(updateManyBuildInput: [UpdateManyBuildInput]!): StatusMessage
   removeBuild(buildId: String, permission: Permission): Build
   changeBuildPermission(
     changeBuildPermissionInput: ChangeBuildPermissionInput
@@ -139,8 +140,6 @@ type Build {
   archivedBuild: [ArchivedBuild]
 }
 
-
-
 type ArchivedBuild {
   id: ID!
   buildId: String!
@@ -184,6 +183,18 @@ input CreateBuildInput {
   ice: String
   image: String
   touchArray: [TouchInput]!
+}
+
+type BuildConstructor {
+  name: String!
+  buildName: String!
+  about: String
+  instructions: String
+  ice: String
+  glassware: String
+  touchArray: [TouchInput]!
+  id: String!
+  permission: Permission!
 }
 
 input RecipeNameInput {
@@ -289,7 +300,7 @@ type RecipeBook {
   createdBy: User
   editedBy: User
   permission: Permission
-  build: [Build]
+  build: [Build!]!
 }
 
 type RecipeBookUser {

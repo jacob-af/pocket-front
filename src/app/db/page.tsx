@@ -2,7 +2,7 @@ export default async function Landing() {
   return (
     <div className="max-w-2xl  mb-12 overflow-auto">
       <div className="text-center text-4xl my-16">Welcome to Pocket</div>
-      <div className="text-center text-xl my-8">
+      <div className="text-justify text-xl my-8">
         Below, I have provided an outline of my plans for this particular
         application. There remains a considerable journey ahead, and progress
         will take time. For now, you may take pleasure in exploring the

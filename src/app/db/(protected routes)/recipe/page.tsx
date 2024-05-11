@@ -3,7 +3,6 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import AddRecipe from "../../../components/buttons/AddRecipeButton";
-import Link from "next/link";
 import ShortCard from "../../../components/recipe/display/ShortCard";
 import { userRecipeList } from "@/app/graphql/reactiveVar/recipes";
 

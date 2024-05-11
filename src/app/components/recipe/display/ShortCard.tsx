@@ -43,7 +43,7 @@ export default function ShortCard({ build }: { build: Build }) {
             {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
           </div>
         ))}
-        <div className="col-span-4 row-span-2 text-sm">
+        <div className="col-span-4 row-span-2 text-sm py-2">
           Build: {build.buildName}
         </div>
       </div>

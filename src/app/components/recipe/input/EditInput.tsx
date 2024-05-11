@@ -1,4 +1,4 @@
-import { AddTouch } from "./AddTouch";
+import { AddTouch } from "../../buttons/AddTouch";
 import { BuildDetails } from "./BuildDetails";
 import { BuildName } from "./BuildName";
 import { RecipeAbout } from "./RecipeAbout";

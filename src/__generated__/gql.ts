@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation Login($loginInput: LoginInput!) {\n    login(loginInput: $loginInput) {\n      accessToken\n      refreshToken\n      user {\n        id\n        userName\n        email\n        profile {\n          image\n        }\n      }\n    }\n  }\n": types.LoginDocument,
     "\n  mutation Signup($createUserInput: CreateUserInput!) {\n    signup(createUserInput: $createUserInput) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n      }\n    }\n  }\n": types.SignupDocument,
-    "\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n      }\n    }\n  }\n": types.GetTokensDocument,
+    "\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n        profile {\n          image\n        }\n      }\n    }\n  }\n": types.GetTokensDocument,
     "\n  mutation LogOut($userId: ID!) {\n    logout(userId: $userId) {\n      loggedOut\n    }\n  }\n": types.LogOutDocument,
     "\n  mutation CreateManyIngredients(\n    $createManyIngredientInputs: [CreateIngredientInput]!\n  ) {\n    createManyIngredients(\n      createManyIngredientInputs: $createManyIngredientInputs\n    ) {\n      message\n    }\n  }\n": types.CreateManyIngredientsDocument,
     "\n  mutation CreateRecipe($createRecipeInput: CreateRecipeInput!) {\n    createRecipe(createRecipeInput: $createRecipeInput) {\n      name\n      createdAt\n      build {\n        buildName\n        ice\n        id\n        instructions\n        notes\n        permission\n        recipe {\n          name\n        }\n        touch {\n          id\n          amount\n          order\n          unit\n          version\n          ingredient {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n": types.CreateRecipeDocument,
@@ -33,6 +33,7 @@ const documents = {
     "\n  query Query {\n    userRecipe {\n      id\n      name\n      about\n      createdBy {\n        id\n        userName\n      }\n      userBuild {\n        id\n        buildName\n        instructions\n        ice\n        glassware\n        permission\n        createdBy {\n          id\n          userName\n        }\n        recipe {\n          id\n          name\n        }\n        touch {\n          id\n          ingredient {\n            id\n            name\n            description\n          }\n          amount\n          unit\n          order\n        }\n      }\n    }\n  }\n": types.QueryDocument,
     "\n  query RecipeList {\n    recipeList {\n      id\n      name\n    }\n    ingredients {\n      id\n      name\n    }\n  }\n": types.RecipeListDocument,
     "\n  query FindFolloweddUsersBuildPermission($buildId: String!) {\n    findFolloweddUsersBuildPermission(buildId: $buildId) {\n      permission\n      user {\n        userName\n        id\n      }\n    }\n  }\n": types.FindFolloweddUsersBuildPermissionDocument,
+    "\n  query FindOneBuild($recipeName: String!, $buildName: String!) {\n    findOneBuild(recipeName: $recipeName, buildName: $buildName) {\n      id\n      buildName\n      instructions\n      ice\n      glassware\n      recipe {\n        id\n        name\n        about\n      }\n      touch {\n        id\n        ingredient {\n          id\n          name\n        }\n        amount\n        unit\n        order\n      }\n    }\n  }\n": types.FindOneBuildDocument,
     "\n  query AllUsers {\n    allUsers {\n      id\n      userName\n      email\n    }\n  }\n": types.AllUsersDocument,
     "\n  query allRelations {\n    allUsers {\n      id\n      userName\n      email\n    }\n    findFollowers {\n      userName\n      id\n      email\n    }\n    findFollows {\n      userName\n      id\n      email\n    }\n  }\n": types.AllRelationsDocument,
 };
@@ -62,7 +63,7 @@ export function gql(source: "\n  mutation Signup($createUserInput: CreateUserInp
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n      }\n    }\n  }\n"];
+export function gql(source: "\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n        profile {\n          image\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n        profile {\n          image\n        }\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -131,6 +132,10 @@ export function gql(source: "\n  query RecipeList {\n    recipeList {\n      id\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query FindFolloweddUsersBuildPermission($buildId: String!) {\n    findFolloweddUsersBuildPermission(buildId: $buildId) {\n      permission\n      user {\n        userName\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query FindFolloweddUsersBuildPermission($buildId: String!) {\n    findFolloweddUsersBuildPermission(buildId: $buildId) {\n      permission\n      user {\n        userName\n        id\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query FindOneBuild($recipeName: String!, $buildName: String!) {\n    findOneBuild(recipeName: $recipeName, buildName: $buildName) {\n      id\n      buildName\n      instructions\n      ice\n      glassware\n      recipe {\n        id\n        name\n        about\n      }\n      touch {\n        id\n        ingredient {\n          id\n          name\n        }\n        amount\n        unit\n        order\n      }\n    }\n  }\n"): (typeof documents)["\n  query FindOneBuild($recipeName: String!, $buildName: String!) {\n    findOneBuild(recipeName: $recipeName, buildName: $buildName) {\n      id\n      buildName\n      instructions\n      ice\n      glassware\n      recipe {\n        id\n        name\n        about\n      }\n      touch {\n        id\n        ingredient {\n          id\n          name\n        }\n        amount\n        unit\n        order\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
