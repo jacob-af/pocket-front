@@ -27,7 +27,7 @@ type NewTokenResponse {
 type Query {
   hello: String!
   findAllBuilds: [Build]
-  findOneBuild: Build
+  findOneBuild(recipeName: String!, buildName: String!): Build
   usersBuilds: [Build]
   findBuildUsers(buildId: String!): [BuildUser]
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
@@ -35,7 +35,7 @@ type Query {
   ingredient(id: Int!): Ingredient
   getProfile(userId: String): Profile!
   allRecipeBooks: [RecipeBook]!
-  userRecipeBooks(userId: String!): RecipeBook
+  userRecipeBooks: RecipeBook
   recipeList: [ListItem]!
   recipes: [Recipe]!
   recipe(name: String!): Recipe
@@ -132,29 +132,14 @@ type Build {
   notes: String
   glassware: String
   ice: String
+  image: String
   permission: Permission!
   touch: [Touch!]!
   version: Int
   archivedBuild: [ArchivedBuild]
 }
 
-type BuildWithRecipeOptional {
-  id: ID!
-  recipe: Recipe
-  buildName: String!
-  createdAt: DateTime
-  editedAt: DateTime
-  createdBy: User
-  editedBy: User
-  instructions: String
-  notes: String
-  glassware: String
-  ice: String
-  permission: Permission
-  touch: [Touch!]
-  version: Int
-  archivedBuild: [ArchivedBuild]
-}
+
 
 type ArchivedBuild {
   id: ID!
@@ -181,19 +166,6 @@ type UserBuildPermission {
   permission: String
 }
 
-input BuildConstructor {
-  id: String!
-  newRecipe: Boolean!
-  name: String!
-  buildName: String!
-  about: String!
-  glassware: String!
-  ice: String!
-  instructions: String!
-  touchArray: [TouchInput!]!
-  permission: Permission!
-}
-
 type ArchiveResponse {
   build: Build
   archivedBuild: ArchivedBuild
@@ -210,6 +182,7 @@ input CreateBuildInput {
   instructions: String
   glassware: String
   ice: String
+  image: String
   touchArray: [TouchInput]!
 }
 
@@ -232,8 +205,24 @@ input UpdateBuildInput {
   instructions: String
   glassware: String
   ice: String
+  image: String
   touchArray: [TouchInput]!
-  permission: Permission!
+  permission: Permission
+}
+
+input UpdateManyBuildInput {
+  name: String!
+  about: String
+  build: ManyBuildInput!
+}
+
+input ManyBuildInput {
+  buildId: String
+  buildName: String!
+  instructions: String
+  glassware: String
+  ice: String
+  touchArray: [TouchInput]!
 }
 
 input ChangeBuildPermissionInput {
@@ -323,6 +312,7 @@ type Recipe {
   createdBy: User
   createdById: String
   editedBy: User
+  editeById: String
   build: [Build!]!
   userBuild: [Build!]!
 }
@@ -336,7 +326,7 @@ input CreateRecipeInput {
 input UpdateRecipeInput {
   id: ID!
   name: String!
-  about: String
+  about: String!
   build: UpdateBuildInput!
 }
 
