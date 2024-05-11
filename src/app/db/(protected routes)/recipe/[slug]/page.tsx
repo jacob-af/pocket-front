@@ -3,7 +3,7 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import { GET_RECIPE } from "@/app/graphql/queries/recipe";
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "@/app/components/recipe/display/RecipeCard";
 import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
 import { useEffect } from "react";
 
@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div>
       My Post: {recipe.name}
-      <RecipeCard recipe={recipe} />
+      <RecipeCard />
     </div>
   );
 }

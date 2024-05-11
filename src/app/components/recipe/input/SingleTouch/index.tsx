@@ -7,7 +7,7 @@ import {
   touchIngredientChange
 } from "@/app/components/recipe/recipeActions";
 
-import { IngredientModal } from "./IngredientModal";
+import { IngredientModal } from "../../../modals/IngredientModal";
 import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
 import { RemoveTouch } from "./RemoveTouch";
 import { TouchInput } from "@/__generated__/graphql";
