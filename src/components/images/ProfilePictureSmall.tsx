@@ -13,7 +13,6 @@ export default function AmILoggedIn() {
   useEffect(() => {
     async function fetchSession() {
       const session = await getSession();
-      console.log(session?.user);
       if (session?.user && session.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
         console.log("new tokens");

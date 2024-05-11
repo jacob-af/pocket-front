@@ -12,13 +12,9 @@ import { Build } from "@/__generated__/graphql";
 import ShortCard from "@/components/recipe/display/ShortCard";
 
 export default function RecipeBook() {
-  const { build = [] } = useReactiveVar(selectedRecipeBook);
   const bookList = useReactiveVar(userRecipeBookList);
-
-  const bookColumns = (num: number) =>
-    bookList.filter((_, index) => index % num === num - 1);
-
-  const columnConfigurations = [[1], [2, 2]];
+  console.log(bookList);
+  const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
   return (
     <div>
@@ -28,27 +24,24 @@ export default function RecipeBook() {
         </div>
         {columnConfigurations.map((columns, index) =>
           // Create a div for each column configuration
-          columns.map(num =>
-            bookColumns(num).map(book => (
-              <div
-                key={index}
-                className={`col-span-1 justify-items-center w-full ${
-                  index === 0 ? "md:hidden" : "hidden md:grid"
-                } ${index === 2 ? "xl:grid-cols-3" : ""}`}
-              >
-                <BookCover key={book.id} book={book} />
-              </div>
-            ))
-          )
+          columns.map((num, columnIndex) => (
+            <div
+              key={`${index}-${columnIndex}`}
+              className={`col-span-1 justify-items-center w-full ${
+                index === 0 ? "grid md:hidden" : ""
+              } ${index === 1 ? "hidden md:grid xl:hidden" : ""}${
+                index === 2 ? "hidden xl:grid" : ""
+              }`}
+            >
+              {bookList
+                .filter((_, i) => i % num === columnIndex)
+                .map(book => (
+                  <BookCover key={book.id} book={book} />
+                ))}
+            </div>
+          ))
         )}
       </div>
-      {/* <div>
-        {bookList.length !== 0
-          ? bookList.map(book => {
-              return <BookCover key={book.id} book={book} />;
-            })
-          : ""}
-      </div> */}
     </div>
   );
 }
