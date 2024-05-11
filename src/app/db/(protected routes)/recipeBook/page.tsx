@@ -15,10 +15,10 @@ export default function RecipeBook() {
   const { build = [] } = useReactiveVar(selectedRecipeBook);
   const bookList = useReactiveVar(userRecipeBookList);
 
-  const buildColumns = (num: number) =>
-    build.filter((_, index) => index % num === num - 1);
+  const bookColumns = (num: number) =>
+    bookList.filter((_, index) => index % num === num - 1);
 
-  const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
+  const columnConfigurations = [[1], [2, 2]];
 
   return (
     <div>
@@ -29,26 +29,26 @@ export default function RecipeBook() {
         {columnConfigurations.map((columns, index) =>
           // Create a div for each column configuration
           columns.map(num =>
-            buildColumns(num).map(build => (
+            bookColumns(num).map(book => (
               <div
                 key={index}
                 className={`col-span-1 justify-items-center w-full ${
                   index === 0 ? "md:hidden" : "hidden md:grid"
                 } ${index === 2 ? "xl:grid-cols-3" : ""}`}
               >
-                <ShortCard key={build.id} build={build} />
+                <BookCover key={book.id} book={book} />
               </div>
             ))
           )
         )}
       </div>
-      <div>
+      {/* <div>
         {bookList.length !== 0
           ? bookList.map(book => {
               return <BookCover key={book.id} book={book} />;
             })
           : ""}
-      </div>
+      </div> */}
     </div>
   );
 }
