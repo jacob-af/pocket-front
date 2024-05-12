@@ -9,33 +9,18 @@ import { useSession } from "next-auth/react";
 
 export default function UserLoader() {
   const { status: sessionStatus } = useSession();
+  const users = useReactiveVar(userList);
   const { data, loading, error } = useQuery(ALL_RELATIONS, {
     skip: sessionStatus !== "authenticated",
-    fetchPolicy: "cache-and-network"
+    fetchPolicy: "network-only"
   });
 
   useEffect(() => {
-    if (data?.allUsers) {
-      const users = data.allUsers;
-      userList(users);
-    }
-    if (data?.findFollowers) {
-      const followers = data.findFollowers;
-      userRelations({
-        ...userRelations(),
-        followers
-      });
-    }
-    if (data?.findFollows) {
-      const following = data.findFollows;
-      userRelations({
-        ...userRelations(),
-        following
-      });
+    console.log(data);
+    if (data?.getUserRelationships) {
+      userList(data.getUserRelationships);
     }
   }, [data]);
-
-  const users = useReactiveVar(userList);
 
   if (loading) {
     return <div>Loading...</div>;

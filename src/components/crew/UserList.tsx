@@ -1,19 +1,18 @@
 import { ADD_FOLLOW, UN_FOLLOW } from "@/graphql/mutations/user";
+import { User, UserRelation } from "@/__generated__/graphql";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { userList, userRelations } from "@/graphql/reactiveVar/user";
 
 import { ALL_RELATIONS } from "@/graphql/queries/user";
-import { User } from "@/__generated__/graphql";
 
 export const UserList = () => {
-  const users = useReactiveVar(userList);
-  const relations = useReactiveVar(userRelations);
-  const [addFollow] = useMutation(ADD_FOLLOW, {
+  const relations = useReactiveVar(userList);
+  const [addFollow, { loading }] = useMutation(ADD_FOLLOW, {
     fetchPolicy: "network-only", // Used for first execution
 
     refetchQueries: [ALL_RELATIONS]
   });
-  const [unFollow] = useMutation(UN_FOLLOW, {
+  const [unFollow, { loading: unloading }] = useMutation(UN_FOLLOW, {
     fetchPolicy: "network-only", // Change fetchPolicy to "network-only"
     refetchQueries: [ALL_RELATIONS]
   });
@@ -34,39 +33,40 @@ export const UserList = () => {
         unfollowId: userId
       }
     });
-    console.log(data);
   };
 
   return (
     <div className="content-center">
-      {users.map((user: User) => {
-        if (
-          relations.following.some((relation: User) => relation.id === user.id)
-        ) {
-          return (
-            <div key={user.id}>
-              {user.userName}:{" "}
-              <button onClick={() => unFollowUser(user.id)}>unfollow</button>
-            </div>
-          );
-        } else if (
-          relations.followers.some((relation: User) => relation.id === user.id)
-        ) {
-          return (
-            <div key={user.id}>
-              {user.userName}:{" "}
-              <button onClick={() => followUser(user.id)}>follow back</button>
-            </div>
-          );
-        } else {
-          return (
-            <div key={user.id}>
-              {user.userName}:{" "}
-              <button onClick={() => followUser(user.id)}>follow</button>
-            </div>
-          );
-        }
-      })}
+      {relations.map((rel: UserRelation) => (
+        <div
+          key={rel.id}
+          className="bg-black rounded-md block p-2 align-center"
+        >
+          {rel.userName}
+          {rel.following ? (
+            <button
+              className="border p-1 float-right"
+              onClick={() => unFollowUser(rel.id)}
+            >
+              unfollow
+            </button>
+          ) : rel.followedBy ? (
+            <button
+              className="border p-1 float-right"
+              onClick={() => followUser(rel.id)}
+            >
+              follow back
+            </button>
+          ) : (
+            <button
+              className="border p-1 float-right"
+              onClick={() => followUser(rel.id)}
+            >
+              follow
+            </button>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
