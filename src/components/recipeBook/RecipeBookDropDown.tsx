@@ -19,7 +19,7 @@ export default function RecipeBookDropDown({
   const recipeBookSelect = (newValue: ListItem) => {
     selectedRecipeBook(newValue as RecipeBook);
     console.log(newValue.name, "hitting rec selec");
-    //router.push(`/db/recipeBook/${newValue.name}`);
+    router.push(`/db/recipeBook/${newValue.name}`);
   };
 
   return (
