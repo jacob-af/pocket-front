@@ -1,6 +1,6 @@
 import { ReactEventHandler } from "react";
-import { fieldChange } from "@/app/components/recipe/recipeActions";
-import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
+import { fieldChange } from "@/components/recipe/recipeActions";
+import { newRecipeInfo } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export const RecipeName = () => {

@@ -8,7 +8,7 @@ import {
   userRelations
 } from "@/graphql/reactiveVar/user";
 
-import { BUILD_PERMISSIONS } from "@/app/graphql/queries/recipe";
+import { BUILD_PERMISSIONS } from "@/graphql/queries/recipe";
 import { ShareRecipe } from "./ShareRecipeItem";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";

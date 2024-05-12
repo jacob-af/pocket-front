@@ -3,7 +3,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 
 import { Build } from "@/__generated__/graphql";
 import { DELETE_BUILD } from "@/graphql/mutations/recipes";
-import { USER_BUILDS } from "@/app/graphql/queries/recipe";
+import { USER_BUILDS } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
 
 export const DeleteRecipeModal = ({
@@ -25,20 +25,30 @@ export const DeleteRecipeModal = ({
     toggleopen(false);
   };
   const handleDeleteRecipe = async () => {
-    const { data } = await deleteBuild({
-      variables: {
-        buildId: build.id,
-        permission: build.permission
+    try {
+      const { data } = await deleteBuild({
+        variables: {
+          buildId: build.id,
+          permission: build.permission
+        }
+      });
+      console.log(data);
+      alertList([
+        ...alerts,
+        {
+          code: "success",
+          message: `${build.recipe.name} has been deleted`
+        }
+      ]);
+      toggleopen(false);
+    } catch (error) {
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+        errorMessage = error.message;
       }
-    });
-    console.log(data);
-    alertList([
-      ...alerts,
-      {
-        code: "success",
-        message: `${build.recipe.name} has been deleted`
-      }
-    ]);
+      alertList([...alerts, { code: "error", message: errorMessage }]);
+      console.log(error);
+    }
   };
 
   return (

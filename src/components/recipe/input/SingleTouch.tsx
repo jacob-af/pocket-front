@@ -5,13 +5,13 @@ import {
 import {
   touchChange,
   touchIngredientChange
-} from "@/app/components/recipe/recipeActions";
+} from "@/components/recipe/recipeActions";
 
-import { IngredientModal } from "../../modals/IngredientModal";
-import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
+import { IngredientModal } from "@/components/modals/IngredientModal";
+import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { RemoveTouch } from "../../buttons/RemoveTouch";
 import { TouchInput } from "@/__generated__/graphql";
-import { touchArray } from "@/app/graphql/reactiveVar/recipes";
+import { touchArray } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export const SingleTouch = ({

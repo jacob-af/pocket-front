@@ -1,11 +1,9 @@
-import {
-  allRecipesList,
-  newRecipeInfo
-} from "@/app/graphql/reactiveVar/recipes";
+import { allRecipesList, newRecipeInfo } from "@/graphql/reactiveVar/recipes";
 
-import { AboutModal } from "@/app/components/modals/NewRecipeModal";
-import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
-import { recipeChange } from "@/app/components/recipe/recipeActions";
+import { AboutModal } from "@/components/modals/NewRecipeModal";
+import { ListItem } from "@/__generated__/graphql";
+import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
+import { recipeChange } from "@/components/recipe/recipeActions";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeSelect() {
@@ -20,9 +18,11 @@ export default function RecipeSelect() {
           options={allRecipes}
           handleChange={recipeChange}
           index={98}
-          currentValue={{
-            ...recipeInfo
-          }}
+          currentValue={
+            {
+              ...recipeInfo
+            } as ListItem
+          }
         >
           <AboutModal
             open={false}

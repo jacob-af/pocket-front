@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactEventHandler } from "react";
-import { fieldChange } from "@/app/components/recipe/recipeActions";
-import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
+import { fieldChange } from "@/components/recipe/recipeActions";
+import { newRecipeInfo } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export const RecipeAbout = () => {
@@ -20,7 +20,7 @@ export const RecipeAbout = () => {
         className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 h-40"
         id="about"
         placeholder="About"
-        value={recipeInfo.about}
+        value={recipeInfo.about || ""}
       />
     </div>
   );

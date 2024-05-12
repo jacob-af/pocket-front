@@ -3,7 +3,7 @@ import { BuildDetails } from "./BuildDetails";
 import { BuildName } from "./BuildName";
 import { RecipeAbout } from "./RecipeAbout";
 import RecipeSelect from "./RecipeSelect";
-import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
+import { newRecipeInfo } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeInput() {

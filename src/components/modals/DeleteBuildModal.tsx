@@ -4,9 +4,9 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { Build } from "@/__generated__/graphql";
 import { DELETE_BUILD } from "@/graphql/mutations/recipes";
 import { DeleteRecipeModal } from "./DeleteRecipeModal";
-import { USER_RECIPES } from "@/app/graphql/queries/recipe";
+import { USER_RECIPES } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
-import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
+import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 

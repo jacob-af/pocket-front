@@ -1,22 +1,27 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { AddBookModal } from "../modals/AddBookModal";
+import { useState } from "react";
 
 function AddRecipeBookButton() {
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
-  const handleNavigate = () => {
-    router.push("/db/recipeBook/add");
+  const toggleOpen = () => {
+    setOpen(!open);
   };
+
   return (
-    <button
-      onClick={handleNavigate}
-      className="border border-white rounded-full p-2 text-xs opacity-100 z-10 bg-slate-800"
-    >
-      Add
-      <br />
-      Recipe Book
-    </button>
+    <div>
+      <button
+        onClick={toggleOpen}
+        className="border border-white rounded-full p-2 text-xs opacity-100 z-10 bg-slate-800"
+      >
+        Add
+        <br />
+        Recipe Book
+      </button>
+      <AddBookModal open={open} toggleopen={toggleOpen} />
+    </div>
   );
 }
 

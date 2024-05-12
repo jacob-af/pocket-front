@@ -7,7 +7,7 @@ import {
 
 import { Ingredient } from "@/__generated__/graphql";
 import { ListItem } from "@/types/util";
-import MuiDropDown from "@/app/components/SharedComponents/MUIDropDown";
+import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { ingredientChange } from "./ingredientHooks";
 import { useEffect } from "react";
 import { useReactiveVar } from "@apollo/client";

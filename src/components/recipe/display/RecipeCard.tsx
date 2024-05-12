@@ -2,8 +2,8 @@
 
 import BuildDisplay from "./BuildDisplay";
 import { Recipe } from "@/__generated__/graphql";
-import TempImage from "@/app/components/images/Images";
-import { selectedRecipe } from "@/app/graphql/reactiveVar/recipes";
+import TempImage from "@/components/images/Images";
+import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeCard() {

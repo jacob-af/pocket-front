@@ -5,9 +5,9 @@ import {
   newRecipeInfo,
   selectedRecipe,
   touchArray
-} from "@/app/graphql/reactiveVar/recipes";
+} from "@/graphql/reactiveVar/recipes";
 
-import { DropDownSelectFunction } from "@/app/components/ingredients/ingredientHooks";
+import { DropDownSelectFunction } from "@/components/ingredients/ingredientHooks";
 import { ListItem } from "@/types/util";
 import { redirect } from "next/navigation";
 

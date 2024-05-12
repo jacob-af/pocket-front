@@ -5,7 +5,7 @@ import {
 } from "@/graphql/mutations/recipes";
 import { useMutation, useReactiveVar } from "@apollo/client";
 
-import { BUILD_PERMISSIONS } from "@/app/graphql/queries/recipe";
+import { BUILD_PERMISSIONS } from "@/graphql/queries/recipe";
 import { useState } from "react";
 import { userBuildPermissions } from "@/graphql/reactiveVar/user";
 

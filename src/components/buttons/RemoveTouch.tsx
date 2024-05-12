@@ -1,4 +1,4 @@
-import { removeTouch } from "@/app/components/recipe/recipeActions";
+import { removeTouch } from "@/components/recipe/recipeActions";
 
 export const RemoveTouch = ({ index }: { index: number }) => {
   return (

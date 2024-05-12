@@ -11,4 +11,11 @@ export const selectedRecipeBook = makeVar<RecipeBook>({
   permission: Permission.View
 });
 
+export const bookBlank = {
+  name: "",
+  description: ""
+};
+
+export const newBookInfo = makeVar(bookBlank);
+
 export const userRecipeBookList = makeVar<RecipeBook[]>([]);

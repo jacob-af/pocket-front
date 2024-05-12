@@ -2,11 +2,11 @@
 
 import { Build, Touch } from "@/__generated__/graphql";
 import React, { useState } from "react";
-import { newRecipeInfo, touchArray } from "@/app/graphql/reactiveVar/recipes";
+import { newRecipeInfo, touchArray } from "@/graphql/reactiveVar/recipes";
 
-import { DeleteBuildModal } from "@/app/components/modals/DeleteBuildModal";
-import { ShareRecipeModal } from "@/app/components/modals/ShareRecipeModal";
-import { convertArrayByOrder } from "@/app/components/recipe/recipeActions";
+import { DeleteBuildModal } from "@/components/modals/DeleteBuildModal";
+import { ShareRecipeModal } from "@/components/modals/ShareRecipeModal";
+import { convertArrayByOrder } from "@/components/recipe/recipeActions";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 

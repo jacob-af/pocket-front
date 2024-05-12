@@ -16,7 +16,11 @@ export default function BookCover({ book }: { book: RecipeBook }) {
       <div className="w-full bg-black">{book.description}</div>
       <br />
       {book.build.map((build: Build) => {
-        return <>{`* ${build.buildName} *`}</>;
+        return (
+          <React.Fragment
+            key={build.id}
+          >{`* ${build.buildName} *`}</React.Fragment>
+        );
       })}
     </div>
   );

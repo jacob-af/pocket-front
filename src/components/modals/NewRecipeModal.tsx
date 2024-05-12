@@ -1,5 +1,5 @@
 import React from "react";
-import { newRecipeInfo } from "@/app/graphql/reactiveVar/recipes";
+import { newRecipeInfo } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export const AboutModal = ({
