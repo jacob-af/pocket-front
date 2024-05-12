@@ -1,4 +1,4 @@
-import AuthButton from "@/app/components/buttons/SignOutButton";
+import AuthButton from "@/components/buttons/SignOutButton";
 import { Button } from "@mui/material";
 import Link from "@mui/material/Link";
 import { auth } from "../lib/auth";
