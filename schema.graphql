@@ -36,6 +36,7 @@ type Query {
   getProfile(userId: String): Profile!
   allRecipeBooks: [RecipeBook]!
   userRecipeBooks: RecipeBook
+  recipeBook(name: String): RecipeBook
   recipeList: [ListItem]!
   recipes: [Recipe]!
   recipe(name: String!): Recipe
@@ -44,7 +45,7 @@ type Query {
   userById(id: ID!): User
   findFollows: [User]
   findFollowers: [User]
-  getUserRelationships: [UserRelationship]
+  getUserRelationships: [UserRelation]
 }
 
 type Mutation {
@@ -434,8 +435,9 @@ type FollowReturn {
   status: StatusMessage
 }
 
-type UserRelationship {
-  user: User!
-  followedBy: Boolean
-  following: Boolean
+type UserRelation {
+  id: String!
+  userName: String!
+  followedBy: Boolean!
+  following: Boolean!
 }

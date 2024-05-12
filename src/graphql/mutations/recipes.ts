@@ -118,7 +118,7 @@ export const EDIT_BUILD = gql`
 `;
 
 export const DELETE_BUILD = gql`
-  mutation Mutation($buildId: String, $permission: Permission) {
+  mutation DeleteBuild($buildId: String, $permission: Permission) {
     removeBuild(buildId: $buildId, permission: $permission) {
       id
       buildName
