@@ -3,10 +3,12 @@ export default async function Landing() {
     <div className="max-w-2xl  mb-12 overflow-auto">
       <div className="text-center text-4xl my-16">Welcome to Pocket</div>
       <div className="text-justify text-xl my-8">
-        Below, I have provided an outline of my plans for this particular
-        application. There remains a considerable journey ahead, and progress
-        will take time. For now, you may take pleasure in exploring the
-        functionality related to the storing and viewing of recipes.
+        Welcome to Pocket Bar Book, a bar management tool designed by a
+        bartender, for bartenders. Current capabilites are storing and editing
+        recipes. Recipes can be organized into recipe books. Recipes, specific
+        builds, and recipe books can be visited at specific URLs. The next goal
+        will be making recipe books shareable before adding inventory and
+        costing capabilities.
       </div>
       <div className="text-justify text-xs my-4">
         The front-end architecture employs Typescript along with Next App
@@ -20,7 +22,7 @@ export default async function Landing() {
       <div>[ &#10003; ] Refresh Tokens</div>
       <div>[ &#10003; ] Cache Persist</div>
       <div>[ &#10003; ] User facing error messages</div>
-      <div>[ x ] Image Hosting</div>
+      <div>[ I ] Image Hosting</div>
       <div>[ x ] Alternate Login methods</div>
       <div>[ x ] Social Feed</div>
 
@@ -54,10 +56,10 @@ export default async function Landing() {
       <br />
       <div className="text-2xl text-center py-4">RecipeBook Operations</div>
       <div>[API][UI]</div>
-      <div>[ &#10003; ][ x ] Load RecipeBooks</div>
+      <div>[ &#10003; ][ &#10003; ] Load RecipeBooks</div>
       <div>[ &#10003; ][ x ] Edit RecipeBookDetails</div>
-      <div>[ &#10003; ][ x ] Add Recipe to Recipe Book</div>
-      <div>[ &#10003; ][ x ] Remove Recipe from Book</div>
+      <div>[ &#10003; ][ &#10003; ] Add Recipe to Recipe Book</div>
+      <div>[ &#10003; ][ &#10003; ] Remove Recipe from Book</div>
       <div>[ &#10003; ][ x ] Delete Recipe Book</div>
       <div>[ &#10003; ][ x ] Change Recipe Book Permission</div>
       <div>[ &#10003; ][ x ] Remove Recipe Book Permission</div>

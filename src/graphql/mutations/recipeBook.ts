@@ -47,3 +47,36 @@ export const REMOVE_BUILD_FROM_BOOK = gql`
     }
   }
 `;
+
+export const GET_RECIPE_BOOK = gql`
+  query getRecipeBook($name: String) {
+    recipeBook(name: $name) {
+      id
+      name
+      description
+      permission
+      build {
+        buildName
+        ice
+        id
+        instructions
+        notes
+        permission
+        recipe {
+          name
+        }
+        touch {
+          id
+          amount
+          order
+          unit
+          version
+          ingredient {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
