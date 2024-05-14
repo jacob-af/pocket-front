@@ -5,7 +5,7 @@ import React, { HTMLAttributes, ReactNode, useState } from "react";
 
 import { ListItem } from "@/types/util";
 import TextField from "@mui/material/TextField";
-import { pressStart } from "@/lib/pressStart";
+import { cutive } from "@/lib/cutive";
 import { v4 as uuidv4 } from "uuid";
 
 const filter = createFilterOptions<ListItem>();
@@ -44,7 +44,7 @@ export default function MuiDropDown({
   return (
     <>
       <Autocomplete
-        className="w-full bg-white text-black rounded-xl m-1 box-border"
+        className="w-full bg-white text-black box-border rounded-lg"
         value={currentValue.name}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
@@ -102,7 +102,7 @@ export default function MuiDropDown({
             <li
               {...props}
               key={uniqueKey}
-              className={`${pressStart.className} antialiased py-1 px-2 hover:bg-gray-400 focus-visible:bg-red-800`}
+              className={`${cutive.className} antialiased py-1 px-2 hover:bg-gray-400 focus-visible:bg-red-800`}
             >
               <div className="focus-visible:bg-red-800">{option.name}</div>
               {option.build && option.build.length > 1 ? (
@@ -116,14 +116,16 @@ export default function MuiDropDown({
           return (
             <TextField
               {...params}
+              size="small"
               InputProps={{
                 ...params.InputProps,
                 style: {
                   color: "black",
-                  fontFamily: `${pressStart.style.fontFamily}`
+                  fontFamily: `${cutive.style.fontFamily}`,
+                  height: "2rem",
+                  borderRadius: "0.5rem"
                 }
               }}
-              className="w-full"
             />
           );
         }}

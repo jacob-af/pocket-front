@@ -8,7 +8,13 @@ import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
 
-export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
+export default function RecipeDropDown({
+  recipes,
+  loading
+}: {
+  recipes: Recipe[];
+  loading: string;
+}) {
   const selected = useReactiveVar(selectedRecipe);
   const router = useRouter();
 
@@ -23,7 +29,11 @@ export default function RecipeDropDown({ recipes }: { recipes: Recipe[] }) {
       <MuiDropDown
         options={recipes as ListItem[]}
         handleChange={recipeSelect}
-        currentValue={(selected as ListItem) || { name: "", id: "Arbitrary" }}
+        currentValue={
+          selected.name !== ""
+            ? (selected as ListItem)
+            : { name: loading, id: "Arbitrary" }
+        }
         index={97}
       />
     </div>

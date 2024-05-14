@@ -20,7 +20,7 @@ import EditInput from "@/components/recipe/input/EditInput";
 import Review from "@/components/recipe/input/Review";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
-import { pressStart } from "@/lib/pressStart";
+import { cutive } from "@/lib/cutive";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -161,15 +161,15 @@ export default function AddRecipe() {
       >
         <Tab
           label="Recipe Info"
-          className={`${pressStart.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-black text-white`}
         />
         <Tab
           label="Instructions"
-          className={`${pressStart.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-black text-white`}
         />
         <Tab
           label="Review"
-          className={`${pressStart.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-black text-white`}
         />
       </Tabs>
 

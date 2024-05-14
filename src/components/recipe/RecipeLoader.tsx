@@ -35,16 +35,18 @@ export default function RecipeLoader() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-2">
-      <div className="lg:row-span-1 flex items-center justify-center">
-        {recipeList.length === 0 && loading
-          ? "Loading..."
-          : recipeList.length > 0 && loading
-          ? `${recipeList.length} Recipes Loaded From Cache`
-          : `${recipeList.length} Recipes Loaded`}
-      </div>
-      <div className="lg:row-span-1">
-        <RecipeDropDown recipes={recipeList} />
+    <div className="fixed top-14 h-16">
+      <div className="flex w-72">
+        <RecipeDropDown
+          recipes={recipeList}
+          loading={
+            recipeList.length === 0 && loading
+              ? "Loading..."
+              : recipeList.length > 0 && loading
+              ? `Updating...`
+              : `${recipeList.length} Recipes Loaded`
+          }
+        />
       </div>
     </div>
   );

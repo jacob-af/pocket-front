@@ -29,7 +29,7 @@ export const SingleTouch = ({
   };
 
   return (
-    <div className="w-lg grid grid-cols-12 my-4 py-1 px-4 rounded-xl h-18 box-border bg-black">
+    <div className="w-lg grid grid-cols-12 my-4 px-4 rounded-xl box-border bg-black">
       <input
         className="col-span-2 bg-black px-2 shadow focus:shadow-outline text-center"
         onChange={onChange}
@@ -54,7 +54,8 @@ export const SingleTouch = ({
         <option value="cl">cl</option>
         <option value="g">grams</option>
       </select>
-      <div className="col-span-6 bg-black shadow focus:shadow-outline text-gray-100 flex">
+      {/* <div className="flex align-center justify-center"> */}
+      <div className="col-span-6 bg-black shadow rounded-xl focus:shadow-outline text-gray-100 flex align p-2 center">
         <MuiDropDown
           options={allIngredients}
           handleChange={value => touchIngredientChange(value, index)}
@@ -73,6 +74,7 @@ export const SingleTouch = ({
           />
         </MuiDropDown>
       </div>
+      {/* </div> */}
       <div>
         <RemoveTouch index={index} />
       </div>

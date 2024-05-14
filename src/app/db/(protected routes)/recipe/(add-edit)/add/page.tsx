@@ -17,7 +17,7 @@ import RecipeInput from "@/components/recipe/input";
 import Review from "@/components/recipe/input/Review";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
-import { pressStart } from "@/lib/pressStart";
+import { cutive } from "@/lib/cutive";
 import { useRouter } from "next/navigation";
 
 export default function AddRecipe() {
@@ -124,21 +124,25 @@ export default function AddRecipe() {
         TabIndicatorProps={{
           style: {
             backgroundColor: "#000000",
-            fontFamily: `${pressStart.style.fontFamily}`
+            fontFamily: `${cutive.style.fontFamily}`
           }
         }}
       >
         <Tab
-          label="Recipe Details"
-          className={`${pressStart.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-black text-white`}
+          label={
+            <span className={`text-lg ${cutive.className}`}>
+              Recipe Details
+            </span>
+          }
         />
         <Tab
           label="Instructions"
-          className={`${pressStart.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-black text-white`}
         />
         <Tab
           label="Review"
-          className={`${pressStart.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-black text-white`}
         />
       </Tabs>
 
