@@ -64,37 +64,37 @@ export const AddBookModal = ({
       {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-90 flex justify-center items-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-90"
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="p-6 rounded border border-black shadow-xl w-80"
+            className="w-80 rounded border border-black p-6 shadow-xl"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 hover:text-gray-800"
+              className="absolute right-2 top-2 hover:text-gray-800"
             >
               &times;
             </button>
 
             {/* Modal content */}
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 className="mb-4 text-lg font-semibold">
               Your Recipe Book must have a Unique Name
             </h3>
 
             {/* Input field */}
             <input
               onChange={(event: any) => onChange(event)}
-              className="bg-black shadow focus:shadow-outline px-3 py-2 mb-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 "
+              className="focus:shadow-outline mb-2 w-full appearance-none border bg-black px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
               id="name"
               placeholder="Recipe Book Name"
               value={bookInfo.name}
             />
             <textarea
               onChange={(event: any) => onChange(event)}
-              className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 h-40"
+              className="focus:shadow-outline h-40 w-full appearance-none border bg-black px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
               id="description"
               placeholder="Description"
               value={bookInfo.description}
@@ -102,7 +102,7 @@ export const AddBookModal = ({
 
             {/* Optional button to submit the form */}
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className="rounded bg-blue-500 px-4 py-2 text-white"
               onClick={onClick}
             >
               Okay

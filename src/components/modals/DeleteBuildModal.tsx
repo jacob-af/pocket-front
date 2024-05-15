@@ -64,50 +64,49 @@ export const DeleteBuildModal = ({
   console.log(recipe);
 
   return (
-    <div>
-      {/* Modal */}
+    <>
       {open && (
         <div
-          className="fixed inset-0 mx-auto bg-gray-800 bg-opacity-80 flex justify-center items-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-80"
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="p-6 bg-black block max-w-lg"
+            className="relative bg-black p-6"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="top-20 right-2 hover:text-gray-400"
+              className="right-2 top-20 hover:text-gray-400"
             >
               &times;
             </button>
 
             {/* Modal content */}
-            <div className="text-xl font-semibold mb-4">
+            <div className="mb-4 text-xl">
               Are you sure you want to delete: {`${build.buildName}`} for{" "}
               {`${build.recipe.name}? This process cannot be undone.`}
             </div>
             <button
               onClick={handleDeleteBuild}
-              className="border p-2 float-left"
+              className="float-left border p-2"
             >
-              <span className=" block">Delete</span>
-              <span className=" block">Build</span>
+              <span className="block">Delete</span>
+              <span className="block">Build</span>
             </button>
             {recipe.createdBy?.id == session?.user.id && (
               <button
                 onClick={handleDeleteRecipe}
-                className="border border-red-800 p-2 float-right text-red-800"
+                className="float-right border border-red-800 p-2 text-red-800"
               >
-                <span className=" block">Delete</span>
-                <span className=" block">Recipe</span>
+                <span className="block">Delete</span>
+                <span className="block">Recipe</span>
               </button>
             )}
           </div>
         </div>
       )}
       <DeleteRecipeModal build={build} open={openModal} toggleopen={setOpen} />
-    </div>
+    </>
   );
 };

@@ -32,38 +32,37 @@ export const IngredientModal = ({
       {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="bg-white p-6 rounded shadow-lg w-80"
+            className="relative w-80 rounded bg-white p-6 shadow-lg"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-100 hover:text-gray-800"
+              className="absolute right-2 top-2 text-gray-100 hover:text-gray-800"
             >
               &times;
             </button>
 
             {/* Modal content */}
-            <h3 className="text-lg text-primary bg-black font-semibold mb-4">
+            <div className="text-primary mb-4 bg-black text-lg">
               We dont have that in our database, would you like to make a custom
               ingredient?
-            </h3>
+            </div>
 
             {/* Input field */}
             <input
               onChange={onChange}
-              className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 appearance-none focus:outline-none h-32 text-left text-top placeholder-gray-400 disabled:placeholder-gray-900
-    disabled:text-gray-900 disabled:border-none"
+              className="focus:shadow-outline text-top h-32 w-full appearance-none border bg-black px-3 py-2 text-left text-gray-100 placeholder-gray-400 shadow focus:outline-none disabled:border-none disabled:text-gray-900 disabled:placeholder-gray-900"
               id="about"
             />
 
             {/* Optional button to submit the form */}
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className="rounded bg-blue-500 px-4 py-2 text-white"
               onClick={onClick}
             >
               Okay
