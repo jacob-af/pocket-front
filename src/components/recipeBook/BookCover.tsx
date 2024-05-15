@@ -8,9 +8,9 @@ import { BookCoverImage } from "@/components/images/BookCoverImage";
 
 export default function BookCover({ book }: { book: RecipeBook }) {
   return (
-    <div className="relative flex flex-col max-w-lg rounded-lg w-full my-2 bg-black z-10">
+    <div className="relative my-2 flex w-full max-w-lg flex-col rounded-lg bg-black">
       <div className="w-full bg-black text-center text-2xl">{book.name}</div>
-      <div className="flex max-w-md h-40">
+      <div className="flex h-40 max-w-md">
         <BookCoverImage />
       </div>
       <div className="w-full bg-black">{book.description}</div>
