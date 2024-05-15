@@ -6,13 +6,8 @@ import { ApolloWrapper } from "../lib/ApolloWrapper";
 import type { Metadata } from "next";
 import { Session } from "next-auth";
 import SessionProvider from "@/lib/SessionProvider";
+import { cutive } from "@/lib/cutive";
 import { getSession } from "next-auth/react";
-
-const pressStart = Cutive({
-  subsets: ["latin"],
-  weight: "400",
-  preload: false
-});
 
 export const metadata: Metadata = {
   title: "Pocket",
@@ -27,7 +22,7 @@ export default async function RootLayout({
   const session: Session | null = await getSession();
 
   return (
-    <html lang="en" className={`${pressStart.className} antialiased`}>
+    <html lang="en" className={`${cutive.className} antialiased`}>
       <body className="w-screen">
         <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
