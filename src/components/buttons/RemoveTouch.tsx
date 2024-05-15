@@ -4,7 +4,7 @@ export const RemoveTouch = ({ index }: { index: number }) => {
   return (
     <button
       onClick={() => removeTouch(index)}
-      className="text-center align-center w-16 h-16 bg-black"
+      className="text-center align-center w-8 h-8 bg-black"
     >
       X
     </button>
