@@ -41,7 +41,7 @@ function BottomNavBar() {
             onClick={() => handleChange("recipeBooks")}
           >
             <BookIcon />
-            <span className="text-xxs">RecipeBooks</span>
+            <span className="text-xxs">Books</span>
           </span>
         </Link>
         <Link href="/db/recipe" passHref>

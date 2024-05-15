@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default async function SideBar() {
   return (
-    <div className="container top-0 left-0 h-full w-60 pt-12 border-box  hidden lg:flex fixed">
-      <div className="flex flex-col space-y-4 p-4 mt-10">
+    <div className="z-90 border-box container fixed left-0 top-0 hidden h-full w-60 pt-12 lg:flex">
+      <div className="mt-10 flex flex-col space-y-4 p-4">
         <Link href="/db" className="text-gray-100 hover:text-blue-600">
           Dashboard
         </Link>
