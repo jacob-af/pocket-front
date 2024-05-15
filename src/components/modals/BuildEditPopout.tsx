@@ -4,9 +4,8 @@ import { ArrowDown, ArrowUp } from "@/components/images/Arrows";
 import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
-import { DeleteBuildButton } from "../buttons/DeleteBuild";
-import { EditRecipeButton } from "../buttons/EditRecipe";
-import { ShareRecipeButton } from "../buttons/ShareRecipe";
+import { DeleteBuildButton } from "@/components/buttons/DeleteBuild";
+import { EditRecipeButton } from "@/components/buttons/EditRecipe";
 import { useReactiveVar } from "@apollo/client";
 import { useSession } from "next-auth/react";
 
