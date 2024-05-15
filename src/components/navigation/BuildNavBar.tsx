@@ -1,22 +1,31 @@
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "../images/Arrows";
+import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
 import { BuildEditPopout } from "../modals/BuildEditPopout";
-import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
+import { ShareRecipeModal } from "../modals/ShareRecipeModal";
 import { useReactiveVar } from "@apollo/client";
+import { useState } from "react";
 
-export async function BuildNavBar() {
+export function BuildNavBar() {
   const recipe = useReactiveVar(selectedRecipe);
-
+  const slide: number = useReactiveVar(currentBuild);
+  const [openShare, setOpenShare] = useState(false);
   const handleNextSlide = () => {
-    console.log(recipe.userBuild.findIndex);
+    currentBuild((slide + 1) % recipe.userBuild.length);
   };
 
-  const handlePrevSlide = () => {};
+  const handlePrevSlide = () => {
+    currentBuild(slide === 0 ? recipe.userBuild.length - 1 : slide - 1);
+  };
+
+  if (!recipe || recipe.userBuild.length === 0) {
+    return <div>This recipe has no builds</div>;
+  }
 
   return (
-    <nav className="fixed bottom-14 flex w-screen h-12 box-border z-10 justify-center items-center">
-      <div className="grid grid-cols-3 grid-flow-row gap-8 mt-4">
-        <div className="col-span-1 w-full flex items-center justify-center">
+    <nav className="z-10 mb-16 box-border flex h-12 w-screen items-center justify-center">
+      <div className="mt-4 grid grid-flow-row grid-cols-3 gap-8">
+        <div className="col-span-1 flex w-full items-center justify-center">
           <button
             onClick={handlePrevSlide}
             className={` ${recipe.userBuild.length >= 2 ? "" : "hidden"}`}
@@ -25,9 +34,9 @@ export async function BuildNavBar() {
           </button>
         </div>
         <div className="col-span-1 w-full">
-          <BuildEditPopout />
+          <BuildEditPopout setopen={setOpenShare} />
         </div>
-        <div className="col-span-1 w-full flex items-center justify-center">
+        <div className="col-span-1 flex w-full items-center justify-center">
           <button
             onClick={handleNextSlide}
             className={` ${recipe.userBuild.length >= 2 ? "" : "hidden"}`}
@@ -36,6 +45,11 @@ export async function BuildNavBar() {
           </button>
         </div>
       </div>
+      <ShareRecipeModal
+        open={openShare}
+        toggleopen={setOpenShare}
+        build={recipe.userBuild[slide]}
+      />
     </nav>
   );
 }

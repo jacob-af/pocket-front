@@ -9,7 +9,11 @@ import { useReactiveVar } from "@apollo/client";
 export default function RecipeCard() {
   const recipe = useReactiveVar(selectedRecipe);
   return (
-    <div className={`p-4 border mt-16 ${recipe.name ? "" : "hidden"}`}>
+    <div
+      className={`p-4 my-8 overflow-scroll max-w-2xl ${
+        recipe.name ? "" : "hidden"
+      }`}
+    >
       <div className="text-center text-xl">{recipe.name}</div>
       <div className="block">
         <TempImage />
