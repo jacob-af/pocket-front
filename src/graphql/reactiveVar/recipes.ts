@@ -45,4 +45,6 @@ export const recipeBlank = {
   permission: Permission.View
 };
 
+export const currentBuild = makeVar(0);
+
 export const newRecipeInfo = makeVar<BuildConstructor>(recipeBlank);
