@@ -10,10 +10,11 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="flex flex-row w-full bg-black">
+    <div className="flex h-full w-full max-w-2xl flex-col items-center justify-center">
+      <div className="flex w-full items-center justify-center bg-black">
         <RecipeLoader />
       </div>
+
       {children}
     </div>
   );

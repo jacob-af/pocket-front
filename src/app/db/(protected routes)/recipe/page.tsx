@@ -12,7 +12,7 @@ export default function Recipe() {
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
   return (
-    <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto pt-4 m-0 box-border">
+    <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto mt-10 m-0 box-border">
       {/* AddRecipe button */}
       <div className="fixed top-12 right-2 z-40">
         <AddRecipe />

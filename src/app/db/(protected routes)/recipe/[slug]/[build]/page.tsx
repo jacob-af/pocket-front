@@ -2,6 +2,7 @@
 
 import { useQuery, useReactiveVar } from "@apollo/client";
 
+import { BuildNavBar } from "@/components/navigation/BuildNavBar";
 import { GET_ONE_BUILD } from "@/graphql/queries/recipe";
 import RecipeCard from "@/components/recipe/display/RecipeCard";
 import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
@@ -38,10 +39,18 @@ export default function Page({
     }
   }, [data?.findOneBuild, data, loading, error]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>There is no page here</div>;
+  }
+
   return (
-    <div>
-      {recipe.name}
+    <div className="box-border h-full overflow-scroll">
       <RecipeCard />
+      <BuildNavBar />
     </div>
   );
 }

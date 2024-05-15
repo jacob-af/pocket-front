@@ -18,8 +18,8 @@ export default function RecipeBook() {
 
   return (
     <div>
-      <div className="h-full w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto pt-4 m-0 box-border">
-        <div className="fixed top-12 right-2 z-40">
+      <div className="m-0 mb-14 box-border grid h-full w-full gap-4 overflow-auto pt-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="fixed right-2 top-12 z-10">
           <AddRecipeBookButton />
         </div>
         {columnConfigurations.map((columns, index) =>
