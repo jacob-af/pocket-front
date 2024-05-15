@@ -44,7 +44,7 @@ export default function RecipeLoader() {
               ? "Loading..."
               : recipeList.length > 0 && loading
               ? `Updating...`
-              : `${recipeList.length} Recipes Loaded`
+              : `Recipe Search`
           }
         />
       </div>
