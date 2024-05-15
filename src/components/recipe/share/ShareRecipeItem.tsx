@@ -60,39 +60,41 @@ export const ShareRecipe = ({
   };
 
   return (
-    <div key={user.id} className="flex items-center space-x-4">
-      <span>{user.userName}</span>
-      <select
-        value={value}
-        onChange={handleChange}
-        className="border border-gray-300 bg-black max-w-40 px-4 py-2 rounded-md"
-      >
-        <option value="">-- Select Option --</option>
-        <option value="BLOCKED">Block</option>
-        <option value="VIEW">View</option>
-        <option value="EDIT">Edit</option>
-        <option value="MANAGER">Manager</option>
-        <option value="OWNER">Owner</option>
-      </select>
+    <div key={user.id} className="flex items-center justify-center space-x-4">
+      <div className="block text-center md:flex">
+        <div className="ml-3 text-center">{user.userName}</div>
+        <select
+          value={value}
+          onChange={handleChange}
+          className="max-w-40 rounded-md border border-gray-300 bg-black px-4"
+        >
+          <option value="">-- Select Option --</option>
+          <option value="BLOCKED">Block</option>
+          <option value="VIEW">View</option>
+          <option value="EDIT">Edit</option>
+          <option value="MANAGER">Manager</option>
+          <option value="OWNER">Owner</option>
+        </select>
+      </div>
       {permission ? (
-        <>
+        <div className="flex flex-col md:flex-row-reverse">
           <button
             onClick={() => handleUnshare(user.id)}
-            className="bg-red-500 text-xxs px-4 py-2 rounded-md"
+            className="rounded-md bg-gray-600 px-4 py-2 text-xxs"
           >
             Remove
           </button>
           <button
             onClick={() => handleShare(user.id)}
-            className="bg-red-500 text-xxs px-4 py-2 rounded-md"
+            className="rounded-md bg-gray-400 px-4 py-2 text-xxs"
           >
             Change
           </button>
-        </>
+        </div>
       ) : (
         <button
           onClick={() => handleShare(user.id)}
-          className=" text-xxs px-4 py-2 rounded-md"
+          className="rounded-md px-4 py-2 text-xxs"
         >
           Share
         </button>
