@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import Image from "next/image";
 import { useReactiveVar } from "@apollo/client";
 import { useSession } from "next-auth/react";
@@ -27,10 +29,11 @@ function getRandomImagePath() {
 }
 
 export default function TempImage() {
-  const randomImagePath = getRandomImagePath();
+  const randomImagePath = useRef(getRandomImagePath);
+
   return (
     <Image
-      src={randomImagePath}
+      src={randomImagePath.current()}
       width={180}
       height={180}
       alt="Pixel drawing of whiskey cocktail on the rocks with cherry"
