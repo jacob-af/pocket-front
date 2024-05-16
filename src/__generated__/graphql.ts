@@ -74,7 +74,7 @@ export type Build = {
   image?: Maybe<Scalars['String']['output']>;
   instructions?: Maybe<Scalars['String']['output']>;
   notes?: Maybe<Scalars['String']['output']>;
-  permission: Permission;
+  permission?: Maybe<Permission>;
   recipe: Recipe;
   touch: Array<Touch>;
   version?: Maybe<Scalars['Int']['output']>;
@@ -89,9 +89,8 @@ export type BuildConstructor = {
   id: Scalars['String']['output'];
   instructions?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
-  newRecipe: Scalars['Boolean']['output'];
   permission: Permission;
-  touchArray: Array<Maybe<TouchInput>>;
+  touchArray: Array<Maybe<CompleteTouch>>;
 };
 
 export type BuildPermissionResponse = {
@@ -116,11 +115,10 @@ export type ChangeBuildPermissionInput = {
 
 export type CompleteTouch = {
   __typename?: 'CompleteTouch';
-  amount?: Maybe<Scalars['Float']['output']>;
-  cost?: Maybe<Scalars['Float']['output']>;
+  amount: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
-  ingredientName?: Maybe<Scalars['String']['output']>;
-  unit?: Maybe<Scalars['String']['output']>;
+  ingredientName: Scalars['String']['output'];
+  unit: Scalars['String']['output'];
 };
 
 export type CreateBuildInput = {
@@ -221,7 +219,7 @@ export type Mutation = {
   addBuildToRecipeBook: StatusMessage;
   blockUser?: Maybe<StatusMessage>;
   changeBuildPermission?: Maybe<BuildPermissionResponse>;
-  changeRecipeBookPermission: StatusMessage;
+  changeRecipeBookPermission: RecipeBookShare;
   createBuild?: Maybe<Build>;
   createIngredient: Ingredient;
   createManyIngredients: StatusMessage;
@@ -271,7 +269,7 @@ export type MutationChangeBuildPermissionArgs = {
 
 
 export type MutationChangeRecipeBookPermissionArgs = {
-  permission?: InputMaybe<Permission>;
+  desiredPermission?: InputMaybe<Permission>;
   recipeBookId: Scalars['String']['input'];
   userId: Scalars['String']['input'];
   userPermission?: InputMaybe<Permission>;
@@ -359,8 +357,8 @@ export type MutationRemoveRecipeArgs = {
 
 
 export type MutationRemoveRecipeBookArgs = {
+  id: Scalars['String']['input'];
   permission: Permission;
-  recipeBookId: Scalars['String']['input'];
 };
 
 
@@ -413,9 +411,9 @@ export type MutationUpdateRecipeArgs = {
 
 export type MutationUpdateRecipeBookArgs = {
   description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
   name: Scalars['String']['input'];
   permission: Permission;
-  recipeBookId: Scalars['String']['input'];
 };
 
 
@@ -458,6 +456,7 @@ export type Query = {
   allUsers: Array<Maybe<User>>;
   findAllBuilds?: Maybe<Array<Maybe<Build>>>;
   findBuildUsers?: Maybe<Array<Maybe<BuildUser>>>;
+  findFolloweddUsersBookPermission?: Maybe<Array<Maybe<UserBookPermission>>>;
   findFolloweddUsersBuildPermission?: Maybe<Array<Maybe<UserBuildPermission>>>;
   findFollowers?: Maybe<Array<Maybe<User>>>;
   findFollows?: Maybe<Array<Maybe<User>>>;
@@ -473,13 +472,18 @@ export type Query = {
   recipes: Array<Maybe<Recipe>>;
   userById?: Maybe<User>;
   userRecipe?: Maybe<Array<Maybe<Recipe>>>;
-  userRecipeBooks?: Maybe<RecipeBook>;
+  userRecipeBooks?: Maybe<Array<Maybe<RecipeBook>>>;
   usersBuilds?: Maybe<Array<Maybe<Build>>>;
 };
 
 
 export type QueryFindBuildUsersArgs = {
   buildId: Scalars['String']['input'];
+};
+
+
+export type QueryFindFolloweddUsersBookPermissionArgs = {
+  recipeBookId: Scalars['String']['input'];
 };
 
 
@@ -521,7 +525,7 @@ export type QueryUserByIdArgs = {
 export type Recipe = {
   __typename?: 'Recipe';
   about?: Maybe<Scalars['String']['output']>;
-  build: Array<Build>;
+  build?: Maybe<Array<Maybe<Build>>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   createdById?: Maybe<Scalars['String']['output']>;
@@ -538,18 +542,19 @@ export type RecipeBook = {
   build: Array<Build>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
-  description?: Maybe<Scalars['String']['output']>;
+  createdById?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   editedAt?: Maybe<Scalars['DateTime']['output']>;
   editedBy?: Maybe<User>;
   id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
   permission?: Maybe<Permission>;
 };
 
-export type RecipeBookBuild = {
-  __typename?: 'RecipeBookBuild';
-  build?: Maybe<Build>;
-  recipeBook?: Maybe<RecipeBook>;
+export type RecipeBookShare = {
+  __typename?: 'RecipeBookShare';
+  recipeBook?: Maybe<RecipeBookUser>;
+  status?: Maybe<StatusMessage>;
 };
 
 export type RecipeBookUser = {
@@ -577,12 +582,12 @@ export type StatusMessage = {
 
 export type Touch = {
   __typename?: 'Touch';
-  amount: Scalars['Float']['output'];
+  amount?: Maybe<Scalars['Float']['output']>;
   build?: Maybe<Build>;
   id: Scalars['ID']['output'];
-  ingredient: Ingredient;
-  order: Scalars['Int']['output'];
-  unit: Scalars['String']['output'];
+  ingredient?: Maybe<Ingredient>;
+  order?: Maybe<Scalars['Int']['output']>;
+  unit?: Maybe<Scalars['String']['output']>;
   version?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -645,6 +650,12 @@ export type User = {
   userName: Scalars['String']['output'];
 };
 
+export type UserBookPermission = {
+  __typename?: 'UserBookPermission';
+  permission?: Maybe<Scalars['String']['output']>;
+  user: User;
+};
+
 export type UserBuildPermission = {
   __typename?: 'UserBuildPermission';
   permission?: Maybe<Scalars['String']['output']>;
@@ -700,7 +711,7 @@ export type CreateBookMutationVariables = Exact<{
 }>;
 
 
-export type CreateBookMutation = { __typename?: 'Mutation', createRecipeBook: { __typename?: 'RecipeBook', id: string, name?: string | null, description?: string | null, permission?: Permission | null, build: Array<{ __typename?: 'Build', id: string }> } };
+export type CreateBookMutation = { __typename?: 'Mutation', createRecipeBook: { __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, build: Array<{ __typename?: 'Build', id: string }> } };
 
 export type AddBuildToRecipeBookMutationVariables = Exact<{
   recipeBookId: Scalars['String']['input'];
@@ -726,35 +737,63 @@ export type GetRecipeBookQueryVariables = Exact<{
 }>;
 
 
-export type GetRecipeBookQuery = { __typename?: 'Query', recipeBook?: { __typename?: 'RecipeBook', id: string, name?: string | null, description?: string | null, permission?: Permission | null, build: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission: Permission, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, unit: string, version?: number | null, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> }> } | null };
+export type GetRecipeBookQuery = { __typename?: 'Query', recipeBook?: { __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, build: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, order?: number | null, unit?: string | null, version?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> }> } | null };
+
+export type UpdateRecipeBookMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  permission: Permission;
+}>;
+
+
+export type UpdateRecipeBookMutation = { __typename?: 'Mutation', updateRecipeBook: { __typename?: 'RecipeBook', build: Array<{ __typename?: 'Build', id: string, buildName: string, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string }> }>, createdBy?: { __typename?: 'User', id: string, userName: string } | null } };
+
+export type ChangeRecipeBookPermissionMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+  recipeBookId: Scalars['String']['input'];
+  userPermission?: InputMaybe<Permission>;
+  desiredPermission?: InputMaybe<Permission>;
+}>;
+
+
+export type ChangeRecipeBookPermissionMutation = { __typename?: 'Mutation', changeRecipeBookPermission: { __typename?: 'RecipeBookShare', status?: { __typename?: 'StatusMessage', message?: string | null } | null } };
+
+export type RemoveRecipeBookPermissionMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+  recipeBookId: Scalars['String']['input'];
+  permission?: InputMaybe<Permission>;
+}>;
+
+
+export type RemoveRecipeBookPermissionMutation = { __typename?: 'Mutation', removeRecipeBookPermission: { __typename?: 'StatusMessage', message?: string | null } };
 
 export type CreateRecipeMutationVariables = Exact<{
   createRecipeInput: CreateRecipeInput;
 }>;
 
 
-export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', name: string, createdAt?: any | null, build: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission: Permission, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, unit: string, version?: number | null, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> }> } };
+export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', name: string, createdAt?: any | null, build?: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, order?: number | null, unit?: string | null, version?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null> | null } };
 
 export type AddBuildMutationVariables = Exact<{
   createBuildInput?: InputMaybe<CreateBuildInput>;
 }>;
 
 
-export type AddBuildMutation = { __typename?: 'Mutation', createBuild?: { __typename?: 'Build', id: string, buildName: string, ice?: string | null, instructions?: string | null, notes?: string | null, permission: Permission, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, unit: string, version?: number | null, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null };
+export type AddBuildMutation = { __typename?: 'Mutation', createBuild?: { __typename?: 'Build', id: string, buildName: string, ice?: string | null, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, order?: number | null, unit?: string | null, version?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null };
 
 export type UpdateRecipeMutationVariables = Exact<{
   updateRecipeInput: UpdateRecipeInput;
 }>;
 
 
-export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, build: Array<{ __typename?: 'Build', id: string, buildName: string, ice?: string | null, glassware?: string | null, instructions?: string | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, version?: number | null, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> }> } };
+export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, build?: Array<{ __typename?: 'Build', id: string, buildName: string, ice?: string | null, glassware?: string | null, instructions?: string | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, version?: number | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null> | null } };
 
 export type UpdateBuildMutationVariables = Exact<{
   updateBuildInput?: InputMaybe<UpdateBuildInput>;
 }>;
 
 
-export type UpdateBuildMutation = { __typename?: 'Mutation', updateBuild?: { __typename?: 'ArchiveResponse', build?: { __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission: Permission, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, order: number, unit: string, amount: number, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null } | null };
+export type UpdateBuildMutation = { __typename?: 'Mutation', updateBuild?: { __typename?: 'ArchiveResponse', build?: { __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, order?: number | null, unit?: string | null, amount?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null } | null };
 
 export type DeleteBuildMutationVariables = Exact<{
   buildId?: InputMaybe<Scalars['String']['input']>;
@@ -762,7 +801,7 @@ export type DeleteBuildMutationVariables = Exact<{
 }>;
 
 
-export type DeleteBuildMutation = { __typename?: 'Mutation', removeBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, permission: Permission, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', name: string, id: string } }> } | null };
+export type DeleteBuildMutation = { __typename?: 'Mutation', removeBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, permission?: Permission | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', name: string, id: string } | null }> } | null };
 
 export type ChangeBuildPermissionMutationVariables = Exact<{
   changeBuildPermissionInput?: InputMaybe<ChangeBuildPermissionInput>;
@@ -803,17 +842,17 @@ export type GetRecipeQueryVariables = Exact<{
 }>;
 
 
-export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name: string, about?: string | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission: Permission, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> }> } | null };
+export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name: string, about?: string | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> }> } | null };
 
 export type UserBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserBuildsQuery = { __typename?: 'Query', usersBuilds?: Array<{ __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission: Permission, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> } | null> | null };
+export type UserBuildsQuery = { __typename?: 'Query', usersBuilds?: Array<{ __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> } | null> | null };
 
 export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryQuery = { __typename?: 'Query', userRecipe?: Array<{ __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission: Permission, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> }> } | null> | null };
+export type QueryQuery = { __typename?: 'Query', userRecipe?: Array<{ __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> }> } | null> | null };
 
 export type RecipeListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -833,12 +872,29 @@ export type FindOneBuildQueryVariables = Exact<{
 }>;
 
 
-export type FindOneBuildQuery = { __typename?: 'Query', findOneBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null };
+export type FindOneBuildQuery = { __typename?: 'Query', findOneBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null };
 
 export type UserRecipeBooksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserRecipeBooksQuery = { __typename?: 'Query', userRecipeBooks?: { __typename?: 'RecipeBook', id: string, name?: string | null, description?: string | null, permission?: Permission | null, build: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission: Permission, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> }> } | null };
+export type UserRecipeBooksQuery = { __typename?: 'Query', userRecipeBooks?: Array<{ __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, build: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> }> } | null> | null };
+
+export type BookPermissionQueryVariables = Exact<{
+  recipeBookId: Scalars['String']['input'];
+}>;
+
+
+export type BookPermissionQuery = { __typename?: 'Query', findFolloweddUsersBookPermission?: Array<{ __typename?: 'UserBookPermission', permission?: string | null, user: { __typename?: 'User', id: string, userName: string } } | null> | null };
+
+export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllUsersQuery = { __typename?: 'Query', allUsers: Array<{ __typename?: 'User', id: string, userName: string, email?: any | null } | null> };
+
+export type GetRelationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRelationsQuery = { __typename?: 'Query', getUserRelationships?: Array<{ __typename?: 'UserRelation', id: string, userName: string, following: boolean, followedBy: boolean } | null> | null };
 
 
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
@@ -850,6 +906,9 @@ export const CreateBookDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const AddBuildToRecipeBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddBuildToRecipeBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"buildId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"buildPermission"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bookPermission"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addBuildToRecipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"recipeBookId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}}},{"kind":"Argument","name":{"kind":"Name","value":"buildId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"buildId"}}},{"kind":"Argument","name":{"kind":"Name","value":"buildPermission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"buildPermission"}}},{"kind":"Argument","name":{"kind":"Name","value":"bookPermission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bookPermission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<AddBuildToRecipeBookMutation, AddBuildToRecipeBookMutationVariables>;
 export const RemoveBuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveBuild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"buildId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bookPermission"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeBuildFromRecipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"recipeBookId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}}},{"kind":"Argument","name":{"kind":"Name","value":"buildId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"buildId"}}},{"kind":"Argument","name":{"kind":"Name","value":"bookPermission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bookPermission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<RemoveBuildMutation, RemoveBuildMutationVariables>;
 export const GetRecipeBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipeBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"build"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipeBookQuery, GetRecipeBookQueryVariables>;
+export const UpdateRecipeBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRecipeBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"permission"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRecipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"permission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"permission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"build"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRecipeBookMutation, UpdateRecipeBookMutationVariables>;
+export const ChangeRecipeBookPermissionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangeRecipeBookPermission"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userPermission"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"desiredPermission"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeRecipeBookPermission"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"recipeBookId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}}},{"kind":"Argument","name":{"kind":"Name","value":"userPermission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userPermission"}}},{"kind":"Argument","name":{"kind":"Name","value":"desiredPermission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"desiredPermission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<ChangeRecipeBookPermissionMutation, ChangeRecipeBookPermissionMutationVariables>;
+export const RemoveRecipeBookPermissionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveRecipeBookPermission"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"permission"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeRecipeBookPermission"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"recipeBookId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}}},{"kind":"Argument","name":{"kind":"Name","value":"permission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"permission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<RemoveRecipeBookPermissionMutation, RemoveRecipeBookPermissionMutationVariables>;
 export const CreateRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRecipeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRecipeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRecipe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRecipeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRecipeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"build"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateRecipeMutation, CreateRecipeMutationVariables>;
 export const AddBuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddBuild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createBuildInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateBuildInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBuild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createBuildInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createBuildInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AddBuildMutation, AddBuildMutationVariables>;
 export const UpdateRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateRecipeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateRecipeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRecipe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateRecipeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateRecipeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}},{"kind":"Field","name":{"kind":"Name","value":"build"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRecipeMutation, UpdateRecipeMutationVariables>;
@@ -866,4 +925,7 @@ export const QueryDocument = {"kind":"Document","definitions":[{"kind":"Operatio
 export const RecipeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"RecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ingredients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<RecipeListQuery, RecipeListQueryVariables>;
 export const FindFolloweddUsersBuildPermissionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindFolloweddUsersBuildPermission"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"buildId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findFolloweddUsersBuildPermission"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"buildId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"buildId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<FindFolloweddUsersBuildPermissionQuery, FindFolloweddUsersBuildPermissionQueryVariables>;
 export const FindOneBuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindOneBuild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"buildName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findOneBuild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"recipeName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeName"}}},{"kind":"Argument","name":{"kind":"Name","value":"buildName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"buildName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]} as unknown as DocumentNode<FindOneBuildQuery, FindOneBuildQueryVariables>;
-export const UserRecipeBooksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserRecipeBooks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRecipeBooks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"build"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserRecipeBooksQuery, UserRecipeBooksQueryVariables>;
+export const UserRecipeBooksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserRecipeBooks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRecipeBooks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"build"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserRecipeBooksQuery, UserRecipeBooksQueryVariables>;
+export const BookPermissionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"bookPermission"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findFolloweddUsersBookPermission"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"recipeBookId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeBookId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]} as unknown as DocumentNode<BookPermissionQuery, BookPermissionQueryVariables>;
+export const AllUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<AllUsersQuery, AllUsersQueryVariables>;
+export const GetRelationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRelations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserRelationships"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"following"}},{"kind":"Field","name":{"kind":"Name","value":"followedBy"}}]}}]}}]} as unknown as DocumentNode<GetRelationsQuery, GetRelationsQueryVariables>;

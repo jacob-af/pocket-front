@@ -9,9 +9,11 @@ import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
 
 export default function RecipeBookDropDown({
-  recipeBooks
+  recipeBooks,
+  loading
 }: {
   recipeBooks: RecipeBook[];
+  loading: string;
 }) {
   const selected = useReactiveVar(selectedRecipeBook);
   const router = useRouter();
@@ -23,11 +25,15 @@ export default function RecipeBookDropDown({
   };
 
   return (
-    <div className="w-full">
+    <div className="z-20 w-full">
       <MuiDropDown
         options={recipeBooks as ListItem[]}
         handleChange={recipeBookSelect}
-        currentValue={(selected as ListItem) || { name: "", id: "Arbitrary" }}
+        currentValue={
+          selected.name !== ""
+            ? (selected as ListItem)
+            : { name: loading, id: "Arbitrary" }
+        }
         index={97}
       />
     </div>

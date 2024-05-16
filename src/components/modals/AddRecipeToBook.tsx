@@ -42,7 +42,7 @@ export const AddRecipeToBookModal = ({
 
   useEffect(() => {
     if (data?.userRecipe) {
-      const recipes = data?.userRecipe
+      const recipes = data.userRecipe
         .filter(recipe => {
           return recipe?.userBuild.length > 0;
         })
@@ -70,8 +70,8 @@ export const AddRecipeToBookModal = ({
     try {
       const res = await addBuild({
         variables: {
-          buildId: build.id,
           recipeBookId: book.id,
+          buildId: build.id,
           buildPermission: build.permission,
           bookPermission: book.permission
         }
@@ -91,8 +91,8 @@ export const AddRecipeToBookModal = ({
     try {
       await removeBuild({
         variables: {
-          buildId: build.id,
           recipeBookId: book.id,
+          buildId: build.id,
           bookPermission: book.permission
         }
       });
@@ -111,27 +111,27 @@ export const AddRecipeToBookModal = ({
       {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-90 flex justify-center items-center z-80"
+          className="z-80 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-90"
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="p-6 relative rounded border border-black shadow-xl w-80"
+            className="relative w-80 rounded border border-black p-6 shadow-xl"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 hover:text-gray-800"
+              className="absolute right-2 top-2 hover:text-gray-800"
             >
               &times;
             </button>
 
             {/* Modal content */}
-            <div className="text-lg font-semibold mb-4">
+            <div className="mb-4 text-lg font-semibold">
               Add recipes to your book:
             </div>
 
-            <div className="content-center overflow-scroll h-80">
+            <div className="h-80 content-center overflow-scroll">
               {recipeList
                 .flatMap(recipe => recipe.userBuild)
                 .map((build: Build, index: number) => {
@@ -158,7 +158,7 @@ export const AddRecipeToBookModal = ({
                 })}
             </div>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className="rounded bg-blue-500 px-4 py-2 text-white"
               onClick={onClick}
             >
               DONE

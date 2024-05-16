@@ -15,13 +15,13 @@ export default async function Dashboard({
 }) {
   return (
     <main className="flex min-h-screen w-screen overflow-hidden bg-black">
-      <RightSideBar />
-      <SideBar />
       <AlertDisplay />
-      <div className="float-right box-border flex h-full w-screen flex-grow justify-center md:pb-0 lg:mx-60">
+      <SideBar />
+      <RightSideBar />
+      <TopNavBar />
+      <div className="box-border flex h-full w-screen flex-grow justify-center md:pb-0 lg:mx-60">
         {children}
       </div>
-      <TopNavBar />
 
       <BottomNavBar />
     </main>

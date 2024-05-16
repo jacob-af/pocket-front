@@ -10,8 +10,8 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="flex flex-row w-full bg-black">
+    <div className="bg-background flex h-full w-full max-w-2xl flex-col items-center justify-center">
+      <div className="z-20 flex w-full flex-row items-center justify-center bg-black">
         <RecipeBookLoader />
       </div>
       {children}

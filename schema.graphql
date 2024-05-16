@@ -35,8 +35,9 @@ type Query {
   ingredient(id: Int!): Ingredient
   getProfile(userId: String): Profile!
   allRecipeBooks: [RecipeBook]!
-  userRecipeBooks: RecipeBook
+  userRecipeBooks: [RecipeBook]
   recipeBook(name: String): RecipeBook
+  findFolloweddUsersBookPermission(recipeBookId: String!): [UserBookPermission]
   recipeList: [ListItem]!
   recipes: [Recipe]!
   recipe(name: String!): Recipe
@@ -72,15 +73,12 @@ type Mutation {
   updateProfile(image: String): Profile!
   createRecipeBook(name: String!, description: String): RecipeBook!
   updateRecipeBook(
-    recipeBookId: String!
+    id: String!
     name: String!
     permission: Permission!
     description: String
   ): RecipeBook!
-  removeRecipeBook(
-    recipeBookId: String!
-    permission: Permission!
-  ): StatusMessage!
+  removeRecipeBook(id: String!, permission: Permission!): StatusMessage!
   addBuildToRecipeBook(
     recipeBookId: String!
     buildId: String!
@@ -95,9 +93,9 @@ type Mutation {
   changeRecipeBookPermission(
     userId: String!
     recipeBookId: String!
-    permission: Permission
     userPermission: Permission
-  ): StatusMessage!
+    desiredPermission: Permission
+  ): RecipeBookShare!
   removeRecipeBookPermission(
     userId: String!
     recipeBookId: String!
@@ -135,10 +133,22 @@ type Build {
   glassware: String
   ice: String
   image: String
-  permission: Permission!
+  permission: Permission
   touch: [Touch!]!
   version: Int
   archivedBuild: [ArchivedBuild]
+}
+
+type BuildConstructor {
+  name: String!
+  buildName: String!
+  about: String
+  instructions: String
+  ice: String
+  glassware: String
+  touchArray: [CompleteTouch]!
+  id: String!
+  permission: Permission!
 }
 
 type ArchivedBuild {
@@ -184,19 +194,6 @@ input CreateBuildInput {
   ice: String
   image: String
   touchArray: [TouchInput]!
-}
-
-type BuildConstructor {
-  name: String!
-  buildName: String!
-  about: String
-  instructions: String
-  ice: String
-  glassware: String
-  touchArray: [TouchInput]!
-  id: String!
-  permission: Permission!
-  newRecipe: Boolean!
 }
 
 input RecipeNameInput {
@@ -295,9 +292,10 @@ input ProfileInput {
 
 type RecipeBook {
   id: ID!
-  name: String
-  description: String
+  name: String!
+  description: String!
   createdAt: DateTime
+  createdById: String
   editedAt: DateTime
   createdBy: User
   editedBy: User
@@ -311,9 +309,14 @@ type RecipeBookUser {
   permission: Permission!
 }
 
-type RecipeBookBuild {
-  recipeBook: RecipeBook
-  build: Build
+type RecipeBookShare {
+  recipeBook: RecipeBookUser
+  status: StatusMessage
+}
+
+type UserBookPermission {
+  user: User!
+  permission: String
 }
 
 type Recipe {
@@ -326,7 +329,7 @@ type Recipe {
   createdById: String
   editedBy: User
   editeById: String
-  build: [Build!]!
+  build: [Build]
   userBuild: [Build!]!
 }
 
@@ -356,11 +359,11 @@ scalar EmailAddress
 type Touch {
   id: ID!
   build: Build
-  order: Int!
-  amount: Float!
-  unit: String!
+  order: Int
+  amount: Float
+  unit: String
   version: Int
-  ingredient: Ingredient!
+  ingredient: Ingredient
 }
 
 type ArchivedTouch {
@@ -382,10 +385,9 @@ input TouchInput {
 
 type CompleteTouch {
   id: ID!
-  ingredientName: String
-  amount: Float
-  unit: String
-  cost: Float
+  ingredientName: String!
+  amount: Float!
+  unit: String!
 }
 
 type User {

@@ -1,6 +1,5 @@
+import { RecipeBook, UserBookPermission } from "@/__generated__/graphql";
 import { TypedDocumentNode, gql } from "@apollo/client";
-
-import { RecipeBook } from "@/__generated__/graphql";
 
 export const USER_RECIPEBOOKS: TypedDocumentNode<{
   userRecipeBooks: RecipeBook[];
@@ -11,6 +10,10 @@ export const USER_RECIPEBOOKS: TypedDocumentNode<{
       name
       description
       permission
+      createdBy {
+        id
+        userName
+      }
       build {
         id
         createdBy {
@@ -37,6 +40,20 @@ export const USER_RECIPEBOOKS: TypedDocumentNode<{
           unit
           order
         }
+      }
+    }
+  }
+`;
+
+export const BOOK_PERMISSIONS: TypedDocumentNode<{
+  findFolloweddUsersBookPermission: UserBookPermission[];
+}> = gql`
+  query bookPermission($recipeBookId: String!) {
+    findFolloweddUsersBookPermission(recipeBookId: $recipeBookId) {
+      permission
+      user {
+        id
+        userName
       }
     }
   }

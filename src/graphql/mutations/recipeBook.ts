@@ -80,3 +80,65 @@ export const GET_RECIPE_BOOK = gql`
     }
   }
 `;
+
+export const EDIT_BOOK = gql`
+  mutation UpdateRecipeBook(
+    $id: String!
+    $name: String!
+    $permission: Permission!
+  ) {
+    updateRecipeBook(id: $id, name: $name, permission: $permission) {
+      build {
+        recipe {
+          id
+          name
+        }
+        id
+        buildName
+        touch {
+          id
+        }
+      }
+      createdBy {
+        id
+        userName
+      }
+    }
+  }
+`;
+
+export const CHANGE_BOOK_PERMISSION = gql`
+  mutation ChangeRecipeBookPermission(
+    $userId: String!
+    $recipeBookId: String!
+    $userPermission: Permission
+    $desiredPermission: Permission
+  ) {
+    changeRecipeBookPermission(
+      userId: $userId
+      recipeBookId: $recipeBookId
+      userPermission: $userPermission
+      desiredPermission: $desiredPermission
+    ) {
+      status {
+        message
+      }
+    }
+  }
+`;
+
+export const REMOVE_BOOK_PERMISSION = gql`
+  mutation RemoveRecipeBookPermission(
+    $userId: String!
+    $recipeBookId: String!
+    $permission: Permission
+  ) {
+    removeRecipeBookPermission(
+      userId: $userId
+      recipeBookId: $recipeBookId
+      permission: $permission
+    ) {
+      message
+    }
+  }
+`;
