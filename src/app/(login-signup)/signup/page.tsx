@@ -52,19 +52,19 @@ export default function SignUpSide() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+    <div className="flex h-screen items-center justify-center bg-gray-100">
+      <div className="rounded-lg bg-white p-8 shadow-lg">
+        <h1 className="mb-4 text-2xl font-bold">Sign Up</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="userName"
             >
               User Name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="userName"
               type="text"
               placeholder="User Name"
@@ -77,20 +77,20 @@ export default function SignUpSide() {
               })}
             />
             {errors?.userName && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-xs italic text-red-500">
                 {errors.userName.message}
               </p>
             )}
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="email"
             >
               Email Address
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="email"
               type="email"
               placeholder="Email Address"
@@ -103,7 +103,7 @@ export default function SignUpSide() {
               })}
             />
             {errors?.email && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-xs italic text-red-500">
                 {errors.email.message}
               </p>
             )}
@@ -111,13 +111,13 @@ export default function SignUpSide() {
 
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="email"
             >
               Password
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="password"
               type="password"
               placeholder="Password"
@@ -131,7 +131,7 @@ export default function SignUpSide() {
               })}
             />
             {errors?.password && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-xs italic text-red-500">
                 {errors.password.message}
               </p>
             )}
@@ -141,13 +141,13 @@ export default function SignUpSide() {
 
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="confirmPassword"
             >
               Confirm Password
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="confirmPassword"
               type="confirmPassword"
               placeholder="Confirm Password"
@@ -161,7 +161,7 @@ export default function SignUpSide() {
               })}
             />
             {errors?.confirmPassword && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-xs italic text-red-500">
                 {errors.confirmPassword.message}
               </p>
             )}
@@ -169,7 +169,7 @@ export default function SignUpSide() {
 
           {/* Submit button */}
           <button
-            className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline rounded bg-blue-500 px-4 py-2 font-bold hover:bg-blue-700 focus:outline-none"
             type="submit"
           >
             Create Account
@@ -177,7 +177,7 @@ export default function SignUpSide() {
           {/* Login link */}
           <Link
             href="login"
-            className="block mt-4 text-blue-500 hover:text-blue-700"
+            className="mt-4 block text-blue-500 hover:text-blue-700"
           >
             Already have an account? Login
           </Link>
