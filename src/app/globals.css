@@ -49,3 +49,7 @@ ul.dropdown-list li:hover {
     20px
   ); /* Adjust the value as needed to control the pixelation effect */
 }
+
+.bg-background {
+  background-color: var(--background-color);
+}

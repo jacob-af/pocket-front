@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default async function TopNavBar() {
   return (
-    <nav className="fixed flex w-screen h-12 box-border bg-black z-10 justify-center items-center">
+    <nav className="z-90 fixed box-border flex h-12 w-screen items-center justify-center bg-black">
       <AmILoggedIn />
       <Link href="/db" className="">
         Pocket

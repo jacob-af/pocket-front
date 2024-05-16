@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { AlertDisplay } from "@/components/alerts/AlertDisplay";
 import BottomNavBar from "@/components/navigation/BottomNavBar";
+import RightSideBar from "@/components/navigation/RightSideBar";
 import SideBar from "@/components/navigation/SideBar";
 import TopNavBar from "@/components/navigation/TopNavBar";
 
@@ -13,13 +14,14 @@ export default async function Dashboard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen w-screen">
-      <TopNavBar />
+    <main className="flex min-h-screen w-screen overflow-hidden bg-black">
+      <RightSideBar />
       <SideBar />
       <AlertDisplay />
-      <div className="flex flex-grow h-full w-screen box-border mt-12 lg:mx-60 pb-26 md:pb-0 float-right justify-center">
+      <div className="float-right box-border flex h-full w-screen flex-grow justify-center md:pb-0 lg:mx-60">
         {children}
       </div>
+      <TopNavBar />
 
       <BottomNavBar />
     </main>
