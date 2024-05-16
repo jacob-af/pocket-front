@@ -44,12 +44,9 @@ export const ShareBook = ({
   const handleUnshare = async (userId: string) => {
     removePermission({
       variables: {
-        changeBookPermissionInput: {
-          userId: userId,
-          bookId: book.id,
-          userPermission: book.permission,
-          desiredPermission: value
-        }
+        userId: userId,
+        recipeBookId: book.id,
+        permission: book.permission
       }
     });
   };
