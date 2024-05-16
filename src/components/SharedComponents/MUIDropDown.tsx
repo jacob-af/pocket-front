@@ -29,7 +29,6 @@ export default function MuiDropDown({
   children?: ReactNode;
 }) {
   const [open, setOpen] = useState<boolean>(false);
-  const [uuid, setUuid] = useState<string>("");
   const toggleopen = () => setOpen(!open);
 
   // Clone the child element and pass open and setOpen as props
@@ -44,18 +43,21 @@ export default function MuiDropDown({
   return (
     <>
       <Autocomplete
-        className="w-full bg-white text-black box-border rounded-lg"
+        className="z-80 box-border w-full rounded-lg bg-white text-black"
         value={currentValue.name}
-        onChange={(event, newValue) => {
-          if (typeof newValue === "string") {
+        onChange={(event, newValue, reason) => {
+          if (reason === "clear") {
+            handleChange({ name: "", id: "unique", index });
+          } else if (typeof newValue === "string") {
             setTimeout(() => {
               handleChange({ name: newValue, id: "", index });
               setOpen(true);
-            });
+            }, 100);
           } else if (newValue && newValue.inputValue) {
-            // Create a new value from the user input
-            handleChange({ ...newValue, index });
-            setOpen(true);
+            setTimeout(() => {
+              handleChange({ name: newValue, id: "", index });
+              setOpen(true);
+            }, 100);
           } else {
             if (newValue) {
               handleChange({ ...newValue, index });
@@ -81,6 +83,7 @@ export default function MuiDropDown({
         }}
         selectOnFocus
         clearOnBlur
+        openOnFocus
         handleHomeEndKeys
         id="free-solo-with-text-demo"
         options={options}
@@ -112,6 +115,7 @@ export default function MuiDropDown({
           );
         }}
         freeSolo
+        clearText="Select"
         renderInput={params => {
           return (
             <TextField
