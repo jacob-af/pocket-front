@@ -35,7 +35,7 @@ export default function RecipeLoader() {
   }
 
   return (
-    <div className="fixed top-14 h-16">
+    <div className="fixed top-14 z-30 h-16">
       <div className="flex w-72">
         <RecipeDropDown
           recipes={recipeList}

@@ -17,7 +17,6 @@ export default function Page({ params }: { params: { slug: string } }) {
     variables: { name: q },
     fetchPolicy: "cache-and-network"
   });
-  const recipe = useReactiveVar(selectedRecipe);
 
   useEffect(() => {
     if (data?.recipe) {
@@ -35,7 +34,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="flex h-full max-w-xl flex-col items-center justify-center">
+    <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
       <RecipeCard />
       <BuildNavBar />
     </div>

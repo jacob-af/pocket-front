@@ -3,6 +3,7 @@ import {
   allRecipesList,
   blankTouch,
   newRecipeInfo,
+  recipeBlank,
   selectedRecipe,
   touchArray
 } from "@/graphql/reactiveVar/recipes";
@@ -17,6 +18,7 @@ export const RecipeChange: DropDownSelectFunction = (newValue: ListItem) => {
   const router = useRouter();
   const recipeList = allRecipesList();
   const recipe = newRecipeInfo();
+
   if (recipeList.findIndex(a => a.name === newValue.name) === -1) {
     newRecipeInfo({
       ...recipe,
@@ -24,6 +26,10 @@ export const RecipeChange: DropDownSelectFunction = (newValue: ListItem) => {
       buildName: "Original",
       newRecipe: true
     });
+  } else if (newValue.name === "") {
+    console.log("clear hit");
+    newRecipeInfo(recipeBlank);
+    router.push("/db/recipe/");
   } else {
     newRecipeInfo({
       ...recipe,
@@ -32,7 +38,7 @@ export const RecipeChange: DropDownSelectFunction = (newValue: ListItem) => {
       newRecipe: false
     });
     if (pathname !== "/db/recipe/add") {
-      redirect("/db/recipe/add");
+      router.push("/db/recipe/add");
     }
   }
 };

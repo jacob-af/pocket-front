@@ -18,12 +18,12 @@ export function BuildNavBar() {
     currentBuild(slide === 0 ? recipe.userBuild.length - 1 : slide - 1);
   };
 
-  if (!recipe || recipe.userBuild.length === 0) {
+  if (recipe.userBuild === undefined || recipe.userBuild.length === 0) {
     return <div>This recipe has no builds</div>;
   }
 
   return (
-    <nav className="z-10 mb-16 box-border flex h-12 w-screen items-center justify-center">
+    <nav className="z-10 mt-auto box-border flex h-10 w-screen items-center justify-center">
       <div className="mt-4 grid grid-flow-row grid-cols-3 gap-8">
         <div className="col-span-1 flex w-full items-center justify-center">
           <button

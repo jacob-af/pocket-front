@@ -25,7 +25,7 @@ export default function RecipeDropDown({
   };
 
   return (
-    <div className="w-full">
+    <div className="z-20 w-full">
       <MuiDropDown
         options={recipes as ListItem[]}
         handleChange={recipeSelect}
