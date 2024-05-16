@@ -4,6 +4,7 @@ import { AddRecipeToBookModal } from "@/components/modals/AddRecipeToBook";
 import { EDIT_BOOK } from "@/graphql/mutations/recipeBook";
 import { EditBookModal } from "@/components/modals/EditBookModal";
 import EditRecipeBookButton from "@/components/buttons/EditRecipeBookButton";
+import { RecipeBook } from "@/__generated__/graphql";
 import { ShareBookModal } from "@/components/modals/ShareBookModal";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { useReactiveVar } from "@apollo/client";
@@ -11,10 +12,9 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-export function BookNavBar() {
+export function BookNavBar({ book }: { book: RecipeBook }) {
   const { data: session } = useSession();
   const router = useRouter();
-  const book = useReactiveVar(selectedRecipeBook);
   const [openBook, setOpenBook] = useState(false);
   const [openShare, setOpenShare] = useState(false);
 
@@ -33,14 +33,15 @@ export function BookNavBar() {
   }
 
   if (!book.createdBy) {
-    return <div>No book selected</div>;
+    console.log(book);
+    return <div>Book selection error</div>;
   }
 
   console.log(book);
   return (
     <>
       {book.permission === ("OWNER" || "MANAGER") && (
-        <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen flex-col items-center justify-center">
+        <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-2xl flex-col items-center justify-center">
           <AddRecipeToBookModal open={openBook} toggleopen={addRecipe} />
           <ShareBookModal open={openShare} toggleopen={handleShare} />
           <div className="flex w-full max-w-2xl flex-row items-center justify-around text-xs">

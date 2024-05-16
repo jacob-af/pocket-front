@@ -55,6 +55,10 @@ export const GET_RECIPE_BOOK = gql`
       name
       description
       permission
+      createdBy {
+        id
+        userName
+      }
       build {
         buildName
         ice

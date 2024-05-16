@@ -2,7 +2,7 @@
 
 import { useQuery, useReactiveVar } from "@apollo/client";
 
-import { BookNavBar } from "@/components/recipeBook/display/BookNavBar";
+import { BookNavBar } from "@/components/recipeBook/display/BookActionBar";
 import { GET_RECIPE_BOOK } from "@/graphql/mutations/recipeBook";
 import ShortCard from "@/components/recipe/display/ShortCard";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
@@ -60,7 +60,7 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
           ))
         )}
       </div>
-      <BookNavBar />
+      <BookNavBar book={book} />
     </div>
   );
 }
