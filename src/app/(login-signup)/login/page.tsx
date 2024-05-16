@@ -1,8 +1,11 @@
 "use client";
+
 import * as React from "react";
-import { useRouter } from "next/navigation";
+
+import { SubmitHandler, useForm } from "react-hook-form";
+
 import { signIn } from "next-auth/react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 type LoginInputs = {
   email: string;
@@ -32,24 +35,27 @@ export default function LogInSide() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-centerpy-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="justify-centerpy-12 flex min-h-screen items-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
             Sign in to your account
           </h2>
+          <div>
+            Warning: in development, server may take up to 1 minute to spin up
+          </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="email"
             >
               Email Address
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="email"
               type="email"
               placeholder="Email Address"
@@ -62,7 +68,7 @@ export default function LogInSide() {
               })}
             />
             {errors?.email && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-xs italic text-red-500">
                 {errors.email.message}
               </p>
             )}
@@ -70,13 +76,13 @@ export default function LogInSide() {
 
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="email"
             >
               Password
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="password"
               type="password"
               placeholder="Password"
@@ -90,7 +96,7 @@ export default function LogInSide() {
               })}
             />
             {errors?.password && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-xs italic text-red-500">
                 {errors.password.message}
               </p>
             )}
@@ -98,7 +104,7 @@ export default function LogInSide() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Sign in
             </button>
