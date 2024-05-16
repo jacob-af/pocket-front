@@ -3,7 +3,7 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import { BookNavBar } from "@/components/recipeBook/display/BookActionBar";
-import { GET_RECIPE_BOOK } from "@/graphql/mutations/recipeBook";
+import { GET_RECIPE_BOOK } from "@/graphql/queries/recipeBook";
 import ShortCard from "@/components/recipe/display/ShortCard";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { useEffect } from "react";

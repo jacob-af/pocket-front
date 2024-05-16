@@ -1,6 +1,7 @@
 import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
 import { AddRecipeToBookModal } from "@/components/modals/AddRecipeToBook";
+import { DeleteBookButton } from "@/components/buttons/DeleteBook";
 import { EDIT_BOOK } from "@/graphql/mutations/recipeBook";
 import { EditBookModal } from "@/components/modals/EditBookModal";
 import EditRecipeBookButton from "@/components/buttons/EditRecipeBookButton";
@@ -24,8 +25,6 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   function handleShare() {
     setOpenShare(!openShare);
   }
-
-  function handleDelete() {}
 
   if (!session) {
     router.push("/db/recipeBook");
@@ -54,12 +53,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
               <div>Share</div>
               <div>Book</div>
             </button>
-            {book.createdBy.id === session.user.id && (
-              <button onClick={handleDelete} className="text-red-500">
-                <div>Delete</div>
-                <div>Book</div>
-              </button>
-            )}
+            {book.createdBy.id === session.user.id && <DeleteBookButton />}
           </div>
         </nav>
       )}

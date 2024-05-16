@@ -58,3 +58,40 @@ export const BOOK_PERMISSIONS: TypedDocumentNode<{
     }
   }
 `;
+
+export const GET_RECIPE_BOOK = gql`
+  query getRecipeBook($name: String) {
+    recipeBook(name: $name) {
+      id
+      name
+      description
+      permission
+      createdBy {
+        id
+        userName
+      }
+      build {
+        buildName
+        ice
+        id
+        instructions
+        notes
+        permission
+        recipe {
+          name
+        }
+        touch {
+          id
+          amount
+          order
+          unit
+          version
+          ingredient {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;

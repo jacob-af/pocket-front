@@ -14,6 +14,40 @@ export const CREATE_BOOK = gql`
   }
 `;
 
+export const EDIT_BOOK = gql`
+  mutation UpdateRecipeBook(
+    $id: String!
+    $name: String!
+    $permission: Permission!
+  ) {
+    updateRecipeBook(id: $id, name: $name, permission: $permission) {
+      build {
+        recipe {
+          id
+          name
+        }
+        id
+        buildName
+        touch {
+          id
+        }
+      }
+      createdBy {
+        id
+        userName
+      }
+    }
+  }
+`;
+
+export const DELETE_BOOK = gql`
+  mutation RemoveRecipeBook($id: String!, $permission: Permission!) {
+    removeRecipeBook(id: $id, permission: $permission) {
+      message
+    }
+  }
+`;
+
 export const ADD_BUILD_TO_BOOK = gql`
   mutation AddBuildToRecipeBook(
     $recipeBookId: String!
@@ -44,69 +78,6 @@ export const REMOVE_BUILD_FROM_BOOK = gql`
       bookPermission: $bookPermission
     ) {
       message
-    }
-  }
-`;
-
-export const GET_RECIPE_BOOK = gql`
-  query getRecipeBook($name: String) {
-    recipeBook(name: $name) {
-      id
-      name
-      description
-      permission
-      createdBy {
-        id
-        userName
-      }
-      build {
-        buildName
-        ice
-        id
-        instructions
-        notes
-        permission
-        recipe {
-          name
-        }
-        touch {
-          id
-          amount
-          order
-          unit
-          version
-          ingredient {
-            id
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const EDIT_BOOK = gql`
-  mutation UpdateRecipeBook(
-    $id: String!
-    $name: String!
-    $permission: Permission!
-  ) {
-    updateRecipeBook(id: $id, name: $name, permission: $permission) {
-      build {
-        recipe {
-          id
-          name
-        }
-        id
-        buildName
-        touch {
-          id
-        }
-      }
-      createdBy {
-        id
-        userName
-      }
     }
   }
 `;
