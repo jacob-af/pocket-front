@@ -15,7 +15,6 @@ export default async function Dashboard({
 }) {
   return (
     <main className="flex min-h-screen w-screen overflow-hidden bg-black">
-      <AlertDisplay />
       <SideBar />
       <RightSideBar />
       <TopNavBar />
@@ -23,6 +22,7 @@ export default async function Dashboard({
         {children}
       </div>
 
+      <AlertDisplay />
       <BottomNavBar />
     </main>
   );
