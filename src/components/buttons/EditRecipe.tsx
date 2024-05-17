@@ -1,5 +1,6 @@
 "use client";
 
+import { Permission, Recipe } from "@/__generated__/graphql";
 import {
   currentBuild,
   newRecipeInfo,
@@ -7,7 +8,6 @@ import {
   touchArray
 } from "@/graphql/reactiveVar/recipes";
 
-import { Recipe } from "@/__generated__/graphql";
 import { convertArrayByOrder } from "@/components/recipe/recipeActions";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ export const EditRecipeButton = () => {
         ice: builds[slide].ice || "",
         touchArray: touches,
         newRecipe: true,
-        permission: builds[slide].permission
+        permission: builds[slide].permission || Permission.View
       });
     } else {
       newRecipeInfo({
@@ -48,7 +48,7 @@ export const EditRecipeButton = () => {
         ice: builds[slide].ice || "",
         touchArray: touches,
         newRecipe: false,
-        permission: builds[slide].permission
+        permission: builds[slide].permission || Permission.View
       });
     }
     router.push("/db/recipe/edit");
@@ -58,7 +58,7 @@ export const EditRecipeButton = () => {
     <>
       <button
         onClick={handleEdit}
-        className="my-2 inline-block bg-gray-500 text-white px-4 py-2 rounded"
+        className="my-2 inline-block rounded bg-gray-500 px-4 py-2 text-white"
       >
         Edit
       </button>
