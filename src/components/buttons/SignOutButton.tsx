@@ -50,7 +50,7 @@ function Button() {
 
   return (
     <>
-      <button onClick={onClick} className="text-lg text-right">
+      <button onClick={onClick} className="text-right text-lg">
         Sign out
       </button>
     </>
@@ -59,7 +59,7 @@ function Button() {
 
 export default function AuthButton() {
   return (
-    <div className="fixed right top-2 right-2">
+    <div className="right fixed right-2 top-2">
       <Button />
     </div>
   );
