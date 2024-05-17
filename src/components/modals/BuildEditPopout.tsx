@@ -6,6 +6,7 @@ import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
 import { DeleteBuildButton } from "@/components/buttons/DeleteBuild";
 import { EditRecipeButton } from "@/components/buttons/EditRecipe";
+import { Permission } from "@/__generated__/graphql";
 import { useReactiveVar } from "@apollo/client";
 import { useSession } from "next-auth/react";
 
@@ -22,6 +23,11 @@ export function BuildEditPopout({
     setIsVisible(!isVisible);
   };
 
+  // Ensure index and recipe.userBuild[index] exist and permission is not undefined
+  const userBuild = recipe?.userBuild?.[index];
+  const permission = userBuild?.permission;
+  const createdBy = userBuild?.createdBy;
+
   return (
     <div className="relative flex items-center justify-center">
       {/* New container */}
@@ -37,14 +43,11 @@ export function BuildEditPopout({
             >
               Share
             </button>
-            {!recipe.userBuild[index]
-              ? ""
-              : ["EDIT", "MANAGER", "OWNER"].includes(
-                  recipe.userBuild[index].permission
-                ) && <EditRecipeButton />}
-            {recipe.userBuild[index].createdBy?.id == session?.user.id && (
-              <DeleteBuildButton />
-            )}
+            {permission &&
+              [Permission.Edit, Permission.Manager, Permission.Owner].includes(
+                permission
+              ) && <EditRecipeButton />}
+            {createdBy?.id === session?.user.id && <DeleteBuildButton />}
           </div>
         </div>
       )}
