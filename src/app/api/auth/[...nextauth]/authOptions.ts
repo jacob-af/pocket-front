@@ -1,15 +1,52 @@
 import { credentialsProvider } from "./credentialsProvider";
 import type { NextAuthOptions } from "next-auth";
 import { getClient } from "@/lib/client";
-import { NEW_TOKENS } from "@/graphql/mutations/auth";
+import { GOOGLE_SIGNIN, NEW_TOKENS } from "@/graphql/mutations/auth";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
-  providers: [credentialsProvider],
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID
+        ? process.env.GOOGLE_CLIENT_ID
+        : "",
+      clientSecret: process.env.GOOGLE_SECRET ? process.env.GOOGLE_SECRET : "'"
+    }),
+    credentialsProvider
+  ],
   pages: { signIn: "/login" },
   session: { maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
-    async jwt({ token, user, session, trigger }) {
+    async jwt({ token, user, account, profile, session, trigger }) {
       if (user) {
+        if (account?.provider === "google" && profile) {
+          const client = await getClient();
+          const { data } = await client.mutate({
+            mutation: GOOGLE_SIGNIN,
+            variables: {
+              googleUserId: account.providerAccountId,
+              email: profile.email,
+              name: profile.name,
+              //image: token.picture,
+              accessToken: account.access_token,
+              tokenExpiry: account.expires_at
+                ? new Date(account?.expires_at * 1000)
+                : Date.now() + 24 * 60 * 60 * 1000
+            }
+          });
+          console.log(data);
+          const { user, accessToken, refreshToken } = data.googleSignIn;
+          return {
+            ...token,
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
+            accessToken: accessToken,
+            refreshToken: refreshToken
+          };
+        }
         return {
           ...token,
           id: user.id,
@@ -55,7 +92,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ token, session, user }) {
       console.log("session callback hit");
-
+      console.log(token);
       return {
         ...session,
         user: {
@@ -68,6 +105,10 @@ export const authOptions: NextAuthOptions = {
           accessTokenExpires: token.accessTokenExpires
         }
       };
+    },
+    async redirect({ url, baseUrl }) {
+      // Always redirect to the dashboard after login
+      return url === baseUrl ? `${baseUrl}/db` : url;
     }
   }
 } satisfies NextAuthOptions;
