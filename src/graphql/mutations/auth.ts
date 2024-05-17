@@ -33,6 +33,35 @@ export const SIGNUP: TypedDocumentNode<AuthPayload> = gql`
   }
 `;
 
+export const GOOGLE_SIGNIN = gql`
+  mutation Mutation(
+    $googleUserId: String!
+    $email: String!
+    $name: String!
+    $accessToken: String!
+    $tokenExpiry: DateTime!
+  ) {
+    googleSignIn(
+      googleUserId: $googleUserId
+      email: $email
+      name: $name
+      accessToken: $accessToken
+      tokenExpiry: $tokenExpiry
+    ) {
+      accessToken
+      refreshToken
+      user {
+        id
+        userName
+        email
+        profile {
+          image
+        }
+      }
+    }
+  }
+`;
+
 export const NEW_TOKENS: TypedDocumentNode<{ getNewTokens: AuthPayload }> = gql`
   mutation GetTokens($refreshToken: String!) {
     getNewTokens(refreshToken: $refreshToken) {
