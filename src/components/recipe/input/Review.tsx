@@ -17,7 +17,7 @@ export default function Review() {
           <li key={`review${touch.id}`} className="py-1">
             <div className="flex justify-between">
               <div>
-                <p className="font-medium">{touch.ingredientName}</p>
+                <p className="font-medium">{touch.ingredient.name}</p>
                 <p className="text-xs">{touch.unit}</p>
               </div>
               <p className="text-sm">{touch.amount}</p>

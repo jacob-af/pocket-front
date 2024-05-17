@@ -91,7 +91,7 @@ export type BuildConstructor = {
   name: Scalars['String']['output'];
   newRecipe: Scalars['Boolean']['output'];
   permission: Permission;
-  touchArray: Array<Maybe<CompleteTouch>>;
+  touchArray: Array<Maybe<Touch>>;
 };
 
 export type BuildPermissionResponse = {
@@ -633,12 +633,12 @@ export type StatusMessage = {
 
 export type Touch = {
   __typename?: 'Touch';
-  amount?: Maybe<Scalars['Float']['output']>;
+  amount: Scalars['Float']['output'];
   build?: Maybe<Build>;
   id: Scalars['ID']['output'];
-  ingredient?: Maybe<Ingredient>;
-  order?: Maybe<Scalars['Int']['output']>;
-  unit?: Maybe<Scalars['String']['output']>;
+  ingredient: Ingredient;
+  order: Scalars['Int']['output'];
+  unit: Scalars['String']['output'];
   version?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -835,28 +835,28 @@ export type CreateRecipeMutationVariables = Exact<{
 }>;
 
 
-export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', name: string, createdAt?: any | null, build?: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, order?: number | null, unit?: string | null, version?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null> | null } };
+export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', name: string, createdAt?: any | null, build?: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, unit: string, version?: number | null, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null> | null } };
 
 export type AddBuildMutationVariables = Exact<{
   createBuildInput?: InputMaybe<CreateBuildInput>;
 }>;
 
 
-export type AddBuildMutation = { __typename?: 'Mutation', createBuild?: { __typename?: 'Build', id: string, buildName: string, ice?: string | null, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, order?: number | null, unit?: string | null, version?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null };
+export type AddBuildMutation = { __typename?: 'Mutation', createBuild?: { __typename?: 'Build', id: string, buildName: string, ice?: string | null, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, unit: string, version?: number | null, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null };
 
 export type UpdateRecipeMutationVariables = Exact<{
   updateRecipeInput: UpdateRecipeInput;
 }>;
 
 
-export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, build?: Array<{ __typename?: 'Build', id: string, buildName: string, ice?: string | null, glassware?: string | null, instructions?: string | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, version?: number | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null> | null } };
+export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, build?: Array<{ __typename?: 'Build', id: string, buildName: string, ice?: string | null, glassware?: string | null, instructions?: string | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, version?: number | null, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null> | null } };
 
 export type UpdateBuildMutationVariables = Exact<{
   updateBuildInput?: InputMaybe<UpdateBuildInput>;
 }>;
 
 
-export type UpdateBuildMutation = { __typename?: 'Mutation', updateBuild?: { __typename?: 'ArchiveResponse', build?: { __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, order?: number | null, unit?: string | null, amount?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null } | null };
+export type UpdateBuildMutation = { __typename?: 'Mutation', updateBuild?: { __typename?: 'ArchiveResponse', build?: { __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, order: number, unit: string, amount: number, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null } | null };
 
 export type DeleteBuildMutationVariables = Exact<{
   buildId?: InputMaybe<Scalars['String']['input']>;
@@ -864,7 +864,7 @@ export type DeleteBuildMutationVariables = Exact<{
 }>;
 
 
-export type DeleteBuildMutation = { __typename?: 'Mutation', removeBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, permission?: Permission | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', name: string, id: string } | null }> } | null };
+export type DeleteBuildMutation = { __typename?: 'Mutation', removeBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, permission?: Permission | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', name: string, id: string } }> } | null };
 
 export type ChangeBuildPermissionMutationVariables = Exact<{
   changeBuildPermissionInput?: InputMaybe<ChangeBuildPermissionInput>;
@@ -905,17 +905,17 @@ export type GetRecipeQueryVariables = Exact<{
 }>;
 
 
-export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name: string, about?: string | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> }> } | null };
+export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name: string, about?: string | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> }> } | null };
 
 export type UserBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserBuildsQuery = { __typename?: 'Query', usersBuilds?: Array<{ __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> } | null> | null };
+export type UserBuildsQuery = { __typename?: 'Query', usersBuilds?: Array<{ __typename?: 'Build', id: string, buildName: string, glassware?: string | null, ice?: string | null, instructions?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> } | null> | null };
 
 export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryQuery = { __typename?: 'Query', userRecipe?: Array<{ __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> }> } | null> | null };
+export type QueryQuery = { __typename?: 'Query', userRecipe?: Array<{ __typename?: 'Recipe', id: string, name: string, about?: string | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, userBuild: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> }> } | null> | null };
 
 export type RecipeListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -935,12 +935,12 @@ export type FindOneBuildQueryVariables = Exact<{
 }>;
 
 
-export type FindOneBuildQuery = { __typename?: 'Query', findOneBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> } | null };
+export type FindOneBuildQuery = { __typename?: 'Query', findOneBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null };
 
 export type UserRecipeBooksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserRecipeBooksQuery = { __typename?: 'Query', userRecipeBooks?: Array<{ __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, build: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, unit?: string | null, order?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } | null }> }> } | null> | null };
+export type UserRecipeBooksQuery = { __typename?: 'Query', userRecipeBooks?: Array<{ __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, build: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, unit: string, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null } }> }> } | null> | null };
 
 export type BookPermissionQueryVariables = Exact<{
   recipeBookId: Scalars['String']['input'];
@@ -954,7 +954,7 @@ export type GetRecipeBookQueryVariables = Exact<{
 }>;
 
 
-export type GetRecipeBookQuery = { __typename?: 'Query', recipeBook?: { __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, build: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount?: number | null, order?: number | null, unit?: string | null, version?: number | null, ingredient?: { __typename?: 'Ingredient', id: string, name: string } | null }> }> } | null };
+export type GetRecipeBookQuery = { __typename?: 'Query', recipeBook?: { __typename?: 'RecipeBook', id: string, name: string, description: string, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, build: Array<{ __typename?: 'Build', buildName: string, ice?: string | null, id: string, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, unit: string, version?: number | null, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> }> } | null };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 

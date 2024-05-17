@@ -10,7 +10,7 @@ import {
 import { IngredientModal } from "@/components/modals/IngredientModal";
 import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { RemoveTouch } from "../../buttons/RemoveTouch";
-import { TouchInput } from "@/__generated__/graphql";
+import { Touch } from "@/__generated__/graphql";
 import { touchArray } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
@@ -18,7 +18,7 @@ export const SingleTouch = ({
   touch,
   index
 }: {
-  touch: TouchInput;
+  touch: Touch;
   index: number;
 }) => {
   const touches = useReactiveVar(touchArray);
@@ -29,9 +29,9 @@ export const SingleTouch = ({
   };
 
   return (
-    <div className="w-lg grid grid-cols-12 my-4 px-4 rounded-xl box-border bg-black">
+    <div className="w-lg my-4 box-border grid grid-cols-12 rounded-xl bg-black px-4">
       <input
-        className="col-span-2 bg-black px-2 shadow focus:shadow-outline text-center"
+        className="focus:shadow-outline col-span-2 bg-black px-2 text-center shadow"
         onChange={onChange}
         type="number"
         id="amount"
@@ -42,7 +42,7 @@ export const SingleTouch = ({
       <select
         onChange={onChange}
         name="unit-options"
-        className="col-span-3 dark:bg-black text-white focus:shadow-outline"
+        className="focus:shadow-outline col-span-3 text-white dark:bg-black"
         id="unit"
         value={touches[index].unit}
       >
@@ -54,8 +54,8 @@ export const SingleTouch = ({
         <option value="cl">cl</option>
         <option value="g">grams</option>
       </select>
-      {/* <div className="flex align-center justify-center"> */}
-      <div className="col-span-6 bg-black shadow rounded-xl focus:shadow-outline text-gray-100 flex align p-2 center">
+      {/* <div className="align-center flex justify-center"> */}
+      <div className="focus:shadow-outline align center col-span-6 flex rounded-xl bg-black p-2 text-gray-100 shadow">
         <MuiDropDown
           options={allIngredients}
           handleChange={value => touchIngredientChange(value, index)}
@@ -63,7 +63,7 @@ export const SingleTouch = ({
           currentValue={{
             ...touches[index],
             id: touches[index].id,
-            name: touches[index].ingredientName
+            name: touches[index].ingredient.name
           }}
         >
           <IngredientModal

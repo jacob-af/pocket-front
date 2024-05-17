@@ -172,7 +172,7 @@ type BuildConstructor {
   instructions: String
   ice: String
   glassware: String
-  touchArray: [CompleteTouch]!
+  touchArray: [Touch]!
   id: String!
   permission: Permission!
   newRecipe: Boolean!
@@ -386,11 +386,11 @@ scalar EmailAddress
 type Touch {
   id: ID!
   build: Build
-  order: Int
-  amount: Float
-  unit: String
+  order: Int!
+  amount: Float!
+  unit: String!
   version: Int
-  ingredient: Ingredient
+  ingredient: Ingredient!
 }
 
 type ArchivedTouch {

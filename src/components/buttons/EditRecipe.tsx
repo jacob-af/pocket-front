@@ -1,6 +1,6 @@
 "use client";
 
-import { Permission, Recipe } from "@/__generated__/graphql";
+import { Permission, Recipe, Touch } from "@/__generated__/graphql";
 import {
   currentBuild,
   newRecipeInfo,
@@ -8,7 +8,7 @@ import {
   touchArray
 } from "@/graphql/reactiveVar/recipes";
 
-import { convertArrayByOrder } from "@/components/recipe/recipeActions";
+// import { convertArrayByOrder } from "@/components/recipe/recipeActions";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -21,7 +21,7 @@ export const EditRecipeButton = () => {
 
   const handleEdit = () => {
     const builds = recipe.userBuild;
-    const touches = convertArrayByOrder(builds[slide].touch);
+    const touches: Touch[] = builds[slide].touch;
     touchArray(touches);
 
     if (builds[slide].recipe.createdBy?.id == session?.user.id) {

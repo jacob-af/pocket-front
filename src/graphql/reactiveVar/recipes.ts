@@ -7,9 +7,10 @@ import { v4 as uuidv4 } from "uuid";
 export const blankTouch = (order: number) => {
   return {
     id: order.toString(),
-    ingredientName: "",
+    ingredient: { name: "", id: "'" },
     amount: 1,
-    unit: "oz"
+    unit: "oz",
+    order
   };
 };
 

@@ -87,7 +87,7 @@ export type TouchChangeFunction = ({
 }) => void;
 
 export const touchChange: TouchChangeFunction = ({ key, newValue, index }) => {
-  const touches: TouchInput[] = touchArray();
+  const touches = touchArray();
   let newTouch = { ...touches[index] };
 
   // Update the specified key with the new newValue
@@ -113,24 +113,24 @@ export const addTouch = () => {
   touchArray(rec);
 };
 
-export function convertArrayByOrder(inputArray: Touch[]) {
-  // Create an empty array to hold the output
-  const outputArray: TouchInput[] = [];
+// export function convertArrayByOrder(inputArray: Touch[]) {
+//   // Create an empty array to hold the output
+//   const outputArray: TouchInput[] = [];
 
-  // Loop through each object in the input array
-  inputArray.forEach(item => {
-    // Create a new object with the desired properties
-    const newItem = {
-      id: item.id,
-      ingredientName: item.ingredient.name,
-      amount: item.amount,
-      unit: item.unit
-      //order: item.order
-    };
+//   // Loop through each object in the input array
+//   inputArray.forEach(item => {
+//     // Create a new object with the desired properties
+//     const newItem = {
+//       id: item.id,
+//       ingredientName: item.ingredient.name,
+//       amount: item.amount,
+//       unit: item.unit
+//       //order: item.order
+//     };
 
-    // Place the new object in the output array at the index specified by the order property
-    outputArray[item.order] = newItem;
-  });
-  console.log(outputArray);
-  return outputArray;
-}
+//     // Place the new object in the output array at the index specified by the order property
+//     outputArray[item.order] = newItem;
+//   });
+//   console.log(outputArray);
+//   return outputArray;
+// }
