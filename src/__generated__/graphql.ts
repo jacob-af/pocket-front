@@ -89,6 +89,7 @@ export type BuildConstructor = {
   id: Scalars['String']['output'];
   instructions?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
+  newRecipe: Scalars['Boolean']['output'];
   permission: Permission;
   touchArray: Array<Maybe<CompleteTouch>>;
 };

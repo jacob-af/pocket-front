@@ -175,6 +175,7 @@ type BuildConstructor {
   touchArray: [CompleteTouch]!
   id: String!
   permission: Permission!
+  newRecipe: Boolean!
 }
 
 type ArchivedBuild {
