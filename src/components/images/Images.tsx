@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 
 import Image from "next/image";
 import { useReactiveVar } from "@apollo/client";
-import { useSession } from "next-auth/react";
 
 const imagePaths = [
   "/pixel-cocktails/b52.png",
@@ -56,22 +55,6 @@ export function SmallImage() {
   );
 }
 
-export function ProfileImage() {
-  const { data: session } = useSession();
-
-  return (
-    <div className="">
-      <Image
-        src={session?.user.image || "/withcherry100.png"}
-        width={50}
-        height={50}
-        alt="Pixel drawing of whiskey cocktail on the rocks with cherry"
-        className="rounded-full "
-      />
-    </div>
-  );
-}
-
 export function DownArrow() {
   return (
     <Image
@@ -79,7 +62,7 @@ export function DownArrow() {
       width={15}
       height={15}
       alt="Pixel down arrow"
-      className="dark:invert z-10"
+      className="z-10 dark:invert"
     />
   );
 }
@@ -91,7 +74,7 @@ export function UpArrow() {
       width={15}
       height={15}
       alt="Pixel down arrow"
-      className="dark:invert z-10"
+      className="z-10 dark:invert"
     />
   );
 }
@@ -103,7 +86,7 @@ export function Expand() {
       width={15}
       height={15}
       alt="Pixel down arrow"
-      className="dark:invert z-10"
+      className="z-10 dark:invert"
     />
   );
 }

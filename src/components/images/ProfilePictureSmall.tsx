@@ -3,7 +3,7 @@
 import { getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-import { ProfileImage } from "./Images";
+import { ProfileImage } from "./ProfileImage";
 
 export default function AmILoggedIn() {
   const { update } = useSession();
@@ -25,7 +25,7 @@ export default function AmILoggedIn() {
   }, [update]);
 
   return (
-    <div className="fixed top-2 left-2">
+    <div className="fixed left-2 top-2">
       {userImage !== "" ? <ProfileImage /> : ""}
     </div>
   );
