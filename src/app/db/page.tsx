@@ -1,6 +1,6 @@
 export default async function Landing() {
   return (
-    <div className="mb-12 max-w-2xl overflow-auto">
+    <div className="bg-background mb-12 max-w-2xl overflow-auto">
       <div className="my-16 text-center text-4xl">Welcome to Pocket</div>
       <div className="my-8 text-justify text-xl">
         Welcome to Pocket Bar Book, a bar management tool designed by a
