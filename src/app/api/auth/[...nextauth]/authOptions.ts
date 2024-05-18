@@ -34,7 +34,6 @@ export const authOptions: NextAuthOptions = {
                 : Date.now() + 24 * 60 * 60 * 1000
             }
           });
-          console.log(data);
           const { user, accessToken, refreshToken } = data.googleSignIn;
           return {
             ...token,
@@ -92,7 +91,6 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ token, session, user }) {
       console.log("session callback hit");
-      console.log(token);
       return {
         ...session,
         user: {
