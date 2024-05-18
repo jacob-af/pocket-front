@@ -8,7 +8,7 @@ import { useQuery, useReactiveVar } from "@apollo/client";
 
 import AddRecipeBookButton from "@/components/buttons/AddRecipeBookButton";
 import BookCover from "@/components/recipeBook/display/BookCover";
-import { Bookshelf } from "./Bookshelf";
+import { Bookshelf } from "../../../../components/recipeBook/display/Bookshelf";
 
 export default function RecipeBook() {
   const bookList = useReactiveVar(userRecipeBookList);
