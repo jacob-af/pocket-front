@@ -16,30 +16,30 @@ export const USER_RECIPEBOOKS: TypedDocumentNode<{
       }
       build {
         id
-        createdBy {
-          id
-          userName
-        }
+        # createdBy {
+        #   id
+        #   userName
+        # }
         buildName
         recipe {
           id
           name
         }
-        instructions
-        ice
-        glassware
-        permission
-        touch {
-          id
-          ingredient {
-            id
-            name
-            description
-          }
-          amount
-          unit
-          order
-        }
+        # instructions
+        # ice
+        # glassware
+        # permission
+        # touch {
+        #   id
+        #   ingredient {
+        #     id
+        #     name
+        #     description
+        #   }
+        #   amount
+        #   unit
+        #   order
+        # }
       }
     }
   }
