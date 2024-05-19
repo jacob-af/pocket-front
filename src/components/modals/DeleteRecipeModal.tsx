@@ -3,7 +3,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 
 import { Build } from "@/__generated__/graphql";
 import { DELETE_BUILD } from "@/graphql/mutations/recipes";
-import { USER_BUILDS } from "@/graphql/queries/recipe";
+import { USER_RECIPES } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
 
 export const DeleteRecipeModal = ({
@@ -18,7 +18,7 @@ export const DeleteRecipeModal = ({
   const alerts = useReactiveVar(alertList);
 
   const [deleteBuild, feedback] = useMutation(DELETE_BUILD, {
-    refetchQueries: [USER_BUILDS]
+    refetchQueries: [USER_RECIPES]
   });
 
   const closeModal = () => {
@@ -56,34 +56,34 @@ export const DeleteRecipeModal = ({
       {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-80 flex justify-center items-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-80"
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="p-6 bg-black block max-w-lg justify-center items-center"
+            className="block max-w-lg items-center justify-center bg-black p-6"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="top-20 right-2 hover:text-gray-400"
+              className="right-2 top-20 hover:text-gray-400"
             >
               &times;
             </button>
 
             {/* Modal content */}
 
-            <div className="text-xl font-semibold mb-4 text-red-800">
+            <div className="mb-4 text-xl font-semibold text-red-800">
               Are you sure you want to delete
               {` ${build.recipe.name}? This process cannot be undone.  It will delete every build anyone has made for this recipe.  Someone might have a really bad day.  Like, are you really really sure?`}
             </div>
 
             <button
               onClick={handleDeleteRecipe}
-              className="border border-white p-2 mx-auto text-red-800 block text-center"
+              className="mx-auto block border border-white p-2 text-center text-red-800"
             >
-              <span className=" block">Delete</span>
-              <span className=" block">Recipe</span>
+              <span className="block">Delete</span>
+              <span className="block">Recipe</span>
             </button>
           </div>
         </div>
