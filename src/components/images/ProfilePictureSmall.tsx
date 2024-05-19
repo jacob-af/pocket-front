@@ -7,7 +7,6 @@ import { ProfileImage } from "./ProfileImage";
 
 export default function AmILoggedIn() {
   const { update } = useSession();
-  const [userName, setUserName] = useState("");
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
@@ -16,9 +15,6 @@ export default function AmILoggedIn() {
       if (session?.user && session.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
         console.log("new tokens");
-      } else if (session?.user) {
-        setUserName(session.user.name);
-        setUserImage(session.user.image || "");
       }
     }
     fetchSession();
@@ -26,7 +22,7 @@ export default function AmILoggedIn() {
 
   return (
     <div className="fixed left-2 top-2">
-      {userImage !== "" ? <ProfileImage /> : ""}
+      <ProfileImage />
     </div>
   );
 }
