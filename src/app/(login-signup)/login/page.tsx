@@ -4,7 +4,9 @@ import {
   ClientSafeProvider,
   LiteralUnion,
   getProviders,
-  signIn
+  getSession,
+  signIn,
+  useSession
 } from "next-auth/react";
 import { MouseEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -19,6 +21,7 @@ type LoginInputs = {
 
 export default function LogInSide() {
   const router = useRouter();
+  const { data: session } = useSession();
   const {
     register,
     handleSubmit,
@@ -35,6 +38,10 @@ export default function LogInSide() {
       setProviders(res);
     })();
   }, []);
+
+  if (session?.user) {
+    router.push("/db");
+  }
 
   const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }) => {
     try {

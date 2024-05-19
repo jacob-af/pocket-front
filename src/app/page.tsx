@@ -10,10 +10,10 @@ export default async function Home() {
   if (!session?.user) {
     redirect("/welcome");
   }
-  redirect("/db");
+  redirect("/login");
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 bg-black">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-black px-24">
       Welcome - you will be redirected shortly.
     </main>
   );

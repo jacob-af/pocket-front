@@ -8,7 +8,8 @@ const withPWA = withPWAInit({
   aggressiveFrontEndNavCaching: true,
   cacheStartUrl: process.env.NEXTAUTH_URL,
   //dynamicStartUrl: `${process.env.NEXTAUTH_URL}db/`,
-  disabled: false
+  disabled: false,
+  reloadOnOnline: true
   //fallbacks: `${process.env.NEXTAUTH_URL}db/`
 });
 
