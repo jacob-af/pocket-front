@@ -40,6 +40,9 @@ const cache = new NextSSRInMemoryCache({
     },
     Ingredient: {
       keyFields: ["name"]
+    },
+    RecipeBook: {
+      keyFields: ["name"]
     }
   }
 });
