@@ -39,14 +39,15 @@ export default function ShortCard({ build }: { build: Build }) {
           <SmallImage />
         </div>
 
-        {build.touch.map((touch, index) => (
-          <div
-            key={touch?.id}
-            className="col-span-2 row-span-1 overflow-clip pl-2 text-left text-xs"
-          >
-            {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
-          </div>
-        ))}
+        {build.touch &&
+          build.touch.map((touch, index) => (
+            <div
+              key={touch?.id}
+              className="col-span-2 row-span-1 overflow-clip pl-2 text-left text-xs"
+            >
+              {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
+            </div>
+          ))}
         <div className="col-span-4 row-span-2 py-2 text-sm">
           Build: {build.buildName}
         </div>
