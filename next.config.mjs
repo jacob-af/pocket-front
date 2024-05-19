@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+import withPWAInit from "@ducanh2912/next-pwa";
+
+const withPWA = withPWAInit({
+  dest: "public",
+  cacheOnFrontendNav: true,
+  aggressiveFrontEndNavCaching: true,
+  cacheStartUrl: process.env.NEXTAUTH_URL,
+  //dynamicStartUrl: `${process.env.NEXTAUTH_URL}db/`,
+  disabled: false
+  //fallbacks: `${process.env.NEXTAUTH_URL}db/`
+});
+
+export default withPWA({
   images: {
     remotePatterns: [
       {
@@ -8,6 +21,17 @@ const nextConfig = {
       }
     ]
   }
-};
+});
 
-export default nextConfig;
+// const nextConfig = {
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: "https",
+//         hostname: "utfs.io"
+//       }
+//     ]
+//   }
+// };
+
+//export default nextConfig;
