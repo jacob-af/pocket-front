@@ -48,7 +48,7 @@ export default function Page({
   }
 
   return (
-    <div className="box-border h-full overflow-scroll">
+    <div className="mb-24 mt-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
       <RecipeCard />
       <BuildNavBar />
     </div>
