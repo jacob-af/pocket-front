@@ -42,41 +42,6 @@ export const GET_RECIPE: TypedDocumentNode<{
   }
 `;
 
-export const USER_BUILDS: TypedDocumentNode<{
-  usersBuilds: Build[];
-}> = gql`
-  query userBuilds {
-    usersBuilds {
-      id
-      buildName
-      glassware
-      ice
-      instructions
-      permission
-      recipe {
-        id
-        name
-        about
-        createdBy {
-          id
-          userName
-        }
-      }
-      touch {
-        id
-        amount
-        unit
-        order
-        ingredient {
-          id
-          name
-          description
-        }
-      }
-    }
-  }
-`;
-
 export const USER_RECIPES: TypedDocumentNode<{ userRecipe: Recipe[] }> = gql`
   query Query {
     userRecipe {
@@ -107,7 +72,6 @@ export const USER_RECIPES: TypedDocumentNode<{ userRecipe: Recipe[] }> = gql`
           ingredient {
             id
             name
-            description
           }
           amount
           unit
@@ -170,6 +134,46 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
         amount
         unit
         order
+      }
+    }
+  }
+`;
+
+export const LAZY_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
+  query Recipes($skip: Int, $take: Int) {
+    recipes(skip: $skip, take: $take) {
+      id
+      name
+      about
+      createdBy {
+        id
+        userName
+      }
+      userBuild {
+        id
+        buildName
+        instructions
+        ice
+        glassware
+        permission
+        createdBy {
+          id
+          userName
+        }
+        recipe {
+          id
+          name
+        }
+        touch {
+          id
+          ingredient {
+            id
+            name
+          }
+          amount
+          unit
+          order
+        }
       }
     }
   }
