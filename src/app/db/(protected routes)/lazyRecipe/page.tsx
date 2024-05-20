@@ -12,10 +12,11 @@ import { userRecipeList } from "@/graphql/reactiveVar/recipes";
 
 export default function RecipePage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const itemsPerPage = 12;
   const [data, setData] = useState<Recipe[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [uniqueItems, setUniqueItems] = useState(new Set());
+  const scrollOffset = 100;
 
   const [getData, { loading, error }] = useLazyQuery(LAZY_RECIPES, {
     onCompleted: response => {
@@ -43,7 +44,7 @@ export default function RecipePage() {
       const scrollTop = document.documentElement.scrollTop;
       if (scrollTop > lastScrollTop) {
         if (
-          window.innerHeight + scrollTop >=
+          window.innerHeight + scrollTop + scrollOffset >=
           document.documentElement.offsetHeight
         ) {
           if (hasMore) {
