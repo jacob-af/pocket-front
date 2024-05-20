@@ -20,13 +20,14 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
       {/* Displaying the current slide */}
       <div className="carousel-slide">
         <div>{builds[slide].buildName}</div>
-        {builds[slide].touch.map((touch: Touch | null, index: number) => {
-          return (
-            <div key={touch?.id}>
-              {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
-            </div>
-          );
-        })}
+        {builds[slide].touch &&
+          builds[slide].touch.map((touch: Touch | null, index: number) => {
+            return (
+              <div key={touch?.id}>
+                {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
+              </div>
+            );
+          })}
         <p>{builds[slide].instructions}</p>
         <p>Glassware: {builds[slide].glassware}</p>
         <p>Ice: {builds[slide].ice}</p>
