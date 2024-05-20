@@ -67,9 +67,16 @@ export default function RecipePage() {
   // Define the configurations for the number of columns
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
+  if (loading) {
+    return <div>Loading Something Tasty</div>;
+  }
+  if (error) {
+    return <div>error.message</div>;
+  }
+
   return (
     <>
-      <div className="bg-background mt-12 flex w-full max-w-2xl items-center justify-center">
+      <div className="bg-background mt-20 flex w-full max-w-2xl items-center justify-center">
         <RecipeLoader />
       </div>
       <div className="mt-10 box-border grid h-full w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
