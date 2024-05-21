@@ -43,40 +43,13 @@ export const GET_RECIPE: TypedDocumentNode<{
 `;
 
 export const USER_RECIPES: TypedDocumentNode<{ userRecipe: Recipe[] }> = gql`
-  query Query {
+  query USER_RECIPES {
     userRecipe {
       id
       name
-      about
-      createdBy {
-        id
-        userName
-      }
       userBuild {
         id
         buildName
-        instructions
-        ice
-        glassware
-        permission
-        createdBy {
-          id
-          userName
-        }
-        recipe {
-          id
-          name
-        }
-        touch {
-          id
-          ingredient {
-            id
-            name
-          }
-          amount
-          unit
-          order
-        }
       }
     }
   }
