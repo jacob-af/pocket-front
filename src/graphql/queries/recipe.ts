@@ -42,6 +42,38 @@ export const GET_RECIPE: TypedDocumentNode<{
   }
 `;
 
+export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
+  query FindOneBuild($recipeName: String!, $buildName: String!) {
+    findOneBuild(recipeName: $recipeName, buildName: $buildName) {
+      id
+      buildName
+      instructions
+      ice
+      glassware
+      recipe {
+        id
+        name
+        about
+      }
+      createdBy {
+        id
+        userName
+      }
+      touch {
+        id
+        ingredient {
+          id
+          name
+          description
+        }
+        amount
+        unit
+        order
+      }
+    }
+  }
+`;
+
 export const USER_RECIPES: TypedDocumentNode<{ userRecipe: Recipe[] }> = gql`
   query USER_RECIPES {
     userRecipe {
@@ -67,47 +99,6 @@ export const RECIPES_AND_INGREDIENTS: TypedDocumentNode<{
     ingredients {
       id
       name
-    }
-  }
-`;
-
-export const BUILD_PERMISSIONS: TypedDocumentNode<{
-  findFolloweddUsersBuildPermission: UserBuildPermission[];
-}> = gql`
-  query FindFolloweddUsersBuildPermission($buildId: String!) {
-    findFolloweddUsersBuildPermission(buildId: $buildId) {
-      permission
-      user {
-        userName
-        id
-      }
-    }
-  }
-`;
-
-export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
-  query FindOneBuild($recipeName: String!, $buildName: String!) {
-    findOneBuild(recipeName: $recipeName, buildName: $buildName) {
-      id
-      buildName
-      instructions
-      ice
-      glassware
-      recipe {
-        id
-        name
-        about
-      }
-      touch {
-        id
-        ingredient {
-          id
-          name
-        }
-        amount
-        unit
-        order
-      }
     }
   }
 `;
@@ -147,6 +138,20 @@ export const LAZY_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
           unit
           order
         }
+      }
+    }
+  }
+`;
+
+export const BUILD_PERMISSIONS: TypedDocumentNode<{
+  findFolloweddUsersBuildPermission: UserBuildPermission[];
+}> = gql`
+  query FindFolloweddUsersBuildPermission($buildId: String!) {
+    findFolloweddUsersBuildPermission(buildId: $buildId) {
+      permission
+      user {
+        userName
+        id
       }
     }
   }
