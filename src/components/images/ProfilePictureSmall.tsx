@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ProfileImage } from "./ProfileImage";
 
 export default function AmILoggedIn() {
-  const { update } = useSession();
+  const { data: session, update } = useSession();
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export default function AmILoggedIn() {
 
   return (
     <div className="fixed left-2 top-2">
+      {(session?.user.name && session.user.name) || "nope"}
       <ProfileImage />
     </div>
   );
