@@ -1,6 +1,6 @@
 "use client";
 
-import {} from "../../images/Images";
+import {} from "@/components/images/Images";
 
 import { Build, Touch } from "@/__generated__/graphql";
 import {
