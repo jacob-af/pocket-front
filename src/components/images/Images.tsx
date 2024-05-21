@@ -22,17 +22,10 @@ const imagePaths = [
   "/pixel-cocktails/whiterussian.png"
 ];
 
-function getRandomImagePath() {
-  const randomIndex = Math.floor(Math.random() * imagePaths.length);
-  return imagePaths[randomIndex];
-}
-
 export default function TempImage() {
-  const randomImagePath = useRef(getRandomImagePath);
-
   return (
     <Image
-      src={randomImagePath.current()}
+      src={imagePaths[10]}
       width={180}
       height={180}
       alt="Pixel drawing of whiskey cocktail on the rocks with cherry"
@@ -42,11 +35,11 @@ export default function TempImage() {
 }
 
 export function SmallImage() {
-  const randomImagePath = getRandomImagePath();
+  //const randomImagePath = getRandomImagePath();
 
   return (
     <Image
-      src={randomImagePath}
+      src={imagePaths[10]}
       width={90}
       height={90}
       alt="Pixel drawing of whiskey cocktail on the rocks with cherry"
