@@ -32,7 +32,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   }
 
   if (!book.createdBy) {
-    console.log(book);
+    console.log(book, ": no creator");
     return <div>Book selection error</div>;
   }
 

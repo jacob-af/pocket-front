@@ -4,14 +4,12 @@ import { Build, RecipeBook } from "@/__generated__/graphql";
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import RecipeBookDropDown from "./RecipeBookDropDown";
-import { USER_RECIPEBOOKS } from "@/graphql/queries/recipeBook";
+import { USER_BOOK_LIST } from "@/graphql/queries/recipeBook";
 import { useEffect } from "react";
 import { userRecipeBookList } from "@/graphql/reactiveVar/recipeBooks";
 
 export default function RecipeBookLoader() {
-  const { data, error, loading } = useQuery(USER_RECIPEBOOKS, {
-    fetchPolicy: "cache-and-network"
-  });
+  const { data, error, loading } = useQuery(USER_BOOK_LIST);
   const recipeBookList = useReactiveVar(userRecipeBookList);
 
   useEffect(() => {

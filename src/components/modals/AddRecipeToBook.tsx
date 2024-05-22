@@ -13,7 +13,7 @@ import {
 } from "@/graphql/reactiveVar/recipeBooks";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
-import { USER_RECIPEBOOKS } from "@/graphql/queries/recipeBook";
+import { GET_RECIPE_BOOK } from "@/graphql/queries/recipeBook";
 import { USER_RECIPES } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
@@ -29,20 +29,18 @@ export const AddRecipeToBookModal = ({
   const book = useReactiveVar(selectedRecipeBook);
   const recipeList = useReactiveVar(userRecipeList);
   const [addBuild] = useMutation(ADD_BUILD_TO_BOOK, {
-    fetchPolicy: "network-only", // Used for first execution
-    refetchQueries: [USER_RECIPEBOOKS]
+    refetchQueries: [GET_RECIPE_BOOK]
   });
   const [removeBuild] = useMutation(REMOVE_BUILD_FROM_BOOK, {
-    fetchPolicy: "network-only", // Change fetchPolicy to "network-only"
-    refetchQueries: [USER_RECIPEBOOKS]
+    refetchQueries: [GET_RECIPE_BOOK]
   });
   const { data, error, loading } = useQuery(USER_RECIPES, {
     fetchPolicy: "cache-and-network"
   });
 
   useEffect(() => {
-    if (data?.userRecipe) {
-      const recipes = data.userRecipe
+    if (data?.recipes) {
+      const recipes = data.recipes
         .filter(recipe => {
           return recipe?.userBuild.length > 0;
         })
@@ -54,7 +52,7 @@ export const AddRecipeToBookModal = ({
         });
       userRecipeList(recipes);
     }
-  }, [data?.userRecipe]);
+  }, [data?.recipes]);
 
   const closeModal = () => {
     newBookInfo({ name: "", description: "" });
@@ -141,7 +139,7 @@ export const AddRecipeToBookModal = ({
                       className="short-card flex justify-between"
                     >
                       <div>
-                        {build.recipe.name}
+                        {/* {build.recipe.name} */}
                         <div className="text-xxs">{build.buildName}</div>
                       </div>
                       {book.build && book.build.some(b => b.id === build.id) ? (
