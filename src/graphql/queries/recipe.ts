@@ -74,9 +74,9 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
   }
 `;
 
-export const USER_RECIPES: TypedDocumentNode<{ userRecipe: Recipe[] }> = gql`
+export const USER_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
   query USER_RECIPES {
-    userRecipe {
+    recipes {
       id
       name
       userBuild {
@@ -119,7 +119,6 @@ export const LAZY_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
         instructions
         ice
         glassware
-        permission
         createdBy {
           id
           userName

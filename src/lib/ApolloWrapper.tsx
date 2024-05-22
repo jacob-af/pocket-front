@@ -32,8 +32,11 @@ const cache = new NextSSRInMemoryCache({
     User: {
       keyFields: ["id", "userName"]
     },
+    Recipe: {
+      keyFields: ["name"]
+    },
     Build: {
-      keyFields: ["id", "recipe", ["name"]]
+      keyFields: ["id"]
     },
     Touch: {
       keyFields: ["id"]

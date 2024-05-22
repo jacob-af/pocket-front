@@ -49,7 +49,7 @@ export default function ShortCard({ build }: { build: Build }) {
             </div>
           ))}
         <div className="col-span-4 row-span-2 py-2 text-sm">
-          Build: {build.buildName}
+          {build.buildName} Build
         </div>
       </div>
       <div

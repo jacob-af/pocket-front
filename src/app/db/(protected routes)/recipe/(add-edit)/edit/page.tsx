@@ -147,7 +147,7 @@ export default function AddRecipe() {
   }
 
   return (
-    <div className="flex flex-col bg-gray-900 shadow-md mx-auto p-4 rounded-lg w-full md:w-2/3">
+    <div className="mx-auto flex w-full flex-col rounded-lg bg-gray-900 p-4 shadow-md md:w-2/3">
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}
@@ -178,7 +178,7 @@ export default function AddRecipe() {
         <div className="p-4">
           <EditInput />
           <button
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
+            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
           >
             Next
@@ -189,13 +189,13 @@ export default function AddRecipe() {
         <div className="p-4">
           <BuildInstructions />
           <button
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-left"
+            className="float-left mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
             onClick={() => setSelectedIndex(0)} // Move to Instructions panel
           >
             Back
           </button>
           <button
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
+            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
             onClick={() => setSelectedIndex(2)} // Move to Instructions panel
           >
             Next
@@ -206,13 +206,13 @@ export default function AddRecipe() {
         <div className="p-4">
           <Review />
           <button
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-left"
+            className="float-left mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
           >
             Back
           </button>
           <button
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg float-right"
+            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
             onClick={submitRecipe} // Move to Instructions panel
           >
             Submit
