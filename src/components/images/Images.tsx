@@ -25,6 +25,7 @@ const imagePaths = [
 export default function TempImage() {
   return (
     <Image
+      priority
       src={imagePaths[10]}
       width={180}
       height={180}
