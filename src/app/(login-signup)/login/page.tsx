@@ -19,7 +19,7 @@ type LoginInputs = {
   password: string;
 };
 
-export default function LogInSide() {
+export default function LogIn() {
   const router = useRouter();
   const { data: session } = useSession();
   const {
@@ -37,11 +37,10 @@ export default function LogInSide() {
       const res = await getProviders();
       setProviders(res);
     })();
-  }, []);
-
-  if (session?.user) {
-    router.push("/db");
-  }
+    if (session?.user) {
+      router.push("/db");
+    }
+  }, [router, session?.user]);
 
   const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }) => {
     try {
@@ -73,8 +72,9 @@ export default function LogInSide() {
           <h2 className="mt-6 text-center text-3xl font-extrabold">
             Sign in to your account
           </h2>
-          <div>
-            Warning: in development, server may take up to 1 minute to spin up
+          <div className="text-justify">
+            Warning: in development, server may take up to 1 minute to spin up.
+            Google Sign in available for alpha-test users only.
           </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
