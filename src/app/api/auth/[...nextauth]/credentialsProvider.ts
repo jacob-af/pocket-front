@@ -16,7 +16,7 @@ export const credentialsProvider = CredentialsProvider({
     },
     password: { label: "Password", type: "password" }
   },
-  async authorize(credentials, req) {
+  async authorize(credentials) {
     const client = await getClient();
     try {
       const { data }: FetchResult<{ login: AuthPayload }> = await client.mutate(

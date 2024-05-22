@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, account, profile, session, trigger }) {
       if (user) {
         if (account?.provider === "google" && profile) {
+          console.log(token, "token inset");
           const client = await getClient();
           const { data } = await client.mutate({
             mutation: GOOGLE_SIGNIN,
@@ -38,7 +39,7 @@ export const authOptions: NextAuthOptions = {
           return {
             ...token,
             id: user.id,
-            name: user.name,
+            name: user.userName,
             email: user.email,
             image: user.image,
             accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
