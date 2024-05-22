@@ -28,7 +28,7 @@ type Query {
   hello: String!
   findAllBuilds: [Build]
   findOneBuild(recipeName: String!, buildName: String!): Build
-  usersBuilds: [Build]
+  usersBuilds: [Recipe]
   findBuildUsers(buildId: String!): [BuildUser]
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
   ingredients: [Ingredient]!
@@ -36,10 +36,11 @@ type Query {
   getProfile(userId: String): Profile!
   allRecipeBooks: [RecipeBook]!
   userRecipeBooks: [RecipeBook]
+  userBookList: [ListItem]
   recipeBook(name: String): RecipeBook
   findFolloweddUsersBookPermission(recipeBookId: String!): [UserBookPermission]
   recipeList: [ListItem]!
-  recipes: [Recipe]!
+  recipes(skip: Int, take: Int): [Recipe]!
   recipe(name: String!): Recipe
   userRecipe: [Recipe]
   allUsers: [User]!
@@ -172,10 +173,22 @@ type BuildConstructor {
   instructions: String
   ice: String
   glassware: String
-  touchArray: [Touch]!
+  isPublic: Boolean
+  touchArray: [CompleteTouch]!
   id: String!
   permission: Permission!
   newRecipe: Boolean!
+}
+
+input CreateBuildInput {
+  recipe: RecipeNameInput!
+  buildName: String!
+  instructions: String
+  glassware: String
+  ice: String
+  image: String
+  isPublic: Boolean
+  touchArray: [TouchInput]!
 }
 
 type ArchivedBuild {
@@ -211,16 +224,6 @@ type ArchiveResponse {
 type BuildPermissionResponse {
   buildUser: BuildUser
   status: StatusMessage
-}
-
-input CreateBuildInput {
-  recipe: RecipeNameInput!
-  buildName: String!
-  instructions: String
-  glassware: String
-  ice: String
-  image: String
-  touchArray: [TouchInput]!
 }
 
 input RecipeNameInput {
@@ -391,6 +394,7 @@ type Touch {
   unit: String!
   version: Int
   ingredient: Ingredient!
+  ingredientName: String
 }
 
 type ArchivedTouch {

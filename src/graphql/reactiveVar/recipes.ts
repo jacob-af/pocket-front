@@ -40,6 +40,7 @@ export const recipeBlank = {
   instructions: "",
   glassware: "",
   ice: "",
+  isPublic: false,
   touchArray: [],
   newRecipe: false,
   id: uuidv4(),
