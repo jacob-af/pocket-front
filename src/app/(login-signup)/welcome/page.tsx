@@ -2,9 +2,9 @@ import AuthButton from "@/components/buttons/SignOutButton";
 import Link from "next/link";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center px-24">
-      <div className="max-w-md text-center align-middle my-auto">
-        <h1 className="text-4xl font-bold mb-4">
+    <main className="bg-background flex h-full min-h-screen flex-col items-center px-24">
+      <div className="my-auto max-w-md text-center align-middle">
+        <h1 className="mb-4 text-4xl font-bold">
           Welcome to the Pocket Bar Book
         </h1>
         <p className="mb-8">
@@ -14,13 +14,13 @@ export default function Home() {
         </p>
         <Link
           href="signup"
-          className="btn-primary inline-block bg-white text-black px-5 py-3 rounded hover:bg-gray-300 mr-4"
+          className="btn-primary mr-4 inline-block rounded bg-white px-5 py-3 text-black hover:bg-gray-300"
         >
           Sign Up
         </Link>
         <Link
           href="login"
-          className="btn-secondary inline-block bg-gray-600 text-white px-5 py-3 rounded hover:bg-gray-900 mr-4"
+          className="btn-secondary mr-4 inline-block rounded bg-gray-600 px-5 py-3 text-white hover:bg-gray-900"
         >
           Login
         </Link>
