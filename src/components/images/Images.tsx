@@ -25,7 +25,7 @@ const imagePaths = [
 export default function TempImage() {
   return (
     <Image
-      priority
+      priority={true}
       src={imagePaths[10]}
       width={180}
       height={180}
@@ -40,6 +40,7 @@ export function SmallImage() {
 
   return (
     <Image
+      priority={true}
       src={imagePaths[10]}
       width={90}
       height={90}
