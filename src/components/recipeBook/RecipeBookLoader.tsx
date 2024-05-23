@@ -13,11 +13,11 @@ export default function RecipeBookLoader() {
   const recipeBookList = useReactiveVar(userRecipeBookList);
 
   useEffect(() => {
-    if (data?.userRecipeBooks) {
-      userRecipeBookList(data.userRecipeBooks);
+    if (data?.userBookList) {
+      userRecipeBookList(data.userBookList);
     }
     console.log("this happened");
-  }, [data?.userRecipeBooks]);
+  }, [data?.userBookList, data]);
 
   if (error) {
     return <div>{error.message}</div>;

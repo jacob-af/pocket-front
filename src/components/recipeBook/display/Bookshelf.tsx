@@ -15,8 +15,8 @@ export function Bookshelf() {
 
   const [getData, { loading, error }] = useLazyQuery(USER_BOOKS, {
     onCompleted: response => {
-      console.log("Data fetched");
-      const newBooks = response.userRecipeBooks;
+      console.log(response);
+      const newBooks = response.userBooks;
       if (newBooks.length > 0) {
         setList(value => [...value, ...newBooks]);
         setHasMore(newBooks.length === itemsPerPage);

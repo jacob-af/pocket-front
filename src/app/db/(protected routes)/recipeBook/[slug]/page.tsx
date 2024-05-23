@@ -19,11 +19,12 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
   });
 
   useEffect(() => {
-    if (data?.recipeBook) {
-      console.log(data.recipeBook);
-      selectedRecipeBook(data.recipeBook);
+    console.log(data);
+    if (data?.book) {
+      console.log(data.book);
+      selectedRecipeBook(data.book);
     }
-  }, [data?.recipeBook]);
+  }, [data?.book, data]);
 
   if (loading) {
     return <div>Loading...</div>;
