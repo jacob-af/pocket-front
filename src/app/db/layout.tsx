@@ -14,7 +14,7 @@ export default async function Dashboard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen w-screen overflow-hidden bg-black">
+    <main className="flex min-h-screen w-screen overflow-hidden">
       <SideBar />
       <RightSideBar />
       <TopNavBar />
