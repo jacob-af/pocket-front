@@ -28,21 +28,23 @@ type Query {
   hello: String!
   findAllBuilds: [Build]
   findOneBuild(recipeName: String!, buildName: String!): Build
-  usersBuilds: [Recipe]
-  findBuildUsers(buildId: String!): [BuildUser]
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
   getProfile(userId: String): Profile!
-  allRecipeBooks: [RecipeBook]!
-  userRecipeBooks: [RecipeBook]
-  userBookList: [ListItem]
-  recipeBook(name: String): RecipeBook
   findFolloweddUsersBookPermission(recipeBookId: String!): [UserBookPermission]
-  recipeList: [ListItem]!
-  recipes(skip: Int, take: Int): [Recipe]!
+  publicBook(name: String): RecipeBook!
+  publicBookList: [RecipeBook]!
+  publicBooks(skip: Int, take: Int): [RecipeBook]!
+  book(name: String): RecipeBook
+  userBookList: [RecipeBook]!
+  userBooks(skip: Int, take: Int): [RecipeBook]!
+  publicRecipe(name: String!): Recipe!
+  publicRecipeList: [Recipe]!
+  publicRecipes(skip: Int, take: Int): [Recipe]!
   recipe(name: String!): Recipe
-  userRecipe: [Recipe]
+  userRecipeList: [Recipe]!
+  userRecipes(skip: Int, take: Int): [Recipe]!
   allUsers: [User]!
   userById(id: ID!): User
   findFollows: [User]
@@ -331,6 +333,7 @@ type RecipeBook {
   editedBy: User
   permission: Permission
   build: [Build!]!
+  publicBuild: [Build]
 }
 
 type RecipeBookUser {
@@ -359,8 +362,8 @@ type Recipe {
   createdById: String
   editedBy: User
   editeById: String
-  build: [Build]
-  userBuild: [Build!]!
+  publicBuild: [Build]
+  userBuild: [Build]
 }
 
 input CreateRecipeInput {

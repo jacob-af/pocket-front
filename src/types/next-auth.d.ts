@@ -10,7 +10,7 @@ declare module "next-auth" {
     id: string;
     name: string;
     email: string;
-    image?: string | null;
+    image: string | null;
     accessToken: string;
     refreshToken: string;
     accessTokenExpires: number;
@@ -22,7 +22,7 @@ declare module "next-auth/jwt" {
     id: string;
     name: string;
     email: string;
-    image?: string | null;
+    image: string;
     refreshToken: string;
     accessToken: string;
     accessTokenExpires: number;
