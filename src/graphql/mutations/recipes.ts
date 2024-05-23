@@ -5,7 +5,7 @@ export const ADD_RECIPE = gql`
     createRecipe(createRecipeInput: $createRecipeInput) {
       name
       createdAt
-      build {
+      userBuild {
         buildName
         ice
         id
@@ -64,7 +64,7 @@ export const EDIT_RECIPE = gql`
       id
       name
       about
-      build {
+      userBuild {
         id
         buildName
         ice

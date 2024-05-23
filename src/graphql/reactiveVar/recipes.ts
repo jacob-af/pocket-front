@@ -22,7 +22,7 @@ export const selectedRecipe = makeVar<Recipe>({
   id: uuidv4(),
   name: "",
   about: "",
-  build: [],
+  publicBuild: [],
   userBuild: []
 });
 
@@ -48,5 +48,6 @@ export const recipeBlank = {
 };
 
 export const currentBuild = makeVar(0);
+export const currentRecipe = makeVar(0);
 
 export const newRecipeInfo = makeVar<BuildConstructor>(recipeBlank);

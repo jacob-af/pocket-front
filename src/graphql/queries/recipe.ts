@@ -42,6 +42,45 @@ export const GET_RECIPE: TypedDocumentNode<{
   }
 `;
 
+export const PUBLIC_RECIPE: TypedDocumentNode<{
+  publicRecipe: Recipe;
+}> = gql`
+  query publicRecipe($name: String!) {
+    publicRecipe(name: $name) {
+      id
+      name
+      about
+      publicBuild {
+        id
+        createdBy {
+          id
+          userName
+        }
+        buildName
+        recipe {
+          id
+          name
+        }
+        instructions
+        ice
+        glassware
+        permission
+        touch {
+          id
+          ingredient {
+            id
+            name
+            description
+          }
+          amount
+          unit
+          order
+        }
+      }
+    }
+  }
+`;
+
 export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
   query FindOneBuild($recipeName: String!, $buildName: String!) {
     findOneBuild(recipeName: $recipeName, buildName: $buildName) {
@@ -74,9 +113,11 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
   }
 `;
 
-export const USER_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
-  query USER_RECIPES {
-    recipes {
+export const USER_RECIPE_LIST: TypedDocumentNode<{
+  userRecipeList: Recipe[];
+}> = gql`
+  query UserRecipes {
+    userRecipeList {
       id
       name
       userBuild {
@@ -86,13 +127,27 @@ export const USER_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
     }
   }
 `;
+export const PUBLIC_RECIPE_LIST: TypedDocumentNode<{
+  publicRecipeList: Recipe[];
+}> = gql`
+  query PublicRecipes {
+    publicRecipeList {
+      id
+      name
+      publicBuild {
+        id
+        buildName
+      }
+    }
+  }
+`;
 
 export const RECIPES_AND_INGREDIENTS: TypedDocumentNode<{
-  recipeList: ListItem[];
+  publicRecipeList: ListItem[];
   ingredients: ListItem[];
 }> = gql`
   query RecipeList {
-    recipeList {
+    publicRecipeList {
       id
       name
     }
@@ -103,9 +158,9 @@ export const RECIPES_AND_INGREDIENTS: TypedDocumentNode<{
   }
 `;
 
-export const LAZY_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
-  query Recipes($skip: Int, $take: Int) {
-    recipes(skip: $skip, take: $take) {
+export const USER_RECIPES: TypedDocumentNode<{ userRecipes: Recipe[] }> = gql`
+  query userRecipes($skip: Int, $take: Int) {
+    userRecipes(skip: $skip, take: $take) {
       id
       name
       about
@@ -114,6 +169,46 @@ export const LAZY_RECIPES: TypedDocumentNode<{ recipes: Recipe[] }> = gql`
         userName
       }
       userBuild {
+        id
+        buildName
+        instructions
+        ice
+        glassware
+        createdBy {
+          id
+          userName
+        }
+        recipe {
+          id
+          name
+        }
+        touch {
+          id
+          ingredient {
+            id
+            name
+          }
+          amount
+          unit
+          order
+        }
+      }
+    }
+  }
+`;
+export const PUBLIC_RECIPES: TypedDocumentNode<{
+  publicRecipes: Recipe[];
+}> = gql`
+  query PublicRecipes($skip: Int, $take: Int) {
+    publicRecipes(skip: $skip, take: $take) {
+      id
+      name
+      about
+      createdBy {
+        id
+        userName
+      }
+      publicBuild {
         id
         buildName
         instructions
