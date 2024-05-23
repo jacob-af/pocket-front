@@ -5,7 +5,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 
 import { AddRecipeToBookModal } from "./AddRecipeToBook";
 import { CREATE_BOOK } from "@/graphql/mutations/recipeBook";
-import { USER_RECIPEBOOKS } from "@/graphql/queries/recipeBook";
+import { USER_BOOK_LIST } from "@/graphql/queries/recipeBook";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { newBookInfo } from "@/graphql/reactiveVar/recipeBooks";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
@@ -20,7 +20,7 @@ export const AddBookModal = ({
   const bookInfo = useReactiveVar(newBookInfo);
   const alerts = useReactiveVar(alertList);
   const [createBook, feedback] = useMutation(CREATE_BOOK, {
-    refetchQueries: [USER_RECIPEBOOKS]
+    refetchQueries: [USER_BOOK_LIST]
   });
 
   const [openInner, setOpen] = useState(false);

@@ -1,12 +1,15 @@
 "use client";
 
+//import { recipeSelect } from "./recipeActions";
+import { selectedRecipe, userRecipeList } from "@/graphql/reactiveVar/recipes";
+
 import { ListItem } from "@/types/util";
 import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { Recipe } from "@/__generated__/graphql";
-//import { recipeSelect } from "./recipeActions";
-import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
+import { useEffect } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function RecipeDropDown({
   recipes,
@@ -16,12 +19,21 @@ export default function RecipeDropDown({
   loading: string;
 }) {
   const selected = useReactiveVar(selectedRecipe);
+  const { data: session } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    userRecipeList(recipes);
+  }, [recipes]);
 
   const recipeSelect = (newValue: ListItem) => {
     selectedRecipe(newValue as Recipe);
     console.log(newValue.name, "hitting rec selec");
-    router.push(`/db/recipe/${newValue.name}`);
+    if (session?.user) {
+      router.push(`/db/recipe/${newValue.name}`);
+    } else {
+      router.push(`/recipe/${newValue.name}`);
+    }
   };
 
   return (

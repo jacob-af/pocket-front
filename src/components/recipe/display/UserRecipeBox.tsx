@@ -1,9 +1,11 @@
+"use client";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 
-import { LAZY_RECIPES } from "@/graphql/queries/recipe";
 import { Recipe } from "@/__generated__/graphql";
 import ShortCard from "@/components/recipe/display/ShortCard";
+import { USER_RECIPES } from "@/graphql/queries/recipe";
 
 export function RecipeBox() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,10 +14,11 @@ export function RecipeBox() {
   const itemsPerPage = 12;
   const scrollOffset = 300;
 
-  const [getData, { loading, error }] = useLazyQuery(LAZY_RECIPES, {
+  const [getData, { loading, error }] = useLazyQuery(USER_RECIPES, {
     onCompleted: response => {
-      console.log("Data fetched");
-      const newRecipes = response.recipes;
+      console.log(response);
+      const newRecipes = response.userRecipes;
+      console.log(newRecipes);
       if (newRecipes.length > 0) {
         setList(value => [...value, ...newRecipes]);
         setHasMore(newRecipes.length === itemsPerPage);
@@ -67,7 +70,7 @@ export function RecipeBox() {
         });
         setCurrentPage((prevPage: number) => prevPage + 1);
       }
-    }, 50);
+    }, 25);
   }, [hasMore, getData, currentPage]);
 
   useEffect(() => {
@@ -97,10 +100,11 @@ export function RecipeBox() {
             {/* Calculate the starting index for this column's builds */}
             {recipeList
               .flatMap(recipe => recipe.userBuild)
-              .filter((_, i) => i % num === columnIndex)
-              .map((build, index) => (
-                <ShortCard key={build.id + index} build={build} />
-              ))}
+              .filter((build, i) => build && i % num === columnIndex) // Ensure build is not null or undefined
+              .map(
+                (build, index) =>
+                  build && <ShortCard key={build.id + index} build={build} />
+              )}
           </div>
         ))
       )}

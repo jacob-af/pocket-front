@@ -55,13 +55,11 @@ export const DeleteBuildModal = ({
       id: "Uniqu3",
       name: "",
       about: "",
-      build: [],
+      publicBuild: [],
       userBuild: []
     });
     router.push("/db/recipe");
   };
-
-  console.log(recipe);
 
   return (
     <>

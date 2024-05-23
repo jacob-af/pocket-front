@@ -1,13 +1,13 @@
 "use client";
 
+import { Build, Recipe } from "@/__generated__/graphql";
 import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
 import { DeleteBuildModal } from "@/components/modals/DeleteBuildModal";
-import { Recipe } from "@/__generated__/graphql";
 import { useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 
-export const DeleteBuildButton = () => {
+export const DeleteBuildButton = ({ builds }: { builds: Build[] }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const slide: number = useReactiveVar(currentBuild);
   const recipe: Recipe = useReactiveVar(selectedRecipe);
@@ -25,7 +25,7 @@ export const DeleteBuildButton = () => {
         Delete
       </button>
       <DeleteBuildModal
-        build={recipe.userBuild[slide]}
+        build={builds[slide]}
         open={openDelete}
         toggleopen={setOpenDelete}
       />

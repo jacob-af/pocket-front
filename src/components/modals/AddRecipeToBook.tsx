@@ -14,7 +14,7 @@ import {
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import { GET_RECIPE_BOOK } from "@/graphql/queries/recipeBook";
-import { USER_RECIPES } from "@/graphql/queries/recipe";
+import { USER_RECIPE_LIST } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { userRecipeList } from "@/graphql/reactiveVar/recipes";
@@ -34,15 +34,15 @@ export const AddRecipeToBookModal = ({
   const [removeBuild] = useMutation(REMOVE_BUILD_FROM_BOOK, {
     refetchQueries: [GET_RECIPE_BOOK]
   });
-  const { data, error, loading } = useQuery(USER_RECIPES, {
+  const { data, error, loading } = useQuery(USER_RECIPE_LIST, {
     fetchPolicy: "cache-and-network"
   });
 
   useEffect(() => {
-    if (data?.recipes) {
-      const recipes = data.recipes
+    if (data?.userRecipeList) {
+      const recipes = data.userRecipeList
         .filter(recipe => {
-          return recipe?.userBuild.length > 0;
+          return recipe.userBuild && recipe.userBuild.length > 0;
         })
         .map((recipe: Recipe) => {
           return {
@@ -52,7 +52,7 @@ export const AddRecipeToBookModal = ({
         });
       userRecipeList(recipes);
     }
-  }, [data?.recipes]);
+  }, [data?.userRecipeList]);
 
   const closeModal = () => {
     newBookInfo({ name: "", description: "" });
@@ -132,6 +132,7 @@ export const AddRecipeToBookModal = ({
             <div className="h-80 content-center overflow-scroll">
               {recipeList
                 .flatMap(recipe => recipe.userBuild)
+                .filter((build): build is Build => !!build)
                 .map((build: Build, index: number) => {
                   return (
                     <div

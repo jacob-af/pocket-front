@@ -3,7 +3,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 
 import { DELETE_BOOK } from "@/graphql/mutations/recipeBook";
 import { RecipeBook } from "@/__generated__/graphql";
-import { USER_RECIPES } from "@/graphql/queries/recipe";
+import { USER_RECIPE_LIST } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ export const DeleteBookModal = ({
   const router = useRouter();
 
   const [deleteBook, feedback] = useMutation(DELETE_BOOK, {
-    refetchQueries: [USER_RECIPES]
+    refetchQueries: [USER_RECIPE_LIST]
   });
 
   const closeModal = () => {
