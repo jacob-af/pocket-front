@@ -11,14 +11,7 @@ export default async function LoadIngredients() {
   try {
     const { data }: ApolloQueryResult<{ ingredients: Ingredient[] }> =
       await client.query({
-        query: ALL_INGREDIENTS,
-        context: {
-          headers: {
-            Authorization: session?.user.accessToken
-              ? `Bearer ${session?.user.accessToken}`
-              : ""
-          }
-        }
+        query: ALL_INGREDIENTS
       });
 
     const sortedIngredients: Ingredient[] = [...data?.ingredients].sort(
