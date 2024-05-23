@@ -2,6 +2,7 @@
 
 import { useQuery, useReactiveVar } from "@apollo/client";
 
+import { Build } from "@/__generated__/graphql";
 import { BuildNavBar } from "@/components/navigation/BuildNavBar";
 import { GET_RECIPE } from "@/graphql/queries/recipe";
 import RecipeCard from "@/components/recipe/display/RecipeCard";
@@ -29,14 +30,17 @@ export default function Page({ params }: { params: { slug: string } }) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (error || !data?.recipe) {
     return <div>There is no page here</div>;
   }
-
+  const filteredBuilds = (data.recipe.userBuild ?? []).filter(
+    (build): build is Build => build !== null
+  );
+  console.log(filteredBuilds);
   return (
     <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
       <RecipeCard />
-      <BuildNavBar />
+      <BuildNavBar builds={filteredBuilds} />
     </div>
   );
 }

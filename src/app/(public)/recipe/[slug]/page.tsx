@@ -15,7 +15,6 @@ import { useEffect } from "react";
 
 export default function Page({ params }: { params: { slug: string } }) {
   console.log(params.slug);
-  const recipeIndex = useReactiveVar(currentRecipe);
   const q =
     params.slug.charAt(0).toUpperCase() +
     params.slug.slice(1).replace(/%20/g, " ");
@@ -42,10 +41,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   const filteredBuilds = (data.publicRecipe.publicBuild ?? []).filter(
     (build): build is Build => build !== null
   );
+  console.log(filteredBuilds);
   return (
     <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
-      <RecipeCard recipe={data.publicRecipe} />
-      {filteredBuilds.length > 0 && <BuildNavBar builds={filteredBuilds} />}
+      <RecipeCard />
+      <BuildNavBar builds={filteredBuilds} />
     </div>
   );
 }

@@ -2,9 +2,11 @@
 
 import { useQuery, useReactiveVar } from "@apollo/client";
 
+import { Build } from "@/__generated__/graphql";
 import { BuildNavBar } from "@/components/navigation/BuildNavBar";
 import { GET_ONE_BUILD } from "@/graphql/queries/recipe";
 import RecipeCard from "@/components/recipe/display/RecipeCard";
+import SkeletonCard from "@/components/recipe/display/SkeletonCard";
 import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useEffect } from "react";
 
@@ -40,17 +42,24 @@ export default function Page({
   }, [data?.findOneBuild, data, loading, error]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="mb-24 mt-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
+        <SkeletonCard />
+      </div>
+    );
   }
 
-  if (error) {
+  if (error || !recipe.userBuild) {
     return <div>There is no page here</div>;
   }
+  const filteredBuilds = (recipe.userBuild ?? []).filter(
+    (build): build is Build => build !== null
+  );
 
   return (
     <div className="mb-24 mt-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
       <RecipeCard />
-      <BuildNavBar />
+      <BuildNavBar builds={filteredBuilds} />
     </div>
   );
 }

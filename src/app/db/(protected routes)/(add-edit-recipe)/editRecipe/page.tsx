@@ -1,33 +1,39 @@
 "use client";
 
-import { ADD_BUILD, ADD_RECIPE } from "@/graphql/mutations/recipes";
+import { EDIT_BUILD, EDIT_RECIPE } from "@/graphql/mutations/recipes";
+import {
+  RECIPES_AND_INGREDIENTS,
+  USER_RECIPES
+} from "@/graphql/queries/recipe";
 import { Tab, Tabs } from "@mui/material";
 import {
   allRecipesList,
   newRecipeInfo,
-  recipeBlank,
+  selectedRecipe,
   touchArray
 } from "@/graphql/reactiveVar/recipes";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "@/components/recipe/input/BuildInstructions";
-import { RECIPES_AND_INGREDIENTS } from "@/graphql/queries/recipe";
-import RecipeInput from "@/components/recipe/input";
+import EditInput from "@/components/recipe/input/EditInput";
 import Review from "@/components/recipe/input/Review";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
 import { cutive } from "@/lib/cutive";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function AddRecipe() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [newRecipe] = useMutation(ADD_RECIPE, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS]
+  const { status: sessionStatus } = useSession();
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [updateRecipe] = useMutation(EDIT_RECIPE, {
+    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_RECIPES]
   });
-  const [newBuild] = useMutation(ADD_BUILD, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS]
+  const [updateBuild] = useMutation(EDIT_BUILD, {
+    refetchQueries: [RECIPES_AND_INGREDIENTS, USER_RECIPES]
   });
+
   const touches = useReactiveVar(touchArray);
   const recipeInfo = useReactiveVar(newRecipeInfo);
   const alerts = useReactiveVar(alertList);
@@ -35,23 +41,25 @@ export default function AddRecipe() {
 
   // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
+    skip: sessionStatus !== "authenticated",
     fetchPolicy: "cache-and-network"
   });
-  console.log();
 
   // Update reactive variables when the lists change
   useEffect(() => {
-    console.log("unconditional too");
+    console.log("unconditional three");
+    if (data?.publicRecipeList) {
+      allRecipesList(data?.publicRecipeList);
+    }
     if (data?.ingredients) {
       allIngredientsList(data.ingredients);
     }
-    if (data?.recipeList) {
-      allRecipesList(data.recipeList);
+    if (recipeInfo.name === "") {
+      router.push("/db/recipe");
     }
-  }, [data?.recipeList, data?.ingredients]);
+  }, [data?.publicRecipeList, data?.ingredients, recipeInfo, router]);
 
   if (error) {
-    alertList([...alerts, { code: "error", message: error.message }]);
     return <div>{error.message}</div>;
   }
 
@@ -59,39 +67,64 @@ export default function AddRecipe() {
     console.log(recipeInfo.newRecipe, recipeInfo.name);
     try {
       if (recipeInfo.newRecipe) {
-        const { data } = await newRecipe({
+        const { data } = await updateRecipe({
           variables: {
-            createRecipeInput: {
-              recipeName: recipeInfo.name,
+            updateRecipeInput: {
+              id: recipeInfo.id,
+              name: recipeInfo.name,
               about: recipeInfo.about,
               build: {
+                buildId: recipeInfo.id,
                 buildName: recipeInfo.buildName,
                 instructions: recipeInfo.instructions,
                 glassware: recipeInfo.glassware,
                 ice: recipeInfo.ice,
-                touchArray: [...touches]
+                touchArray: [...touches],
+                permission: recipeInfo.permission
               }
             }
           }
         });
         console.log(data);
+        alertList([
+          ...alerts,
+          {
+            code: "success",
+            message: `${recipeInfo.name} successfully updated`
+          }
+        ]);
       } else {
         console.log(recipeInfo.name);
-        const { data } = await newBuild({
+        const { data } = await updateBuild({
           variables: {
-            createBuildInput: {
+            updateBuildInput: {
+              buildId: recipeInfo.id,
               recipe: { name: recipeInfo.name },
               buildName: recipeInfo.buildName,
               instructions: recipeInfo.instructions,
               glassware: recipeInfo.glassware,
               ice: recipeInfo.ice,
-              touchArray: [...touches]
+              touchArray: [...touches],
+              permission: recipeInfo.permission
             }
           }
         });
         console.log(data);
+        alertList([
+          ...alerts,
+          {
+            code: "success",
+            message: `Build "${recipeInfo.buildName}" successfully updated for ${recipeInfo.name}`
+          }
+        ]);
       }
-      newRecipeInfo(recipeBlank);
+      selectedRecipe({
+        id: "",
+        name: "",
+        about: "",
+        publicBuild: [],
+        userBuild: []
+      });
       router.push("/db/recipe");
     } catch (error) {
       let errorMessage = "An unknown error occurred";
@@ -115,7 +148,6 @@ export default function AddRecipe() {
 
   return (
     <div className="mx-auto flex w-full flex-col rounded-lg bg-gray-900 p-4 shadow-md md:w-2/3">
-      {loading ? "loading" : ""}
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}
@@ -123,18 +155,13 @@ export default function AddRecipe() {
         textColor="inherit"
         TabIndicatorProps={{
           style: {
-            backgroundColor: "#000000",
-            fontFamily: `${cutive.style.fontFamily}`
+            backgroundColor: "#000000"
           }
         }}
       >
         <Tab
+          label="Recipe Info"
           className={`${cutive.className} antialiased bg-black text-white`}
-          label={
-            <span className={`text-lg ${cutive.className}`}>
-              Recipe Details
-            </span>
-          }
         />
         <Tab
           label="Instructions"
@@ -149,7 +176,7 @@ export default function AddRecipe() {
       {/* Conditionally render tab panels based on selectedIndex */}
       {selectedIndex === 0 && (
         <div className="p-4">
-          <RecipeInput />
+          <EditInput />
           <button
             className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel

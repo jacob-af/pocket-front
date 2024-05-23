@@ -1,10 +1,8 @@
-"use client";
-
 import AddRecipe from "@/components/buttons/AddRecipeButton";
-import { RecipeBox } from "../../../../components/recipe/display/RecipeBox";
-import RecipeLoader from "@/components/recipe/RecipeLoader";
+import { RecipeBox } from "@/components/recipe/display/UserRecipeBox";
+import RecipeLoader from "@/components/recipe/UserRecipeLoader";
 
-export default function RecipePage() {
+export default async function RecipePage() {
   return (
     <>
       <div className="bg-background mt-20 flex w-full max-w-2xl items-center justify-center">
