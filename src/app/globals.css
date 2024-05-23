@@ -10,9 +10,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #221f27;
-    --primary-color: #f7f0f5;
-    --secondary-color: #e8d33f;
+    --background-color: #071f35ff;
+    --primary-color: #cee5f2ff;
+    --secondary-color: #f0c987ff;
+    --danger-color: #ed254eff;
+    --columbia-blue: #cee5f2ff;
+    --red-crayola: #ed254eff;
+    --sunset: #f0c987ff;
+    --oxford-blue: #071f35ff;
   }
 }
 
@@ -26,11 +31,12 @@ Jet 333138 */
 body {
   color: var(--primary-color);
   background: var(--background-color);
+
   font-size: 1.2rem;
 }
 
-div {
-  border-color: var(--primary-color);
+Link {
+  color: var(--secondary-color);
 }
 
 @layer utilities {
