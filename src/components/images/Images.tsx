@@ -78,8 +78,8 @@ export function Expand() {
   return (
     <Image
       src={"/expand.png"}
-      width={15}
-      height={15}
+      width={30}
+      height={30}
       alt="Pixel down arrow"
       className="z-10 dark:invert"
     />

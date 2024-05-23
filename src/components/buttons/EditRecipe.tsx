@@ -1,9 +1,17 @@
 "use client";
 
-import { Permission, Recipe, Touch } from "@/__generated__/graphql";
 import {
+  Build,
+  CompleteTouch,
+  Permission,
+  Recipe,
+  Touch
+} from "@/__generated__/graphql";
+import {
+  blankTouch,
   currentBuild,
   newRecipeInfo,
+  recipeBlank,
   selectedRecipe,
   touchArray
 } from "@/graphql/reactiveVar/recipes";
@@ -13,14 +21,12 @@ import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-export const EditRecipeButton = () => {
+export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
   const slide: number = useReactiveVar(currentBuild);
-  const recipe: Recipe = useReactiveVar(selectedRecipe);
   const router = useRouter();
   const { data: session } = useSession();
 
   const handleEdit = () => {
-    const builds = recipe.userBuild;
     const touches: Touch[] = builds[slide].touch;
     touchArray(touches);
 
@@ -33,7 +39,14 @@ export const EditRecipeButton = () => {
         instructions: builds[slide].instructions || "",
         glassware: builds[slide].glassware || "",
         ice: builds[slide].ice || "",
-        touchArray: touches,
+        touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+          return {
+            amount,
+            id,
+            ingredientName: ingredient.name,
+            unit
+          };
+        }),
         newRecipe: true,
         permission: builds[slide].permission || Permission.View
       });
@@ -46,7 +59,14 @@ export const EditRecipeButton = () => {
         instructions: builds[slide].instructions || "",
         glassware: builds[slide].glassware || "",
         ice: builds[slide].ice || "",
-        touchArray: touches,
+        touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+          return {
+            amount,
+            id,
+            ingredientName: ingredient.name,
+            unit
+          };
+        }),
         newRecipe: false,
         permission: builds[slide].permission || Permission.View
       });

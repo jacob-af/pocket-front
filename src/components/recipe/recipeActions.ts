@@ -9,7 +9,7 @@ import {
 } from "@/graphql/reactiveVar/recipes";
 import { usePathname, useRouter } from "next/navigation";
 
-import { DropDownSelectFunction } from "@/components/ingredients/ingredientHooks";
+import { DropDownSelectFunction } from "@/components/ingredients/ingredientActions";
 import { ListItem } from "@/types/util";
 import { redirect } from "next/navigation";
 

@@ -42,6 +42,8 @@ export const recipeBlank = {
   ice: "",
   isPublic: false,
   touchArray: [],
+  recipe: { name: "" },
+
   newRecipe: false,
   id: uuidv4(),
   permission: Permission.View

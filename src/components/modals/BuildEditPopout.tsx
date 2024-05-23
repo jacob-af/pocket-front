@@ -48,7 +48,7 @@ export function BuildEditPopout({
             {permission &&
               [Permission.Edit, Permission.Manager, Permission.Owner].includes(
                 permission
-              ) && <EditRecipeButton />}
+              ) && <EditRecipeButton builds={builds} />}
             {createdBy?.id === session?.user.id && (
               <DeleteBuildButton builds={builds} />
             )}
