@@ -4,6 +4,7 @@
 
 :root {
   --background-color: #f7f0f5;
+  --background-contrast: #ffffff;
   --primary-color: #221f27;
   --secondary-color: #2b0b1e;
 }
@@ -11,6 +12,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #071f35ff;
+    --background-contrast: #000000;
     --primary-color: #cee5f2ff;
     --secondary-color: #f0c987ff;
     --danger-color: #ed254eff;
@@ -51,6 +53,17 @@ ul.dropdown-list li:hover {
 
 .bg-background {
   background-color: var(--background-color);
+}
+
+.bg-contrast {
+  background-color: var(--background-contrast);
+}
+
+.text-secondary {
+  color: var(--secondary-color);
+}
+.text-primary {
+  color: var(--primary-color);
 }
 
 .h-140 {

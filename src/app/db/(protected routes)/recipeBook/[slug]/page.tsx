@@ -38,7 +38,7 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
   return (
-    <div className="box-border flex h-screen w-full max-w-2xl flex-col items-center justify-center bg-black">
+    <div className="bg-contrast box-border flex h-screen w-full max-w-2xl flex-col items-center justify-center">
       <div className="m-0 mt-24 box-border grid h-full w-full grid-cols-1 gap-4 overflow-scroll md:grid-cols-2 xl:grid-cols-3">
         {columnConfigurations.map((columns, index) =>
           //{/* Create a div for each column configuration */}

@@ -66,7 +66,7 @@ export const ShareRecipe = ({
         <select
           value={value}
           onChange={handleChange}
-          className="max-w-40 rounded-md border border-gray-300 bg-black px-4"
+          className="bg-contrast max-w-40 rounded-md border border-gray-300 px-4"
         >
           <option value="">-- Select Option --</option>
           <option value="BLOCKED">Block</option>

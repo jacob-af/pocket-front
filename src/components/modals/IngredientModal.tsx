@@ -48,7 +48,7 @@ export const IngredientModal = ({
             </button>
 
             {/* Modal content */}
-            <div className="text-primary mb-4 bg-black text-lg">
+            <div className="text-primary bg-contrast mb-4 text-lg">
               We dont have that in our database, would you like to make a custom
               ingredient?
             </div>
@@ -56,7 +56,7 @@ export const IngredientModal = ({
             {/* Input field */}
             <input
               onChange={onChange}
-              className="focus:shadow-outline text-top h-32 w-full appearance-none border bg-black px-3 py-2 text-left text-gray-100 placeholder-gray-400 shadow focus:outline-none disabled:border-none disabled:text-gray-900 disabled:placeholder-gray-900"
+              className="focus:shadow-outline text-top bg-contrast h-32 w-full appearance-none border px-3 py-2 text-left text-gray-100 placeholder-gray-400 shadow focus:outline-none disabled:border-none disabled:text-gray-900 disabled:placeholder-gray-900"
               id="about"
             />
 

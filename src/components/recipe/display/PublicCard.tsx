@@ -23,7 +23,7 @@ export default function PublicCard({
   };
 
   return (
-    <div className="relative my-2 w-full content-center rounded-lg bg-black text-center">
+    <div className="bg-contrast relative my-2 w-full content-center rounded-lg text-center">
       <div className="p-2 text-center text-xl">{recipe.name}</div>
       <div className="block">
         <TempImage />

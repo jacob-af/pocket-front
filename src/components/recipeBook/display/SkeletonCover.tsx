@@ -1,6 +1,6 @@
 export function BookCoverSkeleton() {
   return (
-    <div className="h-140 relative my-2 flex w-full max-w-lg animate-pulse flex-col rounded-lg bg-black p-4">
+    <div className="h-140 bg-contrast relative my-2 flex w-full max-w-lg animate-pulse flex-col rounded-lg p-4">
       <div className="h-8 w-full rounded bg-gray-700"></div>{" "}
       {/* Simulated title bar */}
       <div className="mt-4 flex h-40 max-w-md rounded bg-gray-700"></div>{" "}

@@ -27,13 +27,13 @@ export const AlertItem = ({
 
   return (
     <div
-      className={`w-full justify-center truncate items-center bg-black h-10 ${color} mt-${
+      className={`w-full justify-center truncate items-center bg-contrast h-10 ${color} mt-${
         20 + index * 11
       }`}
     >
       {alert.message}
       <button
-        className="ml-2 bg-gray-500 text-white rounded p-1"
+        className="ml-2 rounded bg-gray-500 p-1 text-white"
         onClick={handleRemove}
       >
         X

@@ -161,15 +161,15 @@ export default function AddRecipe() {
       >
         <Tab
           label="Recipe Info"
-          className={`${cutive.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
           label="Instructions"
-          className={`${cutive.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
           label="Review"
-          className={`${cutive.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-contrast`}
         />
       </Tabs>
 
@@ -178,7 +178,7 @@ export default function AddRecipe() {
         <div className="p-4">
           <EditInput />
           <button
-            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
           >
             Next
@@ -189,13 +189,13 @@ export default function AddRecipe() {
         <div className="p-4">
           <BuildInstructions />
           <button
-            className="float-left mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(0)} // Move to Instructions panel
           >
             Back
           </button>
           <button
-            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(2)} // Move to Instructions panel
           >
             Next
@@ -206,13 +206,13 @@ export default function AddRecipe() {
         <div className="p-4">
           <Review />
           <button
-            className="float-left mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
           >
             Back
           </button>
           <button
-            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={submitRecipe} // Move to Instructions panel
           >
             Submit

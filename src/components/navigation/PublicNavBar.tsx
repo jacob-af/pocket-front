@@ -12,7 +12,7 @@ import { Bokor } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 
-function BottomNavBar() {
+export function PublicNavBar() {
   const [value, setValue] = React.useState("home");
 
   const handleChange = (newValue: string) => {
@@ -20,12 +20,12 @@ function BottomNavBar() {
   };
 
   return (
-    <div className="bg-contrast fixed bottom-0 left-0 right-0 shadow-lg lg:hidden">
+    <div className="bg-contrast fixed left-0 right-0 top-0 shadow-lg">
       <nav className="flex items-center justify-around">
-        <Link href="/db" passHref>
+        <Link href="/" passHref>
           <span
             className={`flex flex-col items-center p-2 ${
-              value === "home" ? "text-secondary" : "text-primary"
+              value === "home" ? "text-secondary" : ""
             }`}
             onClick={() => handleChange("home")}
           >
@@ -33,10 +33,10 @@ function BottomNavBar() {
             <span className="text-xxs">Home</span>
           </span>
         </Link>
-        <Link href="/db/recipeBook" passHref>
+        <Link href="/recipeBook" passHref>
           <span
             className={`flex flex-col items-center p-2 ${
-              value === "recipeBooks" ? "text-secondary" : "text-primary"
+              value === "recipeBooks" ? "text-secondary" : ""
             }`}
             onClick={() => handleChange("recipeBooks")}
           >
@@ -44,10 +44,10 @@ function BottomNavBar() {
             <span className="text-xxs">Books</span>
           </span>
         </Link>
-        <Link href="/db/recipe" passHref>
+        <Link href="/recipe" passHref>
           <span
             className={`flex flex-col items-center p-2 ${
-              value === "recipes" ? "text-secondary" : "text-primary"
+              value === "recipes" ? "text-secondary" : ""
             }`}
             onClick={() => handleChange("recipes")}
           >
@@ -55,21 +55,21 @@ function BottomNavBar() {
             <span className="text-xxs">Recipes</span>
           </span>
         </Link>
-        <Link href="/db/inventory" passHref>
+        <Link href="/ingredient" passHref>
           <span
             className={`flex flex-col items-center p-2 ${
-              value === "inventory" ? "text-secondary" : "text-primary"
+              value === "inventory" ? "text-secondary" : ""
             }`}
             onClick={() => handleChange("inventory")}
           >
             <BottleIcon />
-            <span className="text-xxs">Inventory</span>
+            <span className="text-xxs">Ingredients</span>
           </span>
         </Link>
-        <Link href="/db/crew" passHref>
+        <Link href="/crew" passHref>
           <span
             className={`flex flex-col items-center p-2 ${
-              value === "crew" ? "text-secondary" : "text-primary"
+              value === "crew" ? "text-secondary" : ""
             }`}
             onClick={() => handleChange("crew")}
           >
@@ -81,5 +81,3 @@ function BottomNavBar() {
     </div>
   );
 }
-
-export default BottomNavBar;

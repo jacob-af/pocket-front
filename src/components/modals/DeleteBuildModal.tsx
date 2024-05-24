@@ -69,7 +69,7 @@ export const DeleteBuildModal = ({
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="relative bg-black p-6"
+            className="bg-contrast relative p-6"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}

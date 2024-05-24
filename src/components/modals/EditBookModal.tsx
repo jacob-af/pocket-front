@@ -85,14 +85,14 @@ export const EditBookModal = ({
             {/* Input field */}
             <input
               onChange={(event: any) => onChange(event)}
-              className="focus:shadow-outline mb-2 w-full appearance-none border bg-black px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
+              className="focus:shadow-outline bg-contrast mb-2 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
               id="name"
               placeholder="Recipe Book Name"
               value={bookInfo.name}
             />
             <textarea
               onChange={(event: any) => onChange(event)}
-              className="focus:shadow-outline h-40 w-full appearance-none border bg-black px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
+              className="focus:shadow-outline bg-contrast h-40 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
               id="description"
               placeholder="Description"
               value={bookInfo.description}

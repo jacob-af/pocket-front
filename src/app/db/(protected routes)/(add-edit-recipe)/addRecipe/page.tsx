@@ -129,16 +129,16 @@ export default function AddRecipe() {
         }}
       >
         <Tab
-          className={`${cutive.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-contrast`}
           label={<span className={`${cutive.className}`}>Recipe Details</span>}
         />
         <Tab
           label={<span className={`${cutive.className}`}>Instructions</span>}
-          className={`${cutive.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
           label={<span className={`${cutive.className}`}>Review</span>}
-          className={`${cutive.className} antialiased bg-black text-white`}
+          className={`${cutive.className} antialiased bg-contrast`}
         />
       </Tabs>
 
@@ -147,7 +147,7 @@ export default function AddRecipe() {
         <div className="p-4">
           <RecipeInput />
           <button
-            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
           >
             Next
@@ -158,13 +158,13 @@ export default function AddRecipe() {
         <div className="p-4">
           <BuildInstructions />
           <button
-            className="float-left mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(0)} // Move to Instructions panel
           >
             Back
           </button>
           <button
-            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(2)} // Move to Instructions panel
           >
             Next
@@ -175,13 +175,13 @@ export default function AddRecipe() {
         <div className="p-4">
           <Review />
           <button
-            className="float-left mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
           >
             Back
           </button>
           <button
-            className="float-right mt-4 rounded-lg bg-gray-500 px-4 py-2 text-white"
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={submitRecipe} // Move to Instructions panel
           >
             Submit

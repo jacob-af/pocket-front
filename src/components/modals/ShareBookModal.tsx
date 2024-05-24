@@ -27,7 +27,7 @@ export const ShareBookModal = ({
           onClick={closeModal}
         >
           <div
-            className="max-h-80 max-w-xl rounded border bg-black p-6 shadow-lg"
+            className="bg-contrast max-h-80 max-w-xl rounded border p-6 shadow-lg"
             onClick={e => e.stopPropagation()}
           >
             {/* Close button */}

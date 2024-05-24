@@ -27,7 +27,7 @@ export default function ShortCard({ build }: { build: Build }) {
   };
 
   return (
-    <div className="relative my-2 w-full content-center rounded-lg bg-black text-center">
+    <div className="bg-contrast relative my-2 w-full content-center rounded-lg text-center">
       <div className="absolute right-2 mt-2" onClick={handleOpen}>
         {open ? <UpArrow /> : <DownArrow />}
       </div>

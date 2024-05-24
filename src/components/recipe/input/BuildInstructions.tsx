@@ -12,11 +12,11 @@ export default function BuildInstructions() {
   };
 
   return (
-    <div className="flex flex-col items-center min-w-xl">
+    <div className="min-w-xl flex flex-col items-center">
       <div>learn to follow instructions</div>
       <textarea
         onChange={(event: any) => onChange(event)}
-        className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 m-4"
+        className="bg-contrast focus:shadow-outline m-4 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
         id="instructions"
         placeholder="Instructions"
         value={recipeInfo.instructions || ""}
@@ -24,14 +24,14 @@ export default function BuildInstructions() {
       ></textarea>
       <input
         onChange={(event: any) => onChange(event)}
-        className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 m-4"
+        className="bg-contrast focus:shadow-outline m-4 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
         id="glassware"
         value={recipeInfo.glassware || ""}
         placeholder="Glassware"
       />
       <input
         onChange={(event: any) => onChange(event)}
-        className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 m-4"
+        className="bg-contrast focus:shadow-outline m-4 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
         id="ice"
         placeholder="Ice"
         value={recipeInfo.ice || ""}

@@ -13,7 +13,7 @@ export default async function Home() {
   redirect("/login");
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-black px-24">
+    <main className="bg-contrast flex min-h-screen flex-col items-center justify-between px-24">
       Welcome - you will be redirected shortly.
     </main>
   );

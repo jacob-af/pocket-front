@@ -1,3 +1,4 @@
+import { PublicNavBar } from "@/components/navigation/PublicNavBar";
 import RecipeLoader from "@/components/recipe/PublicRecipeLoader";
 
 export default async function Dashboard({
@@ -6,11 +7,11 @@ export default async function Dashboard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center overflow-hidden">
-      <div className="bg-background mt-20 flex w-full max-w-2xl items-center justify-center">
-        <RecipeLoader />
-      </div>
+    <main className="flex min-h-screen w-screen flex-col items-center overflow-hidden pt-12">
+      <RecipeLoader />
+
       {children}
+      <PublicNavBar />
     </main>
   );
 }

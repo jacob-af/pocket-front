@@ -15,7 +15,7 @@ export const RecipeName = () => {
       <div> Change the name of this Recipe:</div>
       <input
         onChange={(event: any) => onChange(event)}
-        className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 "
+        className="bg-contrast focus:shadow-outline w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
         id="recipeName"
         placeholder="Recipe Name"
         value={recipeInfo.name}

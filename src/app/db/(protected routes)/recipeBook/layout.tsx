@@ -11,7 +11,7 @@ export default async function Layout({
 }) {
   return (
     <div className="bg-background flex h-full w-full max-w-2xl flex-col items-center justify-center">
-      <div className="z-20 flex w-full flex-row items-center justify-center bg-black">
+      <div className="bg-contrast z-20 flex w-full flex-row items-center justify-center">
         <RecipeBookLoader />
       </div>
       {children}

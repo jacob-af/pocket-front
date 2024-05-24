@@ -40,26 +40,26 @@ export const UserList = () => {
       {relations.map((rel: UserRelation) => (
         <div
           key={rel.id}
-          className="bg-black rounded-md block p-2 align-center"
+          className="bg-contrast align-center block rounded-md p-2"
         >
           {rel.userName}
           {rel.following ? (
             <button
-              className="border p-1 float-right"
+              className="float-right border p-1"
               onClick={() => unFollowUser(rel.id)}
             >
               unfollow
             </button>
           ) : rel.followedBy ? (
             <button
-              className="border p-1 float-right"
+              className="float-right border p-1"
               onClick={() => followUser(rel.id)}
             >
               follow back
             </button>
           ) : (
             <button
-              className="border p-1 float-right"
+              className="float-right border p-1"
               onClick={() => followUser(rel.id)}
             >
               follow

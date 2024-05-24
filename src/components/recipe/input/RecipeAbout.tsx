@@ -17,7 +17,7 @@ export const RecipeAbout = () => {
       <div> Tell Us About this Build</div>
       <textarea
         onChange={(event: any) => onChange(event)}
-        className="bg-black shadow focus:shadow-outline px-3 py-2 border w-full text-gray-100 leading-tight appearance-none focus:outline-none text-left placeholder-gray-400 h-40"
+        className="bg-contrast focus:shadow-outline h-40 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
         id="about"
         placeholder="About"
         value={recipeInfo.about || ""}

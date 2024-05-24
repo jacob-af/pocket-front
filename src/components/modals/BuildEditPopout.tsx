@@ -37,7 +37,7 @@ export function BuildEditPopout({
         {isVisible ? <ArrowDown /> : <ArrowUp />}
       </button>
       {isVisible && (
-        <div className="absolute bottom-12 z-10 mx-auto w-40 border border-gray-300 bg-black p-4">
+        <div className="bg-contrast absolute bottom-12 z-10 mx-auto w-40 border border-gray-300 p-4">
           <div className="pop-out-content flex flex-col items-center">
             <button
               onClick={() => setopen(true)}

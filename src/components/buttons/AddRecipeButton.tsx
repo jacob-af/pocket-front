@@ -11,7 +11,7 @@ function AddRecipe() {
   return (
     <button
       onClick={handleNavigate}
-      className="border border-white rounded-full p-2 text-xs opacity-100 z-10 bg-slate-800"
+      className="rounded-full border border-white p-2 text-xs opacity-100"
     >
       Add
       <br />

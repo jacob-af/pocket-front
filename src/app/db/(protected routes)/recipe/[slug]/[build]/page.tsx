@@ -57,7 +57,7 @@ export default function Page({
   );
 
   return (
-    <div className="mb-24 mt-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
+    <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
       <RecipeCard />
       <BuildNavBar builds={filteredBuilds} />
     </div>

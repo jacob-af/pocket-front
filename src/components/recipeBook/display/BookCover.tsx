@@ -19,12 +19,12 @@ export default function BookCover({ book }: { book: RecipeBook }) {
   };
 
   return (
-    <div className="h-140 relative my-2 flex w-full max-w-lg flex-col rounded-lg bg-black p-4">
-      <div className="w-full bg-black text-center text-2xl">{book.name}</div>
+    <div className="h-140 bg-contrast relative my-2 flex w-full max-w-lg flex-col rounded-lg p-4">
+      <div className="bg-contrast w-full text-center text-2xl">{book.name}</div>
       <div className="flex h-40 max-w-md">
         <BookCoverImage />
       </div>
-      <div className="h-20 bg-black py-4 text-center text-sm">
+      <div className="bg-contrast h-20 py-4 text-center text-sm">
         {book.description}
       </div>
       <br />
@@ -35,7 +35,7 @@ export default function BookCover({ book }: { book: RecipeBook }) {
         {book.build.length < 10 ? "" : `and ${book.build.length - 10} others`}
       </div>
       <button
-        className="absolute bottom-4 right-4 bg-black text-xs"
+        className="bg-contrast absolute bottom-4 right-4 text-xs"
         onClick={handleView}
       >
         <Expand />

@@ -12,10 +12,7 @@ function AddRecipeBookButton() {
 
   return (
     <div>
-      <button
-        onClick={toggleOpen}
-        className="border border-white rounded-full p-2 text-xs opacity-100 z-10 bg-slate-800"
-      >
+      <button onClick={toggleOpen} className="text-xs opacity-100">
         Add
         <br />
         Recipe Book

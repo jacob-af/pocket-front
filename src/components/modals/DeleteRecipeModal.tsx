@@ -60,7 +60,7 @@ export const DeleteRecipeModal = ({
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="block max-w-lg items-center justify-center bg-black p-6"
+            className="bg-contrast block max-w-lg items-center justify-center p-6"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
