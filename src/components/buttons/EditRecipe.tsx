@@ -51,6 +51,7 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         permission: builds[slide].permission || Permission.View
       });
     } else {
+      console.log(touches);
       newRecipeInfo({
         id: builds[slide].id,
         name: builds[slide].recipe.name,
@@ -71,7 +72,7 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         permission: builds[slide].permission || Permission.View
       });
     }
-    router.push("/db/recipe/edit");
+    router.push("/db/editRecipe");
   };
 
   return (

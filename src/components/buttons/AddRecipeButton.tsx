@@ -6,7 +6,7 @@ function AddRecipe() {
   const router = useRouter();
 
   const handleNavigate = () => {
-    router.push("/db/recipe/add");
+    router.push("/db/addRecipe");
   };
   return (
     <button

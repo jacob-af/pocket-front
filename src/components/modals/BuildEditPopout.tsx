@@ -29,6 +29,7 @@ export function BuildEditPopout({
   const build = builds[index];
   const permission = build?.permission || Permission.View;
   const createdBy = build?.createdBy;
+  console.log(permission);
 
   return (
     <div className="relative flex items-center justify-center">

@@ -13,7 +13,6 @@ export default function BuildInstructions() {
 
   return (
     <div className="min-w-xl flex flex-col items-center">
-      <div>learn to follow instructions</div>
       <textarea
         onChange={(event: any) => onChange(event)}
         className="bg-contrast focus:shadow-outline m-4 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"

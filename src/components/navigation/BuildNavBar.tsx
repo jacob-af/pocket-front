@@ -7,7 +7,6 @@ import {
 import { Build, Recipe } from "@/__generated__/graphql";
 import {
   currentBuild,
-  currentRecipe,
   selectedRecipe,
   userRecipeList
 } from "@/graphql/reactiveVar/recipes";

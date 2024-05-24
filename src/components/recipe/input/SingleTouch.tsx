@@ -42,7 +42,7 @@ export const SingleTouch = ({
       <select
         onChange={onChange}
         name="unit-options"
-        className="focus:shadow-outline dark:bg-contrast col-span-3 text-white"
+        className="focus:shadow-outline bg-contrast col-span-3 text-white"
         id="unit"
         value={touches[index].unit}
       >
