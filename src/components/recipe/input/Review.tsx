@@ -1,3 +1,7 @@
+import {
+  CocktailPicture,
+  SmallCocktailPicture
+} from "@/components/images/CocktailPicture";
 import { newRecipeInfo, touchArray } from "@/graphql/reactiveVar/recipes";
 
 import { useReactiveVar } from "@apollo/client";
@@ -8,10 +12,14 @@ export default function Review() {
 
   return (
     <div>
+      <div className="float-right pl-6">
+        <SmallCocktailPicture url={recipeInfo.image ?? "/withCherry200.png"} />
+      </div>
       <h2 className="text-lg font-semibold">{recipeInfo.name}</h2>
-      <h2 className="text-lg font-semibold">{recipeInfo.buildName}</h2>
+      <h2 className="text-lg font-semibold">{recipeInfo.buildName} Build</h2>
+      <br />
       <p className="text-sm">{recipeInfo.about}</p>
-
+      <br />
       <ul className="p-0">
         {touches.map((touch, index) => (
           <li key={`review${touch.id}`} className="py-1">

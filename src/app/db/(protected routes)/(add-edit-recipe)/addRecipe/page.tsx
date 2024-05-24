@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "@/components/recipe/input/BuildInstructions";
+import PictureUpload from "@/components/recipe/input/PictureUpload";
 import { RECIPES_AND_INGREDIENTS } from "@/graphql/queries/recipe";
 import RecipeInput from "@/components/recipe/input";
 import Review from "@/components/recipe/input/Review";
@@ -137,6 +138,10 @@ export default function AddRecipe() {
           className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
+          label={<span className={`${cutive.className}`}>Add Photo</span>}
+          className={`${cutive.className} antialiased bg-contrast`}
+        />
+        <Tab
           label={<span className={`${cutive.className}`}>Review</span>}
           className={`${cutive.className} antialiased bg-contrast`}
         />
@@ -173,10 +178,27 @@ export default function AddRecipe() {
       )}
       {selectedIndex === 2 && (
         <div className="p-4">
-          <Review />
+          <PictureUpload />
           <button
             className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
+          >
+            Back
+          </button>
+          <button
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
+            onClick={() => setSelectedIndex(3)} // Move to Instructions panel
+          >
+            Next
+          </button>
+        </div>
+      )}
+      {selectedIndex === 3 && (
+        <div className="p-4">
+          <Review />
+          <button
+            className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
+            onClick={() => setSelectedIndex(2)} // Move to Instructions panel
           >
             Back
           </button>

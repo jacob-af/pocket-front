@@ -17,6 +17,7 @@ import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import BuildInstructions from "@/components/recipe/input/BuildInstructions";
 import EditInput from "@/components/recipe/input/EditInput";
+import PictureUpload from "@/components/recipe/input/PictureUpload";
 import Review from "@/components/recipe/input/Review";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
@@ -64,7 +65,7 @@ export default function AddRecipe() {
   }
 
   const submitRecipe = async () => {
-    console.log(recipeInfo.newRecipe, recipeInfo.name);
+    console.log(touches);
     try {
       if (recipeInfo.newRecipe) {
         const { data } = await updateRecipe({
@@ -79,7 +80,15 @@ export default function AddRecipe() {
                 instructions: recipeInfo.instructions,
                 glassware: recipeInfo.glassware,
                 ice: recipeInfo.ice,
-                touchArray: [...touches],
+                image: recipeInfo.image,
+                touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+                  return {
+                    amount,
+                    id,
+                    ingredientName: ingredient.name,
+                    unit
+                  };
+                }),
                 permission: recipeInfo.permission
               }
             }
@@ -104,7 +113,15 @@ export default function AddRecipe() {
               instructions: recipeInfo.instructions,
               glassware: recipeInfo.glassware,
               ice: recipeInfo.ice,
-              touchArray: [...touches],
+              image: recipeInfo.image,
+              touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+                return {
+                  amount,
+                  id,
+                  ingredientName: ingredient.name,
+                  unit
+                };
+              }),
               permission: recipeInfo.permission
             }
           }
@@ -125,7 +142,7 @@ export default function AddRecipe() {
         publicBuild: [],
         userBuild: []
       });
-      router.push("/db/recipe");
+      router.push(`/db/recipe/${recipeInfo.name}`);
     } catch (error) {
       let errorMessage = "An unknown error occurred";
       if (error instanceof Error) {
@@ -147,7 +164,8 @@ export default function AddRecipe() {
   }
 
   return (
-    <div className="mx-auto flex w-full flex-col rounded-lg bg-gray-900 p-4 shadow-md md:w-2/3">
+    <div className="mx-auto my-12 flex w-full flex-col rounded-lg bg-gray-900 p-4 shadow-md md:w-2/3">
+      {loading ? "loading" : ""}
       <Tabs
         value={selectedIndex}
         onChange={(_, newValue) => setSelectedIndex(newValue)}
@@ -155,20 +173,25 @@ export default function AddRecipe() {
         textColor="inherit"
         TabIndicatorProps={{
           style: {
-            backgroundColor: "#000000"
+            backgroundColor: "#000000",
+            fontFamily: `${cutive.style.fontFamily}`
           }
         }}
       >
         <Tab
-          label="Recipe Info"
+          className={`${cutive.className} antialiased bg-contrast`}
+          label={<span className={`${cutive.className}`}>Recipe Details</span>}
+        />
+        <Tab
+          label={<span className={`${cutive.className}`}>Instructions</span>}
           className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
-          label="Instructions"
+          label={<span className={`${cutive.className}`}>Add Photo</span>}
           className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
-          label="Review"
+          label={<span className={`${cutive.className}`}>Review</span>}
           className={`${cutive.className} antialiased bg-contrast`}
         />
       </Tabs>
@@ -204,10 +227,27 @@ export default function AddRecipe() {
       )}
       {selectedIndex === 2 && (
         <div className="p-4">
-          <Review />
+          <PictureUpload />
           <button
             className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
             onClick={() => setSelectedIndex(1)} // Move to Instructions panel
+          >
+            Back
+          </button>
+          <button
+            className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
+            onClick={() => setSelectedIndex(3)} // Move to Instructions panel
+          >
+            Next
+          </button>
+        </div>
+      )}
+      {selectedIndex === 3 && (
+        <div className="p-4">
+          <Review />
+          <button
+            className="text-primary float-left mt-4 rounded-lg bg-gray-500 px-4 py-2"
+            onClick={() => setSelectedIndex(2)} // Move to Instructions panel
           >
             Back
           </button>
