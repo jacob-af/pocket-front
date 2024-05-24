@@ -12,7 +12,7 @@ export function RecipeBox() {
   const [hasMore, setHasMore] = useState(true);
   const [recipeList, setList] = useState<Recipe[]>([]);
   const itemsPerPage = 12;
-  const scrollOffset = 300;
+  const scrollOffset = 100;
 
   const [getData, { loading, error }] = useLazyQuery(USER_RECIPES, {
     onCompleted: response => {
@@ -23,7 +23,8 @@ export function RecipeBox() {
         setList(value => [...value, ...newRecipes]);
         setHasMore(newRecipes.length === itemsPerPage);
       }
-    }
+    },
+    fetchPolicy: "cache-and-network"
   });
 
   useEffect(() => {
@@ -70,7 +71,7 @@ export function RecipeBox() {
         });
         setCurrentPage((prevPage: number) => prevPage + 1);
       }
-    }, 25);
+    }, 100);
   }, [hasMore, getData, currentPage]);
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export function RecipeBox() {
   }
 
   return (
-    <>
+    <div className="mt-10 box-border grid h-full w-full grid-flow-col grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       {columnConfigurations.map((columns, index) =>
         //{/* Create a div for each column configuration */}
         columns.map((num, columnIndex) => (
@@ -108,6 +109,6 @@ export function RecipeBox() {
           </div>
         ))
       )}
-    </>
+    </div>
   );
 }

@@ -1,16 +1,12 @@
 "use client";
 
-import {
-  currentRecipe,
-  selectedRecipe,
-  userRecipeList
-} from "@/graphql/reactiveVar/recipes";
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import { Build } from "@/__generated__/graphql";
 import { BuildNavBar } from "@/components/navigation/BuildNavBar";
 import { PUBLIC_RECIPE } from "@/graphql/queries/recipe";
 import RecipeCard from "@/components/recipe/display/RecipeCard";
+import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useEffect } from "react";
 
 export default function Page({ params }: { params: { slug: string } }) {
@@ -44,7 +40,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   console.log(filteredBuilds);
   return (
     <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
-      <RecipeCard />
+      <RecipeCard recipe={data.publicRecipe} />
       <BuildNavBar builds={filteredBuilds} />
     </div>
   );

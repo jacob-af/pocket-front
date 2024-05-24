@@ -43,7 +43,7 @@ export default function Page({
 
   if (loading) {
     return (
-      <div className="mb-24 mt-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
+      <div className="mb-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
         <SkeletonCard />
       </div>
     );
@@ -58,7 +58,7 @@ export default function Page({
 
   return (
     <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
-      <RecipeCard />
+      <RecipeCard recipe={recipe} />
       <BuildNavBar builds={filteredBuilds} />
     </div>
   );

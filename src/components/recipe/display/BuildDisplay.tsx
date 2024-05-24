@@ -19,7 +19,8 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
     <div className="carousel">
       {/* Displaying the current slide */}
       <div className="carousel-slide">
-        <div>{builds[slide].buildName}</div>
+        <div>{builds[slide].buildName} Build</div>
+        <br />
         {builds[slide].touch &&
           builds[slide].touch.map((touch: Touch | null, index: number) => {
             return (
@@ -28,9 +29,18 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
               </div>
             );
           })}
-        <p>{builds[slide].instructions}</p>
-        <p>Glassware: {builds[slide].glassware}</p>
-        <p>Ice: {builds[slide].ice}</p>
+        <p>
+          <span className="text-sm">Directions: </span>
+          {builds[slide].instructions}
+        </p>
+        <p>
+          <span className="text-sm">Ice: </span>
+          {builds[slide].ice}
+        </p>
+        <p>
+          <span className="text-sm">Glassware: </span>
+          {builds[slide].glassware}
+        </p>
       </div>
 
       <div className="flex items-center justify-between">
