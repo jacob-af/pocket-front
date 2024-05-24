@@ -33,23 +33,22 @@ export const allRecipesList = makeVar<ListItem[]>([
   }
 ]);
 
-export const recipeBlank = {
+export const recipeBlank: BuildConstructor = {
   name: "",
   buildName: "",
   about: "",
   instructions: "",
   glassware: "",
   ice: "",
+  image: "",
   isPublic: false,
   touchArray: [],
   recipe: { name: "" },
-
   newRecipe: false,
   id: uuidv4(),
   permission: Permission.View
 };
 
 export const currentBuild = makeVar(0);
-export const currentRecipe = makeVar(0);
 
 export const newRecipeInfo = makeVar<BuildConstructor>(recipeBlank);

@@ -24,6 +24,7 @@ export const GET_RECIPE: TypedDocumentNode<{
         }
         instructions
         ice
+        image
         glassware
         permission
         touch {
@@ -63,6 +64,7 @@ export const PUBLIC_RECIPE: TypedDocumentNode<{
         }
         instructions
         ice
+        image
         glassware
         permission
         touch {
@@ -87,8 +89,10 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
       id
       buildName
       instructions
-      ice
       glassware
+      ice
+      image
+      permission
       recipe {
         id
         name
@@ -116,7 +120,7 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
 export const USER_RECIPE_LIST: TypedDocumentNode<{
   userRecipeList: Recipe[];
 }> = gql`
-  query UserRecipes {
+  query UserRecipeList {
     userRecipeList {
       id
       name
@@ -130,7 +134,7 @@ export const USER_RECIPE_LIST: TypedDocumentNode<{
 export const PUBLIC_RECIPE_LIST: TypedDocumentNode<{
   publicRecipeList: Recipe[];
 }> = gql`
-  query PublicRecipes {
+  query PublicRecipeList {
     publicRecipeList {
       id
       name
@@ -173,6 +177,7 @@ export const USER_RECIPES: TypedDocumentNode<{ userRecipes: Recipe[] }> = gql`
         buildName
         instructions
         ice
+        image
         glassware
         createdBy {
           id
@@ -213,6 +218,7 @@ export const PUBLIC_RECIPES: TypedDocumentNode<{
         buildName
         instructions
         ice
+        image
         glassware
         createdBy {
           id
