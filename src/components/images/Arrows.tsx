@@ -7,7 +7,7 @@ export function ArrowLeft() {
       height={25}
       width={25}
       alt="single arrow"
-      className="z-10 scale-x-[-1] transform dark:invert"
+      className="z-10 h-auto w-auto scale-x-[-1] transform dark:invert"
     />
   );
 }
@@ -18,7 +18,7 @@ export function DoubleArrowLeft() {
       height={25}
       width={25}
       alt="double arrow"
-      className="z-10 scale-x-[-1] transform dark:invert"
+      className="z-10 h-auto w-auto scale-x-[-1] transform dark:invert"
     />
   );
 }
@@ -29,7 +29,7 @@ export function ArrowUp() {
       height={25}
       width={25}
       alt="double arrow"
-      className="z-10 -rotate-90 dark:invert"
+      className="z-10 h-auto w-auto -rotate-90 dark:invert"
     />
   );
 }
@@ -40,7 +40,7 @@ export function ArrowDown() {
       height={25}
       width={25}
       alt="double arrow"
-      className="z-10 rotate-90 dark:invert"
+      className="z-10 h-auto w-auto rotate-90 dark:invert"
     />
   );
 }
@@ -52,7 +52,7 @@ export function ArrowRight() {
       height={25}
       width={25}
       alt="single arrow"
-      className="z-10 dark:invert"
+      className="z-10 h-auto w-auto dark:invert"
     />
   );
 }
@@ -64,7 +64,7 @@ export function DoubleArrowRight() {
       height={25}
       width={25}
       alt="flowerarrow"
-      className="z-10 dark:invert"
+      className="z-10 h-auto w-auto dark:invert"
     />
   );
 }

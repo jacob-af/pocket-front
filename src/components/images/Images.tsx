@@ -53,11 +53,11 @@ export function SmallImage() {
 export function DownArrow() {
   return (
     <Image
-      src={"/down-arrow.png"}
-      width={15}
-      height={15}
+      src={"/up-arrow.png"}
+      width={20}
+      height={20}
       alt="Pixel down arrow"
-      className="z-10 dark:invert"
+      className="z-10 scale-y-[-1] transform dark:invert"
     />
   );
 }
@@ -66,8 +66,8 @@ export function UpArrow() {
   return (
     <Image
       src={"/up-arrow.png"}
-      width={15}
-      height={15}
+      width={20}
+      height={20}
       alt="Pixel down arrow"
       className="z-10 dark:invert"
     />
