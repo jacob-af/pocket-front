@@ -79,6 +79,10 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
           amount
           order
           unit
+          Unit {
+            id
+            abbreviation
+          }
           version
           ingredient {
             id

@@ -36,6 +36,10 @@ export const GET_RECIPE: TypedDocumentNode<{
           }
           amount
           unit
+          Unit {
+            id
+            abbreviation
+          }
           order
         }
       }
@@ -76,6 +80,10 @@ export const PUBLIC_RECIPE: TypedDocumentNode<{
           }
           amount
           unit
+          Unit {
+            id
+            abbreviation
+          }
           order
         }
       }
@@ -111,6 +119,10 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
         }
         amount
         unit
+        Unit {
+          id
+          abbreviation
+        }
         order
       }
     }
@@ -195,6 +207,10 @@ export const USER_RECIPES: TypedDocumentNode<{ userRecipes: Recipe[] }> = gql`
           }
           amount
           unit
+          Unit {
+            id
+            abbreviation
+          }
           order
         }
       }
@@ -236,6 +252,10 @@ export const PUBLIC_RECIPES: TypedDocumentNode<{
           }
           amount
           unit
+          Unit {
+            id
+            abbreviation
+          }
           order
         }
       }

@@ -8,7 +8,7 @@ export function CardBorder() {
       // width={400}
       fill={true}
       src={"/border-2.png"}
-      alt="dynamically loaded image"
+      alt="elegant border"
       className="shadow-md dark:invert"
     />
   );

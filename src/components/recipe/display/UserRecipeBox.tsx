@@ -82,6 +82,7 @@ export function RecipeBox() {
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
   if (error) {
+    console.log(error);
     return <div>{error.message}</div>;
   }
 

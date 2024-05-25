@@ -25,7 +25,8 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
           builds[slide].touch.map((touch: Touch | null, index: number) => {
             return (
               <div key={touch?.id}>
-                {touch?.amount} {touch?.unit} {touch?.ingredient?.name}
+                {touch?.amount} {touch?.Unit?.abbreviation}{" "}
+                {touch?.ingredient?.name}
               </div>
             );
           })}

@@ -20,6 +20,10 @@ export const ADD_RECIPE = gql`
           amount
           order
           unit
+          Unit {
+            id
+            abbreviation
+          }
           version
           ingredient {
             id
@@ -48,6 +52,10 @@ export const ADD_BUILD = gql`
         amount
         order
         unit
+        Unit {
+          id
+          abbreviation
+        }
         version
         ingredient {
           id
@@ -110,6 +118,10 @@ export const EDIT_BUILD = gql`
           }
           order
           unit
+          Unit {
+            id
+            abbreviation
+          }
           amount
         }
       }
@@ -132,6 +144,10 @@ export const DELETE_BUILD = gql`
         id
         amount
         unit
+        Unit {
+          id
+          abbreviation
+        }
         ingredient {
           name
           id
