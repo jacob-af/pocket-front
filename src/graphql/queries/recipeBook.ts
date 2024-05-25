@@ -14,7 +14,7 @@ export const USER_BOOKS: TypedDocumentNode<{
         id
         userName
       }
-      build {
+      userBuild {
         id
         buildName
         recipe {
@@ -64,7 +64,7 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
         id
         userName
       }
-      build {
+      userBuild {
         buildName
         ice
         id

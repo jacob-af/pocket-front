@@ -45,6 +45,8 @@ type Query {
   recipe(name: String!): Recipe
   userRecipeList: [Recipe]!
   userRecipes(skip: Int, take: Int): [Recipe]!
+  findAllUnits: [Unit]
+  findSomeUnits(unitType: String): [Unit]
   allUsers: [User]!
   userById(id: ID!): User
   findFollows: [User]
@@ -340,7 +342,7 @@ type RecipeBook {
   createdBy: User
   editedBy: User
   permission: Permission
-  build: [Build!]!
+  userBuild: [Build!]!
   publicBuild: [Build]
 }
 
@@ -439,11 +441,10 @@ input UnitInput {
 }
 
 type CompleteTouch {
-  id: String!
-  ingredient: IngredientInput!
+  id: ID!
+  ingredientName: String!
   amount: Float!
-  Unit: UnitInput!
-  order: Int
+  unit: String!
 }
 
 type Unit {

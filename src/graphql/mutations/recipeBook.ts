@@ -7,7 +7,7 @@ export const CREATE_BOOK = gql`
       name
       description
       permission
-      build {
+      userBuild {
         id
       }
     }
@@ -21,7 +21,7 @@ export const EDIT_BOOK = gql`
     $permission: Permission!
   ) {
     updateRecipeBook(id: $id, name: $name, permission: $permission) {
-      build {
+      userBuild {
         recipe {
           id
           name

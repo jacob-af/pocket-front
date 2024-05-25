@@ -19,6 +19,7 @@ export async function PublicRecipeBox() {
         context: {}
       });
     const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
+    console.log(data, ": loading data");
     return (
       <>
         {columnConfigurations.map((columns, index) =>

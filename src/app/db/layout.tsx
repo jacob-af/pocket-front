@@ -18,7 +18,7 @@ export default async function Dashboard({
       <SideBar />
       <RightSideBar />
       <TopNavBar />
-      <div className="box-border flex h-full w-screen flex-grow justify-center md:pb-0 lg:mx-60">
+      <div className="box-border flex h-full w-screen flex-grow justify-center md:pb-0">
         {children}
       </div>
 

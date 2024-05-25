@@ -10,7 +10,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-background flex h-full w-full max-w-2xl flex-col items-center justify-center">
+    <div className="bg-background flex h-full w-full max-w-2xl flex-col items-center justify-center xl:max-w-4xl">
       {children}
     </div>
   );

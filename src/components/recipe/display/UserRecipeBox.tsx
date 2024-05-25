@@ -23,8 +23,7 @@ export function RecipeBox() {
         setList(value => [...value, ...newRecipes]);
         setHasMore(newRecipes.length === itemsPerPage);
       }
-    },
-    fetchPolicy: "cache-and-network"
+    }
   });
 
   useEffect(() => {

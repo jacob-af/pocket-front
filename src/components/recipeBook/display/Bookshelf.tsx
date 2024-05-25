@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLazyQuery, useReactiveVar } from "@apollo/client";
 
 import BookCover from "@/components/recipeBook/display/BookCover";
 import { RecipeBook } from "@/__generated__/graphql";
+import { SkeletonCover } from "./SkeletonCover";
 import { USER_BOOKS } from "@/graphql/queries/recipeBook";
-import { userRecipeBookList } from "@/graphql/reactiveVar/recipeBooks";
+import { useLazyQuery } from "@apollo/client";
 
 export function Bookshelf() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [bookList, setList] = useState<RecipeBook[]>([]);
-  const itemsPerPage = 3;
+  const itemsPerPage = 6;
   const scrollOffset = 200;
 
   const [getData, { loading, error }] = useLazyQuery(USER_BOOKS, {
@@ -18,8 +18,17 @@ export function Bookshelf() {
       console.log(response);
       const newBooks = response.userBooks;
       if (newBooks.length > 0) {
-        setList(value => [...value, ...newBooks]);
+        setList(prevList => {
+          // Create a Set to filter out duplicates based on the book id
+          const uniqueBooks = new Set(prevList.map(book => book.id));
+          const filteredNewBooks = newBooks.filter(
+            book => !uniqueBooks.has(book.id)
+          );
+          return [...prevList, ...filteredNewBooks];
+        });
         setHasMore(newBooks.length === itemsPerPage);
+      } else {
+        setHasMore(false);
       }
     }
   });
@@ -52,12 +61,14 @@ export function Bookshelf() {
         timeout = setTimeout(later, wait);
       };
     };
+
     return debounce(() => {
       const scrollTop = document.documentElement.scrollTop;
       if (
         window.innerHeight + scrollTop + scrollOffset >=
           document.documentElement.offsetHeight &&
-        hasMore
+        hasMore &&
+        !loading
       ) {
         console.log("Fetching more data");
         getData({
@@ -66,36 +77,43 @@ export function Bookshelf() {
             take: itemsPerPage
           }
         });
-        setCurrentPage((prevPage: number) => prevPage + 1);
+        setCurrentPage(prevPage => prevPage + 1);
       }
     }, 50);
-  }, [hasMore, getData, currentPage]);
+  }, [hasMore, getData, currentPage, loading]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
+  const columnConfigurations = [[1], [2, 2]];
+
+  if (error) {
+    console.log(error);
+    return <div className="fixed inset-0">{error.message}</div>;
+  }
+
+  if (loading && bookList.length === 0) {
+    return <SkeletonCover />;
+  }
+
+  console.log(bookList);
 
   return (
-    <div className="z-0 mt-12 box-border grid w-full gap-8 overflow-auto shadow-xl md:grid-cols-2 xl:grid-cols-3">
+    <div className="z-0 mt-12 box-border grid w-full gap-8 overflow-auto shadow-xl lg:grid-cols-2">
       {columnConfigurations.map((columns, index) =>
-        // Create a div for each column configuration
         columns.map((num, columnIndex) => (
           <div
             key={`${index}-${columnIndex}`}
-            //
             className={`col-span-1 justify-items-center w-full ${
-              index === 0 ? "grid md:hidden" : ""
-            } ${index === 1 ? "hidden md:grid xl:hidden" : ""}${
-              index === 2 ? "hidden xl:grid" : ""
-            }`}
+              index === 0 ? "grid lg:hidden" : ""
+            } ${index === 1 ? "hidden lg:grid" : ""}`}
           >
             {bookList
               .filter((_, i) => i % num === columnIndex)
-              .map(book => (
-                <BookCover key={book.id} book={book} />
+              .map((book, index) => (
+                <BookCover key={book.id + index} book={book} />
               ))}
           </div>
         ))

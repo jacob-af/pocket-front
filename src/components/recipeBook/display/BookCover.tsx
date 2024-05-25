@@ -29,10 +29,12 @@ export default function BookCover({ book }: { book: RecipeBook }) {
       </div>
       <br />
       <div className="text-center">
-        {book.build.slice(0, 10).map((build: Build) => {
+        {book.userBuild.slice(0, 10).map((build: Build) => {
           return <span key={build.id}>{`${build.recipe.name} - `}</span>;
         })}
-        {book.build.length < 10 ? "" : `and ${book.build.length - 10} others`}
+        {book.userBuild.length < 10
+          ? ""
+          : `and ${book.userBuild.length - 10} others`}
       </div>
       <button
         className="bg-contrast absolute bottom-4 right-4 text-xs"
