@@ -102,10 +102,11 @@ export const touchChange: TouchChangeFunction = ({ key, newValue, index }) => {
   if (key === "amount") {
     newTouch["amount"] = parseFloat(newValue);
   } else if (key === "unit") {
-    newTouch["Unit"] = newValue;
+    newTouch["Unit"].abbreviation = newValue;
   }
 
   touches[index] = newTouch;
+  console.log(touches);
   touchArray([...touches]);
 };
 
