@@ -12,6 +12,7 @@ import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { RemoveTouch } from "../../buttons/RemoveTouch";
 import { Touch } from "@/__generated__/graphql";
 import { touchArray } from "@/graphql/reactiveVar/recipes";
+import { unitList } from "@/graphql/reactiveVar/unit";
 import { useReactiveVar } from "@apollo/client";
 
 export const SingleTouch = ({
@@ -23,6 +24,7 @@ export const SingleTouch = ({
 }) => {
   const touches = useReactiveVar(touchArray);
   const allIngredients = useReactiveVar(allIngredientsList);
+  const list = useReactiveVar(unitList);
 
   const onChange = (event: any) => {
     touchChange({ key: event.target.id, newValue: event.target.value, index });
@@ -46,13 +48,13 @@ export const SingleTouch = ({
         id="unit"
         value={touches[index].Unit.abbreviation}
       >
-        <option value="oz selected">Ounces</option>
-        <option value="dash">Dashes</option>
-        <option value="drop">Drops</option>
-        <option value="each">Each</option>
-        <option value="ml">ml</option>
-        <option value="cl">cl</option>
-        <option value="g">grams</option>
+        {list.map((unit, index) => {
+          return (
+            <option key={unit.abbreviation + index} value={unit.abbreviation}>
+              {unit.abbreviation}
+            </option>
+          );
+        })}
       </select>
       {/* <div className="align-center flex justify-center"> */}
       <div className="focus:shadow-outline align center bg-contrast col-span-6 flex rounded-xl p-2 text-gray-100 shadow">
