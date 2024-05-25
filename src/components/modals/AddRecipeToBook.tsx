@@ -40,16 +40,9 @@ export const AddRecipeToBookModal = ({
 
   useEffect(() => {
     if (data?.userRecipeList) {
-      const recipes = data.userRecipeList
-        .filter(recipe => {
-          return recipe.userBuild && recipe.userBuild.length > 0;
-        })
-        .map((recipe: Recipe) => {
-          return {
-            ...recipe,
-            build: recipe.userBuild
-          };
-        });
+      const recipes = data.userRecipeList.filter(recipe => {
+        return recipe.userBuild && recipe.userBuild.length > 0;
+      });
       userRecipeList(recipes);
     }
   }, [data?.userRecipeList]);
@@ -63,21 +56,21 @@ export const AddRecipeToBookModal = ({
     toggleopen();
   };
 
-  const add = async (build: Build) => {
-    console.log(build.permission, book.permission);
+  const add = async (userBuild: Build) => {
+    console.log(userBuild.permission, book.permission);
     try {
       const res = await addBuild({
         variables: {
           recipeBookId: book.id,
-          buildId: build.id,
-          buildPermission: build.permission,
+          buildId: userBuild.id,
+          buildPermission: userBuild.permission,
           bookPermission: book.permission
         }
       });
       console.log("nook: ", book);
       selectedRecipeBook({
         ...book,
-        build: [...book.build, build]
+        userBuild: [...book.userBuild, userBuild]
       });
     } catch (err) {
       console.log(err);
@@ -97,7 +90,7 @@ export const AddRecipeToBookModal = ({
 
       selectedRecipeBook({
         ...book,
-        build: book.build.filter(b => b.id !== build.id)
+        userBuild: book.userBuild.filter(b => b.id !== build.id)
       });
     } catch (err) {
       console.log(err);
@@ -143,7 +136,8 @@ export const AddRecipeToBookModal = ({
                         {/* {build.recipe.name} */}
                         <div className="text-xxs">{build.buildName}</div>
                       </div>
-                      {book.build && book.build.some(b => b.id === build.id) ? (
+                      {book.userBuild &&
+                      book.userBuild.some(b => b.id === build.id) ? (
                         <button className="pr-6" onClick={() => remove(build)}>
                           Remove
                         </button>

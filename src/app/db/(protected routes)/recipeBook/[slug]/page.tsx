@@ -30,7 +30,7 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
     return <div>Loading...</div>;
   }
 
-  if (error || !book?.build) {
+  if (error || !book?.userBuild) {
     return <div>There is no page here</div>;
   }
 
@@ -52,7 +52,7 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
               }`}
             >
               {/* Calculate the starting index for this column's builds */}
-              {book.build
+              {book.userBuild
                 .filter((_, i) => i % num === columnIndex)
                 .map(build => (
                   <ShortCard key={build.id} build={build} />

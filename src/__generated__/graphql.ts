@@ -49,7 +49,6 @@ export type ArchivedTouch = {
   id: Scalars['ID']['output'];
   ingredient?: Maybe<Ingredient>;
   order?: Maybe<Scalars['Int']['output']>;
-  unitAbb?: Maybe<Scalars['String']['output']>;
   version?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -120,10 +119,11 @@ export type ChangeBuildPermissionInput = {
 
 export type CompleteTouch = {
   __typename?: 'CompleteTouch';
+  Unit: Unit;
   amount: Scalars['Float']['output'];
-  id: Scalars['ID']['output'];
-  ingredientName: Scalars['String']['output'];
-  unit: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  ingredient: Ingredient;
+  order?: Maybe<Scalars['Int']['output']>;
 };
 
 export type CreateBuildInput = {
@@ -696,7 +696,6 @@ export type Touch = {
   ingredient: Ingredient;
   ingredientName?: Maybe<Scalars['String']['output']>;
   order: Scalars['Int']['output'];
-  unitAbb: Scalars['String']['output'];
   version?: Maybe<Scalars['Int']['output']>;
 };
 

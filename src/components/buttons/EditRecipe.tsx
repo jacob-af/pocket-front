@@ -70,14 +70,7 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         instructions: builds[slide].instructions || "",
         glassware: builds[slide].glassware || "",
         ice: builds[slide].ice || "",
-        touchArray: touches.map(({ amount, id, ingredient, Unit }) => {
-          return {
-            amount,
-            id,
-            ingredient,
-            Unit
-          };
-        }),
+        touchArray: mappedTouches,
         newRecipe: false,
         permission: builds[slide].permission || Permission.View
       });

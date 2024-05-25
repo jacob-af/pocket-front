@@ -404,7 +404,7 @@ type Touch {
   build: Build
   order: Int!
   amount: Float!
-  unitAbb: String!
+
   Unit: Unit!
   version: Int
   ingredient: Ingredient!
@@ -417,7 +417,7 @@ type ArchivedTouch {
   order: Int
   amount: Float
   Unit: Unit
-  unitAbb: String
+
   version: Int
   ingredient: Ingredient
 }
@@ -441,10 +441,11 @@ input UnitInput {
 }
 
 type CompleteTouch {
-  id: ID!
-  ingredientName: String!
+  id: String!
+  ingredient: Ingredient!
   amount: Float!
-  unit: String!
+  Unit: Unit!
+  order: Int
 }
 
 type Unit {
