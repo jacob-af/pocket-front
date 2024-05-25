@@ -52,6 +52,7 @@ export default function AddRecipe() {
   }, [data?.publicRecipeList, data?.ingredients]);
 
   if (error) {
+    console.log(error);
     alertList([...alerts, { code: "error", message: error.message }]);
     return <div>{error.message}</div>;
   }
@@ -70,6 +71,7 @@ export default function AddRecipe() {
                 instructions: recipeInfo.instructions,
                 glassware: recipeInfo.glassware,
                 ice: recipeInfo.ice,
+                isPublic: true,
                 touchArray: [...touches]
               }
             }
@@ -77,7 +79,7 @@ export default function AddRecipe() {
         });
         console.log(data);
       } else {
-        console.log(recipeInfo.name);
+        console.log(touches);
         const { data } = await newBuild({
           variables: {
             createBuildInput: {
@@ -86,6 +88,7 @@ export default function AddRecipe() {
               instructions: recipeInfo.instructions,
               glassware: recipeInfo.glassware,
               ice: recipeInfo.ice,
+              isPublic: true,
               touchArray: [...touches]
             }
           }

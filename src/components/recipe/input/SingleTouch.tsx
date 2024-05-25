@@ -44,11 +44,11 @@ export const SingleTouch = ({
         name="unit-options"
         className="focus:shadow-outline bg-contrast col-span-3 text-white"
         id="unit"
-        value={touches[index].unit}
+        value={touches[index].Unit.abbreviation}
       >
-        <option value="ounces selected">Ounces</option>
-        <option value="dashes">Dashes</option>
-        <option value="drops">Drops</option>
+        <option value="oz selected">Ounces</option>
+        <option value="dash">Dashes</option>
+        <option value="drop">Drops</option>
         <option value="each">Each</option>
         <option value="ml">ml</option>
         <option value="cl">cl</option>

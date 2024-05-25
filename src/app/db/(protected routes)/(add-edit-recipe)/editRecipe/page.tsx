@@ -81,12 +81,13 @@ export default function AddRecipe() {
                 glassware: recipeInfo.glassware,
                 ice: recipeInfo.ice,
                 image: recipeInfo.image,
-                touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+                isPublic: true,
+                touchArray: touches.map(({ amount, id, ingredient, Unit }) => {
                   return {
                     amount,
                     id,
-                    ingredientName: ingredient.name,
-                    unit
+                    ingredient,
+                    Unit
                   };
                 }),
                 permission: recipeInfo.permission
@@ -114,12 +115,13 @@ export default function AddRecipe() {
               glassware: recipeInfo.glassware,
               ice: recipeInfo.ice,
               image: recipeInfo.image,
-              touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+              isPublic: true,
+              touchArray: touches.map(({ amount, id, ingredient, Unit }) => {
                 return {
                   amount,
                   id,
                   ingredientName: ingredient.name,
-                  unit
+                  Unit
                 };
               }),
               permission: recipeInfo.permission

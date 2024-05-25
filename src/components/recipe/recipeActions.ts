@@ -12,35 +12,42 @@ import { usePathname, useRouter } from "next/navigation";
 import { DropDownSelectFunction } from "@/components/ingredients/ingredientActions";
 import { ListItem } from "@/types/util";
 import { redirect } from "next/navigation";
+import { useCallback } from "react";
 
-export const RecipeChange: DropDownSelectFunction = (newValue: ListItem) => {
+export const useRecipeChange = (): DropDownSelectFunction => {
   const pathname = usePathname();
   const router = useRouter();
   const recipeList = allRecipesList();
-  const recipe = newRecipeInfo();
 
-  if (recipeList.findIndex(a => a.name === newValue.name) === -1) {
-    newRecipeInfo({
-      ...recipe,
-      name: newValue.name,
-      buildName: "Original",
-      newRecipe: true
-    });
-  } else if (newValue.name === "") {
-    console.log("clear hit");
-    newRecipeInfo(recipeBlank);
-    router.push("/db/recipe/");
-  } else {
-    newRecipeInfo({
-      ...recipe,
-      name: newValue.name,
-      buildName: "",
-      newRecipe: false
-    });
-    if (pathname !== "/db/recipe/add") {
-      router.push("/db/recipe/add");
-    }
-  }
+  return useCallback(
+    (newValue: ListItem) => {
+      const recipe = newRecipeInfo();
+
+      if (recipeList.findIndex(a => a.name === newValue.name) === -1) {
+        newRecipeInfo({
+          ...recipe,
+          name: newValue.name,
+          buildName: "Original",
+          newRecipe: true
+        });
+      } else if (newValue.name === "") {
+        console.log("clear hit");
+        newRecipeInfo(recipeBlank);
+        router.push("/db/recipe/");
+      } else {
+        newRecipeInfo({
+          ...recipe,
+          name: newValue.name,
+          buildName: "",
+          newRecipe: false
+        });
+        if (pathname !== "/db/addRecipe") {
+          router.push("/db/addRecipe");
+        }
+      }
+    },
+    [pathname, router, recipeList]
+  );
 };
 
 export const recipeSelect: DropDownSelectFunction = (newValue: ListItem) => {
@@ -95,7 +102,7 @@ export const touchChange: TouchChangeFunction = ({ key, newValue, index }) => {
   if (key === "amount") {
     newTouch["amount"] = parseFloat(newValue);
   } else if (key === "unit") {
-    newTouch["unit"] = newValue;
+    newTouch["Unit"] = newValue;
   }
 
   touches[index] = newTouch;

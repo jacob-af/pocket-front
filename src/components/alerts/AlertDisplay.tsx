@@ -17,7 +17,7 @@ export const AlertDisplay = () => {
         // Remove the first alert from the list
         const newAlerts = alerts.slice(1);
         alertList(newAlerts);
-      }, 5000); // Adjust the delay time as needed (5000ms for 5 seconds).
+      }, 3000); // Adjust the delay time as needed (5000ms for 5 seconds).
 
       return () => clearTimeout(timer);
     }
@@ -26,7 +26,7 @@ export const AlertDisplay = () => {
   return (
     <>
       {alerts.length > 0 && (
-        <div className="fixed top-10 flex flex-col w-full justify-center">
+        <div className="fixed top-10 flex w-full flex-col justify-center">
           {alerts.map((alert, index) => (
             <AlertItem key={uuidv4()} alert={alert} index={index} />
           ))}

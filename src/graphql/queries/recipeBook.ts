@@ -78,7 +78,7 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
           id
           amount
           order
-          unit
+          #unit
           Unit {
             id
             abbreviation

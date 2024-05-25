@@ -19,7 +19,7 @@ export const ADD_RECIPE = gql`
           id
           amount
           order
-          unit
+          # unit
           Unit {
             id
             abbreviation
@@ -51,7 +51,7 @@ export const ADD_BUILD = gql`
         id
         amount
         order
-        unit
+        #unit
         Unit {
           id
           abbreviation
@@ -84,7 +84,11 @@ export const EDIT_RECIPE = gql`
         touch {
           id
           amount
-          unit
+          #unit
+          Unit {
+            id
+            abbreviation
+          }
           version
           ingredient {
             id
@@ -117,7 +121,7 @@ export const EDIT_BUILD = gql`
             name
           }
           order
-          unit
+          #unit
           Unit {
             id
             abbreviation
@@ -143,7 +147,7 @@ export const DELETE_BUILD = gql`
       touch {
         id
         amount
-        unit
+        #unit
         Unit {
           id
           abbreviation

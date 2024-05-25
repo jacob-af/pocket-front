@@ -5,7 +5,8 @@ import {
   CompleteTouch,
   Permission,
   Recipe,
-  Touch
+  Touch,
+  TouchInput
 } from "@/__generated__/graphql";
 import {
   blankTouch,
@@ -28,7 +29,23 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
 
   const handleEdit = () => {
     const touches: Touch[] = builds[slide].touch;
-    touchArray(touches);
+
+    const mappedTouches = touches.map(
+      ({ amount, id, ingredient, Unit }, index) => {
+        return {
+          amount,
+          id,
+          ingredient,
+          Unit: {
+            ...Unit,
+            id: Unit.id || "" // Provide a default value if Unit.id is undefined
+          },
+          order: index
+        };
+      }
+    );
+
+    touchArray(mappedTouches);
 
     if (builds[slide].recipe.createdBy?.id == session?.user.id) {
       newRecipeInfo({
@@ -39,14 +56,7 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         instructions: builds[slide].instructions || "",
         glassware: builds[slide].glassware || "",
         ice: builds[slide].ice || "",
-        touchArray: touches.map(({ amount, id, ingredient, unit }) => {
-          return {
-            amount,
-            id,
-            ingredientName: ingredient.name,
-            unit
-          };
-        }),
+        touchArray: mappedTouches,
         newRecipe: true,
         permission: builds[slide].permission || Permission.View
       });
@@ -60,12 +70,12 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         instructions: builds[slide].instructions || "",
         glassware: builds[slide].glassware || "",
         ice: builds[slide].ice || "",
-        touchArray: touches.map(({ amount, id, ingredient, unit }) => {
+        touchArray: touches.map(({ amount, id, ingredient, Unit }) => {
           return {
             amount,
             id,
-            ingredientName: ingredient.name,
-            unit
+            ingredient,
+            Unit
           };
         }),
         newRecipe: false,

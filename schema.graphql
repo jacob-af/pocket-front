@@ -243,6 +243,7 @@ input CreateFirstBuildInput {
   instructions: String
   glassware: String
   ice: String
+  isPublic: Boolean
   touchArray: [TouchInput]!
 }
 
@@ -254,6 +255,7 @@ input UpdateBuildInput {
   glassware: String
   ice: String
   image: String
+  isPublic: Boolean
   touchArray: [TouchInput]!
   permission: Permission
 }
@@ -400,9 +402,8 @@ type Touch {
   build: Build
   order: Int!
   amount: Float!
-  unit: String
   unitAbb: String!
-  Unit: Unit
+  Unit: Unit!
   version: Int
   ingredient: Ingredient!
   ingredientName: String
@@ -413,24 +414,36 @@ type ArchivedTouch {
   archivedBuild: Build
   order: Int
   amount: Float
-  unit: String
-  unitAbb: String!
+  Unit: Unit
+  unitAbb: String
   version: Int
   ingredient: Ingredient
 }
 
 input TouchInput {
   id: String!
-  ingredientName: String!
+  ingredient: IngredientInput!
   amount: Float!
-  unit: String!
+  Unit: UnitInput!
+  order: Int
+}
+
+input IngredientInput {
+  id: String
+  name: String!
+}
+
+input UnitInput {
+  id: String
+  abbreviation: String!
 }
 
 type CompleteTouch {
-  id: ID!
-  ingredientName: String!
+  id: String!
+  ingredient: IngredientInput!
   amount: Float!
-  unit: String!
+  Unit: UnitInput!
+  order: Int
 }
 
 type Unit {
