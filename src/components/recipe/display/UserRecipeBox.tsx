@@ -12,7 +12,7 @@ export function RecipeBox() {
   const [hasMore, setHasMore] = useState(true);
   const [recipeList, setList] = useState<Recipe[]>([]);
   const itemsPerPage = 12;
-  const scrollOffset = 100;
+  const scrollOffset = 200;
 
   const [getData, { loading, error }] = useLazyQuery(USER_RECIPES, {
     onCompleted: response => {

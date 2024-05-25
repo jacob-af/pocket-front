@@ -13,7 +13,9 @@ export default function Review() {
   return (
     <div>
       <div className="float-right pl-6">
-        <SmallCocktailPicture url={recipeInfo.image ?? "/withCherry200.png"} />
+        <CocktailPicture
+          url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
+        />
       </div>
       <h2 className="text-lg font-semibold">{recipeInfo.name}</h2>
       <h2 className="text-lg font-semibold">{recipeInfo.buildName} Build</h2>
@@ -26,7 +28,7 @@ export default function Review() {
             <div className="flex justify-between">
               <div>
                 <p className="font-medium">{touch.ingredient.name}</p>
-                <p className="text-xs">{touch.unit}</p>
+                <p className="text-xs">{touch.Unit.abbreviation}</p>
               </div>
               <p className="text-sm">{touch.amount}</p>
             </div>

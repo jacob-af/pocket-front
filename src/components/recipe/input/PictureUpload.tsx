@@ -25,7 +25,9 @@ export default function PictureUpload() {
           alert(`ERROR! ${error.message}`);
         }}
       />
-      <CocktailPicture url={recipeInfo.image ?? "/withcherry200.png"} />
+      <CocktailPicture
+        url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
+      />
     </div>
   );
 }

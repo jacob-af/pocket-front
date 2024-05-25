@@ -118,7 +118,7 @@ export default function AddRecipe() {
   }
 
   return (
-    <div className="mx-auto mt-12 flex w-full flex-col rounded-lg bg-gray-900 p-4 shadow-md md:w-2/3">
+    <div className="mx-auto mt-12 flex w-full max-w-2xl flex-col overflow-auto rounded-lg bg-gray-900 p-4 shadow-md">
       {loading ? "loading" : ""}
       <Tabs
         value={selectedIndex}
@@ -152,7 +152,7 @@ export default function AddRecipe() {
 
       {/* Conditionally render tab panels based on selectedIndex */}
       {selectedIndex === 0 && (
-        <div className="p-4">
+        <div className="p-4 pb-12">
           <RecipeInput />
           <button
             className="text-primary float-right mt-4 rounded-lg bg-gray-500 px-4 py-2"
