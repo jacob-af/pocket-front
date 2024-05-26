@@ -139,6 +139,7 @@ export const USER_RECIPE_LIST: TypedDocumentNode<{
       userBuild {
         id
         buildName
+        permission
       }
     }
   }

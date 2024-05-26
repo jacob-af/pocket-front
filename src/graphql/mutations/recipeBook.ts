@@ -1,4 +1,6 @@
-import { gql } from "@apollo/client";
+import { TypedDocumentNode, gql } from "@apollo/client";
+
+import { Build } from "@/__generated__/graphql";
 
 export const CREATE_BOOK = gql`
   mutation CreateBook($name: String!, $description: String) {
@@ -48,7 +50,9 @@ export const DELETE_BOOK = gql`
   }
 `;
 
-export const ADD_BUILD_TO_BOOK = gql`
+export const ADD_BUILD_TO_BOOK: TypedDocumentNode<{
+  addBuildToRecipeBook: Build;
+}> = gql`
   mutation AddBuildToRecipeBook(
     $recipeBookId: String!
     $buildId: String!
@@ -61,7 +65,31 @@ export const ADD_BUILD_TO_BOOK = gql`
       buildPermission: $buildPermission
       bookPermission: $bookPermission
     ) {
-      message
+      buildName
+      ice
+      id
+      image
+      instructions
+      notes
+      permission
+      recipe {
+        name
+      }
+      touch {
+        id
+        amount
+        order
+        #unit
+        Unit {
+          id
+          abbreviation
+        }
+        version
+        ingredient {
+          id
+          name
+        }
+      }
     }
   }
 `;

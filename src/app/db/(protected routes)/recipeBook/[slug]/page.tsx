@@ -5,33 +5,47 @@ import { useQuery, useReactiveVar } from "@apollo/client";
 import { BookNavBar } from "@/components/recipeBook/display/BookActionBar";
 import { GET_RECIPE_BOOK } from "@/graphql/queries/recipeBook";
 import ShortCard from "@/components/recipe/display/ShortCard";
+import { SkeletonCover } from "@/components/recipeBook/display/SkeletonCover";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { useEffect } from "react";
 
 export default function RecipeBook({ params }: { params: { slug: string } }) {
   const book = useReactiveVar(selectedRecipeBook);
-  const q =
-    params.slug.charAt(0).toUpperCase() +
-    params.slug.slice(1).replace(/%20/g, " ");
+  const q = decodeURIComponent(params.slug);
+  console.log(q);
   const { data, loading, error } = useQuery(GET_RECIPE_BOOK, {
     variables: { name: q },
-    fetchPolicy: "cache-and-network"
+    //fetchPolicy: "cache-and-network",
+    onCompleted: data => {
+      console.log(data);
+      //selectedRecipeBook(data.book);
+    }
   });
+  console.log(data);
 
   useEffect(() => {
     console.log(data);
-    if (data?.book) {
+    if (!loading && data?.book) {
       console.log(data.book);
       selectedRecipeBook(data.book);
     }
-  }, [data?.book, data]);
+  }, [data, loading]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <SkeletonCover />;
   }
 
-  if (error || !book?.userBuild) {
-    return <div>There is no page here</div>;
+  if (error) {
+    console.log(error);
+    return (
+      <div className="fixed left-1/2 top-1/2 flex">There is no page here</div>
+    );
+  }
+  if (!book?.userBuild) {
+    console.log(error);
+    return (
+      <div className="fixed left-1/2 top-1/2 flex">There is no page here</div>
+    );
   }
 
   // Define the configurations for the number of columns
@@ -51,7 +65,6 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
                 index === 2 ? "hidden xl:grid" : ""
               }`}
             >
-              {/* Calculate the starting index for this column's builds */}
               {book.userBuild
                 .filter((_, i) => i % num === columnIndex)
                 .map(build => (

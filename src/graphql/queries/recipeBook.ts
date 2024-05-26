@@ -68,6 +68,7 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
         buildName
         ice
         id
+        image
         instructions
         notes
         permission

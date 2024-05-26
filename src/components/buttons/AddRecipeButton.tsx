@@ -9,10 +9,7 @@ function AddRecipe() {
     router.push("/db/addRecipe");
   };
   return (
-    <button
-      onClick={handleNavigate}
-      className="rounded-full border border-white p-2 text-xs opacity-100"
-    >
+    <button onClick={handleNavigate} className="p-2 text-xs opacity-100">
       Add
       <br />
       Recipe

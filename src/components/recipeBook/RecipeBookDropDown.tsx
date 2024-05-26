@@ -19,7 +19,6 @@ export default function RecipeBookDropDown({
   const router = useRouter();
 
   const recipeBookSelect = (newValue: ListItem) => {
-    console.log(newValue.name, "hitting rec selec");
     router.push(`/db/recipeBook/${newValue.name}`);
   };
 
@@ -31,7 +30,7 @@ export default function RecipeBookDropDown({
         currentValue={
           selected.name !== ""
             ? (selected as ListItem)
-            : { name: loading, id: "Arbitrary" }
+            : { name: "loading", id: "Arbitrary" }
         }
         index={97}
       />

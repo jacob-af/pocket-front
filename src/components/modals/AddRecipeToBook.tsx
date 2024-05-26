@@ -67,10 +67,10 @@ export const AddRecipeToBookModal = ({
           bookPermission: book.permission
         }
       });
-      console.log("nook: ", book);
+      console.log("nook: ", res);
       selectedRecipeBook({
         ...book,
-        userBuild: [...book.userBuild, userBuild]
+        userBuild: [...book.userBuild]
       });
     } catch (err) {
       console.log(err);

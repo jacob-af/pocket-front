@@ -7,7 +7,7 @@ export default function Home() {
         Welcome to the Pocket Bar Book
       </h1>
       <p className="mb-8">
-        A recipe manage apped designed for working bartenders. Keep track of
+        A recipe management app designed for working bartenders. Keep track of
         different builds, version control for recipe development. Share with
         your team. Manage inventory and run cost. Put it all in your Pocket.
       </p>

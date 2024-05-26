@@ -22,6 +22,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   function addRecipe() {
     setOpenBook(!openBook);
   }
+
   function handleShare() {
     setOpenShare(!openShare);
   }
@@ -39,7 +40,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   console.log(book);
   return (
     <>
-      {book.permission === ("OWNER" || "MANAGER") && (
+      {(book.permission === "OWNER" || book.permission === "MANAGER") && (
         <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-2xl flex-col items-center justify-center">
           <AddRecipeToBookModal open={openBook} toggleopen={addRecipe} />
           <ShareBookModal open={openShare} toggleopen={handleShare} />

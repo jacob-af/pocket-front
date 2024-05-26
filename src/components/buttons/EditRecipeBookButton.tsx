@@ -24,11 +24,8 @@ export default function EditRecipeBookButton() {
 
   return (
     <div>
-      <button
-        onClick={toggleOpen}
-        className="z-10 rounded-full border border-white bg-slate-800 p-2 text-xs opacity-100"
-      >
-        Add
+      <button onClick={toggleOpen} className="z-10 p-2 text-xs">
+        Edit
         <br />
         Recipe Book
       </button>
