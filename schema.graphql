@@ -31,6 +31,8 @@ type Query {
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
+  allInventory: [Inventory]
+  oneInventory(inventoryId: String): Inventory
   getProfile(userId: String): Profile!
   findFolloweddUsersBookPermission(recipeBookId: String!): [UserBookPermission]
   publicBook(name: String): RecipeBook!
@@ -95,6 +97,7 @@ type Mutation {
   ): StatusMessage!
   updateIngredient(updateIngredientInput: UpdateIngredientInput!): Ingredient!
   removeIngredient(id: String!): Ingredient
+  createInventory(name: String, description: String): Inventory
   updateProfile(image: String): Profile!
   createRecipeBook(name: String!, description: String): RecipeBook!
   updateRecipeBook(
@@ -109,7 +112,7 @@ type Mutation {
     buildId: String!
     buildPermission: Permission!
     bookPermission: Permission!
-  ): StatusMessage!
+  ): Build!
   removeBuildFromRecipeBook(
     recipeBookId: String!
     buildId: String!
@@ -476,7 +479,7 @@ type Touch {
   build: Build
   order: Int!
   amount: Float!
-  unitAbb: String!
+  unitAbb: String
   Unit: Unit!
   version: Int
   ingredient: Ingredient!
