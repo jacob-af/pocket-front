@@ -33,11 +33,13 @@ const UploadFile = () => {
   };
 
   return (
-    <>
-      <h3>Upload File</h3>
-      <input type="file" onChange={handleFileUpload} />
-      <button onClick={handleUpload}>Upload</button>
-    </>
+    <div className="flex flex-col items-center justify-center p-4">
+      <h3 className="text-xl">Upload Ingredients File</h3>
+      <div className="flew-row flex">
+        <input type="file" onChange={handleFileUpload} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
+    </div>
   );
 };
 
