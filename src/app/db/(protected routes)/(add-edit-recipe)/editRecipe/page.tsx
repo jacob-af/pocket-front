@@ -86,8 +86,8 @@ export default function AddRecipe() {
                   return {
                     amount,
                     id,
-                    ingredient,
-                    Unit
+                    ingredient: { id: ingredient.id, name: ingredient.name },
+                    Unit: { id: Unit.id, abbreviation: Unit.abbreviation }
                   };
                 }),
                 permission: recipeInfo.permission
@@ -120,8 +120,8 @@ export default function AddRecipe() {
                 return {
                   amount,
                   id,
-                  ingredientName: ingredient.name,
-                  Unit
+                  ingredient: { id: ingredient.id, name: ingredient.name },
+                  Unit: { id: Unit.id, abbreviation: Unit.abbreviation }
                 };
               }),
               permission: recipeInfo.permission
