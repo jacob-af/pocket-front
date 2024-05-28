@@ -29,6 +29,7 @@ type Query {
   findAllBuilds: [Build]
   findOneBuild(recipeName: String!, buildName: String!): Build
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
+  costBuild(buildId: String, inventoryId: String): Cost
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
   allInventory: [Inventory]
@@ -48,9 +49,14 @@ type Query {
   userRecipeList: [Recipe]!
   userRecipes(skip: Int, take: Int): [Recipe]!
   findAllStock: [Stock]
-  findOneStock: Stock
+  findOneStock(ingredientName: String, inventoryId: String): Stock
   findAllUnits: [Unit]
   findSomeUnits(unitType: String): [Unit]
+  convertUnit(
+    amount: Float
+    unitName: String
+    desiredUnitName: String
+  ): ConversionResult
   allUsers: [User]!
   userById(id: ID!): User
   findFollows: [User]
@@ -135,10 +141,11 @@ type Mutation {
   createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: ID!): Recipe
-  createStock(createStock: CreateStockInput): Stock
-  createManyStock(createManyStock: [CreateStockInput]): [Stock]
-  updateStock(updateStock: UpdateStockInput): Stock
-  updateManyStock(updateManyStock: [UpdateStockInput]): [Stock]
+  createStock(createStock: CreateStockInput, inventoryId: String): Stock
+  createManyStocks(
+    createManyStocks: [CreateStockInput]
+    inventoryId: String
+  ): StatusMessage
   changeStockPermission(
     stockId: String
     userId: String
@@ -260,6 +267,10 @@ input RecipeNameInput {
   name: String!
 }
 
+type Cost {
+  cost: Float!
+}
+
 input CreateFirstBuildInput {
   buildName: String!
   instructions: String
@@ -333,12 +344,14 @@ type Ingredient {
 input CreateIngredientInput {
   name: String!
   description: String
+  parent: String
 }
 
 input UpdateIngredientInput {
   id: ID!
   name: String!
   description: String
+  parent: String
 }
 
 type Inventory {
@@ -446,32 +459,23 @@ type Stock {
   unit: Unit
   buildRef: Build
   ingredient: Ingredient
-  permission: Permission
   inventory: Inventory
+  pricePerOunce: Float
 }
 
 input CreateStockInput {
-  price: Float
-  amount: Float
-  unit: UnitInput
-  buildRef: BuildRefInput
-  ingredient: IngredientInput
-  inventory: InventoryInput
-}
-
-input UpdateStockInput {
-  id: ID!
-  price: Float
-  amount: Float
-  unit: UnitInput
-  buildRef: BuildRefInput
-  ingredient: IngredientInput
+  amount: Float!
+  ingredientName: String!
+  price: Float!
+  unitAbb: String!
+  buildName: String
+  recipeName: String
 }
 
 input BuildRefInput {
   id: String!
   buildName: String
-  permission: Permission
+  recipeName: String
 }
 
 type Touch {
@@ -479,7 +483,7 @@ type Touch {
   build: Build
   order: Int!
   amount: Float!
-  unitAbb: String
+  unitAbb: String!
   Unit: Unit!
   version: Int
   ingredient: Ingredient!
@@ -499,15 +503,10 @@ type ArchivedTouch {
 
 input TouchInput {
   id: String!
-  ingredient: IngredientInput!
+  ingredient: UpdateIngredientInput!
   amount: Float!
   Unit: UnitInput!
   order: Int
-}
-
-input IngredientInput {
-  id: String
-  name: String!
 }
 
 input UnitInput {
@@ -537,6 +536,13 @@ type UnitConversion {
   fromUnit: Unit
   toUnit: Unit
   factor: Float
+}
+
+type ConversionResult {
+  originalAmount: Float!
+  convertedAmount: Float!
+  originalUnit: String!
+  convertedUnit: String!
 }
 
 type User {

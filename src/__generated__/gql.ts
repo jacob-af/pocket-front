@@ -19,6 +19,7 @@ const documents = {
     "\n  mutation GetTokens($refreshToken: String!) {\n    getNewTokens(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n      user {\n        email\n        id\n        userName\n        profile {\n          image\n        }\n      }\n    }\n  }\n": types.GetTokensDocument,
     "\n  mutation LogOut($userId: ID!) {\n    logout(userId: $userId) {\n      loggedOut\n    }\n  }\n": types.LogOutDocument,
     "\n  mutation CreateManyIngredients(\n    $createManyIngredientInputs: [CreateIngredientInput]!\n  ) {\n    createManyIngredients(\n      createManyIngredientInputs: $createManyIngredientInputs\n    ) {\n      message\n    }\n  }\n": types.CreateManyIngredientsDocument,
+    "\n  mutation CreateManyStocks(\n    $createManyStocks: [CreateStockInput]\n    $inventoryId: String\n  ) {\n    createManyStocks(\n      createManyStocks: $createManyStocks\n      inventoryId: $inventoryId\n    ) {\n      message\n    }\n  }\n": types.CreateManyStocksDocument,
     "\n  mutation CreateBook($name: String!, $description: String) {\n    createRecipeBook(name: $name, description: $description) {\n      id\n      name\n      description\n      permission\n      userBuild {\n        id\n      }\n    }\n  }\n": types.CreateBookDocument,
     "\n  mutation UpdateRecipeBook(\n    $id: String!\n    $name: String!\n    $permission: Permission!\n  ) {\n    updateRecipeBook(id: $id, name: $name, permission: $permission) {\n      userBuild {\n        recipe {\n          id\n          name\n        }\n        id\n        buildName\n        touch {\n          id\n        }\n      }\n      createdBy {\n        id\n        userName\n      }\n    }\n  }\n": types.UpdateRecipeBookDocument,
     "\n  mutation RemoveRecipeBook($id: String!, $permission: Permission!) {\n    removeRecipeBook(id: $id, permission: $permission) {\n      message\n    }\n  }\n": types.RemoveRecipeBookDocument,
@@ -92,6 +93,10 @@ export function gql(source: "\n  mutation LogOut($userId: ID!) {\n    logout(use
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation CreateManyIngredients(\n    $createManyIngredientInputs: [CreateIngredientInput]!\n  ) {\n    createManyIngredients(\n      createManyIngredientInputs: $createManyIngredientInputs\n    ) {\n      message\n    }\n  }\n"): (typeof documents)["\n  mutation CreateManyIngredients(\n    $createManyIngredientInputs: [CreateIngredientInput]!\n  ) {\n    createManyIngredients(\n      createManyIngredientInputs: $createManyIngredientInputs\n    ) {\n      message\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation CreateManyStocks(\n    $createManyStocks: [CreateStockInput]\n    $inventoryId: String\n  ) {\n    createManyStocks(\n      createManyStocks: $createManyStocks\n      inventoryId: $inventoryId\n    ) {\n      message\n    }\n  }\n"): (typeof documents)["\n  mutation CreateManyStocks(\n    $createManyStocks: [CreateStockInput]\n    $inventoryId: String\n  ) {\n    createManyStocks(\n      createManyStocks: $createManyStocks\n      inventoryId: $inventoryId\n    ) {\n      message\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
