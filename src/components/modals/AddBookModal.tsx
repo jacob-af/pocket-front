@@ -61,17 +61,15 @@ export const AddBookModal = ({
 
   return (
     <div>
-      {/* Modal */}
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-90"
-          onClick={closeModal} // Close modal when clicking outside of the modal content
+          onClick={closeModal}
         >
           <div
             className="w-80 rounded border border-black p-6 shadow-xl"
-            onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
+            onClick={e => e.stopPropagation()}
           >
-            {/* Close button */}
             <button
               onClick={closeModal}
               className="absolute right-2 top-2 hover:text-gray-800"
@@ -79,12 +77,10 @@ export const AddBookModal = ({
               &times;
             </button>
 
-            {/* Modal content */}
             <h3 className="mb-4 text-lg font-semibold">
               Your Recipe Book must have a Unique Name
             </h3>
 
-            {/* Input field */}
             <input
               onChange={(event: any) => onChange(event)}
               className="focus:shadow-outline bg-contrast mb-2 w-full appearance-none border px-3 py-2 text-left leading-tight text-gray-100 placeholder-gray-400 shadow focus:outline-none"
@@ -100,7 +96,6 @@ export const AddBookModal = ({
               value={bookInfo.description}
             />
 
-            {/* Optional button to submit the form */}
             <button
               className="rounded bg-blue-500 px-4 py-2 text-white"
               onClick={onClick}
