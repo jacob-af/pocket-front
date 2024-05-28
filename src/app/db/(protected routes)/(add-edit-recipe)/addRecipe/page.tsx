@@ -19,102 +19,31 @@ import Review from "@/components/recipe/input/Review";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
 import { cutive } from "@/lib/cutive";
+import useAddRecipe from "@/hooks/useAddRecipe";
 import { useRouter } from "next/navigation";
 
 export default function AddRecipe() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [newRecipe] = useMutation(ADD_RECIPE, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS]
-  });
-  const [newBuild] = useMutation(ADD_BUILD, {
-    refetchQueries: [RECIPES_AND_INGREDIENTS]
-  });
-  const touches = useReactiveVar(touchArray);
-  const recipeInfo = useReactiveVar(newRecipeInfo);
-  const alerts = useReactiveVar(alertList);
-  const router = useRouter();
+  const submitRecipe = useAddRecipe();
 
-  // Query data
   const { data, loading, error } = useQuery(RECIPES_AND_INGREDIENTS, {
     fetchPolicy: "cache-and-network"
   });
-  console.log();
 
-  // Update reactive variables when the lists change
   useEffect(() => {
-    console.log("unconditional too");
-    if (data?.ingredients) {
+    if (data) {
       allIngredientsList(data.ingredients);
-    }
-    if (data?.publicRecipeList) {
       allRecipesList(data.publicRecipeList);
     }
-  }, [data?.publicRecipeList, data?.ingredients]);
+  }, [data]);
 
-  if (error) {
-    console.log(error);
-    alertList([...alerts, { code: "error", message: error.message }]);
-    return <div>{error.message}</div>;
-  }
-
-  const submitRecipe = async () => {
-    console.log(recipeInfo.newRecipe, recipeInfo.name);
-    try {
-      if (recipeInfo.newRecipe) {
-        const { data } = await newRecipe({
-          variables: {
-            createRecipeInput: {
-              recipeName: recipeInfo.name,
-              about: recipeInfo.about,
-              build: {
-                buildName: recipeInfo.buildName,
-                instructions: recipeInfo.instructions,
-                glassware: recipeInfo.glassware,
-                ice: recipeInfo.ice,
-                isPublic: true,
-                touchArray: [...touches]
-              }
-            }
-          }
-        });
-        console.log(data);
-      } else {
-        console.log(touches);
-        const { data } = await newBuild({
-          variables: {
-            createBuildInput: {
-              recipe: { name: recipeInfo.name },
-              buildName: recipeInfo.buildName,
-              instructions: recipeInfo.instructions,
-              glassware: recipeInfo.glassware,
-              ice: recipeInfo.ice,
-              isPublic: true,
-              touchArray: [...touches]
-            }
-          }
-        });
-        console.log(data);
-      }
-      newRecipeInfo(recipeBlank);
-      router.push("/db/recipe");
-    } catch (error) {
-      let errorMessage = "An unknown error occurred";
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-      alertList([...alerts, { code: "error", message: errorMessage }]);
-      console.log(error);
-    }
-  };
-
-  // Handle loading and error states
   if (loading) {
-    return <div>Loading...</div>; // Display a loading message
+    return <div>Loading...</div>;
   }
 
   if (error) {
     console.log(error);
-    return <div>Error loading data</div>; // Display an error message
+    return <div>Error: {error.message}</div>;
   }
 
   return (
