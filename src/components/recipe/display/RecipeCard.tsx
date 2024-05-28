@@ -32,14 +32,14 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   }, [current, builds]);
 
   return (
-    <div className="max-w-2xl overflow-scroll">
+    <div className="max-w-2xl overflow-scroll px-4">
       <div className="text-center text-xl">{recipe.name}</div>
       <div className="block">
         <div className="float-left mr-2">
           <CocktailPicture url={url} />{" "}
           {/* Use state for URL to trigger re-renders on change */}
         </div>
-        <div className="mt-4">{recipe.about}</div>
+        <div className="mt-4 text-lg">{recipe.about}</div>
       </div>
       <br />
       <BuildDisplay builds={builds} />

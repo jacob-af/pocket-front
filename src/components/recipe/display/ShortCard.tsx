@@ -16,6 +16,7 @@ import {
   UpArrow
 } from "@/components/images/Images";
 
+import { BreakPoint } from "@/components/images/CardBorder";
 import { SmallCocktailPicture } from "@/components/images/CocktailPicture";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -48,9 +49,9 @@ export default function ShortCard({ build }: { build: Build }) {
         <BRCorner />
       </div>
 
-      <div className="p-8">
-        <div className="grid grid-cols-5 items-center gap-1">
-          <div className="col-span-5 row-span-1 text-xl">
+      <div className="px-4">
+        <div className="grid grid-cols-5 items-center">
+          <div className="col-span-5 row-span-1 pb-4 text-3xl">
             {build.recipe.name}
           </div>
 
@@ -62,44 +63,47 @@ export default function ShortCard({ build }: { build: Build }) {
             build.touch.map((touch, index) => (
               <div
                 key={touch?.id}
-                className="col-span-3 row-span-1 overflow-clip pl-2 text-left text-sm md:text-base"
+                className="col-span-3 row-span-1 overflow-clip pl-2 text-left text-lg md:text-base"
               >
                 {touch?.amount} {touch?.Unit?.abbreviation}{" "}
                 {touch?.ingredient?.name}
               </div>
             ))}
-          <div className="col-span-4 row-span-2 py-2 text-sm">
+          <div className="col-span-5 row-span-2 py-2 text-center">
             {build.buildName} Build
           </div>
         </div>
-        <div className="mt-auto grid grid-cols-3">
-          <div className="flex items-center justify-start" onClick={handleOpen}>
-            {open ? <UpArrow /> : <DownArrow />}
-          </div>
+        <div className="flex items-center justify-center">
+          <BreakPoint />
+        </div>
+        <div
+          className="mt-auto flex items-center justify-center"
+          onClick={handleOpen}
+        >
           <div className="flex items-center justify-center">
-            {open ? "" : "details"}
-          </div>
-          <div className="flex items-center justify-end" onClick={handleOpen}>
-            {open ? <UpArrow /> : <DownArrow />}
+            {open ? "close" : "details"}
           </div>
         </div>
         <div
-          className={`grid grid-cols-4 gap-1 px-1 items-center ${
+          className={`grid grid-cols-4 gap-1 px-1 pb-10 items-center ${
             open ? "" : "hidden"
           }`}
         >
-          <div className="col-span-2 row-span-1 text-left text-sm">
+          <div className="col-span-4 grid items-center justify-center">
+            <BreakPoint />
+          </div>
+          <div className="col-span-2 row-span-1 text-center">
             Ice: {build.ice}
           </div>
-          <div className="col-span-2 row-span-1 text-left text-sm">
+          <div className="col-span-2 row-span-1 text-center">
             Glassware: {build.glassware}
           </div>
-          <div className="col-span-4 row-span-1 text-left text-sm">
+          <div className="col-span-4 row-span-1 text-justify">
             <br /> Instructions: {build.instructions}
           </div>
 
           <button
-            className="text absolute bottom-0 left-0 right-0 items-center justify-center text-center"
+            className="text absolute bottom-0 left-0 right-0 items-center justify-center text-center text-lg"
             onClick={handleView}
           >
             <div>See All Details</div>

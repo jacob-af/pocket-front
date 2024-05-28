@@ -9,7 +9,20 @@ export function CardBorder() {
       fill={true}
       src={"/border-2.png"}
       alt="elegant border"
-      className="shadow-md dark:invert"
+      className="dark:invert"
+    />
+  );
+}
+
+export function BreakPoint() {
+  return (
+    <Image
+      priority={true}
+      height={17}
+      width={280}
+      src={"/breakpoint.png"}
+      alt="simple breakpoint"
+      className="filter-primary dark:invert"
     />
   );
 }
