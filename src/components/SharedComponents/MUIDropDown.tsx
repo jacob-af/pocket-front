@@ -105,9 +105,9 @@ export default function MuiDropDown({
             <li
               {...props}
               key={uniqueKey}
-              className={`${cutive.className} antialiased py-1 px-2 hover:bg-gray-400 focus-visible:bg-red-800`}
+              className={`${cutive.className} antialiased py-1 px-2 hover:bg-gray-400 group-focus:bg-red-800`}
             >
-              <div className="focus-visible:bg-red-800">{option.name}</div>
+              <div className="">{option.name}</div>
               {option.build && option.build.length > 1 ? (
                 <div className="text-xxs">{`${option.build.length} Builds Available`}</div>
               ) : null}
