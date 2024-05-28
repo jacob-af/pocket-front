@@ -24,6 +24,7 @@
 }
 
 /* French grey: A4A5AE
+hsl(202, 58%, 88%) - primarry
 Citrine E8D33F
 Yinmn Blue 274c77
 Magnolia f7f0f5
@@ -33,8 +34,6 @@ Jet 333138 */
 body {
   color: var(--primary-color);
   background: var(--background-color);
-
-  font-size: 1.5rem;
 }
 
 Link {
@@ -68,4 +67,15 @@ ul.dropdown-list li:hover {
 
 .h-140 {
   height: 35rem;
+}
+
+.filter-primary {
+  filter: invert(100%);
+  filter: hue-rotate(202deg);
+  filter: saturate(58%);
+  image-rendering: crisp-edges;
+}
+
+.focus\:bg-red-800:focus {
+  background-color: #ff0000; /* Adjust the color as needed */
 }
