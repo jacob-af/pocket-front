@@ -10,7 +10,7 @@ export default function AmILoggedIn() {
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
-    console.log(session);
+    console.log(session, "from prof picture");
     async function fetchSession() {
       if (
         (session?.user && session.user.accessTokenExpires < Date.now()) ||
@@ -21,7 +21,7 @@ export default function AmILoggedIn() {
       }
     }
     fetchSession();
-  });
+  }, [session, update]);
 
   return (
     <div className="fixed left-2 top-2">
