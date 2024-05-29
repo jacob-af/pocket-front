@@ -2,13 +2,13 @@ Pocket Bar Book is a full stack Typescript application built with Next.js, Tailw
 
 Current functionality allows users to create, edit, and view cocktails recipes, add them to recipe books, and share individual recipes and books to 
 
-Quality of Life
+Basics
 - [ &#10003; ] End to End typesafety
 - [ &#10003; ] Secure login with protected routes
 - [ &#10003; ] Refresh Tokens
 - [ &#10003; ] Cache Persist
 - [ &#10003; ] User facing error messages
-- [ / ] Image Hosting
+- [ &#10003; ] Image Hosting
 - [ &#10003; ] Alternate Login methods
 - [ x ] Social Feed
 
@@ -31,24 +31,24 @@ Ingredient Operations
 [API][UI]
 - [ &#10003; ][ &#10003; ] Load Ingredients
 - [ &#10003; ][ &#10003; ] Manage Ingredient with CSV
-- [ &#10003; ][ x ] Add Custom Ingredient
-- [ &#10003; ][ x ] Edit Custom Ingredient
+- [ x ][ x ] Add Custom Ingredient
+- [ x ][ x ] Edit Custom Ingredient
 - [ &#10003; ][ x ] Connect Ing to Inventory
-- [ &#10003; ][ x ] Delete Custom Ingredient
-- [ &#10003; ][ x ] Change Recipe Connection
+- [ x ][ x ] Delete Custom Ingredient
+- [ x ][ x ] Change Recipe Connection
 - [ &#10003; ][ x ] Use Build as Recipe
-- [ &#10003; ][ x ] Share Custom Ingredient
-- [ &#10003; ][ x ] unshare Custom Ingredient
+- [ x ][ x ] Share Custom Ingredient
+- [ x ][ x ] unshare Custom Ingredient
 
 RecipeBook Operations
 [API][UI]
 - [ &#10003; ][ &#10003; ] Load RecipeBooks
-- [ &#10003; ][ x ] Edit RecipeBookDetails
+- [ &#10003; ][ &#10003; ] Edit RecipeBookDetails
 - [ &#10003; ][ &#10003; ] Add Recipe to Recipe Book
 - [ &#10003; ][ &#10003; ] Remove Recipe from Book
-- [ &#10003; ][ x ] Delete Recipe Book
-- [ &#10003; ][ x ] Change Recipe Book Permission
-- [ &#10003; ][ x ] Remove Recipe Book Permission
+- [ &#10003; ][ &#10003; ] Delete Recipe Book
+- [ &#10003; ][ &#10003; ] Change Recipe Book Permission
+- [ &#10003; ][ &#10003; ] Remove Recipe Book Permission
 
 User/Crew Operations
 [API][UI]
@@ -63,8 +63,8 @@ User/Crew Operations
 
 Inventory Operations
 [API][UI]
-- [ x ][ x ] Load Inventory
-- [ x ][ x ] Add Ingredients
+- [ &#10003; ][ x ] Load Inventory
+- [ &#10003; ][ x ] Add Ingredients
 - [ x ][ x ] Remove Ingredients
 - [ x ][ x ] Edit Ingredient relation
 - [ x ][ x ] Change Inventory Permission
