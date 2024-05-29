@@ -9,8 +9,8 @@ export function BuildDetails({}) {
 
   return (
     <div>
-      {touches.map((touch: Touch, index: number) => {
-        return <SingleTouch touch={touch} key={touch.id} index={index} />;
+      {touches.map((touch: TouchInput, index: number) => {
+        return <SingleTouch key={touch.id} index={index} />;
       })}
     </div>
   );

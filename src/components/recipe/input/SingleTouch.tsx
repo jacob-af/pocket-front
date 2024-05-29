@@ -15,13 +15,7 @@ import { touchArray } from "@/graphql/reactiveVar/recipes";
 import { unitList } from "@/graphql/reactiveVar/unit";
 import { useReactiveVar } from "@apollo/client";
 
-export const SingleTouch = ({
-  touch,
-  index
-}: {
-  touch: Touch;
-  index: number;
-}) => {
+export const SingleTouch = ({ index }: { index: number }) => {
   const touches = useReactiveVar(touchArray);
   const allIngredients = useReactiveVar(allIngredientsList);
   const list = useReactiveVar(unitList);
