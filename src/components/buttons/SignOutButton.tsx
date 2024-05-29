@@ -22,14 +22,12 @@ function Button() {
   const onClick = async () => {
     try {
       if (session) {
-        console.log(session);
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session.user.id }
         });
         localForage.clear();
 
         client.clearStore();
-        console.log(data?.loggedOut);
         await signOut({
           callbackUrl: `/welcome`,
           redirect: true
@@ -48,11 +46,18 @@ function Button() {
     }
   };
 
+  if (session) {
+    return (
+      <>
+        Signed in as {session.user.email} <br />
+        <button onClick={onClick}>Sign out</button>
+      </>
+    );
+  }
   return (
     <>
-      <button onClick={onClick} className="text-right text-lg">
-        Sign out
-      </button>
+      Not signed in <br />
+      <button onClick={onClick}>Sign in</button>
     </>
   );
 }

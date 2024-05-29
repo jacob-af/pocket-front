@@ -21,7 +21,7 @@ export default function AmILoggedIn() {
       }
     }
     fetchSession();
-  }, [session, update]);
+  });
 
   return (
     <div className="fixed left-2 top-2">
