@@ -11,16 +11,17 @@ export default function AmILoggedIn() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(session, "from prof picture");
     async function fetchSession() {
-      const session = await getSession();
-      console.log(session, "this is the current session");
-      if (session?.user && session.user.accessTokenExpires < Date.now()) {
+      const sess = await getSession();
+      console.log(sess, "this is the current session");
+      if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
         console.log("new tokens");
       }
-      if (!session?.user) {
-        router.push("/login");
+      if (sess?.user && !session) {
+        console.log("ping", sess.user.name);
+        update();
+        console.log("pong");
       }
     }
     fetchSession();

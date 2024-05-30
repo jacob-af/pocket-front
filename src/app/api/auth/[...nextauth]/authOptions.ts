@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
   session: { maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
     async jwt({ token, user, account, profile, session, trigger }) {
+      console.log("jwt action", token.name, session);
       if (user) {
         if (account?.provider === "google" && profile) {
           console.log(token, "token inset");
@@ -60,6 +61,7 @@ export const authOptions: NextAuthOptions = {
       }
       //This call back is triggered from the client, a better implementation surely exists.
       if (trigger === "update" && session.action === "New Tokens") {
+        console.log("refresh update");
         try {
           const client = await getClient();
           const { data } = await client.mutate({
@@ -92,6 +94,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ token, session, user }) {
       console.log("session callback hit");
+      console.log("user", user);
       return {
         ...session,
         user: {
