@@ -35,7 +35,7 @@ function Button() {
       } else {
         client.clearStore();
         await signOut({
-          callbackUrl: `/welcome`,
+          callbackUrl: `/login`,
           redirect: true
         });
       }
