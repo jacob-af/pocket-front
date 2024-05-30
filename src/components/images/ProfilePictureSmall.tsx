@@ -14,12 +14,12 @@ export default function AmILoggedIn() {
     console.log(session, "from prof picture");
     async function fetchSession() {
       const session = await getSession();
-      console.log(session);
+      console.log(session, "this is the current session");
       if (session?.user && session.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
         console.log("new tokens");
       }
-      if (!session) {
+      if (!session?.user) {
         router.push("/login");
       }
     }
