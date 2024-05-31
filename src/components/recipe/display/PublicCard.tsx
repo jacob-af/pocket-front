@@ -34,13 +34,13 @@ export default function PublicCard({
   };
 
   return (
-    <div className="bg-contrast relative my-2 h-96 w-full content-center rounded-lg text-center">
+    <div className="bg-contrast h-104 relative my-2 w-full content-center rounded-lg text-center">
       {/* THis goes on bottom */}
       <div className="absolute inset-0 z-0 h-full w-full">
         <CardBorder />
       </div>
       {/* This goes on top */}
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 h-full p-8">
         <div className="p-2 text-center text-xl">{recipe.name}</div>
         <div className="block">
           <div className="float-left mr-2 w-32 lg:w-auto">
