@@ -34,7 +34,7 @@ export default function PublicCard({
   };
 
   return (
-    <div className="bg-contrast h-104 relative my-2 w-full content-center rounded-lg text-center">
+    <div className="bg-contrast h-public-card relative my-2 w-full content-center rounded-lg text-center">
       {/* THis goes on bottom */}
       <div className="absolute inset-0 z-0 h-full w-full">
         <CardBorder />

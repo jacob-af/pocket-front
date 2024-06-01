@@ -68,6 +68,9 @@ ul.dropdown-list li:hover {
 .h-140 {
   height: 35rem;
 }
+.h-public-card {
+  height: 35rem;
+}
 
 .filter-primary {
   filter: invert(100%);
