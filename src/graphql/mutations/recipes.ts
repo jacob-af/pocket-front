@@ -20,7 +20,7 @@ export const ADD_RECIPE = gql`
           amount
           order
           # unit
-          Unit {
+          unit {
             id
             abbreviation
           }
@@ -52,7 +52,7 @@ export const ADD_BUILD = gql`
         amount
         order
         #unit
-        Unit {
+        unit {
           id
           abbreviation
         }
@@ -85,7 +85,7 @@ export const EDIT_RECIPE = gql`
           id
           amount
           #unit
-          Unit {
+          unit {
             id
             abbreviation
           }
@@ -122,7 +122,7 @@ export const EDIT_BUILD = gql`
           }
           order
           #unit
-          Unit {
+          unit {
             id
             abbreviation
           }
@@ -148,7 +148,7 @@ export const DELETE_BUILD = gql`
         id
         amount
         #unit
-        Unit {
+        unit {
           id
           abbreviation
         }

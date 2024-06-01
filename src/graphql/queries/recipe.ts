@@ -36,7 +36,7 @@ export const GET_RECIPE: TypedDocumentNode<{
           }
           amount
           #unit
-          Unit {
+          unit {
             id
             abbreviation
           }
@@ -80,7 +80,7 @@ export const PUBLIC_RECIPE: TypedDocumentNode<{
           }
           amount
           #unit
-          Unit {
+          unit {
             id
             abbreviation
           }
@@ -119,7 +119,7 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
         }
         amount
         #unit
-        Unit {
+        unit {
           id
           abbreviation
         }
@@ -208,7 +208,7 @@ export const USER_RECIPES: TypedDocumentNode<{ userRecipes: Recipe[] }> = gql`
           }
           amount
           #unit
-          Unit {
+          unit {
             id
             abbreviation
           }
@@ -253,7 +253,7 @@ export const PUBLIC_RECIPES: TypedDocumentNode<{
           }
           amount
           #unit
-          Unit {
+          unit {
             id
             abbreviation
           }

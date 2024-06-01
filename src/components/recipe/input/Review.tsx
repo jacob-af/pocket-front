@@ -5,10 +5,20 @@ import {
 import { newRecipeInfo, touchArray } from "@/graphql/reactiveVar/recipes";
 
 import { useReactiveVar } from "@apollo/client";
+import { useState } from "react";
 
 export default function Review() {
   const recipeInfo = useReactiveVar(newRecipeInfo);
   const touches = useReactiveVar(touchArray);
+  const [isToggled, setIsToggled] = useState(recipeInfo.isPublic ?? false);
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+    newRecipeInfo({
+      ...recipeInfo,
+      isPublic: !isToggled
+    });
+  };
 
   return (
     <div>
@@ -28,7 +38,7 @@ export default function Review() {
             <div className="flex justify-between">
               <div>
                 <p className="font-medium">{touch.ingredient.name}</p>
-                <p className="text-xs">{touch.Unit.abbreviation}</p>
+                <p className="text-xs">{touch.unit.abbreviation}</p>
               </div>
               <p className="text-sm">{touch.amount}</p>
             </div>
@@ -51,7 +61,13 @@ export default function Review() {
           <p className="text-sm">{recipeInfo.instructions}</p>
         </li>
       </ul>
-
+      <div>
+        <label className="switch">
+          <input type="checkbox" checked={isToggled} onChange={handleToggle} />
+          <span className="slider"></span>
+        </label>
+        <p>Make Recipe {isToggled ? "Public" : "Private"}</p>
+      </div>
       <div className="mt-2">
         <h2 className="text-lg font-semibold">Total Cost</h2>
       </div>

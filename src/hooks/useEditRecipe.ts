@@ -35,16 +35,16 @@ const useSubmitRecipe = () => {
         ice: recipeInfo.ice,
         image: recipeInfo.image,
         isPublic: true,
-        touchArray: touches.map(({ amount, id, ingredient, Unit }) => ({
+        touchArray: touches.map(({ amount, id, ingredient, unit }) => ({
           amount,
           id,
           ingredient: {
             id: ingredient.id,
             name: ingredient.name
           },
-          Unit: {
-            id: Unit.id,
-            abbreviation: Unit.abbreviation
+          unit: {
+            id: unit.id,
+            abbreviation: unit.abbreviation
           }
         })),
         permission: recipeInfo.permission

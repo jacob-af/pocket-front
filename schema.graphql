@@ -218,7 +218,7 @@ type RecipeName {
 }
 
 input CreateBuildInput {
-  recipe: RecipeNameInput!
+  recipe: RecipeInput!
   buildName: String!
   instructions: String
   glassware: String
@@ -263,10 +263,6 @@ type BuildPermissionResponse {
   status: StatusMessage
 }
 
-input RecipeNameInput {
-  name: String!
-}
-
 type Cost {
   cost: Float!
 }
@@ -281,7 +277,7 @@ input CreateFirstBuildInput {
 }
 
 input UpdateBuildInput {
-  recipe: RecipeNameInput!
+  recipe: RecipeInput!
   buildId: String!
   buildName: String
   instructions: String
@@ -348,7 +344,7 @@ input CreateIngredientInput {
 }
 
 input UpdateIngredientInput {
-  id: ID!
+  id: ID
   name: String!
   description: String
   parent: String
@@ -436,6 +432,12 @@ input CreateRecipeInput {
   build: CreateFirstBuildInput!
 }
 
+input RecipeInput {
+  id: String
+  name: String!
+  about: String
+}
+
 input UpdateRecipeInput {
   id: ID!
   name: String!
@@ -484,7 +486,7 @@ type Touch {
   order: Int!
   amount: Float!
   unitAbb: String!
-  Unit: Unit!
+  unit: Unit!
   version: Int
   ingredient: Ingredient!
   ingredientName: String
@@ -495,17 +497,17 @@ type ArchivedTouch {
   archivedBuild: Build
   order: Int
   amount: Float
-  Unit: Unit
+  unit: Unit
   unitAbb: String
   version: Int
   ingredient: Ingredient
 }
 
 input TouchInput {
-  id: String!
+  id: String
   ingredient: UpdateIngredientInput!
   amount: Float!
-  Unit: UnitInput!
+  unit: UnitInput!
   order: Int
 }
 
@@ -518,7 +520,7 @@ type CompleteTouch {
   id: String!
   ingredient: Ingredient!
   amount: Float!
-  Unit: Unit!
+  unit: Unit!
   order: Int
 }
 

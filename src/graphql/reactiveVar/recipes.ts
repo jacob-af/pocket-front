@@ -10,7 +10,7 @@ export const blankTouch = (order: number) => {
     ingredient: { name: "", id: "'" },
     amount: 1,
 
-    Unit: {
+    unit: {
       id: "ed6dbf57-3ec2-4720-92ca-8d874f14fd3c",
       abbreviation: "oz"
     },

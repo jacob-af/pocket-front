@@ -80,7 +80,7 @@ export const ADD_BUILD_TO_BOOK: TypedDocumentNode<{
         amount
         order
         #unit
-        Unit {
+        unit {
           id
           abbreviation
         }

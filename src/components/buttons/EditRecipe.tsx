@@ -31,14 +31,14 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
     const touches: Touch[] = builds[slide].touch;
 
     const mappedTouches = touches.map(
-      ({ amount, id, ingredient, Unit }, index) => {
+      ({ amount, id, ingredient, unit }, index) => {
         return {
           amount,
           id,
           ingredient,
-          Unit: {
-            ...Unit,
-            id: Unit.id || "" // Provide a default value if Unit.id is undefined
+          unit: {
+            ...unit,
+            id: unit.id || "" // Provide a default value if Unit.id is undefined
           },
           order: index
         };
