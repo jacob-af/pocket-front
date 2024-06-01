@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 function Button() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [logOut, { loading, client }] = useMutation(LOG_OUT);
 
   const onClick = async () => {
@@ -46,20 +46,14 @@ function Button() {
     }
   };
 
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user.email} <br />
-        <button onClick={onClick}>Sign out</button>
-      </>
-    );
+  if (status === "loading") {
+    return <div>Loading...</div>;
   }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={onClick}>Sign in</button>
-    </>
-  );
+
+  if (session) {
+    return <button onClick={onClick}>Sign out</button>;
+  }
+  return <button onClick={onClick}>Sign in</button>;
 }
 
 export default function AuthButton() {
