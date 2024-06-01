@@ -59,12 +59,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session: Session | null = await getSession();
+  //const session: Session | null = await getSession();
 
   return (
     <html lang="en" className={`${cutive.className} antialiased`}>
       <body className="h-screen w-screen overflow-x-hidden">
-        <SessionProvider session={session}>
+        <SessionProvider>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>
       </body>

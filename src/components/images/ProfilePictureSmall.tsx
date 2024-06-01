@@ -20,7 +20,6 @@ export default function AmILoggedIn() {
       }
       if (sess?.user && !session) {
         console.log("ping", sess.user.name);
-        update();
         console.log("pong");
       }
     }
