@@ -63,7 +63,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${cutive.className} antialiased`}>
-      <body className="w-screen">
+      <body className="h-screen w-screen overflow-hidden">
         <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>

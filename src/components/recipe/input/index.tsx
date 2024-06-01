@@ -11,7 +11,7 @@ export default function RecipeInput() {
   const recipeInfo = useReactiveVar(newRecipeInfo);
 
   return (
-    <div className="min-w-xl box-border flex flex-col items-center overflow-scroll">
+    <div className="min-w-xl box-border flex flex-col items-center">
       <RecipeSelect />
       {recipeInfo.newRecipe === true ? <RecipeAbout /> : <></>}
       <BuildName />

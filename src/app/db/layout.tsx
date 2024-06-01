@@ -14,11 +14,11 @@ export default async function Dashboard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen w-screen overflow-hidden">
+    <main className="box-border flex min-h-screen w-screen overflow-x-hidden">
       <SideBar />
       <RightSideBar />
       <TopNavBar />
-      <div className="box-border flex h-full w-screen flex-grow justify-center md:pb-0">
+      <div className="box-border flex h-full w-screen flex-col items-center justify-center overflow-y-auto overflow-x-hidden">
         {children}
       </div>
 

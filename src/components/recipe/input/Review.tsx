@@ -22,49 +22,53 @@ export default function Review() {
 
   return (
     <div>
-      <div className="float-right pl-6">
-        <CocktailPicture
-          url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
-        />
+      <div>
+        <div className="float-right hidden pl-6 md:block">
+          <CocktailPicture
+            url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
+          />
+        </div>
+        <div className="float-right pl-6 md:hidden">
+          <SmallCocktailPicture
+            url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
+          />
+        </div>
+        <h2 className="text-lg font-semibold">{recipeInfo.name}</h2>
+        <h2 className="text-lg font-semibold">{recipeInfo.buildName} Build</h2>
+        <br />
+        <p className="text-sm">{recipeInfo.about}</p>
+        <br />
       </div>
-      <h2 className="text-lg font-semibold">{recipeInfo.name}</h2>
-      <h2 className="text-lg font-semibold">{recipeInfo.buildName} Build</h2>
-      <br />
-      <p className="text-sm">{recipeInfo.about}</p>
       <br />
       <ul className="p-0">
         {touches.map((touch, index) => (
           <li key={`review${touch.id}`} className="py-1">
-            <div className="flex justify-between">
-              <div>
-                <p className="font-medium">{touch.ingredient.name}</p>
-                <p className="text-xs">{touch.unit.abbreviation}</p>
-              </div>
-              <p className="text-sm">{touch.amount}</p>
+            <div className="grid grid-cols-4">
+              <p className="col-span-1 text-right text-lg">{touch.amount}</p>
+              <p className="col-span-1 text-center">
+                {touch.unit.abbreviation}
+              </p>
+              <p className="col-span-2 text-left text-lg">
+                {touch.ingredient.name}
+              </p>
             </div>
           </li>
         ))}
-        <li className="py-1">
-          <div className="flex justify-between">
-            <p>Glassware</p>
-            <p className="font-bold">{recipeInfo.glassware}</p>
-          </div>
+        <li className="grid grid-cols-2 gap-x-4 py-1">
+          <p className="grid-cols-1 text-right">Glassware</p>
+          <p className="grid-cols-1 font-bold">{recipeInfo.glassware}</p>
+          <p className="grid-cols-1 text-right">Ice</p>
+          <p className="grid-cols-1 font-bold">{recipeInfo.ice}</p>
         </li>
         <li className="py-1">
-          <div className="flex justify-between">
-            <p>Ice</p>
-            <p className="font-bold">{recipeInfo.ice}</p>
-          </div>
-        </li>
-        <li className="py-1">
-          <p className="font-medium">Instructions</p>
+          <p className="font-bold">Instructions</p>
           <p className="text-sm">{recipeInfo.instructions}</p>
         </li>
       </ul>
-      <div>
+      <div className="flex">
         <label className="switch">
           <input type="checkbox" checked={isToggled} onChange={handleToggle} />
-          <span className="slider"></span>
+          <span className=""></span>
         </label>
         <p>Make Recipe {isToggled ? "Public" : "Private"}</p>
       </div>

@@ -1,6 +1,10 @@
 "use client";
 
-import { CocktailPicture } from "@/components/images/CocktailPicture";
+import {
+  CocktailPicture,
+  SmallCocktailPicture
+} from "@/components/images/CocktailPicture";
+
 import { UploadDropzone } from "@/components/SharedComponents/uploadthing";
 import { newRecipeInfo } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
@@ -25,9 +29,16 @@ export default function PictureUpload() {
           alert(`ERROR! ${error.message}`);
         }}
       />
-      <CocktailPicture
-        url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
-      />
+      <div className="hidden md:block">
+        <CocktailPicture
+          url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
+        />
+      </div>
+      <div className="md:hidden">
+        <SmallCocktailPicture
+          url={!!recipeInfo.image ? recipeInfo.image : "/withcherry100.png"}
+        />
+      </div>
     </div>
   );
 }

@@ -40,7 +40,7 @@ export const SingleTouch = ({ index }: { index: number }) => {
         name="unit-options"
         className="focus:shadow-outline bg-contrast col-span-3 text-white"
         id="unit"
-        value={touches[index].Unit.abbreviation}
+        value={touches[index].unit.abbreviation}
       >
         {list.map((unit, index) => {
           return (

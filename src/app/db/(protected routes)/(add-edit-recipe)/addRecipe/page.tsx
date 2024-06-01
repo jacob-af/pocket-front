@@ -47,7 +47,7 @@ export default function AddRecipe() {
   }
 
   return (
-    <div className="mx-auto mt-12 flex w-full max-w-2xl flex-col overflow-auto rounded-lg bg-gray-900 p-4 shadow-md">
+    <div className="mx-auto my-12 box-border flex w-full max-w-2xl flex-col rounded-lg p-4 shadow-md">
       {loading ? "loading" : ""}
       <Tabs
         value={selectedIndex}
@@ -63,18 +63,34 @@ export default function AddRecipe() {
       >
         <Tab
           className={`${cutive.className} antialiased bg-contrast`}
-          label={<span className={`${cutive.className}`}>Recipe Details</span>}
+          label={
+            <span className={`${cutive.className} text-sm md:text-base`}>
+              Recipe Details
+            </span>
+          }
         />
         <Tab
-          label={<span className={`${cutive.className}`}>Instructions</span>}
+          label={
+            <span className={`${cutive.className} text-sm md:text-base`}>
+              Instructions
+            </span>
+          }
           className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
-          label={<span className={`${cutive.className}`}>Add Photo</span>}
+          label={
+            <span className={`${cutive.className} text-sm md:text-base`}>
+              Add Photo
+            </span>
+          }
           className={`${cutive.className} antialiased bg-contrast`}
         />
         <Tab
-          label={<span className={`${cutive.className}`}>Review</span>}
+          label={
+            <span className={`${cutive.className} text-sm md:text-base`}>
+              Review
+            </span>
+          }
           className={`${cutive.className} antialiased bg-contrast`}
         />
       </Tabs>
