@@ -65,7 +65,7 @@ export default function ShortCard({ build }: { build: Build }) {
                 key={touch?.id}
                 className="col-span-3 row-span-1 overflow-clip pl-2 text-left text-lg md:text-base"
               >
-                {touch?.amount} {touch?.Unit?.abbreviation}{" "}
+                {touch?.amount} {touch?.unit?.abbreviation}{" "}
                 {touch?.ingredient?.name}
               </div>
             ))}
