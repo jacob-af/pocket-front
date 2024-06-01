@@ -1,14 +1,13 @@
 "use client";
 
 import { getSession, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 
 import { ProfileImage } from "./ProfileImage";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function AmILoggedIn() {
   const { data: session, update } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     async function fetchSession() {
@@ -16,11 +15,9 @@ export default function AmILoggedIn() {
       console.log(sess, "this is the current session");
       if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
-        console.log("new tokens");
       }
       if (sess?.user && !session) {
         console.log("ping", sess.user.name);
-        console.log("pong");
       }
     }
     fetchSession();
