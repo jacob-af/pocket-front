@@ -17,9 +17,10 @@ export default function NextAuthProvider({
       const sessionData = await getSession();
       setSession(sessionData);
     };
-
     fetchSession();
   }, []);
+
+  console.log(session, ": from provider");
 
   return <SessionProvider session={session}>{children}</SessionProvider>;
 }
