@@ -12,6 +12,20 @@ export function CocktailPicture({ url }: { url: string }) {
     />
   );
 }
+
+export function MediumCocktailPicture({ url }: { url: string }) {
+  return (
+    <Image
+      priority={true}
+      src={url}
+      height={150}
+      width={150}
+      alt="dynamically loaded image"
+      className="shadow-md"
+    />
+  );
+}
+
 export function SmallCocktailPicture({ url }: { url: string }) {
   return (
     <Image
