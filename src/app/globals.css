@@ -68,8 +68,11 @@ ul.dropdown-list li:hover {
 .h-140 {
   height: 35rem;
 }
-.h-public-card {
-  height: 35rem;
+.h-public-card-sm {
+  height: 22rem;
+}
+.h-public-card-lg {
+  height: 27rem;
 }
 
 .filter-primary {
