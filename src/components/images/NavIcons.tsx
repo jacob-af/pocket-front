@@ -2,7 +2,6 @@ import Image from "next/image";
 
 export function HomeIcon() {
   return (
-    //<div className="flex h-8 w-8 items-center justify-center rounded-full border">
     <Image
       src="/Pocket-Icons/home-sm-black.png"
       height={20}
@@ -10,8 +9,6 @@ export function HomeIcon() {
       alt="home icon"
       className="z-10 dark:invert"
     />
-    //   <div className="absolute h-4 w-4 bg-blue-900"></div>
-    // </div>
   );
 }
 
