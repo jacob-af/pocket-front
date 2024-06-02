@@ -11,9 +11,7 @@ import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useEffect } from "react";
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const q =
-    params.slug.charAt(0).toUpperCase() +
-    params.slug.slice(1).replace(/%20/g, " ");
+  const q = decodeURIComponent(params.slug);
   console.log(q);
   const { data, loading, error } = useQuery(GET_RECIPE, {
     variables: { name: q },

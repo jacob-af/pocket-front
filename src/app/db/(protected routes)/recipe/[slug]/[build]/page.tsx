@@ -15,8 +15,8 @@ export default function Page({
 }: {
   params: { slug: string; build: string };
 }) {
-  const q = slug.charAt(0).toUpperCase() + slug.slice(1).replace(/%20/g, " ");
-  const b = build.charAt(0).toUpperCase() + build.slice(1).replace(/%20/g, " ");
+  const q = decodeURIComponent(slug);
+  const b = decodeURIComponent(build);
   const { data, loading, error } = useQuery(GET_ONE_BUILD, {
     variables: { recipeName: q, buildName: b },
     fetchPolicy: "cache-and-network"
