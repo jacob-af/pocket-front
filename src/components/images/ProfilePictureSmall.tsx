@@ -12,12 +12,8 @@ export default function AmILoggedIn() {
   useEffect(() => {
     async function fetchSession() {
       const sess = await getSession();
-      console.log(sess, "this is the current session");
       if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
-      }
-      if (sess?.user && !session) {
-        console.log("ping", sess.user.name);
       }
     }
     fetchSession();
