@@ -2,6 +2,7 @@ import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
 import { AddRecipeToBookModal } from "@/components/modals/AddRecipeToBook";
 import { DeleteBookButton } from "@/components/buttons/DeleteBook";
+import { DownloadRecipeBook } from "@/components/SharedComponents/RecipeBookDownload";
 import { EDIT_BOOK } from "@/graphql/mutations/recipeBook";
 import { EditBookModal } from "@/components/modals/EditBookModal";
 import EditRecipeBookButton from "@/components/buttons/EditRecipeBookButton";
@@ -41,7 +42,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   return (
     <>
       {(book.permission === "OWNER" || book.permission === "MANAGER") && (
-        <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-2xl flex-col items-center justify-center">
+        <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-2xl flex-col items-center justify-center xl:mb-0">
           <AddRecipeToBookModal open={openBook} toggleopen={addRecipe} />
           <ShareBookModal open={openShare} toggleopen={handleShare} />
           <div className="flex w-full max-w-2xl flex-row items-center justify-around text-xs">
@@ -54,6 +55,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
               <div>Share</div>
               <div>Book</div>
             </button>
+            <DownloadRecipeBook name={book.name} />
             {book.createdBy.id === session.user.id && <DeleteBookButton />}
           </div>
         </nav>

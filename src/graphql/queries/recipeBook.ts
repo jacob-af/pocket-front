@@ -66,6 +66,7 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
       }
       userBuild {
         buildName
+        glassware
         ice
         id
         image
@@ -74,6 +75,7 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
         permission
         recipe {
           name
+          about
         }
         touch {
           id
