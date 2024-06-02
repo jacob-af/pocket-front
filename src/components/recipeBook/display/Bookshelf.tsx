@@ -1,6 +1,6 @@
 import BookCover from "@/components/recipeBook/display/BookCover";
 import { SkeletonCover } from "./SkeletonCover";
-import { useBookshelf } from "@/hooks/useBookshelf";
+import { useBookshelf } from "@/hooks/useBookShelf";
 
 export function Bookshelf() {
   const itemsPerPage = 6;
@@ -20,12 +20,12 @@ export function Bookshelf() {
   }
 
   return (
-    <div className="z-0 mt-12 box-border grid w-full gap-8 shadow-xl lg:grid-cols-2">
+    <div className="z-0 mt-12 grid w-full gap-8 shadow-xl lg:grid-cols-2">
       {columnConfigurations.map((columns, index) =>
         columns.map((num, columnIndex) => (
           <div
             key={`${index}-${columnIndex}`}
-            className={`col-span-1 w-full ${
+            className={`col-span-1 w-full mb-12 ${
               index === 0 ? "flex flex-col lg:hidden" : ""
             } ${index === 1 ? "hidden lg:flex lg:flex-col" : ""}`}
           >
@@ -34,6 +34,7 @@ export function Bookshelf() {
               .map((book, index) => (
                 <BookCover key={book.id + index} book={book} />
               ))}
+            {loading && bookList.length === 0 && <SkeletonCover />}
           </div>
         ))
       )}
