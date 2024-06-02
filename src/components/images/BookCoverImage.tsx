@@ -7,7 +7,7 @@ export function BookCoverImage() {
       height={160}
       width={384}
       alt="various cocktails on a marble bar top"
-      className="shadow-md"
+      className="rounded-full"
     />
   );
 }
