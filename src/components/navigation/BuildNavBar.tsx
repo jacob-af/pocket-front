@@ -40,10 +40,13 @@ export function BuildNavBar({ builds }: { builds: Build[] }) {
     console.log(recipes, index);
     selectedRecipe(recipes[index + 1]);
     currentBuild(0);
+    const encodedRecipeName = encodeURIComponent(
+      recipes[(index + 1) % recipes.length].name
+    );
     if (session) {
-      router.push(`/db/recipe/${recipes[(index + 1) % recipes.length].name}`);
+      router.push(`/db/recipe/${encodedRecipeName}`);
     } else {
-      router.push(`/recipe/${recipes[(index + 1) % recipes.length].name}`);
+      router.push(`/recipe/${encodedRecipeName}`);
     }
   };
 
@@ -53,10 +56,11 @@ export function BuildNavBar({ builds }: { builds: Build[] }) {
     );
     selectedRecipe(recipes[index - 1]);
     currentBuild(0);
+    const encodedRecipeName = encodeURIComponent(recipes[index - 1].name);
     if (session) {
-      router.push(`/db/recipe/${recipes[index - 1].name}`);
+      router.push(`/db/recipe/${encodedRecipeName}`);
     } else {
-      router.push(`/recipe/${recipes[index - 1].name}`);
+      router.push(`/recipe/${encodedRecipeName}`);
     }
   };
 
