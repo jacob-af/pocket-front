@@ -19,12 +19,12 @@ export default function PublicCard({
   index: number;
 }) {
   const router = useRouter();
-  const [url, setUrl] = useState("/withCherry100.png");
+  const [url, setUrl] = useState("/withcherry100.png");
 
   useEffect(() => {
     // Update the URL state when the current build index or builds change
     const build = recipe.publicBuild?.[0];
-    const imageUrl = build?.image ?? "/withCherry100.png";
+    const imageUrl = build?.image ?? "/withcherry100.png";
     setUrl(imageUrl);
   }, [recipe]);
 
@@ -34,7 +34,7 @@ export default function PublicCard({
   };
 
   return (
-    <div className="bg-contrast h-public-card relative my-2 w-full content-center rounded-lg text-center">
+    <div className="bg-contrast h-public-card-lg relative my-2 w-full content-center rounded-lg text-center">
       {/* THis goes on bottom */}
       <div className="absolute inset-0 z-0 h-full w-full">
         <CardBorder />
@@ -46,9 +46,7 @@ export default function PublicCard({
           <div className="float-left mr-2 w-32 lg:w-auto">
             <CocktailPicture url={url} />{" "}
           </div>
-          <div className="mt-4 text-xs sm:text-sm md:text-base">
-            {recipe.about}
-          </div>
+          <div className="mt-4">{recipe.about}</div>
         </div>
 
         <button
