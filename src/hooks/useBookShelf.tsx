@@ -11,7 +11,6 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
 
   const [getData, { loading, error }] = useLazyQuery(USER_BOOKS, {
     onCompleted: response => {
-      console.log(response);
       const newBooks = response.userBooks;
       if (newBooks.length > 0) {
         setList(prevList => {
@@ -30,7 +29,6 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
   });
 
   useEffect(() => {
-    console.log("Fetching initial data");
     getData({
       variables: {
         skip: 0,
@@ -61,7 +59,6 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
         hasMore &&
         !loading
       ) {
-        console.log("Fetching more data");
         getData({
           variables: {
             skip: currentPage * itemsPerPage,
