@@ -20,11 +20,5 @@ export default function NextAuthProvider({
     fetchSession();
   }, []);
 
-  console.log(session, ": from provider");
-
-  if (!session) {
-    return <div>Loading...</div>;
-  }
-
   return <SessionProvider session={session}>{children}</SessionProvider>;
 }
