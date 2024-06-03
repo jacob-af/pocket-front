@@ -1,13 +1,12 @@
+import { InventoryTable } from "@/components/inventory/InventoryTable";
 import LoadIngredients from "@/components/ingredients/IngredientLoader";
+import LoadInventories from "@/components/inventory/InventoryLoader";
 
 export default function ClientSideIngredients() {
   return (
-    <div className="flex flex-col items-center align-middle max-w-md min-w-sm m-20 box-border text-justify">
-      <div>
-        One day, all your inventory needs will be met on this page. For now,
-        feel free to browse descriptions for over 700 ingredients.
-      </div>
-      <LoadIngredients />
+    <div className="m-20 box-border flex w-full max-w-2xl flex-col items-center text-justify align-middle">
+      <LoadInventories />
+      <InventoryTable />
     </div>
   );
 }

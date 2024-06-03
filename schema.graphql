@@ -90,6 +90,10 @@ type Mutation {
   createBuild(createBuildInput: CreateBuildInput): Build
   updateBuild(updateBuildInput: UpdateBuildInput): ArchiveResponse
   updateManyBuilds(updateManyBuildInput: [UpdateManyBuildInput]!): StatusMessage
+  uploadBook(
+    bookName: String!
+    updateManyBuildInput: [UpdateBuildInput]!
+  ): StatusMessage
   removeBuild(buildId: String, permission: Permission): Build
   changeBuildPermission(
     changeBuildPermissionInput: ChangeBuildPermissionInput
@@ -218,6 +222,7 @@ type RecipeName {
 }
 
 input CreateBuildInput {
+  id: String
   recipe: RecipeInput!
   buildName: String!
   instructions: String
