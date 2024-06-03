@@ -25,7 +25,7 @@ export default function IngredientDrop({
   }, [ingredients]);
 
   return (
-    <div className="border-2 flex flex-col w-80 p-4 items-center">
+    <div className="flex w-80 flex-col items-center border-2 p-4">
       <MuiDropDown
         options={list}
         handleChange={ingredientChange}

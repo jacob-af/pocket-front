@@ -79,7 +79,6 @@ export const PUBLIC_RECIPE: TypedDocumentNode<{
             description
           }
           amount
-          #unit
           unit {
             id
             abbreviation
@@ -192,6 +191,7 @@ export const USER_RECIPES: TypedDocumentNode<{ userRecipes: Recipe[] }> = gql`
         ice
         image
         glassware
+        permission
         createdBy {
           id
           userName
