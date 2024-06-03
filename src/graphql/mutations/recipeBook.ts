@@ -145,3 +145,14 @@ export const REMOVE_BOOK_PERMISSION = gql`
     }
   }
 `;
+
+export const UPLOAD_BOOK = gql`
+  mutation uploadBook(
+    $bookId: String!
+    $updateManyBuildInput: [UpdateBuildInput]!
+  ) {
+    uploadBook(bookId: $bookId, updateManyBuildInput: $updateManyBuildInput) {
+      message
+    }
+  }
+`;

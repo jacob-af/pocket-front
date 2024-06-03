@@ -1,11 +1,20 @@
 import * as d3 from "d3";
 
-import { CreateBuildInput, TouchInput } from "@/__generated__/graphql";
+import {
+  CreateBuildInput,
+  TouchInput,
+  UpdateBuildInput
+} from "@/__generated__/graphql";
 import React, { useState } from "react";
 
-const CSVtoJSON = () => {
-  const [jsonData, setJsonData] = useState<CreateBuildInput[]>([]);
+import { UPLOAD_BOOK } from "@/graphql/mutations/recipeBook";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/navigation";
+
+const CSVtoJSON = ({ bookId }: { bookId: string }) => {
+  const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadBook, feedback] = useMutation(UPLOAD_BOOK);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target?.files?.[0]) {
@@ -13,15 +22,15 @@ const CSVtoJSON = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (selectedFile) {
       const fileReader = new FileReader();
-      fileReader.onload = event => {
+      fileReader.onload = async event => {
         if (event.target) {
           const csvData = event.target.result;
-          const data = d3.csvParse(csvData as string);
+          const parsedData = d3.csvParse(csvData as string);
 
-          const formattedData: CreateBuildInput[] = data.map(row => {
+          const formattedData: UpdateBuildInput[] = parsedData.map(row => {
             const touchArray: TouchInput[] = [];
             for (let i = 1; i <= touchArray.length + 1; i++) {
               if (
@@ -38,31 +47,38 @@ const CSVtoJSON = () => {
             }
 
             return {
-              recipe: { name: row.Name },
-              about: row.About,
+              buildId: row.BuildId || "",
+              recipe: {
+                name: row.Name,
+                about: row.About
+              },
               buildName: row["Build Name"],
               glassware: row.Glassware,
               ice: row.Ice,
               instructions: row.Instructions,
+              image: row.Image,
               touchArray
             };
           });
 
-          setJsonData(formattedData);
+          const { data } = await uploadBook({
+            variables: {
+              updateManyBuildInput: formattedData,
+              bookId
+            }
+          });
+          console.log(data);
         }
       };
       fileReader.readAsText(selectedFile);
+      router.push("/db/recipeBook");
     }
   };
 
   return (
-    <div>
-      <h3>Upload CSV File</h3>
+    <div className="flex flex-col">
       <input type="file" onChange={handleFileUpload} />
       <button onClick={handleUpload}>Upload</button>
-      <pre className="max-w-2xl text-wrap">
-        {JSON.stringify(jsonData, null, 2)}
-      </pre>
     </div>
   );
 };

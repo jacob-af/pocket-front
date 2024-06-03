@@ -73,7 +73,8 @@ function convertToCSV(data: Build[]): string {
     "Build Name",
     "Glassware",
     "Ice",
-    "Instructions"
+    "Instructions",
+    "Image"
   ];
 
   const maxIngredients = Math.max(...data.map(item => item.touch.length));
@@ -94,12 +95,13 @@ function convertToCSV(data: Build[]): string {
       item.buildName,
       item.glassware,
       item.ice,
-      `"${item.instructions}"`
+      `"${item.instructions}"`,
+      item.image
     ];
     for (let i = 0; i < maxIngredients; i++) {
       const touch = item.touch[i];
       row.push(touch?.ingredient.name ? touch.ingredient.name : "");
-      row.push(touch?.amount ? touch.amount.toString() : "");
+      row.push(touch?.amount ? `"${touch.amount.toString()}"` : "");
       row.push(touch?.unit.abbreviation ? touch.unit.abbreviation : "");
     }
 

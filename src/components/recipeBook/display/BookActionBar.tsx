@@ -1,6 +1,7 @@
 import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 
 import { AddRecipeToBookModal } from "@/components/modals/AddRecipeToBook";
+import CSVtoJSON from "@/components/SharedComponents/RecipeCSVUpload";
 import { DeleteBookButton } from "@/components/buttons/DeleteBook";
 import { DownloadRecipeBook } from "@/components/SharedComponents/RecipeBookDownload";
 import { EDIT_BOOK } from "@/graphql/mutations/recipeBook";
@@ -8,6 +9,7 @@ import { EditBookModal } from "@/components/modals/EditBookModal";
 import EditRecipeBookButton from "@/components/buttons/EditRecipeBookButton";
 import { RecipeBook } from "@/__generated__/graphql";
 import { ShareBookModal } from "@/components/modals/ShareBookModal";
+import { UploadBookModal } from "@/components/modals/UploadBookModal";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
@@ -19,6 +21,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   const router = useRouter();
   const [openBook, setOpenBook] = useState(false);
   const [openShare, setOpenShare] = useState(false);
+  const [openUpload, setOpenUpload] = useState(false);
 
   function addRecipe() {
     setOpenBook(!openBook);
@@ -26,6 +29,9 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
 
   function handleShare() {
     setOpenShare(!openShare);
+  }
+  function handleUpload() {
+    setOpenUpload(!openUpload);
   }
 
   if (!session) {
@@ -45,6 +51,11 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
         <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-2xl flex-col items-center justify-center xl:mb-0">
           <AddRecipeToBookModal open={openBook} toggleopen={addRecipe} />
           <ShareBookModal open={openShare} toggleopen={handleShare} />
+          <UploadBookModal
+            open={openUpload}
+            toggleopen={handleUpload}
+            bookId={book.id}
+          />
           <div className="flex w-full max-w-2xl flex-row items-center justify-around text-xs">
             <EditRecipeBookButton />
             <button onClick={addRecipe}>
@@ -54,6 +65,10 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
             <button onClick={handleShare}>
               <div>Share</div>
               <div>Book</div>
+            </button>
+            <button onClick={handleUpload}>
+              <div>Upload</div>
+              <div>CSV</div>
             </button>
             <DownloadRecipeBook name={book.name} />
             {book.createdBy.id === session.user.id && <DeleteBookButton />}
