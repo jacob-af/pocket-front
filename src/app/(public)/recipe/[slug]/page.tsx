@@ -39,7 +39,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   );
   console.log(filteredBuilds);
   return (
-    <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
+    <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-24">
       <RecipeCard recipe={data.publicRecipe} />
       <BuildNavBar builds={filteredBuilds} />
     </div>

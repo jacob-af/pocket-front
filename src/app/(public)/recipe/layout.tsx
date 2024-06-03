@@ -7,7 +7,7 @@ export default async function Dashboard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center overflow-hidden">
+    <main className="flex min-h-screen w-screen flex-col items-center overflow-hidden pt-24">
       <RecipeLoader />
       {children}
       <div className="bg-background fixed top-0 z-20 flex w-full justify-between p-2">
