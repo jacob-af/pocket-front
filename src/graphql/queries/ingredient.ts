@@ -1,5 +1,6 @@
+import { TypedDocumentNode, gql } from "@apollo/client";
+
 import { Ingredient } from "@/__generated__/graphql";
-import { gql, TypedDocumentNode } from "@apollo/client";
 
 export const ALL_INGREDIENTS: TypedDocumentNode<{
   ingredients: Ingredient[];
@@ -9,6 +10,17 @@ export const ALL_INGREDIENTS: TypedDocumentNode<{
       id
       description
       name
+    }
+  }
+`;
+
+export const STOCK_LIST: TypedDocumentNode<{ stockList: Ingredient[] }> = gql`
+  query stockList($inventoryId: String) {
+    stockList(inventoryId: $inventoryId) {
+      id
+      description
+      name
+      pricePerOunce
     }
   }
 `;

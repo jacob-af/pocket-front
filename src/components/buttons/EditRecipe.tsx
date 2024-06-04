@@ -40,7 +40,8 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
             ...unit,
             id: unit.id || "" // Provide a default value if Unit.id is undefined
           },
-          order: index
+          order: index,
+          cost: 0
         };
       }
     );

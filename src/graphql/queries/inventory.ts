@@ -6,8 +6,8 @@ export const USER_INVENTORIES: TypedDocumentNode<{
 }> = gql`
   query UserInventory {
     userInventory {
-      name
       id
+      name
       description
     }
   }

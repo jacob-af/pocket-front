@@ -6,23 +6,15 @@ import { auth } from "@/lib/auth";
 import { getClient } from "@/lib/client";
 
 export default async function LoadIngredients() {
-  const session = await auth();
   const client = await getClient();
   try {
     const { data }: ApolloQueryResult<{ ingredients: Ingredient[] }> =
       await client.query({
         query: ALL_INGREDIENTS
       });
+    const ingredients = data?.ingredients;
 
-    const sortedIngredients: Ingredient[] = [...data?.ingredients].sort(
-      (a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-        return nameA.localeCompare(nameB);
-      }
-    );
-
-    return <IngredientDrop ingredients={sortedIngredients} />;
+    return <IngredientDrop ingredients={ingredients} />;
   } catch (error) {
     console.log(error);
   }

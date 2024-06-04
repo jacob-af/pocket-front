@@ -1,5 +1,6 @@
 "use client";
 
+import { ChangeEvent, useEffect } from "react";
 import { unitList, unitType } from "@/graphql/reactiveVar/unit";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 
@@ -7,7 +8,6 @@ import { Recipe } from "@/__generated__/graphql";
 import ShortCard from "@/components/recipe/display/ShortCard";
 import { UNIT_TYPES } from "@/graphql/queries/unit";
 import { USER_RECIPES } from "@/graphql/queries/recipe";
-import { useEffect } from "react";
 
 export default function UnitSelector() {
   const type = useReactiveVar(unitType);
@@ -22,7 +22,7 @@ export default function UnitSelector() {
     console.log(unitList());
   }, [type, fetchUnits]);
 
-  const onChange = (event: any) => {
+  const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     unitType(event.target.value);
   };
 

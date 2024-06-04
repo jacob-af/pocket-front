@@ -76,7 +76,11 @@ export const touchIngredientChange: DropDownSelectFunction = ({
   const touches = touchArray();
   const newTouch = {
     ...touches[index],
-    ingredient: { id: value.id, name: value.name }
+    ingredient: {
+      id: value.id,
+      name: value.name,
+      pricePerOunce: value.pricePerOunce ?? 0
+    }
   };
   const newTouches = [...touches];
   newTouches.splice(index, 1, newTouch);

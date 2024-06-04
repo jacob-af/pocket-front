@@ -277,3 +277,20 @@ export const BUILD_PERMISSIONS: TypedDocumentNode<{
     }
   }
 `;
+
+export const COST_TOUCH_ARRAY = gql`
+  query costTouchArray($touches: [TouchInput], $inventoryId: String) {
+    costTouchArray(touches: $touches, inventoryId: $inventoryId) {
+      cost
+      amount
+      ingredient {
+        name
+        id
+      }
+      unit {
+        abbreviation
+      }
+      order
+    }
+  }
+`;
