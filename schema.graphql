@@ -32,6 +32,7 @@ type Query {
   costBuild(buildId: String, inventoryId: String): Cost
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
+  stockList(inventoryId: String): [Ingredient]
   allInventory: [Inventory]
   oneInventory(inventoryId: String): Inventory
   userInventory: [Inventory]
@@ -345,6 +346,7 @@ type Ingredient {
   id: ID!
   name: String!
   description: String
+  pricePerOunce(inventoryId: String): Float
 }
 
 input CreateIngredientInput {
