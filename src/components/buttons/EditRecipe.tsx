@@ -35,7 +35,10 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         return {
           amount,
           id,
-          ingredient,
+          ingredient: {
+            ...ingredient,
+            pricePerOunce: 0
+          },
           unit: {
             ...unit,
             id: unit.id || "" // Provide a default value if Unit.id is undefined
