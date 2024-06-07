@@ -9,7 +9,6 @@ import { Tab, Tabs } from "@mui/material";
 import {
   allRecipesList,
   newRecipeInfo,
-  selectedRecipe,
   touchArray
 } from "@/graphql/reactiveVar/recipes";
 import { useEffect, useState } from "react";
@@ -49,7 +48,6 @@ export default function AddRecipe() {
 
   // Update reactive variables when the lists change
   useEffect(() => {
-    console.log("unconditional three");
     if (data?.publicRecipeList) {
       allRecipesList(data?.publicRecipeList);
     }
@@ -62,97 +60,6 @@ export default function AddRecipe() {
   }, [data?.publicRecipeList, data?.ingredients, recipeInfo, router]);
 
   const submitRecipe = useSubmitRecipe();
-  // const submitRecipe = async () => {
-  //   console.log(touches);
-  //   try {
-  //     if (recipeInfo.newRecipe) {
-  //       const { data } = await updateRecipe({
-  //         variables: {
-  //           updateRecipeInput: {
-  //             id: recipeInfo.id,
-  //             name: recipeInfo.name,
-  //             about: recipeInfo.about,
-  //             build: {
-  //               buildId: recipeInfo.id,
-  //               buildName: recipeInfo.buildName,
-  //               instructions: recipeInfo.instructions,
-  //               glassware: recipeInfo.glassware,
-  //               ice: recipeInfo.ice,
-  //               image: recipeInfo.image,
-  //               isPublic: true,
-  //               touchArray: touches.map(({ amount, id, ingredient, Unit }) => {
-  //                 return {
-  //                   amount,
-  //                   id,
-  //                   ingredient: { id: ingredient.id, name: ingredient.name },
-  //                   Unit: { id: Unit.id, abbreviation: Unit.abbreviation }
-  //                 };
-  //               }),
-  //               permission: recipeInfo.permission
-  //             }
-  //           }
-  //         }
-  //       });
-  //       console.log(data);
-  //       alertList([
-  //         ...alerts,
-  //         {
-  //           code: "success",
-  //           message: `${recipeInfo.name} successfully updated`
-  //         }
-  //       ]);
-  //     } else {
-  //       console.log(recipeInfo.name);
-  //       const { data } = await updateBuild({
-  //         variables: {
-  //           updateBuildInput: {
-  //             buildId: recipeInfo.id,
-  //             recipe: { name: recipeInfo.name },
-  //             buildName: recipeInfo.buildName,
-  //             instructions: recipeInfo.instructions,
-  //             glassware: recipeInfo.glassware,
-  //             ice: recipeInfo.ice,
-  //             image: recipeInfo.image,
-  //             isPublic: true,
-  //             touchArray: touches.map(({ amount, id, ingredient, Unit }) => {
-  //               return {
-  //                 amount,
-  //                 id,
-  //                 ingredient: { id: ingredient.id, name: ingredient.name },
-  //                 Unit: { id: Unit.id, abbreviation: Unit.abbreviation }
-  //               };
-  //             }),
-  //             permission: recipeInfo.permission
-  //           }
-  //         }
-  //       });
-  //       console.log(data);
-  //       alertList([
-  //         ...alerts,
-  //         {
-  //           code: "success",
-  //           message: `Build "${recipeInfo.buildName}" successfully updated for ${recipeInfo.name}`
-  //         }
-  //       ]);
-  //     }
-  //     selectedRecipe({
-  //       id: "",
-  //       name: "",
-  //       about: "",
-  //       publicBuild: [],
-  //       userBuild: []
-  //     });
-  //     router.push(`/db/recipe/${recipeInfo.name}`);
-  //   } catch (error) {
-  //     let errorMessage = "An unknown error occurred";
-  //     if (error instanceof Error) {
-  //       errorMessage = error.message;
-  //     }
-  //     alertList([...alerts, { code: "error", message: errorMessage }]);
-  //     console.log(error);
-  //   }
-  // };
-
   // Handle loading and error states
   if (loading) {
     return <div>Loading...</div>; // Display a loading message

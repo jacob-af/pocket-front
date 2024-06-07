@@ -16,7 +16,6 @@ import PictureUpload from "@/components/recipe/input/PictureUpload";
 import { RECIPES_AND_INGREDIENTS } from "@/graphql/queries/recipe";
 import RecipeInput from "@/components/recipe/input";
 import Review from "@/components/recipe/input/Review";
-import { alertList } from "@/graphql/reactiveVar/alert";
 import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
 import { cutive } from "@/lib/cutive";
 import useAddRecipe from "@/hooks/useAddRecipe";
