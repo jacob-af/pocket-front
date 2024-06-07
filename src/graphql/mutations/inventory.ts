@@ -13,3 +13,11 @@ export const CREATE_MANY_STOCKS = gql`
     }
   }
 `;
+
+export const CREATE_STOCK = gql`
+  mutation createStock($createStock: CreateStockInput, $inventoryId: String) {
+    createStock(createStock: $createStock, inventoryId: $inventoryId) {
+      amount
+    }
+  }
+`;

@@ -32,7 +32,6 @@ export default function IngredientDrop({
         index={99}
         currentValue={selected}
       />
-      <div className="pt-2">{selected ? selected.description : ""}</div>
     </div>
   );
 }

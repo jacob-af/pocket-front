@@ -26,14 +26,17 @@ export function InventoryTable() {
   });
 
   useEffect(() => {
-    getData({
-      variables: {
-        inventoryId: inventory.id,
-        skip: 0,
-        take: itemsPerPage
-      }
-    });
-  }, [getData]);
+    if (inventory.id !== "") {
+      console.log(inventory.id);
+      getData({
+        variables: {
+          inventoryId: inventory.id,
+          skip: 0,
+          take: itemsPerPage
+        }
+      });
+    }
+  }, [getData, inventory]);
 
   const handleNextPage = () => {
     const skip = (currentPage + 1) * itemsPerPage - itemsPerPage;

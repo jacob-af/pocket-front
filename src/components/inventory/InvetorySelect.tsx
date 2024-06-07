@@ -35,7 +35,6 @@ export default function InventoryDrop({
         index={99}
         currentValue={selected}
       />
-      <div className="pt-2">{selected ? selected.description : ""}</div>
     </div>
   );
 }
