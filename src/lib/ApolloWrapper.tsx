@@ -45,7 +45,7 @@ const cache = new NextSSRInMemoryCache({
       keyFields: ["name"]
     },
     RecipeBook: {
-      keyFields: ["name"]
+      keyFields: ["id"]
     },
     Unit: {
       keyFields: ["abbreviation"]
