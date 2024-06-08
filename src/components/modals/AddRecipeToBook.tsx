@@ -132,9 +132,9 @@ export const AddRecipeToBookModal = ({
                       key={build.id}
                       className="short-card flex justify-between"
                     >
-                      <div>
-                        {/* {build.recipe.name} */}
-                        <div className="text-xxs">{build.buildName}</div>
+                      <div className="flex items-end justify-end">
+                        <span className="pr-2">{build.recipe.name}:</span>
+                        <span className="text-sm">{build.buildName}</span>
                       </div>
                       {book.userBuild &&
                       book.userBuild.some(b => b.id === build.id) ? (
