@@ -139,6 +139,9 @@ export const USER_RECIPE_LIST: TypedDocumentNode<{
         id
         buildName
         permission
+        recipe {
+          name
+        }
       }
     }
   }
