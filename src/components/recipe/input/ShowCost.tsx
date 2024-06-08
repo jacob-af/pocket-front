@@ -1,3 +1,5 @@
+"use client";
+
 import { touchArray } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
