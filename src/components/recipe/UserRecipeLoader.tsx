@@ -35,19 +35,17 @@ export default function RecipeLoader() {
   }
 
   return (
-    <div className="fixed top-14 z-30 h-16">
-      <div className="flex w-72">
-        <RecipeDropDown
-          recipes={recipeList}
-          loading={
-            recipeList.length === 0 && loading
-              ? "Loading..."
-              : recipeList.length > 0 && loading
-              ? `Updating...`
-              : `Recipe Search`
-          }
-        />
-      </div>
+    <div className="flex w-72">
+      <RecipeDropDown
+        recipes={recipeList}
+        loading={
+          recipeList.length === 0 && loading
+            ? "Loading..."
+            : recipeList.length > 0 && loading
+            ? `Updating...`
+            : `Recipe Search`
+        }
+      />
     </div>
   );
 }
