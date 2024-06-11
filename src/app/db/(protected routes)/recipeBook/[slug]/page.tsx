@@ -10,26 +10,19 @@ import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { useEffect } from "react";
 
 export default function RecipeBook({ params }: { params: { slug: string } }) {
-  const book = useReactiveVar(selectedRecipeBook);
   const q = decodeURIComponent(params.slug);
   console.log(q);
   const { data, loading, error } = useQuery(GET_RECIPE_BOOK, {
     variables: { name: q },
-    //fetchPolicy: "cache-and-network",
-    onCompleted: data => {
-      console.log(data);
-      //selectedRecipeBook(data.book);
-    }
+    fetchPolicy: "cache-and-network"
   });
-  console.log(data);
 
   useEffect(() => {
-    console.log(data);
-    if (!loading && data?.book) {
-      console.log(data.book);
+    console.log(data?.book);
+    if (data?.book) {
       selectedRecipeBook(data.book);
     }
-  }, [data, loading]);
+  }, [data?.book]);
 
   if (loading) {
     return <SkeletonCover />;
@@ -41,7 +34,7 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
       <div className="fixed left-1/2 top-1/2 flex">There is no page here</div>
     );
   }
-  if (!book?.userBuild) {
+  if (!data?.book?.userBuild) {
     console.log(error);
     return (
       <div className="fixed left-1/2 top-1/2 flex">There is no page here</div>
@@ -52,7 +45,7 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
   return (
-    <div className="bg-contrast box-border flex h-screen w-full max-w-2xl flex-col items-center justify-center">
+    <div className="bg-contrast box-border flex h-screen w-full max-w-4xl flex-col items-center justify-center">
       <div className="m-0 mt-24 box-border grid h-full w-full grid-cols-1 gap-4 overflow-y-scroll md:grid-cols-2 xl:grid-cols-3">
         {columnConfigurations.map((columns, index) =>
           //{/* Create a div for each column configuration */}
@@ -65,16 +58,15 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
                 index === 2 ? "hidden xl:grid" : ""
               }`}
             >
-              {book.userBuild
-                .filter((_, i) => i % num === columnIndex)
-                .map(build => (
-                  <ShortCard key={build.id} build={build} />
-                ))}
+              {data.book &&
+                data.book.userBuild
+                  .filter((_, i) => i % num === columnIndex)
+                  .map(build => <ShortCard key={build.id} build={build} />)}
             </div>
           ))
         )}
       </div>
-      <BookNavBar book={book} />
+      <BookNavBar book={data.book} />
     </div>
   );
 }
