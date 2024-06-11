@@ -35,7 +35,7 @@ const CSVtoJSON = ({ bookId }: { bookId: string }) => {
             const formattedData: UpdateBuildInput[] = parsedData.map(
               (row, index) => {
                 const touchArray: TouchInput[] = [];
-                for (let i = 1; i <= touchArray.length + 1; i++) {
+                for (let i = 1; i <= 9; i++) {
                   if (
                     row[`Ingredient ${i}`] &&
                     row[`Amount ${i}`] &&
