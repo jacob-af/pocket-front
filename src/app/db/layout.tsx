@@ -16,7 +16,6 @@ export default async function Dashboard({
   return (
     <main className="box-border flex min-h-screen w-screen overflow-x-hidden">
       <SideBar />
-      <RightSideBar />
 
       <div className="box-border flex h-full w-screen flex-col items-center justify-center overflow-y-auto overflow-x-hidden">
         {children}
