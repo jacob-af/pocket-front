@@ -48,7 +48,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
   return (
     <>
       {(book.permission === "OWNER" || book.permission === "MANAGER") && (
-        <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-2xl flex-col items-center justify-center xl:mb-0">
+        <nav className="bg-background z-20 mb-16 mt-auto box-border flex h-20 w-screen max-w-4xl flex-col items-center justify-center xl:mb-0">
           <AddRecipeToBookModal open={openBook} toggleopen={addRecipe} />
           <ShareBookModal open={openShare} toggleopen={handleShare} />
           <UploadBookModal
