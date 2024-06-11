@@ -34,7 +34,7 @@ export const SIGNUP: TypedDocumentNode<AuthPayload> = gql`
 `;
 
 export const GOOGLE_SIGNIN = gql`
-  mutation Mutation(
+  mutation GoogleSignIn(
     $googleUserId: String!
     $email: String!
     $name: String!
