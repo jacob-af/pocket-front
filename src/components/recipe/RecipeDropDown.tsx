@@ -3,9 +3,11 @@
 //import { recipeSelect } from "./recipeActions";
 import { selectedRecipe, userRecipeList } from "@/graphql/reactiveVar/recipes";
 
+import Dropdown from "../SharedComponents/Dropdown";
 import { ListItem } from "@/types/util";
 import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { Recipe } from "@/__generated__/graphql";
+import levenshteinSortingAlgorithm from "@/components/SharedComponents/Levenshtein";
 import { useEffect } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/navigation";
@@ -28,7 +30,6 @@ export default function RecipeDropDown({
 
   const recipeSelect = (newValue: ListItem) => {
     selectedRecipe(newValue as Recipe);
-    console.log(newValue.name, "hitting rec selec");
     if (session?.user) {
       router.push(`/db/recipe/${newValue.name}`);
     } else {
@@ -38,15 +39,13 @@ export default function RecipeDropDown({
 
   return (
     <div className="z-20 w-full">
-      <MuiDropDown
-        options={recipes as ListItem[]}
-        handleChange={recipeSelect}
-        currentValue={
-          selected.name !== ""
-            ? (selected as ListItem)
-            : { name: loading, id: "Arbitrary" }
+      <Dropdown
+        items={recipes as ListItem[]}
+        selectedValue={selected as ListItem}
+        sortingAlgorithm={(a, b) =>
+          levenshteinSortingAlgorithm(a, b, selected.name)
         }
-        index={97}
+        onSelect={recipeSelect}
       />
     </div>
   );

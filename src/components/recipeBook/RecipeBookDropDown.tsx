@@ -1,8 +1,10 @@
 "use client";
 
+import Dropdown from "@/components/SharedComponents/Dropdown";
 import { ListItem } from "@/types/util";
 import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
 import { RecipeBook } from "@/__generated__/graphql";
+import levenshteinSortingAlgorithm from "../SharedComponents/Levenshtein";
 //import { recipeSelect } from "./recipeActions";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
 import { useReactiveVar } from "@apollo/client";
@@ -19,20 +21,20 @@ export default function RecipeBookDropDown({
   const router = useRouter();
 
   const recipeBookSelect = (newValue: ListItem) => {
+    console.log(newValue);
+    selectedRecipeBook(newValue as RecipeBook);
     router.push(`/db/recipeBook/${newValue.name}`);
   };
 
   return (
     <div className="z-20 w-full">
-      <MuiDropDown
-        options={recipeBooks as ListItem[]}
-        handleChange={recipeBookSelect}
-        currentValue={
-          selected.name !== ""
-            ? (selected as ListItem)
-            : { name: "loading", id: "Arbitrary" }
+      <Dropdown
+        items={recipeBooks as ListItem[]}
+        selectedValue={selected as ListItem}
+        sortingAlgorithm={(a, b) =>
+          levenshteinSortingAlgorithm(a, b, selected.name)
         }
-        index={97}
+        onSelect={recipeBookSelect}
       />
     </div>
   );
