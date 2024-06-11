@@ -35,7 +35,6 @@ export const GET_RECIPE: TypedDocumentNode<{
             description
           }
           amount
-          #unit
           unit {
             id
             abbreviation
