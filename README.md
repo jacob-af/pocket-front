@@ -3,7 +3,7 @@ Pocket Bar Book is a full stack Typescript application built with Next.js, Tailw
 Current functionality allows users to create, edit, and view cocktails recipes, add them to recipe books, and share individual recipes and books too.
 
 Current to do list:
-- Bulk upload and download of builds for user
+&#10003; Bulk upload and download of builds for user
 - Pull to refresh
 - create UI for adding stock
 - finish crud for stock
@@ -36,7 +36,7 @@ Recipe Operations
 - [ &#10003; ][ &#10003; ] Change Build Permission
 - [ &#10003; ][ &#10003; ] Remove Build Permission
 - [ x ][ x ] Specialized Recipe Search
-- [ x ][ x ] Manage Recipe with CSV
+- [ &#10003; ][ &#10003; ] Manage Recipe with CSV
 
 Ingredient Operations
 [API][UI]
