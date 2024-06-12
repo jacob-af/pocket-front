@@ -95,7 +95,11 @@ const useSubmitRecipe = () => {
         publicBuild: [],
         userBuild: []
       });
-      router.push(`/db/recipe/${recipeInfo.name}`);
+      router.push(
+        `/db/recipe/${encodeURIComponent(recipeInfo.name)}/${encodeURIComponent(
+          recipeInfo.buildName
+        )}`
+      );
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
