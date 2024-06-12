@@ -68,7 +68,17 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
         setCurrentPage(prevPage => prevPage + 1);
       }
     }, 50);
-  }, [hasMore, getData, currentPage, loading, scrollOffset]);
+  }, [hasMore, getData, currentPage, loading, scrollOffset, itemsPerPage]);
+
+  const handleRefresh = () => {
+    console.log("handleRefresh");
+    getData({
+      variables: {
+        skip: 0,
+        take: itemsPerPage
+      }
+    });
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -79,6 +89,7 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
     bookList,
     loading,
     error,
-    handleScroll
+    handleScroll,
+    handleRefresh
   };
 }
