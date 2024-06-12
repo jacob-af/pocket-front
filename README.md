@@ -4,10 +4,10 @@ Current functionality allows users to create, edit, and view cocktails recipes, 
 
 Current to do list:
 &#10003; Bulk upload and download of builds for user
-- Pull to refresh
-- create UI for adding stock
+&#10003; Pull to refresh
+&#10003; create UI for adding stock
 - finish crud for stock
-- Run cost while editing
+&#10003; Run cost while editing
 - Call cost for loaded recipe
 - Create polished UI Skeletons
 - Glassware selection as options for builds
