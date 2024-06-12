@@ -3,8 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 
+import PullToRefresh from "@/components/SharedComponents/PullToRefresh";
 import { Recipe } from "@/__generated__/graphql";
 import ShortCard from "@/components/recipe/display/ShortCard";
+import { Skeleton } from "@mui/material";
+import SkeletonCard from "./SkeletonCard";
 import { USER_RECIPES } from "@/graphql/queries/recipe";
 
 export function RecipeBox() {
@@ -36,6 +39,16 @@ export function RecipeBox() {
       }
     });
   }, [getData]); // Include getData to comply with linting rules
+
+  const handleRefresh = () => {
+    console.log("Refreshing");
+    getData({
+      variables: {
+        skip: 0,
+        take: itemsPerPage
+      }
+    });
+  };
 
   type CallbackFunction = () => void;
 
@@ -87,29 +100,32 @@ export function RecipeBox() {
   }
 
   return (
-    <div className="mt-10 box-border grid h-full w-full grid-flow-col grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-      {columnConfigurations.map((columns, index) =>
-        //{/* Create a div for each column configuration */}
-        columns.map((num, columnIndex) => (
-          <div
-            key={`${index}-${columnIndex}`}
-            className={`col-span-1 justify-items-center w-full ${
-              index === 0 ? "grid md:hidden" : ""
-            } ${index === 1 ? "hidden md:grid xl:hidden" : ""}${
-              index === 2 ? "hidden xl:grid" : ""
-            }`}
-          >
-            {/* Calculate the starting index for this column's builds */}
-            {recipeList
-              .flatMap(recipe => recipe.userBuild)
-              .filter((build, i) => build && i % num === columnIndex) // Ensure build is not null or undefined
-              .map(
-                (build, index) =>
-                  build && <ShortCard key={build.id + index} build={build} />
-              )}
-          </div>
-        ))
-      )}
-    </div>
+    <PullToRefresh onRefresh={handleRefresh}>
+      <div className="mt-10 box-border grid h-full w-full max-w-3xl grid-flow-col grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {columnConfigurations.map((columns, index) =>
+          //{/* Create a div for each column configuration */}
+          columns.map((num, columnIndex) => (
+            <div
+              key={`${index}-${columnIndex}`}
+              className={`col-span-1 justify-items-center w-full ${
+                index === 0 ? "grid md:hidden" : ""
+              } ${index === 1 ? "hidden md:grid xl:hidden" : ""}${
+                index === 2 ? "hidden xl:grid" : ""
+              }`}
+            >
+              {/* Calculate the starting index for this column's builds */}
+              {recipeList
+                .flatMap(recipe => recipe.userBuild)
+                .filter((build, i) => build && i % num === columnIndex) // Ensure build is not null or undefined
+                .map(
+                  (build, index) =>
+                    build && <ShortCard key={build.id + index} build={build} />
+                )}
+              {loading && <SkeletonCard />}
+            </div>
+          ))
+        )}
+      </div>
+    </PullToRefresh>
   );
 }
