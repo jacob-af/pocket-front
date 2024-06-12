@@ -17,7 +17,7 @@ import localForage from "localforage";
 import { useRouter } from "next/navigation";
 
 function Button() {
-  //const { data: session, } = useSession();
+  const { update } = useSession();
   const [logOut, { loading, client }] = useMutation(LOG_OUT);
   const [session, setSession] = useState<Session | null>(null);
 
@@ -29,6 +29,16 @@ function Button() {
 
     fetchSession();
   }, []);
+
+  useEffect(() => {
+    async function fetchSession() {
+      const sess = await getSession();
+      if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
+        update({ action: "New Tokens" });
+      }
+    }
+    fetchSession();
+  });
 
   const onClick = async () => {
     try {
