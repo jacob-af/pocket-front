@@ -70,7 +70,7 @@ export function BuildNavBar({ builds }: { builds: Build[] }) {
   }
 
   return (
-    <nav className="z-10 mt-auto box-border flex h-10 w-screen items-center justify-center">
+    <nav className="fixed bottom-20 box-border flex h-10 w-screen items-center justify-center md:bottom-10">
       <div className="mx-7 grid grid-cols-5 gap-1">
         <div className="col-span-1 flex w-full items-center justify-center">
           <button onClick={handlePrevRecipe}>
