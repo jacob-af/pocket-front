@@ -18,18 +18,18 @@ export const authOptions: NextAuthOptions = {
   session: { maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
     async jwt({ token, user, account, profile, session, trigger }) {
-      console.log("jwt action", token.name, session);
+      console.log("jwt action", token.name, token.picture);
       if (user) {
         if (account?.provider === "google" && profile) {
-          console.log(token, "token inset");
           const client = await getClient();
+          console.log(token.picture, "token inset");
           const { data } = await client.mutate({
             mutation: GOOGLE_SIGNIN,
             variables: {
               googleUserId: account.providerAccountId,
               email: profile.email,
               name: profile.name,
-              //image: token.picture,
+              image: token.picture,
               accessToken: account.access_token,
               tokenExpiry: account.expires_at
                 ? new Date(account?.expires_at * 1000)
@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
             id: user.id,
             name: user.userName,
             email: user.email,
-            image: user.image,
+            image: token.picture || user.image,
             accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
             accessToken: accessToken,
             refreshToken: refreshToken
@@ -61,7 +61,6 @@ export const authOptions: NextAuthOptions = {
       }
       //This call back is triggered from the client, a better implementation surely exists.
       if (trigger === "update" && session.action === "New Tokens") {
-        console.log("refresh update");
         try {
           const client = await getClient();
           const { data } = await client.mutate({
@@ -93,8 +92,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ token, session, user }) {
-      console.log("session callback hit");
-      console.log("user", user);
       return {
         ...session,
         user: {
