@@ -68,6 +68,7 @@ const CSVtoJSON = ({ bookId }: { bookId: string }) => {
                   ice: row.Ice,
                   instructions: row.Instructions,
                   image: row.Image,
+                  isPublic: row["Is Public"].toLowerCase() === "true",
                   touchArray
                 };
               }

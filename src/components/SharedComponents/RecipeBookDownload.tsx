@@ -74,7 +74,8 @@ function convertToCSV(data: Build[]): string {
     "Glassware",
     "Ice",
     "Instructions",
-    "Image"
+    "Image",
+    "Is Public"
   ];
 
   const maxIngredients = Math.max(...data.map(item => item.touch.length));
@@ -96,7 +97,8 @@ function convertToCSV(data: Build[]): string {
       item.glassware,
       item.ice,
       `"${item.instructions}"`,
-      item.image
+      item.image,
+      item.isPublic ? "true" : "false"
     ];
     for (let i = 0; i < maxIngredients; i++) {
       const touch = item.touch[i];
