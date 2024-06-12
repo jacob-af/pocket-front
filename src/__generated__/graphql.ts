@@ -60,6 +60,13 @@ export type AuthPayload = {
   user: User;
 };
 
+export type AuthResponse = {
+  __typename?: 'AuthResponse';
+  authType: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  userId: Scalars['String']['output'];
+};
+
 export type Build = {
   __typename?: 'Build';
   archivedBuild?: Maybe<Array<Maybe<ArchivedBuild>>>;
@@ -74,6 +81,7 @@ export type Build = {
   id: Scalars['ID']['output'];
   image?: Maybe<Scalars['String']['output']>;
   instructions?: Maybe<Scalars['String']['output']>;
+  isPublic?: Maybe<Scalars['Boolean']['output']>;
   notes?: Maybe<Scalars['String']['output']>;
   permission?: Maybe<Permission>;
   recipe: Recipe;
@@ -228,7 +236,7 @@ export type Following = {
 
 export type Ingredient = {
   __typename?: 'Ingredient';
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   pricePerOunce?: Maybe<Scalars['Float']['output']>;
@@ -291,8 +299,8 @@ export type ManyBuildInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addBuildToRecipeBook: Build;
-  addOauthAuth: AuthPayload;
-  addPasswordAuth: AuthPayload;
+  addOauthAuth: AuthResponse;
+  addPasswordAuth: AuthResponse;
   blockUser?: Maybe<StatusMessage>;
   changeBuildPermission?: Maybe<BuildPermissionResponse>;
   changeRecipeBookPermission: RecipeBookShare;
@@ -315,7 +323,7 @@ export type Mutation = {
   logout: LogoutResponse;
   removeBuild?: Maybe<Build>;
   removeBuildFromRecipeBook: StatusMessage;
-  removeIngredient?: Maybe<Ingredient>;
+  removeIngredient: StatusMessage;
   removeRecipe?: Maybe<Recipe>;
   removeRecipeBook: StatusMessage;
   removeRecipeBookPermission: StatusMessage;
@@ -429,6 +437,7 @@ export type MutationCreateRecipeArgs = {
 
 export type MutationCreateRecipeBookArgs = {
   description?: InputMaybe<Scalars['String']['input']>;
+  isPublic?: InputMaybe<Scalars['Boolean']['input']>;
   name: Scalars['String']['input'];
 };
 
@@ -611,6 +620,10 @@ export type Profile = {
   __typename?: 'Profile';
   id: Scalars['ID']['output'];
   image?: Maybe<Scalars['String']['output']>;
+  preferredBook?: Maybe<RecipeBook>;
+  preferredBookName?: Maybe<Scalars['String']['output']>;
+  preferredInventory?: Maybe<Inventory>;
+  preferredInventoryId?: Maybe<Scalars['String']['output']>;
   user?: Maybe<User>;
 };
 
@@ -621,6 +634,7 @@ export type ProfileInput = {
 
 export type Query = {
   __typename?: 'Query';
+  allBookList: Array<Maybe<RecipeBook>>;
   allInventory?: Maybe<Array<Maybe<Inventory>>>;
   allUsers: Array<Maybe<User>>;
   book?: Maybe<RecipeBook>;
@@ -719,11 +733,6 @@ export type QueryFindSomeUnitsArgs = {
 };
 
 
-export type QueryGetProfileArgs = {
-  userId?: InputMaybe<Scalars['String']['input']>;
-};
-
-
 export type QueryIngredientArgs = {
   id: Scalars['Int']['input'];
 };
@@ -806,6 +815,7 @@ export type RecipeBook = {
   editedAt?: Maybe<Scalars['DateTime']['output']>;
   editedBy?: Maybe<User>;
   id: Scalars['ID']['output'];
+  isPublic?: Maybe<Scalars['Boolean']['output']>;
   name: Scalars['String']['output'];
   permission?: Maybe<Permission>;
   publicBuild?: Maybe<Array<Maybe<Build>>>;
@@ -845,7 +855,8 @@ export enum Relationship {
 
 export type StatusMessage = {
   __typename?: 'StatusMessage';
-  message?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  message: Scalars['String']['output'];
 };
 
 export type Stock = {
@@ -950,7 +961,7 @@ export type User = {
   allBuilds?: Maybe<Array<Maybe<Build>>>;
   buildEditedBy?: Maybe<Array<Maybe<Build>>>;
   dateJoined?: Maybe<Scalars['DateTime']['output']>;
-  email?: Maybe<Scalars['EmailAddress']['output']>;
+  email: Scalars['EmailAddress']['output'];
   followedBy?: Maybe<Array<Maybe<Follower>>>;
   following?: Maybe<Array<Maybe<Following>>>;
   id: Scalars['ID']['output'];
@@ -985,16 +996,16 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, userName: string, email?: any | null, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, userName: string, email: any, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
 
 export type SignupMutationVariables = Exact<{
   createUserInput: CreateUserInput;
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', email?: any | null, id: string, userName: string } } };
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', email: any, id: string, userName: string } } };
 
-export type MutationMutationVariables = Exact<{
+export type GoogleSignInMutationVariables = Exact<{
   googleUserId: Scalars['String']['input'];
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -1003,14 +1014,14 @@ export type MutationMutationVariables = Exact<{
 }>;
 
 
-export type MutationMutation = { __typename?: 'Mutation', googleSignIn: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, userName: string, email?: any | null, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
+export type GoogleSignInMutation = { __typename?: 'Mutation', googleSignIn: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, userName: string, email: any, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
 
 export type GetTokensMutationVariables = Exact<{
   refreshToken: Scalars['String']['input'];
 }>;
 
 
-export type GetTokensMutation = { __typename?: 'Mutation', getNewTokens: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', email?: any | null, id: string, userName: string, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
+export type GetTokensMutation = { __typename?: 'Mutation', getNewTokens: { __typename?: 'AuthPayload', accessToken: string, refreshToken: string, user: { __typename?: 'User', email: any, id: string, userName: string, profile?: { __typename?: 'Profile', image?: string | null } | null } } };
 
 export type LogOutMutationVariables = Exact<{
   userId: Scalars['ID']['input'];
@@ -1024,7 +1035,7 @@ export type CreateManyIngredientsMutationVariables = Exact<{
 }>;
 
 
-export type CreateManyIngredientsMutation = { __typename?: 'Mutation', createManyIngredients: { __typename?: 'StatusMessage', message?: string | null } };
+export type CreateManyIngredientsMutation = { __typename?: 'Mutation', createManyIngredients: { __typename?: 'StatusMessage', message: string } };
 
 export type CreateManyStocksMutationVariables = Exact<{
   createManyStocks?: InputMaybe<Array<InputMaybe<CreateStockInput>> | InputMaybe<CreateStockInput>>;
@@ -1032,7 +1043,15 @@ export type CreateManyStocksMutationVariables = Exact<{
 }>;
 
 
-export type CreateManyStocksMutation = { __typename?: 'Mutation', createManyStocks?: { __typename?: 'StatusMessage', message?: string | null } | null };
+export type CreateManyStocksMutation = { __typename?: 'Mutation', createManyStocks?: { __typename?: 'StatusMessage', message: string } | null };
+
+export type CreateStockMutationVariables = Exact<{
+  createStock?: InputMaybe<CreateStockInput>;
+  inventoryId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateStockMutation = { __typename?: 'Mutation', createStock?: { __typename?: 'Stock', amount?: number | null } | null };
 
 export type CreateBookMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -1057,7 +1076,7 @@ export type RemoveRecipeBookMutationVariables = Exact<{
 }>;
 
 
-export type RemoveRecipeBookMutation = { __typename?: 'Mutation', removeRecipeBook: { __typename?: 'StatusMessage', message?: string | null } };
+export type RemoveRecipeBookMutation = { __typename?: 'Mutation', removeRecipeBook: { __typename?: 'StatusMessage', message: string } };
 
 export type AddBuildToRecipeBookMutationVariables = Exact<{
   recipeBookId: Scalars['String']['input'];
@@ -1076,7 +1095,7 @@ export type RemoveBuildMutationVariables = Exact<{
 }>;
 
 
-export type RemoveBuildMutation = { __typename?: 'Mutation', removeBuildFromRecipeBook: { __typename?: 'StatusMessage', message?: string | null } };
+export type RemoveBuildMutation = { __typename?: 'Mutation', removeBuildFromRecipeBook: { __typename?: 'StatusMessage', message: string } };
 
 export type ChangeRecipeBookPermissionMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -1086,7 +1105,7 @@ export type ChangeRecipeBookPermissionMutationVariables = Exact<{
 }>;
 
 
-export type ChangeRecipeBookPermissionMutation = { __typename?: 'Mutation', changeRecipeBookPermission: { __typename?: 'RecipeBookShare', status?: { __typename?: 'StatusMessage', message?: string | null } | null } };
+export type ChangeRecipeBookPermissionMutation = { __typename?: 'Mutation', changeRecipeBookPermission: { __typename?: 'RecipeBookShare', status?: { __typename?: 'StatusMessage', message: string } | null } };
 
 export type RemoveRecipeBookPermissionMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -1095,7 +1114,7 @@ export type RemoveRecipeBookPermissionMutationVariables = Exact<{
 }>;
 
 
-export type RemoveRecipeBookPermissionMutation = { __typename?: 'Mutation', removeRecipeBookPermission: { __typename?: 'StatusMessage', message?: string | null } };
+export type RemoveRecipeBookPermissionMutation = { __typename?: 'Mutation', removeRecipeBookPermission: { __typename?: 'StatusMessage', message: string } };
 
 export type UploadBookMutationVariables = Exact<{
   bookId: Scalars['String']['input'];
@@ -1103,7 +1122,7 @@ export type UploadBookMutationVariables = Exact<{
 }>;
 
 
-export type UploadBookMutation = { __typename?: 'Mutation', uploadBook?: { __typename?: 'StatusMessage', message?: string | null } | null };
+export type UploadBookMutation = { __typename?: 'Mutation', uploadBook?: { __typename?: 'StatusMessage', message: string } | null };
 
 export type CreateRecipeMutationVariables = Exact<{
   createRecipeInput: CreateRecipeInput;
@@ -1146,14 +1165,14 @@ export type ChangeBuildPermissionMutationVariables = Exact<{
 }>;
 
 
-export type ChangeBuildPermissionMutation = { __typename?: 'Mutation', changeBuildPermission?: { __typename?: 'BuildPermissionResponse', status?: { __typename?: 'StatusMessage', message?: string | null } | null } | null };
+export type ChangeBuildPermissionMutation = { __typename?: 'Mutation', changeBuildPermission?: { __typename?: 'BuildPermissionResponse', status?: { __typename?: 'StatusMessage', message: string } | null } | null };
 
 export type RemoveBuildPermissionMutationVariables = Exact<{
   changeBuildPermissionInput?: InputMaybe<ChangeBuildPermissionInput>;
 }>;
 
 
-export type RemoveBuildPermissionMutation = { __typename?: 'Mutation', deleteBuildPermission?: { __typename?: 'BuildPermissionResponse', status?: { __typename?: 'StatusMessage', message?: string | null } | null } | null };
+export type RemoveBuildPermissionMutation = { __typename?: 'Mutation', deleteBuildPermission?: { __typename?: 'BuildPermissionResponse', status?: { __typename?: 'StatusMessage', message: string } | null } | null };
 
 export type FollowMutationVariables = Exact<{
   followId: Scalars['String']['input'];
@@ -1161,26 +1180,26 @@ export type FollowMutationVariables = Exact<{
 }>;
 
 
-export type FollowMutation = { __typename?: 'Mutation', followUser?: { __typename?: 'StatusMessage', message?: string | null } | null };
+export type FollowMutation = { __typename?: 'Mutation', followUser?: { __typename?: 'StatusMessage', message: string } | null };
 
 export type UnFollowMutationVariables = Exact<{
   unfollowId: Scalars['String']['input'];
 }>;
 
 
-export type UnFollowMutation = { __typename?: 'Mutation', unFollowUser?: { __typename?: 'StatusMessage', message?: string | null } | null };
+export type UnFollowMutation = { __typename?: 'Mutation', unFollowUser?: { __typename?: 'StatusMessage', message: string } | null };
 
 export type IngredientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IngredientsQuery = { __typename?: 'Query', ingredients: Array<{ __typename?: 'Ingredient', id: string, description?: string | null, name: string } | null> };
+export type IngredientsQuery = { __typename?: 'Query', ingredients: Array<{ __typename?: 'Ingredient', id: string, description: string, name: string } | null> };
 
 export type StockListQueryVariables = Exact<{
   inventoryId?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type StockListQuery = { __typename?: 'Query', stockList?: Array<{ __typename?: 'Ingredient', id: string, description?: string | null, name: string, pricePerOunce?: number | null } | null> | null };
+export type StockListQuery = { __typename?: 'Query', stockList?: Array<{ __typename?: 'Ingredient', id: string, description: string, name: string, pricePerOunce?: number | null } | null> | null };
 
 export type UserInventoryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1195,19 +1214,24 @@ export type FindManyStocksQueryVariables = Exact<{
 
 export type FindManyStocksQuery = { __typename?: 'Query', findManyStocks?: Array<{ __typename?: 'Stock', price?: number | null, amount?: number | null, pricePerOunce?: number | null, ingredient?: { __typename?: 'Ingredient', name: string } | null, unit?: { __typename?: 'Unit', abbreviation: string } | null } | null> | null };
 
+export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProfileQuery = { __typename?: 'Query', getProfile: { __typename?: 'Profile', preferredBook?: { __typename?: 'RecipeBook', name: string, userBuild: Array<{ __typename?: 'Build', buildName: string, glassware?: string | null, ice?: string | null, id: string, image?: string | null, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, version?: number | null, unit: { __typename?: 'Unit', id: string, abbreviation: string }, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> }>, publicBuild?: Array<{ __typename?: 'Build', buildName: string, glassware?: string | null, ice?: string | null, id: string, image?: string | null, instructions?: string | null, notes?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string, about?: string | null }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, version?: number | null, unit: { __typename?: 'Unit', id: string, abbreviation: string }, ingredient: { __typename?: 'Ingredient', id: string, name: string } }> } | null> | null } | null } };
+
 export type GetRecipeQueryVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
 
 
-export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name: string, about?: string | null, userBuild?: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, image?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null }, unit: { __typename?: 'Unit', id: string, abbreviation: string } }> } | null> | null } | null };
+export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name: string, about?: string | null, userBuild?: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, image?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description: string }, unit: { __typename?: 'Unit', id: string, abbreviation: string } }> } | null> | null } | null };
 
 export type PublicRecipeQueryVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
 
 
-export type PublicRecipeQuery = { __typename?: 'Query', publicRecipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, publicBuild?: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, image?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null }, unit: { __typename?: 'Unit', id: string, abbreviation: string } }> } | null> | null } };
+export type PublicRecipeQuery = { __typename?: 'Query', publicRecipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null, publicBuild?: Array<{ __typename?: 'Build', id: string, buildName: string, instructions?: string | null, ice?: string | null, image?: string | null, glassware?: string | null, permission?: Permission | null, createdBy?: { __typename?: 'User', id: string, userName: string } | null, recipe: { __typename?: 'Recipe', id: string, name: string }, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description: string }, unit: { __typename?: 'Unit', id: string, abbreviation: string } }> } | null> | null } };
 
 export type FindOneBuildQueryVariables = Exact<{
   recipeName: Scalars['String']['input'];
@@ -1215,12 +1239,12 @@ export type FindOneBuildQueryVariables = Exact<{
 }>;
 
 
-export type FindOneBuildQuery = { __typename?: 'Query', findOneBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, glassware?: string | null, ice?: string | null, image?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, createdBy?: { __typename?: 'User', id: string, userName: string } | null, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description?: string | null }, unit: { __typename?: 'Unit', id: string, abbreviation: string } }> } | null };
+export type FindOneBuildQuery = { __typename?: 'Query', findOneBuild?: { __typename?: 'Build', id: string, buildName: string, instructions?: string | null, glassware?: string | null, ice?: string | null, image?: string | null, permission?: Permission | null, recipe: { __typename?: 'Recipe', id: string, name: string, about?: string | null }, createdBy?: { __typename?: 'User', id: string, userName: string } | null, touch: Array<{ __typename?: 'Touch', id: string, amount: number, order: number, ingredient: { __typename?: 'Ingredient', id: string, name: string, description: string }, unit: { __typename?: 'Unit', id: string, abbreviation: string } }> } | null };
 
 export type UserRecipeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserRecipeListQuery = { __typename?: 'Query', userRecipeList: Array<{ __typename?: 'Recipe', id: string, name: string, userBuild?: Array<{ __typename?: 'Build', id: string, buildName: string, permission?: Permission | null } | null> | null } | null> };
+export type UserRecipeListQuery = { __typename?: 'Query', userRecipeList: Array<{ __typename?: 'Recipe', id: string, name: string, userBuild?: Array<{ __typename?: 'Build', id: string, buildName: string, permission?: Permission | null, recipe: { __typename?: 'Recipe', name: string } } | null> | null } | null> };
 
 export type PublicRecipeListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1297,7 +1321,7 @@ export type QueryQuery = { __typename?: 'Query', findSomeUnits?: Array<{ __typen
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllUsersQuery = { __typename?: 'Query', allUsers: Array<{ __typename?: 'User', id: string, userName: string, email?: any | null } | null> };
+export type AllUsersQuery = { __typename?: 'Query', allUsers: Array<{ __typename?: 'User', id: string, userName: string, email: any } | null> };
 
 export type GetRelationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1307,11 +1331,12 @@ export type GetRelationsQuery = { __typename?: 'Query', getUserRelationships?: A
 
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const SignupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]} as unknown as DocumentNode<SignupMutation, SignupMutationVariables>;
-export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"googleUserId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accessToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tokenExpiry"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"googleSignIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"googleUserId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"googleUserId"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"accessToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accessToken"}}},{"kind":"Argument","name":{"kind":"Name","value":"tokenExpiry"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tokenExpiry"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
+export const GoogleSignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GoogleSignIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"googleUserId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accessToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tokenExpiry"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"googleSignIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"googleUserId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"googleUserId"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"accessToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accessToken"}}},{"kind":"Argument","name":{"kind":"Name","value":"tokenExpiry"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tokenExpiry"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GoogleSignInMutation, GoogleSignInMutationVariables>;
 export const GetTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GetTokens"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getNewTokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refreshToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetTokensMutation, GetTokensMutationVariables>;
 export const LogOutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LogOut"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loggedOut"}}]}}]}}]} as unknown as DocumentNode<LogOutMutation, LogOutMutationVariables>;
 export const CreateManyIngredientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateManyIngredients"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createManyIngredientInputs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateIngredientInput"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createManyIngredients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createManyIngredientInputs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createManyIngredientInputs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<CreateManyIngredientsMutation, CreateManyIngredientsMutationVariables>;
 export const CreateManyStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateManyStocks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createManyStocks"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateStockInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inventoryId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createManyStocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createManyStocks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createManyStocks"}}},{"kind":"Argument","name":{"kind":"Name","value":"inventoryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inventoryId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<CreateManyStocksMutation, CreateManyStocksMutationVariables>;
+export const CreateStockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createStock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createStock"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateStockInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inventoryId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createStock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createStock"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createStock"}}},{"kind":"Argument","name":{"kind":"Name","value":"inventoryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inventoryId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode<CreateStockMutation, CreateStockMutationVariables>;
 export const CreateBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRecipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateBookMutation, CreateBookMutationVariables>;
 export const UpdateRecipeBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRecipeBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"permission"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRecipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"permission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"permission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRecipeBookMutation, UpdateRecipeBookMutationVariables>;
 export const RemoveRecipeBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveRecipeBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"permission"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Permission"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeRecipeBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"permission"},"value":{"kind":"Variable","name":{"kind":"Name","value":"permission"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<RemoveRecipeBookMutation, RemoveRecipeBookMutationVariables>;
@@ -1333,10 +1358,11 @@ export const IngredientsDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const StockListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"stockList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inventoryId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stockList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"inventoryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inventoryId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"pricePerOunce"}}]}}]}}]} as unknown as DocumentNode<StockListQuery, StockListQueryVariables>;
 export const UserInventoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserInventory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userInventory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<UserInventoryQuery, UserInventoryQueryVariables>;
 export const FindManyStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindManyStocks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findManyStocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pricePerOunce"}}]}}]}}]} as unknown as DocumentNode<FindManyStocksQuery, FindManyStocksQueryVariables>;
+export const GetProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"preferredBook"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"publicBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetProfileQuery, GetProfileQueryVariables>;
 export const GetRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}},{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipeQuery, GetRecipeQueryVariables>;
 export const PublicRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"publicRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publicRecipe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}},{"kind":"Field","name":{"kind":"Name","value":"publicBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]}}]} as unknown as DocumentNode<PublicRecipeQuery, PublicRecipeQueryVariables>;
 export const FindOneBuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindOneBuild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"buildName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findOneBuild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"recipeName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeName"}}},{"kind":"Argument","name":{"kind":"Name","value":"buildName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"buildName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]} as unknown as DocumentNode<FindOneBuildQuery, FindOneBuildQueryVariables>;
-export const UserRecipeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}}]}}]}}]}}]} as unknown as DocumentNode<UserRecipeListQuery, UserRecipeListQueryVariables>;
+export const UserRecipeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserRecipeListQuery, UserRecipeListQueryVariables>;
 export const PublicRecipeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PublicRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publicRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"publicBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}}]}}]}}]}}]} as unknown as DocumentNode<PublicRecipeListQuery, PublicRecipeListQueryVariables>;
 export const RecipeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"RecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publicRecipeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ingredients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<RecipeListQuery, RecipeListQueryVariables>;
 export const UserRecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"userRecipes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRecipes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"about"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userBuild"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"buildName"}},{"kind":"Field","name":{"kind":"Name","value":"instructions"}},{"kind":"Field","name":{"kind":"Name","value":"ice"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"glassware"}},{"kind":"Field","name":{"kind":"Name","value":"permission"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"touch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserRecipesQuery, UserRecipesQueryVariables>;

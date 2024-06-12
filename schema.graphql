@@ -4,6 +4,12 @@ type AuthPayload {
   user: User!
 }
 
+type AuthResponse {
+  id: Int!
+  userId: String!
+  authType: String!
+}
+
 input CreateUserInput {
   userName: String!
   email: EmailAddress!
@@ -36,7 +42,7 @@ type Query {
   allInventory: [Inventory]
   oneInventory(inventoryId: String): Inventory
   userInventory: [Inventory]
-  getProfile(userId: String): Profile!
+  getProfile: Profile!
   findFolloweddUsersBookPermission(recipeBookId: String!): [UserBookPermission]
   publicBook(name: String): RecipeBook!
   publicBookList: [RecipeBook]!
@@ -44,6 +50,7 @@ type Query {
   book(name: String): RecipeBook
   userBookList: [RecipeBook]!
   userBooks(skip: Int, take: Int): [RecipeBook]!
+  allBookList: [RecipeBook]!
   publicRecipe(name: String!): Recipe!
   publicRecipeList: [Recipe]!
   publicRecipes(skip: Int, take: Int): [Recipe]!
@@ -83,14 +90,14 @@ type Mutation {
   logout(userId: ID!): LogoutResponse!
   getNewTokens(refreshToken: String): AuthPayload!
   createNewUser(email: String, userName: String): AuthPayload!
-  addPasswordAuth(id: String, password: String): AuthPayload!
+  addPasswordAuth(id: String, password: String): AuthResponse!
   addOauthAuth(
     id: String
     provider: String
     providerUserId: String
     accessToken: String
     tokenExpiry: DateTime
-  ): AuthPayload!
+  ): AuthResponse!
   createBuild(createBuildInput: CreateBuildInput): Build
   updateBuild(updateBuildInput: UpdateBuildInput): ArchiveResponse
   updateManyBuilds(updateManyBuildInput: [UpdateManyBuildInput]!): StatusMessage
@@ -110,10 +117,14 @@ type Mutation {
     createManyIngredientInputs: [CreateIngredientInput]!
   ): StatusMessage!
   updateIngredient(updateIngredientInput: UpdateIngredientInput!): Ingredient!
-  removeIngredient(id: String!): Ingredient
+  removeIngredient(id: String!): StatusMessage!
   createInventory(name: String, description: String): Inventory
   updateProfile(image: String): Profile!
-  createRecipeBook(name: String!, description: String): RecipeBook!
+  createRecipeBook(
+    name: String!
+    description: String
+    isPublic: Boolean
+  ): RecipeBook!
   updateRecipeBook(
     id: String!
     name: String!
@@ -199,6 +210,7 @@ type Build {
   glassware: String
   ice: String
   image: String
+  isPublic: Boolean
   permission: Permission
   touch: [Touch!]!
   touchWithCost(inventoryId: String): [Touch]
@@ -345,7 +357,7 @@ type ListItem {
 type Ingredient {
   id: ID!
   name: String!
-  description: String
+  description: String!
   pricePerOunce(inventoryId: String): Float
 }
 
@@ -388,6 +400,10 @@ type Profile {
   id: ID!
   image: String
   user: User
+  preferredBook: RecipeBook
+  preferredBookName: String
+  preferredInventory: Inventory
+  preferredInventoryId: String
 }
 
 input ProfileInput {
@@ -404,6 +420,7 @@ type RecipeBook {
   editedAt: DateTime
   createdBy: User
   editedBy: User
+  isPublic: Boolean
   permission: Permission
   userBuild: [Build!]!
   publicBuild: [Build]
@@ -565,7 +582,7 @@ type ConversionResult {
 type User {
   id: ID!
   userName: String!
-  email: EmailAddress
+  email: EmailAddress!
   dateJoined: DateTime
   lastEdited: DateTime
   following: [Following]
@@ -600,7 +617,8 @@ type Follower {
 }
 
 type StatusMessage {
-  message: String
+  message: String!
+  code: String
 }
 
 type FollowReturn {
