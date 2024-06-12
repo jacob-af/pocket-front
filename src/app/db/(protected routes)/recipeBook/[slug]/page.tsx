@@ -24,10 +24,6 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
     }
   }, [data?.book]);
 
-  // if (loading) {
-  //   return <SkeletonCover />;
-  // }
-
   if (error) {
     console.log(error);
     return (
