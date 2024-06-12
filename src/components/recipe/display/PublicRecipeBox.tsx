@@ -44,7 +44,7 @@ export function PublicRecipeBox() {
     getData({
       variables: { skip: currentPage * itemsPerPage, take: itemsPerPage }
     });
-  }, [currentPage]);
+  }, [currentPage, getData]);
 
   const [observerRef] = useLazyLoad(() => {
     if (hasMore && !loading) {
