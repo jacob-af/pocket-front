@@ -2,21 +2,18 @@
 
 import {
   ADD_BUILD_TO_BOOK,
-  CREATE_BOOK,
   REMOVE_BUILD_FROM_BOOK
 } from "@/graphql/mutations/recipeBook";
 import { Build, Permission, Recipe } from "@/__generated__/graphql";
-import React, { useEffect } from "react";
-import {
-  newBookInfo,
-  userRecipeBookList
-} from "@/graphql/reactiveVar/recipeBooks";
+import React, { MouseEvent, useEffect } from "react";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import { GET_RECIPE_BOOK } from "@/graphql/queries/recipeBook";
 import { USER_RECIPE_LIST } from "@/graphql/queries/recipe";
 import { alertList } from "@/graphql/reactiveVar/alert";
+import { newBookInfo } from "@/graphql/reactiveVar/recipeBooks";
 import { selectedRecipeBook } from "@/graphql/reactiveVar/recipeBooks";
+import { useRouter } from "next/navigation";
 import { userRecipeList } from "@/graphql/reactiveVar/recipes";
 
 export const AddRecipeToBookModal = ({
@@ -28,14 +25,15 @@ export const AddRecipeToBookModal = ({
 }) => {
   const book = useReactiveVar(selectedRecipeBook);
   const recipeList = useReactiveVar(userRecipeList);
+  const router = useRouter();
   const [addBuild] = useMutation(ADD_BUILD_TO_BOOK, {
-    refetchQueries: [GET_RECIPE_BOOK]
+    refetchQueries: [USER_RECIPE_LIST, GET_RECIPE_BOOK]
   });
   const [removeBuild] = useMutation(REMOVE_BUILD_FROM_BOOK, {
-    refetchQueries: [GET_RECIPE_BOOK]
+    refetchQueries: [USER_RECIPE_LIST, GET_RECIPE_BOOK]
   });
-  const { data, error, loading } = useQuery(USER_RECIPE_LIST, {
-    fetchPolicy: "cache-and-network"
+  const { data } = useQuery(USER_RECIPE_LIST, {
+    //fetchPolicy: "network-only"
   });
 
   useEffect(() => {
@@ -47,16 +45,22 @@ export const AddRecipeToBookModal = ({
     }
   }, [data?.userRecipeList]);
 
-  const closeModal = () => {
+  const closeModal = (e: MouseEvent) => {
+    e.preventDefault();
     newBookInfo({ name: "", description: "" });
     toggleopen();
   };
 
-  const onClick = async () => {
+  // Function to handle the click event
+  const onClick = async (e: MouseEvent) => {
+    e.preventDefault();
     toggleopen();
+    router.push(`/db/recipeBook/${encodeURIComponent(book.name)}`);
   };
 
-  const add = async (userBuild: Build) => {
+  // Function to add a build to the book
+  const add = async (userBuild: Build, e: MouseEvent) => {
+    e.preventDefault();
     console.log(userBuild.permission, book.permission);
     try {
       const res = await addBuild({
@@ -67,17 +71,18 @@ export const AddRecipeToBookModal = ({
           bookPermission: book.permission
         }
       });
-      console.log("nook: ", res);
       selectedRecipeBook({
         ...book,
-        userBuild: [...book.userBuild]
+        userBuild: [...book.userBuild, userBuild]
       });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const remove = async (build: Build) => {
+  // Function to remove a build from the book
+  const remove = async (build: Build, e: MouseEvent) => {
+    e.preventDefault();
     console.log(book.permission);
     try {
       await removeBuild({
@@ -97,6 +102,7 @@ export const AddRecipeToBookModal = ({
     }
   };
 
+  // Modal component return JSX
   return (
     <div>
       {/* Modal */}
@@ -138,11 +144,14 @@ export const AddRecipeToBookModal = ({
                       </div>
                       {book.userBuild &&
                       book.userBuild.some(b => b.id === build.id) ? (
-                        <button className="pr-6" onClick={() => remove(build)}>
+                        <button
+                          className="pr-6"
+                          onClick={e => remove(build, e)}
+                        >
                           Remove
                         </button>
                       ) : (
-                        <button className="pr-6" onClick={() => add(build)}>
+                        <button className="pr-6" onClick={e => add(build, e)}>
                           Add
                         </button>
                       )}
