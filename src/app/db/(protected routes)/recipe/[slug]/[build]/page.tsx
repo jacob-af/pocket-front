@@ -41,14 +41,6 @@ export default function Page({
     }
   }, [data?.findOneBuild, data, loading, error]);
 
-  if (loading) {
-    return (
-      <div className="mb-24 box-border flex h-full flex-col items-center justify-center overflow-scroll lg:mt-36">
-        <SkeletonCard />
-      </div>
-    );
-  }
-
   if (error || !recipe.userBuild) {
     return <div>There is no page here</div>;
   }
@@ -57,7 +49,7 @@ export default function Page({
   );
 
   return (
-    <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
+    <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-20">
       <RecipeCard recipe={recipe} />
       <BuildNavBar builds={filteredBuilds} />
     </div>

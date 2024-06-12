@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   if (loading) {
     return (
-      <div className="box-border flex h-screen w-full max-w-xl flex-col items-center py-20">
+      <div className="box-border flex h-full w-full max-w-xl flex-col items-center pb-20">
         <SkeletonCard />
       </div>
     );
@@ -41,7 +41,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   );
   console.log(filteredBuilds);
   return (
-    <div className="box-border flex h-screen max-w-xl flex-col items-center justify-center py-20">
+    <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-20 pt-10">
       <RecipeCard recipe={data.recipe} />
       <BuildNavBar builds={filteredBuilds} />
     </div>
