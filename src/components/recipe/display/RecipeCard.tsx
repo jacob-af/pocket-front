@@ -35,7 +35,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   }, [current, builds]);
 
   return (
-    <div className="max-w-2xl overflow-y-auto overflow-x-hidden px-4">
+    <div className="max-w-2xl overflow-x-hidden px-4">
       <div className="text-center text-xl">{recipe.name}</div>
       <div className="block">
         <div className="float-left hidden pr-4 md:block">
