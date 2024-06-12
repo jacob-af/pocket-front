@@ -24,9 +24,9 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
     }
   }, [data?.book]);
 
-  if (loading) {
-    return <SkeletonCover />;
-  }
+  // if (loading) {
+  //   return <SkeletonCover />;
+  // }
 
   if (error) {
     console.log(error);
@@ -58,10 +58,12 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
                 index === 2 ? "hidden xl:grid" : ""
               }`}
             >
-              {data.book &&
-                data.book.userBuild
-                  .filter((_, i) => i % num === columnIndex)
-                  .map(build => <ShortCard key={build.id} build={build} />)}
+              {data.book.userBuild
+                .filter((_, i) => i % num === columnIndex)
+                .map(build => (
+                  <ShortCard key={build.id} build={build} />
+                ))}
+              {loading && <SkeletonCover />}
             </div>
           ))
         )}

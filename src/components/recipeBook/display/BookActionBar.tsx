@@ -56,7 +56,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
             toggleopen={handleUpload}
             bookId={book.id}
           />
-          <div className="flex w-full max-w-2xl flex-row items-center justify-around text-xs">
+          <div className="flex w-full max-w-3xl flex-row items-center justify-around text-xs">
             <EditRecipeBookButton />
             <button onClick={addRecipe}>
               <div>Add/Remove</div>
