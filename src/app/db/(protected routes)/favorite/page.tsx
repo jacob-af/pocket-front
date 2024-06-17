@@ -3,6 +3,7 @@
 import { Build, Profile } from "@/__generated__/graphql";
 import { useQuery, useReactiveVar } from "@apollo/client";
 
+import BuildSkeleton from "@/components/recipe/display/BuildSkeleton";
 import { GET_PROFILE_BOOK } from "@/graphql/queries/profile";
 import ShortCard from "@/components/recipe/display/ShortCard";
 import { SkeletonCover } from "@/components/recipeBook/display/SkeletonCover";
@@ -25,8 +26,8 @@ export default function RecipeBook() {
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
   return (
-    <div className="bg-contrast box-border flex h-screen w-full max-w-3xl flex-col items-center justify-center">
-      <div className="m-0 mt-24 box-border grid h-full w-full grid-cols-1 gap-4 overflow-y-scroll md:grid-cols-2 xl:grid-cols-3">
+    <div className="box-border flex h-screen w-full max-w-3xl flex-col items-center justify-center">
+      <div className="m-0 mt-44 box-border grid h-full w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {columnConfigurations.map((columns, index) =>
           //{/* Create a div for each column configuration */}
           columns.map((num, columnIndex) => (
@@ -42,6 +43,7 @@ export default function RecipeBook() {
                 book.userBuild
                   .filter((_, i) => i % num === columnIndex)
                   .map(build => <ShortCard key={build.id} build={build} />)}
+              {loading && <BuildSkeleton />}
             </div>
           ))
         )}
