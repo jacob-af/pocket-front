@@ -404,6 +404,9 @@ type Profile {
   preferredBookName: String
   preferredInventory: Inventory
   preferredInventoryId: String
+  recipes: [Recipe]
+  builds: [Build]
+  books: [RecipeBook]
 }
 
 input ProfileInput {
@@ -587,9 +590,6 @@ type User {
   lastEdited: DateTime
   following: [Following]
   followedBy: [Follower]
-  myBuild: [Build]
-  allBuilds: [Build]
-  buildEditedBy: [Build]
   profile: Profile
 }
 
