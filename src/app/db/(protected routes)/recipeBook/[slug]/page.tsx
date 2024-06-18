@@ -17,12 +17,14 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
     fetchPolicy: "cache-and-network"
   });
 
+  const book = useReactiveVar(selectedRecipeBook);
+
   useEffect(() => {
     console.log(data?.book);
-    if (data?.book) {
+    if (!loading && data?.book) {
       selectedRecipeBook(data.book);
     }
-  }, [data?.book]);
+  }, [data?.book, loading]);
 
   if (error) {
     console.log(error);
@@ -30,12 +32,10 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
       <div className="fixed left-1/2 top-1/2 flex">There is no page here</div>
     );
   }
-  if (!data?.book?.userBuild) {
-    console.log(error);
-    return (
-      <div className="fixed left-1/2 top-1/2 flex">There is no page here</div>
-    );
-  }
+  // if (!data?.book?.userBuild) {
+  //   console.log(error);
+  //   return <div className="fixed left-1/2 top-1/2 flex">Loading....</div>;
+  // }
 
   // Define the configurations for the number of columns
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
@@ -54,17 +54,16 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
                 index === 2 ? "hidden xl:grid" : ""
               }`}
             >
-              {data.book.userBuild
-                .filter((_, i) => i % num === columnIndex)
-                .map(build => (
-                  <ShortCard key={build.id} build={build} />
-                ))}
+              {book.userBuild &&
+                book.userBuild
+                  .filter((_, i) => i % num === columnIndex)
+                  .map(build => <ShortCard key={build.id} build={build} />)}
               {loading && <SkeletonCover />}
             </div>
           ))
         )}
       </div>
-      <BookNavBar book={data.book} />
+      <BookNavBar book={book} />
     </div>
   );
 }
