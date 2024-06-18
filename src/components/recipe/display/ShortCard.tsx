@@ -8,15 +8,9 @@ import {
   TLCorner,
   TRCorner
 } from "@/components/images/ShortBorder";
-import { Build, Touch } from "@/__generated__/graphql";
-import {
-  DownArrow,
-  Expand,
-  SmallImage,
-  UpArrow
-} from "@/components/images/Images";
 
 import { BreakPoint } from "@/components/images/CardBorder";
+import { Build } from "@/__generated__/graphql";
 import { SmallCocktailPicture } from "@/components/images/CocktailPicture";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
