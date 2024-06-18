@@ -1,24 +1,15 @@
 "use client";
 
-import {
-  ApolloPayloadResult,
-  FetchResult,
-  QueryResult,
-  useMutation,
-  useReactiveVar
-} from "@apollo/client";
-import { getSession, signOut, useSession } from "next-auth/react";
+import { FetchResult, useMutation } from "@apollo/client";
+import { getSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { LOG_OUT } from "../../graphql/mutations/auth";
-import Link from "next/link";
 import { Session } from "next-auth";
 import localForage from "localforage";
-import { useRouter } from "next/navigation";
 
 function Button() {
-  const { update } = useSession();
-  const [logOut, { loading, client }] = useMutation(LOG_OUT);
+  const [logOut, { client }] = useMutation(LOG_OUT);
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
