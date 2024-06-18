@@ -16,11 +16,11 @@ export default function UserLoader() {
   });
 
   useEffect(() => {
-    console.log(data);
+    console.log(data, ": user list data");
     if (data?.getUserRelationships) {
       userList(data.getUserRelationships);
     }
-  }, [data]);
+  }, [data, data?.getUserRelationships]);
 
   if (loading) {
     return <div>Loading...</div>;

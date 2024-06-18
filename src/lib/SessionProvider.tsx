@@ -15,6 +15,7 @@ export default function NextAuthProvider({
   useEffect(() => {
     const fetchSession = async () => {
       const sessionData = await getSession();
+      console.log(sessionData);
       setSession(sessionData);
     };
     fetchSession();
