@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 
+import PublicCard from "./PublicCard";
 import PullToRefresh from "@/components/SharedComponents/PullToRefresh";
 import { Recipe } from "@/__generated__/graphql";
 import ShortCard from "@/components/recipe/display/ShortCard";
@@ -92,7 +93,7 @@ export function RecipeBox() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
+  const columnConfigurations = [[1], [2, 2]];
 
   if (error) {
     console.log(error);
@@ -101,25 +102,28 @@ export function RecipeBox() {
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
-      <div className="mt-10 box-border grid h-full w-full max-w-3xl grid-flow-col grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-10 box-border grid h-full w-full max-w-3xl grid-flow-col grid-cols-1 gap-4 lg:grid-cols-2">
         {columnConfigurations.map((columns, index) =>
           //{/* Create a div for each column configuration */}
           columns.map((num, columnIndex) => (
             <div
               key={`${index}-${columnIndex}`}
               className={`col-span-1 justify-items-center w-full ${
-                index === 0 ? "grid md:hidden" : ""
-              } ${index === 1 ? "hidden md:grid xl:hidden" : ""}${
-                index === 2 ? "hidden xl:grid" : ""
-              }`}
+                index === 0 ? "grid lg:hidden" : ""
+              } ${index === 1 ? "hidden lg:grid" : ""}`}
             >
               {/* Calculate the starting index for this column's builds */}
               {recipeList
-                .flatMap(recipe => recipe.userBuild)
-                .filter((build, i) => build && i % num === columnIndex) // Ensure build is not null or undefined
+                .filter((build, i) => build && i % num === columnIndex)
                 .map(
-                  (build, index) =>
-                    build && <ShortCard key={build.id + index} build={build} />
+                  (recipe, index) =>
+                    recipe && (
+                      <PublicCard
+                        key={recipe.id + index}
+                        recipe={recipe}
+                        index={index}
+                      />
+                    )
                 )}
               {loading && <SkeletonCard />}
             </div>
