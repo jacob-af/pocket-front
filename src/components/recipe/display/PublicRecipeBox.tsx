@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import PublicCard from "@/components/recipe/display/PublicCard";
 import { Recipe } from "@/__generated__/graphql";
+import SkeletonCard from "./SkeletonCard";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 
 export function PublicRecipeBox() {
@@ -80,6 +81,7 @@ export function PublicRecipeBox() {
                     />
                   )
               )}
+            {loading && <SkeletonCard />}
           </div>
         ))
       )}
