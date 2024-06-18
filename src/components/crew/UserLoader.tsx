@@ -14,13 +14,14 @@ export default function UserLoader() {
     skip: sessionStatus !== "authenticated",
     fetchPolicy: "network-only"
   });
+  console.log(sessionStatus, ": status");
 
   useEffect(() => {
     console.log(data, ": user list data");
     if (data?.getUserRelationships) {
       userList(data.getUserRelationships);
     }
-  }, [data, data?.getUserRelationships]);
+  }, [data, sessionStatus]);
 
   if (loading) {
     return <div>Loading...</div>;
