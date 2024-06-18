@@ -1,10 +1,22 @@
 "use client";
 
+import { getSession, useSession } from "next-auth/react";
+
 import { ProfileImage } from "./ProfileImage";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function AmILoggedIn() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
+
+  useEffect(() => {
+    async function fetchSession() {
+      const sess = await getSession();
+      if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
+        update({ action: "New Tokens" });
+      }
+    }
+    fetchSession();
+  });
 
   return (
     <div className="fixed left-2 top-2 flex flex-col items-center justify-center">

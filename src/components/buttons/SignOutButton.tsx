@@ -30,16 +30,6 @@ function Button() {
     fetchSession();
   }, []);
 
-  useEffect(() => {
-    async function fetchSession() {
-      const sess = await getSession();
-      if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
-        update({ action: "New Tokens" });
-      }
-    }
-    fetchSession();
-  });
-
   const onClick = async () => {
     try {
       if (session) {
