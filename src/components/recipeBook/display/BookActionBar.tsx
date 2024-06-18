@@ -34,10 +34,10 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
     setOpenUpload(!openUpload);
   }
 
-  if (!session) {
-    router.push("/db/recipeBook");
-    return;
-  }
+  // if (!session) {
+  //   router.push("/db/recipeBook");
+  //   return;
+  // }
 
   if (!book.createdBy) {
     console.log(book, ": no creator");
@@ -71,7 +71,7 @@ export function BookNavBar({ book }: { book: RecipeBook }) {
               <div>CSV</div>
             </button>
             <DownloadRecipeBook name={book.name} />
-            {book.createdBy.id === session.user.id && <DeleteBookButton />}
+            {book.createdBy.id === session?.user.id && <DeleteBookButton />}
           </div>
         </nav>
       )}
