@@ -38,7 +38,7 @@ export function BreakPoint() {
       width={280}
       src={"/breakpoint.png"}
       alt="simple breakpoint"
-      className="filter-primary dark:invert"
+      className="filter-primary invert dark:invert-0"
     />
   );
 }
