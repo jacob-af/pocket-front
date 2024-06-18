@@ -11,6 +11,7 @@ export default function AmILoggedIn() {
   useEffect(() => {
     async function fetchSession() {
       const sess = await getSession();
+      console.log(sess, "profile pic use effect");
       if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
         update({ action: "New Tokens" });
       }
@@ -18,6 +19,7 @@ export default function AmILoggedIn() {
     fetchSession();
   });
 
+  console.log(session, ": profile picture");
   return (
     <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
       {session?.user.name ? session.user.name : "not loaded"}
