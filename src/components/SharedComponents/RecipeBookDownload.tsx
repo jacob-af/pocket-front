@@ -91,14 +91,14 @@ function convertToCSV(data: Build[]): string {
   data.forEach(item => {
     const row = [
       item.id,
-      item.recipe.name,
+      `"${item.recipe.name}"`,
       `"${item.recipe.about}"`,
-      item.buildName,
-      item.glassware,
-      item.ice,
+      `"${item.buildName}"`,
+      `"${item.glassware}"`,
+      `"${item.ice}"`,
       `"${item.instructions}"`,
       item.image,
-      item.isPublic ? "true" : "false"
+      item.isPublic ? true : false
     ];
     for (let i = 0; i < maxIngredients; i++) {
       const touch = item.touch[i];
