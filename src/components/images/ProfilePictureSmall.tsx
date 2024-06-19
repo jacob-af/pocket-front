@@ -1,34 +1,37 @@
 "use client";
 
 import { getSession, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import { ProfileImage } from "./ProfileImage";
-import { useEffect } from "react";
+import { Session } from "next-auth/";
 
 export default function AmILoggedIn() {
   const { data: session, update, status } = useSession();
+  const [sessi, setSessi] = useState<Session | null>(null);
 
   useEffect(() => {
     async function fetchSession() {
       const sess = await getSession();
       console.log(sess, "use effect");
+      setSessi(sess);
       if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
         console.log("new tokens");
         update({ action: "New Tokens" });
       }
     }
     fetchSession();
-  });
+  }, [update]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  console.log(session, status, ": profile picture");
+  console.log(sessi, status, ": profile picture");
   return (
     <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
-      {session?.user.name ? session.user.name : "not loaded"}
-      <ProfileImage url={session?.user.image || "/portrait-placeholder.png"} />
+      {sessi?.user.name ? sessi.user.name : "not loaded"}
+      <ProfileImage url={sessi?.user.image || "/portrait-placeholder.png"} />
     </div>
   );
 }
