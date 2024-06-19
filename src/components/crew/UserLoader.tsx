@@ -24,11 +24,11 @@ export default function UserLoader() {
   }, [data, sessionStatus]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error.message}</div>;
+    return <div className="text-center">{error.message}</div>;
   }
 
   return <div className="text-center">{`${users.length} Users Loaded`}</div>;
