@@ -19,9 +19,13 @@ export default function AmILoggedIn() {
         console.log("new tokens");
         update({ action: "New Tokens" });
       }
+      if (status === "unauthenticated") {
+        console.log("auth tokens");
+        update({ action: "New Tokens" });
+      }
     }
     fetchSession();
-  }, [update]);
+  }, [update, status]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
