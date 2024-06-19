@@ -8,19 +8,14 @@ import { Session } from "next-auth/";
 
 export default function AmILoggedIn() {
   const { data: session, update, status } = useSession();
-  const [sessi, setSessi] = useState<Session | null>(null);
 
   useEffect(() => {
     async function fetchSession() {
       const sess = await getSession();
       console.log(sess, "use effect");
-      setSessi(sess);
+
       if (sess?.user && sess.user.accessTokenExpires < Date.now()) {
         console.log("new tokens");
-        update({ action: "New Tokens" });
-      }
-      if (status === "unauthenticated") {
-        console.log("auth tokens");
         update({ action: "New Tokens" });
       }
     }
@@ -28,14 +23,18 @@ export default function AmILoggedIn() {
   }, [update, status]);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
-  console.log(sessi, status, ": profile picture");
+  console.log(session, status, ": profile picture");
   return (
     <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
-      {sessi?.user.name ? sessi.user.name : "not loaded"}
-      <ProfileImage url={sessi?.user.image || "/portrait-placeholder.png"} />
+      {session?.user.name ? session.user.name : "not loaded"}
+      <ProfileImage url={session?.user.image || "/portrait-placeholder.png"} />
     </div>
   );
 }
