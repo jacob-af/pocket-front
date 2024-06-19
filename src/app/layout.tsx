@@ -2,12 +2,11 @@ import "./globals.css";
 
 import { Cutive, Old_Standard_TT, Press_Start_2P } from "next/font/google";
 import type { Metadata, Viewport } from "next";
+import { Session, getServerSession } from "next-auth";
 
 import { ApolloWrapper } from "../lib/ApolloWrapper";
-import { Session } from "next-auth";
 import SessionProvider from "@/lib/SessionProvider";
 import { cutive } from "@/lib/cutive";
-import { getSession } from "next-auth/react";
 
 const APP_NAME = "Pocket BB";
 const APP_DEFAULT_TITLE = "Pocket Bar Book";
@@ -59,12 +58,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  //const session: Session | null = await getSession();
+  const session = await getServerSession();
 
   return (
     <html lang="en" className={`${cutive.className} antialiased`}>
       <body className="h-screen w-screen overflow-x-hidden">
-        <SessionProvider>
+        <SessionProvider session={session}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </SessionProvider>
       </body>
