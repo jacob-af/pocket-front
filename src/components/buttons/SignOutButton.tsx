@@ -1,7 +1,7 @@
 "use client";
 
 import { FetchResult, useMutation } from "@apollo/client";
-import { getSession, signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { LOG_OUT } from "../../graphql/mutations/auth";
@@ -10,16 +10,17 @@ import localForage from "localforage";
 
 function Button() {
   const [logOut, { client }] = useMutation(LOG_OUT);
-  const [session, setSession] = useState<Session | null>(null);
+  //const [session, setSession] = useState<Session | null>(null);
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      const sessionData = await getSession();
-      setSession(sessionData);
-    };
+  // useEffect(() => {
+  //   const fetchSession = async () => {
+  //     const sessionData = await getSession();
+  //     setSession(sessionData);
+  //   };
 
-    fetchSession();
-  }, []);
+  //   fetchSession();
+  // }, []);
+  const { data: session } = useSession();
 
   const onClick = async () => {
     try {
