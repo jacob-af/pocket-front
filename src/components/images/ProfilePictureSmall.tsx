@@ -20,10 +20,14 @@ export default function AmILoggedIn() {
     fetchSession();
   });
 
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   console.log(session, status, ": profile picture");
   return (
     <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
-      {status === "authenticated" ? session.user.name : "not loaded"}
+      {session?.user.name ? session.user.name : "not loaded"}
       <ProfileImage url={session?.user.image || "/portrait-placeholder.png"} />
     </div>
   );

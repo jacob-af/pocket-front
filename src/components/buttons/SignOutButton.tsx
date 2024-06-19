@@ -48,10 +48,6 @@ function Button() {
     }
   };
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
   if (session) {
     return <button onClick={onClick}>Sign out</button>;
   }
