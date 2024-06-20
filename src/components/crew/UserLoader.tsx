@@ -11,7 +11,6 @@ export default function UserLoader() {
   const { status: sessionStatus } = useSession();
   const users = useReactiveVar(userList);
   const { data, loading, error } = useQuery(ALL_RELATIONS, {
-    //skip: sessionStatus !== "authenticated",
     fetchPolicy: "network-only"
   });
   console.log(sessionStatus, ": status");
