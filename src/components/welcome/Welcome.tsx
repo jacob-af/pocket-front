@@ -1,5 +1,4 @@
 import { BreakPoint } from "@/components/images/CardBorder";
-import Link from "next/link";
 
 export default function Welcome() {
   return (
@@ -12,24 +11,6 @@ export default function Welcome() {
         different builds, version control for recipe development. Share with
         your team. Manage inventory and run cost. Put it all in your Pocket.
       </p>
-
-      <div>
-        <BreakPoint />
-      </div>
-      <div className="my-8 flex flex-row items-center justify-center">
-        <Link
-          href="signup"
-          className="btn-primary mx-3 inline-block rounded bg-white p-2 text-black hover:bg-gray-300"
-        >
-          Sign Up
-        </Link>
-        <Link
-          href="login"
-          className="btn-secondary mx-3 inline-block rounded bg-gray-600 p-2 text-white hover:bg-gray-900"
-        >
-          Login
-        </Link>
-      </div>
     </div>
   );
 }

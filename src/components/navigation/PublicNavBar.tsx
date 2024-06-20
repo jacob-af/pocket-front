@@ -1,83 +1,22 @@
 "use client";
 
-import {
-  BookIcon,
-  BottleIcon,
-  GroupIcon,
-  HomeIcon,
-  MartiniIcon
-} from "@/components/images/NavIcons";
-
-import { Bokor } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 
 export function PublicNavBar() {
-  const [value, setValue] = React.useState("home");
-
-  const handleChange = (newValue: string) => {
-    setValue(newValue);
-  };
-
   return (
-    <div className="bg-contrast fixed left-0 right-0 top-0 shadow-lg">
-      <nav className="flex items-center justify-around">
-        <Link href="/" passHref>
-          <span
-            className={`flex flex-col items-center p-2 ${
-              value === "home" ? "text-secondary" : ""
-            }`}
-            onClick={() => handleChange("home")}
-          >
-            <HomeIcon />
-            <span className="text-xxs">Home</span>
-          </span>
+    <div className="bg-background fixed top-0 z-20 flex w-full justify-between">
+      <Link href="/welcome" className="p-2">
+        Pocket
+      </Link>
+      <div className="flex space-x-4">
+        <Link href="/signup" className="p-2">
+          Sign Up
         </Link>
-        <Link href="/recipeBook" passHref>
-          <span
-            className={`flex flex-col items-center p-2 ${
-              value === "recipeBooks" ? "text-secondary" : ""
-            }`}
-            onClick={() => handleChange("recipeBooks")}
-          >
-            <BookIcon />
-            <span className="text-xxs">Books</span>
-          </span>
+        <Link href="/login" className="p-2">
+          Login
         </Link>
-        <Link href="/recipe" passHref>
-          <span
-            className={`flex flex-col items-center p-2 ${
-              value === "recipes" ? "text-secondary" : ""
-            }`}
-            onClick={() => handleChange("recipes")}
-          >
-            <MartiniIcon />
-            <span className="text-xxs">Recipes</span>
-          </span>
-        </Link>
-        <Link href="/ingredient" passHref>
-          <span
-            className={`flex flex-col items-center p-2 ${
-              value === "inventory" ? "text-secondary" : ""
-            }`}
-            onClick={() => handleChange("inventory")}
-          >
-            <BottleIcon />
-            <span className="text-xxs">Ingredients</span>
-          </span>
-        </Link>
-        <Link href="/crew" passHref>
-          <span
-            className={`flex flex-col items-center p-2 ${
-              value === "crew" ? "text-secondary" : ""
-            }`}
-            onClick={() => handleChange("crew")}
-          >
-            <GroupIcon />
-            <span className="text-xxs">Crew</span>
-          </span>
-        </Link>
-      </nav>
+      </div>
     </div>
   );
 }

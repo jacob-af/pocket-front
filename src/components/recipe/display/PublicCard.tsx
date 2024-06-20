@@ -7,6 +7,7 @@ import { CardBorder } from "@/components/images/CardBorder";
 import { CocktailPicture } from "@/components/images/CocktailPicture";
 import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function PublicCard({
   recipe,
@@ -16,6 +17,7 @@ export default function PublicCard({
   index: number;
 }) {
   const router = useRouter();
+  const { status } = useSession();
   const [builds, setBuilds] = useState<Build[]>([]);
 
   function mergeArrays<Build>(
@@ -45,6 +47,9 @@ export default function PublicCard({
 
   const handleView = () => {
     selectedRecipe(recipe);
+    if (status === "authenticated") {
+      router.push(`/db/recipe/${recipe.name}`);
+    }
     router.push(`/recipe/${recipe.name}`);
   };
 
