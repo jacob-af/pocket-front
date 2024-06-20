@@ -14,7 +14,7 @@
     --background-color: #071f35ff;
     --background-contrast: #000000;
     --primary-color: #cee5f2ff;
-    --secondary-color: #f0c987ff;
+    --secondary-color: #ffffff;
     --danger-color: #ed254eff;
     --columbia-blue: #cee5f2ff;
     --red-crayola: #ed254eff;
@@ -58,11 +58,21 @@ ul.dropdown-list li:hover {
   background-color: var(--background-contrast);
 }
 
+.bg-primary {
+  background-color: var(--primary-color);
+}
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
 .text-secondary {
   color: var(--secondary-color);
 }
 .text-primary {
   color: var(--primary-color);
+}
+.text-bg {
+  color: var(--background-color);
 }
 
 .h-140 {

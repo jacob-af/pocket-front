@@ -3,7 +3,7 @@ import { PublicNavBar } from "@/components/navigation/PublicNavBar";
 export default function NewLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <main className="flex w-full flex-col items-center justify-center">
+      <main className="flex h-screen min-h-screen w-screen snap-y snap-mandatory flex-col items-center overflow-x-hidden overflow-y-scroll">
         {children}
       </main>
     </>
