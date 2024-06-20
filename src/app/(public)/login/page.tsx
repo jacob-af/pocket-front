@@ -10,9 +10,9 @@ import {
 } from "next-auth/react";
 import { MouseEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { redirect, useRouter } from "next/navigation";
 
 import { BuiltInProviderType } from "next-auth/providers/index";
-import { useRouter } from "next/navigation";
 
 type LoginInputs = {
   email: string;
@@ -21,7 +21,7 @@ type LoginInputs = {
 
 export default function LogIn() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { status } = useSession();
   const {
     register,
     handleSubmit,
@@ -37,10 +37,11 @@ export default function LogIn() {
       const res = await getProviders();
       setProviders(res);
     })();
-    if (session?.user) {
-      router.push("/db");
-    }
-  }, [router, session?.user]);
+  }, []);
+
+  if (status === "authenticated") {
+    redirect("/db");
+  }
 
   const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }) => {
     try {
