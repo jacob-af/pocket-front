@@ -1,8 +1,9 @@
 import { BreakPoint } from "@/components/images/CardBorder";
+import { DownArrow } from "../images/Images";
 
 export default function Welcome() {
   return (
-    <div className="box-border flex min-h-screen w-screen max-w-2xl snap-center flex-col items-center justify-center p-4 text-center">
+    <div className="box-border flex min-h-screen w-screen max-w-2xl snap-center flex-col items-center justify-center p-4 pt-24 text-center">
       <h1 className="text-6xl font-bold">Welcome</h1>
       <h2 className="text-2xl font-bold"> to the </h2>
       <h1 className="text-8xl font-bold">Pocket Bar Book</h1>
@@ -11,6 +12,10 @@ export default function Welcome() {
         different builds, version control for recipe development. Share with
         your team. Manage inventory and run cost. Put it all in your Pocket.
       </p>
+      <div className="mt-auto flex flex-col items-center justify-center">
+        Learn More
+        <DownArrow />
+      </div>
     </div>
   );
 }
