@@ -3,8 +3,8 @@
 import { getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
 import { ProfileImage } from "./ProfileImage";
-import { Session } from "next-auth/";
 
 export default function AmILoggedIn() {
   const { data: session, update, status } = useSession();
@@ -32,9 +32,12 @@ export default function AmILoggedIn() {
 
   console.log(session, status, ": profile picture");
   return (
-    <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
-      {session?.user.name ? session.user.name : "not loaded"}
-      <ProfileImage url={session?.user.image || "/portrait-placeholder.png"} />
-    </div>
+    <Link href="/db/profile">
+      <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
+        <ProfileImage
+          url={session?.user.image || "/portrait-placeholder.png"}
+        />
+      </div>
+    </Link>
   );
 }
