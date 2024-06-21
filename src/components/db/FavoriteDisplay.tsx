@@ -25,6 +25,18 @@ export default function RecipeBook() {
 
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
+  if (book.userBuild.length === 0) {
+    return (
+      <div className="box-border flex min-h-screen w-full max-w-3xl flex-col items-center justify-center text-center">
+        <div>
+          A Default Recipe Book has not been Selected.
+          <br />
+          Go to your profile page to select a default book.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="box-border flex h-screen w-full max-w-3xl flex-col items-center justify-center">
       <div className="m-0 mt-44 box-border grid h-full w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
