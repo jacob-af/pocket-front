@@ -1,8 +1,6 @@
 import { ChangeEvent, ChangeEventHandler } from "react";
 
 import { fieldChange } from "@/components/recipe/recipeActions";
-import { newRecipeInfo } from "@/graphql/reactiveVar/recipes";
-import { useReactiveVar } from "@apollo/client";
 
 export const IngredientModal = ({
   open,
@@ -11,9 +9,6 @@ export const IngredientModal = ({
   open: boolean;
   toggleopen: () => void;
 }) => {
-  // Function to close the modal
-  const recipeInfo = useReactiveVar(newRecipeInfo);
-
   const closeModal = () => {
     fieldChange({ key: "about", newValue: "" });
     toggleopen();
