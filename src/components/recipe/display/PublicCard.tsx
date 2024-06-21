@@ -53,16 +53,14 @@ export default function PublicCard({
     router.push(`/recipe/${recipe.name}`);
   };
 
-  console.log(builds);
-
   return (
     <div className="bg-contrast h-public-card-lg relative my-2 box-border w-full max-w-lg content-center rounded-lg text-center">
       {/* This goes on bottom */}
-      <div className="absolute inset-0 z-0 h-full w-full">
+      <div className="absolute inset-0 h-full w-full">
         <CardBorder />
       </div>
       {/* This goes on top */}
-      <div className="relative z-10 h-full p-8">
+      <div className="relative h-full p-8">
         <div className="p-2 text-center text-xl">{recipe.name}</div>
         <div className="block">
           <div className="float-left mr-2 w-32">
