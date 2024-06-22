@@ -4,7 +4,7 @@ import { AddStockModal } from "../modals/AddStockToInventory";
 import LoadInventories from "../inventory/InventoryLoader";
 import { useState } from "react";
 
-function AddStockButton() {
+function AddStockButton({ message }: { message: string }) {
   const [open, setOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -14,7 +14,7 @@ function AddStockButton() {
   return (
     <div>
       <button onClick={toggleOpen} className="text-xs opacity-100">
-        Add To
+        Add {message} To
         <br />
         Inventory
       </button>

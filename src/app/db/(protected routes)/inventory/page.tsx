@@ -7,7 +7,7 @@ export default function ClientSideIngredients() {
   return (
     <div className="m-20 box-border flex w-full max-w-2xl flex-col items-center text-justify align-middle">
       <LoadInventories />
-      <AddStockButton />
+      <AddStockButton message={""} />
       <InventoryTable />
     </div>
   );
