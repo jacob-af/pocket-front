@@ -116,7 +116,6 @@ export const GET_ONE_BUILD: TypedDocumentNode<{ findOneBuild: Build }> = gql`
           description
         }
         amount
-        #unit
         unit {
           id
           abbreviation
@@ -276,6 +275,16 @@ export const BUILD_PERMISSIONS: TypedDocumentNode<{
         userName
         id
       }
+    }
+  }
+`;
+
+export const COST_BUILD: TypedDocumentNode<{
+  costBuild: { cost: number };
+}> = gql`
+  query CostBuild($buildId: String, $inventoryId: String) {
+    costBuild(buildId: $buildId, inventoryId: $inventoryId) {
+      cost
     }
   }
 `;

@@ -1,14 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import { Build } from "@/__generated__/graphql";
 import { BuildNavBar } from "@/components/navigation/BuildNavBar";
+import CostDisplay from "@/components/recipe/display/CostDisplay";
 import { GET_ONE_BUILD } from "@/graphql/queries/recipe";
 import RecipeCard from "@/components/recipe/display/RecipeCard";
 import SkeletonCard from "@/components/recipe/display/SkeletonCard";
 import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
-import { useEffect } from "react";
 
 export default function Page({
   params: { slug, build }
@@ -23,6 +24,7 @@ export default function Page({
   });
 
   const recipe = useReactiveVar(selectedRecipe);
+  const [buildId, setBuildId] = useState<string>("");
 
   useEffect(() => {
     if (error) {
@@ -33,6 +35,7 @@ export default function Page({
     if (!loading && data?.findOneBuild) {
       const buildData = data.findOneBuild;
       console.log(buildData);
+      setBuildId(buildData.id);
       const rec = {
         ...buildData.recipe,
         userBuild: [buildData]
@@ -49,8 +52,9 @@ export default function Page({
   );
 
   return (
-    <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-20">
+    <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-40">
       <RecipeCard recipe={recipe} />
+      <CostDisplay buildId={buildId} />
       <BuildNavBar builds={filteredBuilds} />
     </div>
   );

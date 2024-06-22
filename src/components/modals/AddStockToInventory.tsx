@@ -1,21 +1,17 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { ListItem, Unit } from "@/__generated__/graphql";
-import { newRecipeInfo, selectedRecipe } from "@/graphql/reactiveVar/recipes";
+import {
+  allIngredientsList,
+  inventoryChoice
+} from "@/graphql/reactiveVar/ingredients";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 
 import { ALL_INGREDIENTS } from "@/graphql/queries/ingredient";
 import { CREATE_STOCK } from "@/graphql/mutations/inventory";
-import IngredientDrop from "../ingredients/IngredientSelect";
-import LoadIngredients from "../ingredients/IngredientLoader";
-import LoadInventories from "../inventory/InventoryLoader";
 import MuiDropDown from "../SharedComponents/MUIDropDown";
-import RecipeLoader from "../recipe/UserRecipeLoader";
-import { UNIT_TYPES } from "@/graphql/queries/unit";
 import UnitSelector from "../recipe/input/UnitSelector";
 import { alertList } from "@/graphql/reactiveVar/alert";
-import { allIngredientsList } from "@/graphql/reactiveVar/ingredients";
 import { fieldChange } from "@/components/recipe/recipeActions";
-import { selectedInventory } from "@/graphql/reactiveVar/inventory";
 import { unitList } from "@/graphql/reactiveVar/unit";
 
 export const AddStockModal = ({
@@ -28,13 +24,7 @@ export const AddStockModal = ({
   const ingredients = useReactiveVar(allIngredientsList);
   const list = useReactiveVar(unitList);
   const alerts = useReactiveVar(alertList);
-  const recipe = useReactiveVar(selectedRecipe);
-  const inventory = useReactiveVar(selectedInventory);
-
-  const [ingredient, setIngredient] = useState<ListItem>({ id: "", name: "" });
-  const [unit, setUnit] = useState<Unit>({ id: "unitId", abbreviation: "" });
-  const [amount, setAmount] = useState<number>(0);
-  const [price, setPrice] = useState<number>(0);
+  const inventoryId = useReactiveVar(inventoryChoice);
   const [stockData, setStockData] = useState({
     ingredient: { id: "", name: "" },
     unit: { id: "", abbreviation: "ml" },
@@ -91,10 +81,10 @@ export const AddStockModal = ({
 
   const onClick = async () => {
     try {
-      console.log(stockData, inventory.id);
+      console.log(stockData, inventoryId);
       const res = await createStock({
         variables: {
-          inventoryId: inventory.id,
+          inventoryId,
           createStock: {
             ingredientName: stockData.ingredient.name,
             unitAbb: stockData.unit.abbreviation,
@@ -108,7 +98,7 @@ export const AddStockModal = ({
         ...alerts,
         {
           code: "success",
-          message: `${stockData.ingredient.name} has been added to ${inventory.name}`
+          message: `${stockData.ingredient.name} has been added to Inventory`
         }
       ]);
       setStockData({
