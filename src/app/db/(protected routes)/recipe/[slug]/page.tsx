@@ -41,7 +41,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   );
   console.log(filteredBuilds);
   return (
-    <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-20 pt-10">
+    <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-40 pt-10">
       <RecipeCard recipe={data.recipe} />
       <BuildNavBar builds={filteredBuilds} />
     </div>
