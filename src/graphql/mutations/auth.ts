@@ -11,6 +11,7 @@ export const LOGIN = gql`
         id
         userName
         email
+        role
         profile {
           image
         }
@@ -54,6 +55,7 @@ export const GOOGLE_SIGNIN = gql`
         id
         userName
         email
+        role
         profile {
           image
         }
@@ -71,6 +73,7 @@ export const NEW_TOKENS: TypedDocumentNode<{ getNewTokens: AuthPayload }> = gql`
         email
         id
         userName
+        role
         profile {
           image
         }
