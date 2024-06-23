@@ -22,14 +22,16 @@ export const userRelations = makeVar<{ followers: User[]; following: User[] }>({
     {
       id: uuidv4(),
       userName: "",
-      email: ""
+      email: "",
+      role: "Free User"
     }
   ],
   following: [
     {
       id: uuidv4(),
       userName: "",
-      email: ""
+      email: "",
+      role: "Free User"
     }
   ]
 });
