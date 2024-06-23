@@ -21,6 +21,7 @@
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@mui/material-nextjs": "^5.15.11",
+    "@stripe/stripe-js": "^4.0.0",
     "@types/d3": "^7.4.3",
     "@types/uuid": "^9.0.8",
     "@uploadthing/react": "^6.5.3",
@@ -33,6 +34,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "stripe": "^15.12.0",
     "uploadthing": "^6.10.3",
     "uuid": "^9.0.1"
   },

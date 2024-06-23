@@ -35,6 +35,7 @@ type Query {
   findAllBuilds: [Build]
   findOneBuild(recipeName: String!, buildName: String!): Build
   findFolloweddUsersBuildPermission(buildId: String!): [UserBuildPermission]
+  findByIngredient(ingredientName: String): [Build]
   costBuild(buildId: String, inventoryId: String): Cost
   ingredients: [Ingredient]!
   ingredient(id: Int!): Ingredient
@@ -492,6 +493,7 @@ type Stock {
   price: Float
   amount: Float
   unit: Unit
+  unitAbb: String
   buildRef: Build
   ingredient: Ingredient
   inventory: Inventory
@@ -586,6 +588,7 @@ type User {
   id: ID!
   userName: String!
   email: EmailAddress!
+  role: String!
   dateJoined: DateTime
   lastEdited: DateTime
   following: [Following]
