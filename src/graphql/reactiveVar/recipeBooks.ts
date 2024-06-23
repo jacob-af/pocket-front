@@ -7,7 +7,7 @@ export const selectedRecipeBook = makeVar<RecipeBook>({
   id: "",
   name: "",
   description: "",
-  createdBy: { id: "", userName: "", email: "" },
+  createdBy: { id: "", userName: "", email: "", role: "Free User" },
   userBuild: [],
   permission: Permission.View
 });
