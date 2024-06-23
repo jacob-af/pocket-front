@@ -20,7 +20,7 @@ function BottomNavBar() {
   };
 
   return (
-    <div className="bg-contrast z-80 fixed bottom-0 left-0 right-0 pb-10 shadow-lg lg:hidden">
+    <div className="bg-contrast fixed bottom-0 left-0 right-0 z-50 pb-10 shadow-lg lg:hidden">
       <nav className="flex items-center justify-around">
         <Link href="/db" passHref>
           <span
