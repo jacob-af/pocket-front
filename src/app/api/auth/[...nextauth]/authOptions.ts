@@ -42,6 +42,7 @@ export const authOptions: NextAuthOptions = {
             id: user.id,
             name: user.userName,
             email: user.email,
+            role: user.role,
             image: token.picture || user.image,
             accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
             accessToken: accessToken,
@@ -53,6 +54,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
           image: user.image,
           accessTokenExpires: user.accessTokenExpires,
           accessToken: user.accessToken,
@@ -80,6 +82,7 @@ export const authOptions: NextAuthOptions = {
               id: resp.user.id,
               name: resp.user.userName,
               email: resp.user.email,
+              role: resp.user.role,
               accessTokenExpires: Date.now() + 23 * 60 * 60 * 1000,
               accessToken: resp.accessToken,
               refreshToken: resp.refreshToken

@@ -39,6 +39,7 @@ export const credentialsProvider = CredentialsProvider({
           id: login.user.id,
           email: login.user.email,
           name: login.user.userName,
+          role: login.user.role,
           image: login.user.profile?.image || null
         };
       }
