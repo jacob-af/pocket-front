@@ -12,8 +12,8 @@ export default function LandingModal() {
 
   return (
     <ModalWrapper open={open} toggleopen={toggleOpen}>
-      <div className="bg-background mb-12 max-w-2xl overflow-auto">
-        <div className="my-16 text-center text-4xl">Welcome to Pocket</div>
+      <div className="bg-background mb-2 max-w-2xl overflow-auto">
+        <div className="my-8 text-center text-4xl">Welcome to Pocket</div>
         <div className="my-8 text-justify text-xl">
           Welcome to Pocket Bar Book, a bar management tool designed by a
           bartender, for bartenders. Current capabilites are storing and editing

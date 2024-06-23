@@ -24,11 +24,11 @@ export const ModalWrapper = ({
       {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-80"
           onClick={closeModal} // Close modal when clicking outside of the modal content
         >
           <div
-            className="bg-contrast w-80 rounded p-2 shadow-lg"
+            className="bg-contrast w-80 p-2 shadow-lg"
             onClick={e => e.stopPropagation()} // Prevent modal from closing when clicking inside modal
           >
             {/* Close button */}
