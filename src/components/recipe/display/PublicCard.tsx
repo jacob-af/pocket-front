@@ -48,9 +48,11 @@ export default function PublicCard({
   const handleView = () => {
     selectedRecipe(recipe);
     if (status === "authenticated") {
+      console.log(status);
       router.push(`/db/recipe/${recipe.name}`);
+    } else {
+      router.push(`/recipe/${recipe.name}`);
     }
-    router.push(`/recipe/${recipe.name}`);
   };
 
   return (
