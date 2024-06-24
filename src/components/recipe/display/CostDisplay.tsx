@@ -26,19 +26,23 @@ export default function CostDisplay({ buildId }: { buildId: string }) {
     console.log(buildId, "hello", inventoryId);
     getCost({ variables: { buildId, inventoryId } });
   };
-
+  console.log(inventoryId);
   return (
     <div className="bg-contrast w-40 rounded-lg border-2 p-4">
       Select Inventory
       <IngredientChoice />
-      <button onClick={handleClick} className="rounded-lg border p-2">
-        Run Cost
-      </button>
-      <br />
-      {new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD"
-      }).format(cost)}
+      {inventoryId !== "all" && (
+        <>
+          <button onClick={handleClick} className="rounded-lg border p-2">
+            Run Cost
+          </button>
+          <br />
+          {new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD"
+          }).format(cost)}
+        </>
+      )}
       <br />
       {error?.message && `${error.message} is not in inventory`}
       {error?.message && (
