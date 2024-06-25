@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -33,6 +34,9 @@ export default function PreviewPage() {
           </button>
         </section>
       </form>
+      <Link href="https://billing.stripe.com/p/login/4gw3cg3pz2Da0b64gg">
+        Delete Subscription
+      </Link>
     </div>
   );
 }

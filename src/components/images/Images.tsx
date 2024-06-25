@@ -85,3 +85,15 @@ export function Expand() {
     />
   );
 }
+
+export function Hamburger() {
+  return (
+    <Image
+      src={"/hamburger.png"}
+      width={30}
+      height={30}
+      alt="menu hamburger"
+      className="z-10 invert dark:invert-0"
+    />
+  );
+}

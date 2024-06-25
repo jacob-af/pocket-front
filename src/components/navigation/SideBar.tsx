@@ -7,9 +7,6 @@ export default async function SideBar() {
         <Link href="/db" className="hover:text-gray-600">
           Dashboard
         </Link>
-        <Link href="/db/favorite" className="hover:text-gray-600">
-          Favorites
-        </Link>
         <Link href="/db/recipe" className="hover:text-gray-600">
           Recipes
         </Link>
@@ -24,6 +21,9 @@ export default async function SideBar() {
         </Link>
         <Link href="/db/upload" className="hover:text-gray-600">
           Upload
+        </Link>
+        <Link href="/db/premium" className="hover:text-gray-600">
+          Go Premium
         </Link>
       </div>
     </div>

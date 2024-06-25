@@ -22,14 +22,15 @@ export async function POST(req: NextRequest) {
       if (!origin) {
         throw new Error("Origin header is not defined");
       }
-
+      console.log(origin);
       // Create Checkout Sessions from body params.
       const session: Stripe.Response<Stripe.Checkout.Session> =
         await stripe.checkout.sessions.create({
           line_items: [
             {
               // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-              price: "price_1PUY7t06lYv58VXCR0EjGwpI",
+              price: "price_1PUeVQ06lYv58VXCMd1TIGnf", //testmode
+              //price: "price_1PUY7t06lYv58VXCR0EjGwpI", //live mode
               quantity: 1
             }
           ],

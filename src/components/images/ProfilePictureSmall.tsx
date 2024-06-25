@@ -24,7 +24,7 @@ export default function AmILoggedIn() {
 
   if (status === "loading") {
     return (
-      <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center pl-3 pt-3">
         Loading...
       </div>
     );
@@ -33,7 +33,7 @@ export default function AmILoggedIn() {
   console.log(session, status, ": profile picture");
   return (
     <Link href="/db/profile">
-      <div className="fixed left-2 top-2 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center pl-3 pt-6">
         <ProfileImage
           url={session?.user.image || "/portrait-placeholder.png"}
         />

@@ -25,7 +25,7 @@ export default function RecipeBook() {
 
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
-  if (book.userBuild.length === 0) {
+  if (book.userBuild && book.userBuild.length === 0) {
     return (
       <div className="box-border flex min-h-screen w-full max-w-3xl flex-col items-center justify-center text-center">
         <div>
