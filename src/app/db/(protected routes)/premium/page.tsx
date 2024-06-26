@@ -27,13 +27,21 @@ export default function PreviewPage() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center">
-      <form action="/api/checkout-sessions" method="POST" name="monthly">
+      <form action="/api/checkout-monthly" method="POST" name="monthly">
         <section>
-          <button type="submit" role="link" value="monthly">
-            Checkout
+          <button type="submit" role="link">
+            Checkout Monthly
           </button>
         </section>
       </form>
+      <form action="/api/checkout-annual" method="POST" name="annual">
+        <section>
+          <button type="submit" role="link">
+            Checkout Annual
+          </button>
+        </section>
+      </form>
+
       <Link href="https://billing.stripe.com/p/login/4gw3cg3pz2Da0b64gg">
         Delete Subscription
       </Link>

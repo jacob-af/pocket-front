@@ -15,6 +15,7 @@ const stripe = new Stripe(stripeSecretKey, {
 
 export async function POST(req: NextRequest) {
   const sess = await auth();
+  console.log(req);
   if (req.method === "POST") {
     try {
       // Ensure origin is defined
@@ -22,15 +23,13 @@ export async function POST(req: NextRequest) {
       if (!origin) {
         throw new Error("Origin header is not defined");
       }
-      console.log(origin);
       // Create Checkout Sessions from body params.
       const session: Stripe.Response<Stripe.Checkout.Session> =
         await stripe.checkout.sessions.create({
           line_items: [
             {
-              // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-              price: "price_1PUeVQ06lYv58VXCMd1TIGnf", //testmode
-              //price: "price_1PUY7t06lYv58VXCR0EjGwpI", //live mode
+              //price: "price_1PUeYC06lYv58VXCLZ57S3xW", //testmode
+              price: "price_1PUeiz06lYv58VXCR2zRQiR2", //live mode
               quantity: 1
             }
           ],
@@ -40,7 +39,6 @@ export async function POST(req: NextRequest) {
           cancel_url: `${origin}/welcome?success=false`,
           automatic_tax: { enabled: true }
         });
-      console.log(session);
       if (session.url) {
         return NextResponse.redirect(session.url, 303);
       }
