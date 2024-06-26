@@ -57,7 +57,7 @@ function Button() {
 
 export default function AuthButton() {
   return (
-    <div className="">
+    <div className="p-2">
       <Button />
     </div>
   );
