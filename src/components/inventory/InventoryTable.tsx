@@ -63,8 +63,8 @@ export function InventoryTable() {
   };
 
   return (
-    <div className="mx-auto p-4">
-      <div className="mb-4 flex justify-between">
+    <div className="mx-auto box-border p-4">
+      <div className="mx-4 mb-4 flex justify-between">
         <button onClick={handlePrevPage} disabled={currentPage === 1}>
           Previous
         </button>
@@ -72,23 +72,23 @@ export function InventoryTable() {
           Next
         </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border">
+      <div className="overflow-y-auto">
+        <table className="box-border min-w-full border">
           <thead>
             <tr>
-              <th className="border-b py-3 text-left text-xs font-medium uppercase tracking-wider lg:px-6">
+              <th className="border-b pl-3 text-left text-xs font-medium uppercase tracking-wider">
                 Ingredient Name
               </th>
-              <th className="border-b py-3 text-left text-xs font-medium uppercase tracking-wider lg:px-6">
+              <th className="border-b py-3 text-center text-xs font-medium uppercase tracking-wider">
                 Price
               </th>
-              <th className="border-b py-3 text-left text-xs font-medium uppercase tracking-wider lg:px-6">
-                Amount
+              <th className="border-b py-3 text-left text-xs font-medium uppercase tracking-wider">
+                Amount/
               </th>
-              <th className="border-b py-3 text-left text-xs font-medium uppercase tracking-wider lg:px-6">
+              <th className="border-b py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Unit
               </th>
-              <th className="border-b py-3 text-right text-xs font-medium uppercase tracking-wider lg:px-6">
+              <th className="border-b pr-3 text-right text-xs font-medium uppercase tracking-wider">
                 Price Per Ounce
               </th>
             </tr>
@@ -96,10 +96,10 @@ export function InventoryTable() {
           <tbody>
             {stockList.map((stock, index) => (
               <tr key={index}>
-                <td className="border-b py-4 text-left lg:px-6">
+                <td className="border-b pl-3 text-left">
                   {stock.ingredient?.name}
                 </td>
-                <td className="border-b py-4 lg:px-6">
+                <td className="border-b py-3 text-center">
                   {stock.price !== null && stock.price !== undefined
                     ? new Intl.NumberFormat("en-US", {
                         style: "currency",
@@ -107,13 +107,9 @@ export function InventoryTable() {
                       }).format(stock.price)
                     : ""}
                 </td>
-                <td className="border-b py-4 text-right lg:px-6">
-                  {stock.amount}
-                </td>
-                <td className="border-b py-4 lg:px-6">
-                  {stock.unit?.abbreviation}
-                </td>
-                <td className="border-b py-4 pr-2 text-right lg:px-6 lg:pr-0">
+                <td className="border-b py-3 text-right">{stock.amount}</td>
+                <td className="border-b py-3">{stock.unit?.abbreviation}</td>
+                <td className="border-b pr-3 text-right">
                   {stock.pricePerOunce !== null &&
                   stock.pricePerOunce !== undefined
                     ? new Intl.NumberFormat("en-US", {
@@ -127,7 +123,7 @@ export function InventoryTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 flex justify-between">
+      <div className="mx-4 mt-4 flex justify-between">
         <button onClick={handlePrevPage} disabled={currentPage === 1}>
           Previous
         </button>

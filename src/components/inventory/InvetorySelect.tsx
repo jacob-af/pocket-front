@@ -5,9 +5,11 @@ import {
   userInventoryList
 } from "@/graphql/reactiveVar/inventory";
 
+import Dropdown from "@/components/SharedComponents/Dropdown";
 import { Inventory } from "@/__generated__/graphql";
 import { ListItem } from "@/types/util";
 import MuiDropDown from "@/components/SharedComponents/MUIDropDown";
+import levenshteinSortingAlgorithm from "../SharedComponents/Levenshtein";
 import { useEffect } from "react";
 import { useReactiveVar } from "@apollo/client";
 
@@ -29,11 +31,13 @@ export default function InventoryDrop({
 
   return (
     <div className="flex w-80 flex-col items-center border-2 p-4">
-      <MuiDropDown
-        options={list}
-        handleChange={inventoryChange}
-        index={99}
-        currentValue={selected}
+      <Dropdown
+        items={list}
+        selectedValue={selected}
+        sortingAlgorithm={(a, b) =>
+          levenshteinSortingAlgorithm(a, b, selected.name)
+        }
+        onSelect={inventoryChange}
       />
     </div>
   );
