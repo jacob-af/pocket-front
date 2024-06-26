@@ -18,9 +18,9 @@ export const DeleteBookButton = () => {
     <>
       <button
         onClick={handleDelete}
-        className="my-2 inline-block rounded bg-red-500 px-4 py-2 text-white"
+        className="my-2 inline-block rounded p-2 px-4 text-white"
       >
-        Delete
+        Delete Book
       </button>
       <DeleteBookModal
         book={book}

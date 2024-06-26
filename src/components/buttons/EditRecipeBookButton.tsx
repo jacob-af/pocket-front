@@ -24,10 +24,8 @@ export default function EditRecipeBookButton() {
 
   return (
     <div>
-      <button onClick={toggleOpen} className="z-10 p-2 text-xs">
-        Edit
-        <br />
-        Recipe Book
+      <button onClick={toggleOpen} className="z-10 p-2 text-lg">
+        Edit Recipe Book
       </button>
       <EditBookModal open={open} toggleopen={toggleOpen} />
     </div>

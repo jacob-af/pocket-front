@@ -52,14 +52,12 @@ export const DownloadRecipeBook = ({ name }: { name: string }) => {
   // fileReader.readAsText(selectedFile);
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
-      <div className="flew-row flex">
-        {buildData ? (
-          <button onClick={handleDownload}>Download CSV</button>
-        ) : (
-          <button onClick={prepareCSV}>Prepare CSV</button>
-        )}
-      </div>
+    <div className="flex flex-col items-center justify-center p-2">
+      {buildData ? (
+        <button onClick={handleDownload}>Download CSV</button>
+      ) : (
+        <button onClick={prepareCSV}>Prepare CSV</button>
+      )}
     </div>
   );
 };

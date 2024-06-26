@@ -8,10 +8,7 @@ import { userRecipeBookList } from "@/graphql/reactiveVar/recipeBooks";
 
 export default function RecipeBook() {
   return (
-    <div className="mt-12 flex h-screen flex-col">
-      <div className="fixed right-2 top-12 z-10">
-        <AddRecipeBookButton />
-      </div>
+    <div className="mt-11z flex h-screen flex-col">
       <Bookshelf />
     </div>
   );

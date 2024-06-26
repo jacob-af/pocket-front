@@ -63,7 +63,6 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
           ))
         )}
       </div>
-      <BookNavBar book={book} />
     </div>
   );
 }

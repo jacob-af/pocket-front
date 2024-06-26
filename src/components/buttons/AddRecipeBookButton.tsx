@@ -12,10 +12,8 @@ function AddRecipeBookButton() {
 
   return (
     <div>
-      <button onClick={toggleOpen} className="text-xs opacity-100">
-        Add
-        <br />
-        Recipe Book
+      <button onClick={toggleOpen} className="p-2 text-lg">
+        New Recipe Book
       </button>
       <AddBookModal open={open} toggleopen={toggleOpen} />
     </div>

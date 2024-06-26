@@ -24,7 +24,7 @@ export default function RecipeBookLoader() {
   }
 
   return (
-    <div className="fixed top-14 h-16">
+    <div className="fixed top-11 h-16">
       <div className="flex w-72">
         <RecipeBookDropDown
           recipeBooks={recipeBookList}
