@@ -4,7 +4,7 @@ import AmILoggedIn from "@/components/images/ProfilePictureSmall";
 import AuthButton from "@/components/buttons/SignOutButton";
 import { Hamburger } from "@/components/images/Images";
 import Link from "next/link";
-import { OptionsPopout } from "@/components/modals/OptionsPopout";
+import { OptionsPopout } from "@/components/options/OptionsPopout";
 
 export default async function TopNavBar() {
   return (
@@ -16,9 +16,6 @@ export default async function TopNavBar() {
       <div className="pr-3">
         <OptionsPopout />
       </div>
-
-      {/* <AuthButton /> */}
-      {/* <RecipeLoader /> */}
     </nav>
   );
 }
