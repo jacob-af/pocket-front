@@ -22,17 +22,17 @@ export default function SignUpSide() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    watch
   } = useForm<SignUpInputs>();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<SignUpInputs> = async ({
     email,
     userName,
-    password,
-    confirmPassword
+    password
   }) => {
-    const { data: data } = await newUser({
+    const { data } = await newUser({
       variables: {
         createUserInput: {
           email,
@@ -51,20 +51,19 @@ export default function SignUpSide() {
     router.push("/db");
   };
 
+  const password = watch("password");
+
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="rounded-lg bg-white p-8 shadow-lg">
+    <div className="flex h-screen items-center justify-center">
+      <div className="rounded-lg p-8 shadow-lg">
         <h1 className="mb-4 text-2xl font-bold">Sign Up</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="userName"
-            >
+            <label className="mb-2 block text-sm font-bold" htmlFor="userName">
               User Name
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-black shadow focus:outline-none"
               id="userName"
               type="text"
               placeholder="User Name"
@@ -83,14 +82,11 @@ export default function SignUpSide() {
             )}
           </div>
           <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="email"
-            >
+            <label className="mb-2 block text-sm font-bold" htmlFor="email">
               Email Address
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-black shadow focus:outline-none"
               id="email"
               type="email"
               placeholder="Email Address"
@@ -108,16 +104,12 @@ export default function SignUpSide() {
               </p>
             )}
           </div>
-
           <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="email"
-            >
+            <label className="mb-2 block text-sm font-bold" htmlFor="password">
               Password
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-black shadow focus:outline-none"
               id="password"
               type="password"
               placeholder="Password"
@@ -136,28 +128,22 @@ export default function SignUpSide() {
               </p>
             )}
           </div>
-
-          {/* Password and Confirm Password fields */}
-
           <div className="mb-4">
             <label
-              className="mb-2 block text-sm font-bold text-gray-700"
+              className="mb-2 block text-sm font-bold"
               htmlFor="confirmPassword"
             >
               Confirm Password
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-black shadow focus:outline-none"
               id="confirmPassword"
-              type="confirmPassword"
+              type="password"
               placeholder="Confirm Password"
               {...register("confirmPassword", {
                 required: true,
-                pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,32}$/,
-                  message: "Password must be extra fancy"
-                }
+                validate: value =>
+                  value === password || "Passwords do not match"
               })}
             />
             {errors?.confirmPassword && (
@@ -166,15 +152,12 @@ export default function SignUpSide() {
               </p>
             )}
           </div>
-
-          {/* Submit button */}
           <button
             className="focus:shadow-outline rounded bg-blue-500 px-4 py-2 font-bold hover:bg-blue-700 focus:outline-none"
             type="submit"
           >
             Create Account
           </button>
-          {/* Login link */}
           <Link
             href="login"
             className="mt-4 block text-blue-500 hover:text-blue-700"
