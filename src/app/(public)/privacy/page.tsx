@@ -10,10 +10,10 @@ const PrivacyPolicy = () => {
 
       <h2>1. Introduction</h2>
       <p>
-        Welcome to Pocket Bar Book (the "App"). We are committed to protecting
-        your privacy and ensuring the security of your personal information.
-        This Privacy Policy explains how we collect, use, disclose, and
-        safeguard your information when you use our App and services.
+        Welcome to Pocket Bar Book (the &quot;App&quot;). We are committed to
+        protecting your privacy and ensuring the security of your personal
+        information. This Privacy Policy explains how we collect, use, disclose,
+        and safeguard your information when you use our App and services.
       </p>
 
       <h2>2. Information We Collect</h2>
@@ -71,9 +71,9 @@ const PrivacyPolicy = () => {
         notice. This does not include App hosting partners and other parties who
         assist us in operating our App, conducting our business, or serving our
         users, so long as those parties agree to keep this information
-        confidential. We may also release information when it's release is
+        confidential. We may also release information when it&#39;s release is
         appropriate to comply with the law, enforce our App policies, or protect
-        ours or others' rights, property, or safety.
+        ours or others&#39; rights, property, or safety.
       </p>
 
       <h2>6. Third-Party Links</h2>
@@ -88,16 +88,16 @@ const PrivacyPolicy = () => {
 
       <h2>7. Cookies</h2>
       <p>
-        Our App may use "cookies" to enhance the user experience. Your web
-        browser places cookies on your hard drive for record-keeping purposes
-        and sometimes to track information about you. You may choose to set your
-        web browser to refuse cookies or to alert you when cookies are being
-        sent. If you do so, note that some parts of the App may not function
-        properly.
+        Our App may use &quot;cookies&quot; to enhance the user experience. Your
+        web browser places cookies on your hard drive for record-keeping
+        purposes and sometimes to track information about you. You may choose to
+        set your web browser to refuse cookies or to alert you when cookies are
+        being sent. If you do so, note that some parts of the App may not
+        function properly.
       </p>
 
       <h2>8. Your Consent</h2>
-      <p>By using our App, you consent to our App's Privacy Policy.</p>
+      <p>By using our App, you consent to our App&#39;s Privacy Policy.</p>
 
       <h2>9. Changes to Our Privacy Policy</h2>
       <p>
