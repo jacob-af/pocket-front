@@ -13,7 +13,7 @@ import { useEffect } from "react";
 export default function RecipeBook() {
   const book = useReactiveVar(selectedRecipeBook);
 
-  const { data, loading, error } = useQuery(GET_PROFILE_BOOK, {
+  const { loading } = useQuery(GET_PROFILE_BOOK, {
     onCompleted: (data: { getProfile: Profile }) => {
       if (data?.getProfile?.preferredBook) {
         selectedRecipeBook(data.getProfile.preferredBook);
@@ -25,7 +25,7 @@ export default function RecipeBook() {
 
   const columnConfigurations = [[1], [2, 2], [3, 3, 3]];
 
-  if (book.userBuild && book.userBuild.length === 0) {
+  if (book.allBuild && book.allBuild.length === 0) {
     return (
       <div className="box-border flex min-h-screen w-full max-w-3xl flex-col items-center justify-center text-center">
         <div>
@@ -36,7 +36,7 @@ export default function RecipeBook() {
       </div>
     );
   }
-
+  console.log(book);
   return (
     <div className="box-border flex h-screen w-full max-w-3xl flex-col items-center justify-center">
       <div className="m-0 mt-44 box-border grid h-full w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -51,8 +51,8 @@ export default function RecipeBook() {
                 index === 2 ? "hidden xl:grid" : ""
               }`}
             >
-              {book.userBuild &&
-                book.userBuild
+              {!!book.allBuild &&
+                book.allBuild
                   .filter((_, i) => i % num === columnIndex)
                   .map(build => <ShortCard key={build.id} build={build} />)}
               {loading && <BuildSkeleton />}

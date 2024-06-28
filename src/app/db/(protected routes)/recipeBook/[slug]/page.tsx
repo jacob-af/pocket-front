@@ -54,8 +54,8 @@ export default function RecipeBook({ params }: { params: { slug: string } }) {
                 index === 2 ? "hidden xl:grid" : ""
               }`}
             >
-              {book.userBuild &&
-                book.userBuild
+              {book.allBuild &&
+                book.allBuild
                   .filter((_, i) => i % num === columnIndex)
                   .map(build => <ShortCard key={build.id} build={build} />)}
               {loading && <SkeletonCover />}
