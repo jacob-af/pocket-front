@@ -39,9 +39,11 @@ export default function LogIn() {
     })();
   }, []);
 
-  if (status === "authenticated") {
-    router.push("/db");
-  }
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/db");
+    }
+  }, [status, router]);
 
   const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }) => {
     try {
