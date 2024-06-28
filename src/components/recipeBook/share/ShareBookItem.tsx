@@ -7,7 +7,6 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 
 import { BOOK_PERMISSIONS } from "@/graphql/queries/recipeBook";
 import { useState } from "react";
-import { userBookPermissions } from "@/graphql/reactiveVar/user";
 
 export const ShareBook = ({
   userBookPermission,
@@ -22,7 +21,7 @@ export const ShareBook = ({
     fetchPolicy: "network-only", // Used for first execution
     refetchQueries: [BOOK_PERMISSIONS]
   });
-  const [removePermission] = useMutation(REMOVE_BOOK_PERMISSION, {
+  const [removePermission, feedback] = useMutation(REMOVE_BOOK_PERMISSION, {
     fetchPolicy: "network-only", // Used for first execution
     refetchQueries: [BOOK_PERMISSIONS]
   });
@@ -42,13 +41,19 @@ export const ShareBook = ({
   };
 
   const handleUnshare = async (userId: string) => {
-    removePermission({
-      variables: {
-        userId: userId,
-        recipeBookId: book.id,
-        permission: book.permission
-      }
-    });
+    try {
+      console.log("hey");
+      const message = await removePermission({
+        variables: {
+          userId: userId,
+          recipeBookId: book.id,
+          permission: book.permission
+        }
+      });
+      console.log(message);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

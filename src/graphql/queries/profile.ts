@@ -8,7 +8,7 @@ export const GET_PROFILE_BOOK: TypedDocumentNode<{ getProfile: Profile }> = gql`
       preferredBook {
         id
         name
-        userBuild {
+        allBuild {
           buildName
           glassware
           ice

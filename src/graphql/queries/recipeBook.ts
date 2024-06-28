@@ -64,7 +64,7 @@ export const GET_RECIPE_BOOK: TypedDocumentNode<{
         id
         userName
       }
-      userBuild {
+      allBuild {
         buildName
         glassware
         ice
