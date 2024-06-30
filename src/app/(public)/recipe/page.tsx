@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { PublicRecipeBox } from "@/components/recipe/display/PublicRecipeBox";
-import RecipeLoader from "@/components/recipe/PublicRecipeLoader";
 
 export default function PublicRecipePage() {
   return (
