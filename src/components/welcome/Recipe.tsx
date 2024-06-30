@@ -1,4 +1,5 @@
 import { BreakPoint } from "@/components/images/CardBorder";
+import Link from "next/link";
 import { RecipeSplash } from "@/components/images/Welcome";
 
 export default function Recipe() {
@@ -9,10 +10,11 @@ export default function Recipe() {
           <BreakPoint />
           <div className="mx-2 my-10">
             Recipes contain complete information, and can be modified with
-            customsnap-center builds - the measurements you use at each bar or
-            restaurant you work.
+            custom builds - the measurements you use at each bar or restaurant
+            you work.
           </div>
           <BreakPoint />
+          <Link href="/recipe">Explore Public Recipes</Link>
         </div>
         <div className="bg-contrast row-span-2 flex h-screen w-full snap-center items-center justify-center md:snap-align-none">
           <RecipeSplash />
@@ -22,6 +24,7 @@ export default function Recipe() {
           Recipes can be organized into books for easy sharing and viewing, with
           a collapsed form for easy access while you are on shift.
           <BreakPoint />
+          <Link href="/recipeBook">Explore Public Recipe Books</Link>
         </div>
       </div>
     </div>
