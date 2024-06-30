@@ -1,17 +1,33 @@
-import { gql, useLazyQuery } from "@apollo/client";
+import { ApolloError, QueryHookOptions, useLazyQuery } from "@apollo/client";
+import { PUBLIC_BOOKS, USER_BOOKS } from "@/graphql/queries/recipeBook";
+import {
+  QueryPublicBooksArgs,
+  QueryUserBooksArgs,
+  RecipeBook
+} from "@/__generated__/graphql";
 import { useEffect, useMemo, useState } from "react";
 
-import { RecipeBook } from "@/__generated__/graphql";
-import { USER_BOOKS } from "@/graphql/queries/recipeBook";
+type BookshelfHookResult = {
+  bookList: RecipeBook[];
+  loading: boolean;
+  error?: ApolloError;
+  handleScroll: () => void;
+  handleRefresh: () => void;
+};
 
-export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
+function useGenericBookshelf(
+  query: any, // Adjust to proper query type if available
+  dataKey: string,
+  itemsPerPage: number,
+  scrollOffset: number
+): BookshelfHookResult {
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [bookList, setList] = useState<RecipeBook[]>([]);
 
-  const [getData, { loading, error }] = useLazyQuery(USER_BOOKS, {
-    onCompleted: response => {
-      const newBooks = response.userBooks;
+  const [getData, { loading, error }] = useLazyQuery(query, {
+    onCompleted: (response: any) => {
+      const newBooks: RecipeBook[] = response[dataKey];
       if (newBooks.length > 0) {
         setList(prevList => {
           const uniqueBooks = new Set(prevList.map(book => book.id));
@@ -24,9 +40,9 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
       } else {
         setHasMore(false);
       }
-    },
-    fetchPolicy: "cache-and-network"
-  });
+    }
+    //fetchPolicy: "cache-and-network"
+  } as QueryHookOptions<any, any>);
 
   useEffect(() => {
     getData({
@@ -92,4 +108,28 @@ export function useBookshelf(itemsPerPage: number, scrollOffset: number) {
     handleScroll,
     handleRefresh
   };
+}
+
+export function useBookshelf(
+  itemsPerPage: number,
+  scrollOffset: number
+): BookshelfHookResult {
+  return useGenericBookshelf(
+    USER_BOOKS,
+    "userBooks",
+    itemsPerPage,
+    scrollOffset
+  );
+}
+
+export function usePublicBookshelf(
+  itemsPerPage: number,
+  scrollOffset: number
+): BookshelfHookResult {
+  return useGenericBookshelf(
+    PUBLIC_BOOKS,
+    "publicBooks",
+    itemsPerPage,
+    scrollOffset
+  );
 }

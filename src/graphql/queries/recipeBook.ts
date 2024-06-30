@@ -14,7 +14,31 @@ export const USER_BOOKS: TypedDocumentNode<{
         id
         userName
       }
-      userBuild {
+      allBuild {
+        id
+        buildName
+        recipe {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export const PUBLIC_BOOKS: TypedDocumentNode<{
+  publicBooks: RecipeBook[];
+}> = gql`
+  query PublicBooks {
+    publicBooks {
+      id
+      name
+      description
+      permission
+      createdBy {
+        id
+        userName
+      }
+      allBuild {
         id
         buildName
         recipe {

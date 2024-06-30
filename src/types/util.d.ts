@@ -10,3 +10,15 @@ export type Alert = {
   message: Scalars["String"]["output"];
   code: Scalars["String"]["output"];
 };
+
+export type UseBookshelf = (
+  itemsPerPage: number,
+  scrollOffset: number
+) => {
+  __typename?: "UseBookshelf";
+  bookList: RecipeBook[];
+  loading: boolean;
+  error?: ApolloError | undefined;
+  handleScroll: () => void;
+  handleRefresh: () => void;
+};

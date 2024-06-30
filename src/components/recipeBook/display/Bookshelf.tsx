@@ -1,9 +1,9 @@
 import BookCover from "@/components/recipeBook/display/BookCover";
 import PullToRefresh from "@/components/SharedComponents/PullToRefresh";
 import { SkeletonCover } from "./SkeletonCover";
-import { useBookshelf } from "@/hooks/useBookShelf";
+import { UseBookshelf } from "@/types/util";
 
-export function Bookshelf() {
+export function Bookshelf({ useBookshelf }: { useBookshelf: UseBookshelf }) {
   const itemsPerPage = 6;
   const scrollOffset = 200;
 
@@ -35,7 +35,12 @@ export function Bookshelf() {
                 .map((book, index) => (
                   <BookCover key={book.id + index} book={book} />
                 ))}
-              {loading && bookList.length === 0 && <SkeletonCover />}
+              {loading && bookList.length === 0 && (
+                <>
+                  <SkeletonCover />
+                  <SkeletonCover />
+                </>
+              )}
             </div>
           ))
         )}

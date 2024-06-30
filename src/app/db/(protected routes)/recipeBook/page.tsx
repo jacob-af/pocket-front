@@ -1,15 +1,12 @@
 "use client";
 
-import { useQuery, useReactiveVar } from "@apollo/client";
-
-import AddRecipeBookButton from "@/components/buttons/AddRecipeBookButton";
 import { Bookshelf } from "@/components/recipeBook/display/Bookshelf";
-import { userRecipeBookList } from "@/graphql/reactiveVar/recipeBooks";
+import { useBookshelf } from "@/hooks/useBookShelf";
 
 export default function RecipeBook() {
   return (
     <div className="mt-11z flex h-screen flex-col">
-      <Bookshelf />
+      <Bookshelf useBookshelf={useBookshelf} />
     </div>
   );
 }
