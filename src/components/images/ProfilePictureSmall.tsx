@@ -10,7 +10,7 @@ export default function AmILoggedIn() {
   const { data: session, update, status } = useSession();
 
   useEffect(() => {
-    async function fetchSession() {
+    const fetchSession = async () => {
       const sess = await getSession();
       console.log(sess, "use effect");
 
@@ -18,9 +18,12 @@ export default function AmILoggedIn() {
         console.log("new tokens");
         update({ action: "New Tokens" });
       }
+    };
+
+    if (status === "authenticated") {
+      fetchSession();
     }
-    fetchSession();
-  }, [update, status]);
+  }, []);
 
   if (status === "loading") {
     return (

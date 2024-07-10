@@ -1,15 +1,17 @@
 "use client";
 
-import { FetchResult, useMutation } from "@apollo/client";
-import { signOut, useSession } from "next-auth/react";
+import { FetchResult, useMutation, useReactiveVar } from "@apollo/client";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { LOG_OUT } from "../../graphql/mutations/auth";
 import { Session } from "next-auth";
+import { alertList } from "@/graphql/reactiveVar/alert";
 import localForage from "localforage";
 
 function Button() {
   const [logOut, { client }] = useMutation(LOG_OUT);
+  const alerts = useReactiveVar(alertList);
   //const [session, setSession] = useState<Session | null>(null);
 
   // useEffect(() => {
@@ -43,9 +45,13 @@ function Button() {
         });
       }
       return;
-    } catch (err) {
-      console.log(err);
-      return;
+    } catch (error) {
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      alertList([...alerts, { code: "error", message: errorMessage }]);
+      console.log(error);
     }
   };
 
