@@ -48,24 +48,22 @@ export default function IngredientChoice() {
   };
 
   return (
-    <div className="flex">
-      <select
-        onChange={onChange}
-        name="unit-options"
-        className="focus:shadow-outline bg-contrast col-span-3 text-white"
-        id="unit"
-        value={choice}
-      >
-        <option value="all">All Ingredients</option>
-        {data &&
-          data?.userInventory.map((inventory: Inventory) => {
-            return (
-              <option key={inventory.id} value={inventory.id}>
-                {inventory.name}
-              </option>
-            );
-          })}
-      </select>
-    </div>
+    <select
+      onChange={onChange}
+      name="unit-options"
+      className="focus:shadow-outline bg-contrast col-span-3 text-white"
+      id="unit"
+      value={choice}
+    >
+      <option value="all">All Ingredients</option>
+      {data &&
+        data?.userInventory.map((inventory: Inventory) => {
+          return (
+            <option key={inventory.id} value={inventory.id}>
+              {inventory.name}
+            </option>
+          );
+        })}
+    </select>
   );
 }
