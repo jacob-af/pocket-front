@@ -3,10 +3,10 @@ import { BuildEditPopout } from "../modals/BuildEditPopout";
 import { EditRecipeButton } from "../buttons/EditRecipe";
 import { useSession } from "next-auth/react";
 
-const RecipeOptions = () => {
+const BuildOptions = () => {
   const { data: session } = useSession();
 
-  return <div>Edit Recipe</div>;
+  return <div>Edit Build</div>;
 };
 
-export default RecipeOptions;
+export default BuildOptions;
