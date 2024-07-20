@@ -1,14 +1,12 @@
 "use client";
 
 import { Build, Touch } from "@/__generated__/graphql";
-import React, { useState } from "react";
 
-import { DeleteBuildModal } from "@/components/modals/DeleteBuildModal";
+import React from "react";
 import { currentBuild } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 const BuildDisplay = ({ builds }: { builds: Build[] }) => {
-  const [openDelete, setOpenDelete] = useState(false);
   const slide: number = useReactiveVar(currentBuild);
 
   if (!builds || builds.length === 0) {
@@ -42,14 +40,6 @@ const BuildDisplay = ({ builds }: { builds: Build[] }) => {
           <span className="text-sm">Glassware: </span>
           {builds[slide].glassware}
         </p>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <DeleteBuildModal
-          build={builds[slide]}
-          open={openDelete}
-          toggleopen={setOpenDelete}
-        />
       </div>
     </div>
   );
