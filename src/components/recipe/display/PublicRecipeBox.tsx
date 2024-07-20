@@ -38,12 +38,14 @@ export function PublicRecipeBox() {
       } else {
         setHasMore(false);
       }
-    }
+    },
+    fetchPolicy: "cache-and-network"
   });
 
   useEffect(() => {
     getData({
-      variables: { skip: currentPage * itemsPerPage, take: itemsPerPage }
+      variables: { skip: currentPage * itemsPerPage, take: itemsPerPage },
+      fetchPolicy: "cache-and-network"
     });
   }, [currentPage, getData]);
 
