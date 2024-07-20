@@ -1,15 +1,17 @@
 "use client";
 
+import { currentBuild, selectedRecipe } from "@/graphql/reactiveVar/recipes";
 import { useEffect, useState } from "react";
 import { useQuery, useReactiveVar } from "@apollo/client";
 
 import { Build } from "@/__generated__/graphql";
+import BuildCard from "@/components/recipe/display/BuildCard";
 import { BuildNavBar } from "@/components/navigation/BuildNavBar";
 import CostDisplay from "@/components/recipe/display/CostDisplay";
-import { GET_ONE_BUILD } from "@/graphql/queries/recipe";
-import RecipeCard from "@/components/recipe/display/RecipeCard";
+import { GET_RECIPE } from "@/graphql/queries/recipe";
+import Link from "next/link";
 import SkeletonCard from "@/components/recipe/display/SkeletonCard";
-import { selectedRecipe } from "@/graphql/reactiveVar/recipes";
+import { useRouter } from "next/navigation";
 
 export default function Page({
   params: { slug, build }
@@ -18,31 +20,31 @@ export default function Page({
 }) {
   const q = decodeURIComponent(slug);
   const b = decodeURIComponent(build);
-  const { data, loading, error } = useQuery(GET_ONE_BUILD, {
-    variables: { recipeName: q, buildName: b },
+  const recipe = useReactiveVar(selectedRecipe);
+  const slide: number = useReactiveVar(currentBuild);
+  const router = useRouter();
+  const [buildId, setBuildId] = useState<string>("");
+
+  const { data, loading, error } = useQuery(GET_RECIPE, {
+    variables: { name: q },
     fetchPolicy: "cache-and-network"
   });
 
-  const recipe = useReactiveVar(selectedRecipe);
-  const [buildId, setBuildId] = useState<string>("");
-
   useEffect(() => {
-    if (error) {
-      console.error("Error fetching data: ", error);
-      // Handle error (e.g., display message or fallback UI)
+    console.log(data?.recipe);
+    if (data?.recipe) {
+      selectedRecipe(data.recipe);
+      const buildIndex = data.recipe?.userBuild?.findIndex(
+        build => build?.buildName === b
+      );
+      if (buildIndex === -1) {
+        router.push(`/db/recipe/${slug}`);
+      } else {
+        currentBuild(buildIndex);
+        setBuildId(data.recipe.userBuild?.[slide]?.id ?? "");
+      }
     }
-    console.log(data);
-    if (!loading && data?.findOneBuild) {
-      const buildData = data.findOneBuild;
-      console.log(buildData);
-      setBuildId(buildData.id);
-      const rec = {
-        ...buildData.recipe,
-        userBuild: [buildData]
-      };
-      selectedRecipe(rec);
-    }
-  }, [data?.findOneBuild, data, loading, error]);
+  }, [data?.recipe, b, router, slug, slide]);
 
   if (error || !recipe.userBuild) {
     return <div>There is no page here</div>;
@@ -53,7 +55,10 @@ export default function Page({
 
   return (
     <div className="box-border flex h-full max-w-xl flex-col items-center justify-center pb-40">
-      <RecipeCard recipe={recipe} />
+      <Link href={`/db/recipe/${encodeURIComponent(recipe.name)}`}>
+        Go Back to Recipes
+      </Link>
+      <BuildCard recipe={recipe} />
       <CostDisplay buildId={buildId} />
       <BuildNavBar builds={filteredBuilds} />
     </div>
