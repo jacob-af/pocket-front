@@ -1,32 +1,26 @@
 "use client";
 
 import { FetchResult, useMutation, useReactiveVar } from "@apollo/client";
-import { getSession, signOut, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 import { LOG_OUT } from "../../graphql/mutations/auth";
-import { Session } from "next-auth";
 import { alertList } from "@/graphql/reactiveVar/alert";
 import localForage from "localforage";
 
 function Button() {
   const [logOut, { client }] = useMutation(LOG_OUT);
   const alerts = useReactiveVar(alertList);
-  //const [session, setSession] = useState<Session | null>(null);
 
-  // useEffect(() => {
-  //   const fetchSession = async () => {
-  //     const sessionData = await getSession();
-  //     setSession(sessionData);
-  //   };
-
-  //   fetchSession();
-  // }, []);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const onClick = async () => {
     try {
-      if (session) {
+      console.log(status, session);
+      if (
+        status === "authenticated" &&
+        session.user.accessTokenExpires > Date.now()
+      ) {
+        console.log("if");
         const { data }: FetchResult<{ loggedOut: boolean }> = await logOut({
           variables: { userId: session.user.id }
         });
@@ -51,7 +45,7 @@ function Button() {
         errorMessage = error.message;
       }
       alertList([...alerts, { code: "error", message: errorMessage }]);
-      console.log(error);
+      console.log(errorMessage);
     }
   };
 
