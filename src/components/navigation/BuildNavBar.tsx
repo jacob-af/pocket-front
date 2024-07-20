@@ -26,7 +26,18 @@ export function BuildNavBar({ builds }: { builds: Build[] }) {
   const [openShare, setOpenShare] = useState(false);
 
   const handleNextSlide = () => {
-    currentBuild((slide + 1) % builds.length);
+    const index = recipes.findIndex(
+      recipe => recipe.name === builds[0].recipe.name
+    );
+    const encodedRecipeName = encodeURIComponent(
+      recipes[index % recipes.length].name
+    );
+    //currentBuild((slide + 1) % builds.length);
+    router.push(
+      `/db/recipe/${encodedRecipeName}/${
+        builds[(slide + 1) % builds.length].buildName
+      }`
+    );
   };
 
   const handlePrevSlide = () => {
@@ -85,11 +96,7 @@ export function BuildNavBar({ builds }: { builds: Build[] }) {
             <ArrowLeft />
           </button>
         </div>
-        <div className="col-span-1 w-full">
-          {!!session && (
-            <BuildEditPopout setopen={setOpenShare} builds={builds} />
-          )}
-        </div>
+        <div className="col-span-1 w-full"></div>
         <div className="col-span-1 flex w-full items-center justify-center">
           <button
             onClick={handleNextSlide}
