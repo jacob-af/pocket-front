@@ -8,13 +8,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import BuildDisplay from "./BuildDisplay";
+import Link from "next/link";
 import { currentBuild } from "@/graphql/reactiveVar/recipes";
 import { useReactiveVar } from "@apollo/client";
 
 export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   const current = useReactiveVar(currentBuild);
   const [url, setUrl] = useState("/withCherry100.png");
-  const buildsRef = useRef<Build[]>([]);
 
   const [builds, setBuilds] = useState<Build[]>([]);
 
@@ -47,7 +47,20 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
         <div className="mt-4 text-lg">{recipe.about}</div>
       </div>
       <br />
-      <BuildDisplay builds={builds} />
+      {builds &&
+        builds.map(build => {
+          return (
+            <div key={build.id}>
+              <Link
+                href={`/db/recipe/${encodeURIComponent(
+                  build.recipe.name
+                )}/${encodeURIComponent(build.buildName)}`}
+              >
+                {build.buildName} Build: {build.touch.length} Touches
+              </Link>
+            </div>
+          );
+        })}
     </div>
   );
 }
