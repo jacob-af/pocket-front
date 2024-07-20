@@ -23,7 +23,7 @@ export default function AmILoggedIn() {
     if (status === "authenticated") {
       fetchSession();
     }
-  }, []);
+  }, [status, update]);
 
   if (status === "loading") {
     return (
