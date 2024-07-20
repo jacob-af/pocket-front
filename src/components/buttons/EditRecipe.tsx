@@ -88,7 +88,7 @@ export const EditRecipeButton = ({ builds }: { builds: Build[] }) => {
         onClick={handleEdit}
         className="my-2 inline-block rounded bg-gray-500 px-4 py-2 text-white"
       >
-        Edit
+        Edit Recipe
       </button>
     </>
   );
